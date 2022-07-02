@@ -6,6 +6,12 @@ plugins {
 android {
     compileSdk 32
 
+    buildFeatures{
+        viewBinding true
+        dataBinding true
+    }
+
+
     defaultConfig {
         applicationId "com.example.bmob"
         minSdk 21
