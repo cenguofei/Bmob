@@ -7,11 +7,11 @@
 
 * 首先找到自己项目的目录，进去右键
 ![3QVGH2CL00J6E H%0`(~YHD](https://user-images.githubusercontent.com/72325667/176997234-c3e84d39-5961-4036-96d0-686b46c2baf6.png)
-* 在git页面中执行下面的代码
-'''
+* 在git页面中执行下面的代码</br>
+```Kotlin
 git config --global user.name "你自己的用户名，可以随便设置"
 git config --global user.email "你自己的邮箱，可以随便设置"
-'''
+```
 ![Untitled](https://user-images.githubusercontent.com/72325667/176995723-ee0970c1-c38c-4c20-82dc-d2ac42c0afde.png)
 ***
 ## 拉取代码步骤
