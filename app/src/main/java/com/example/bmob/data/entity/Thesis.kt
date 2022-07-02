@@ -12,8 +12,8 @@ data class Thesis(
     val teacherId:String, //创造该选题的教师id
     val teacherName:String, //创造该选题的教师
     val studentsId:List<String>, //选择该论文的学生
-    val level:Int,
-    val enabled:Boolean,
-    val state:Int,
-    val selectedNum:Int
+    val level:Int,  //难度 1简单，2中等，3困难
+    val enabled:Boolean, //论文是否可选，当审核通过并且选题时间开始后为true，表示可选
+    val state:Int, //论文是否备选，0未选，1已选
+    val selectedNum:Int //被学生选择的次数
 ):BmobObject()
