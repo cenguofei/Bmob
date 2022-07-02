@@ -26,16 +26,16 @@ class BmobUserRepository private constructor(){
     /**
      * 用过username登录
      */
-    fun loginByUsername(userName:String,pwd:String,callback: (Boolean)->Unit){
+    fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
         BmobUser().run {
             username = userName
             setPassword(pwd)
             login(object :SaveListener<User>(){
                 override fun done(p0: User?, p1: BmobException?) {
                     if(p1 == null){
-                        callback.invoke(true)
+                        callback.invoke(true, EMPTY_TEXT)
                     }else{
-                        callback.invoke(false)
+                        callback.invoke(false,p1.message ?: EMPTY_TEXT)
                         Log.v(LOG_TAG,"登录失败：${p1.message}")
                     }
                 }
@@ -77,4 +77,5 @@ class BmobUserRepository private constructor(){
     }
 }
 
+private const val EMPTY_TEXT = ""
 

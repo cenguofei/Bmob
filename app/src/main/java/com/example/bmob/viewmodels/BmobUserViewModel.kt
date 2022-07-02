@@ -7,7 +7,7 @@ class BmobUserViewModel:ViewModel() {
     companion object{
         private val userRepository = BmobUserRepository.getInstance()
     }
-    fun loginByUsername(userName:String,pwd:String,callback: (Boolean)->Unit){
+    fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
         userRepository.loginByUsername(userName,pwd,callback)
     }
 
