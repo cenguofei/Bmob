@@ -10,7 +10,7 @@ data class User(
     val gender:Int? = null,  //性别
     val birth:String? = null, //生日
     val address:String? = null, //地址
-    val identification:Int? = null
+    val identification:Int //身份
 ):BmobUser()
 
 //identification取值
@@ -18,4 +18,5 @@ const val IDENTIFICATION_STUDENT = 1 //身份为学生
 const val IDENTIFICATION_TEACHER = 2 //身份为老师
 const val IDENTIFICATION_DEAN = 3 //身份为系主任
 const val IDENTIFICATION_PROVOST = 4 //身份为教务长
+const val USER_HAS_NOT_IDENTIFICATION = -1  //不写入云数据库，只在本地dataStore里面使用
 
