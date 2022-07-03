@@ -4,6 +4,12 @@ plugins {
 
     //BindingAdapter
     id 'kotlin-kapt'
+
+    //Use Safe Args to pass data with type safety
+    id("androidx.navigation.safeargs.kotlin")
+
+    /*序列化插件*/
+    id 'kotlin-parcelize'
 }
 
 android {

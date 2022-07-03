@@ -21,10 +21,26 @@
         android:id="@+id/registerFragment"
         android:name="com.example.bmob.fragments.login.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_verifyFragment"
+            app:destination="@id/verifyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.bmob.fragments.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/verifyFragment"
+        android:name="com.example.bmob.fragments.login.VerifyFragment"
+        android:label="fragment_verify"
+        tools:layout="@layout/fragment_verify" >
+        <argument
+            android:name="codeVerifySuccessUser"
+            app:argType="com.example.bmob.fragments.login.CodeVerifySuccessUser" />
+        <action
+            android:id="@+id/action_verifyFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

@@ -21,4 +21,6 @@
     <string name="teacher">教师</string>
     <string name="student">学生</string>
     <string name="dean">系主任</string>
+    <string name="please_input_code">请输入验证码</string>
+    <string name="begin_verify">开始验证</string>
 </resources>

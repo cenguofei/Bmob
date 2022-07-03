@@ -138,7 +138,7 @@
 
 
         <Button
-            android:id="@+id/signupBth"
+            android:id="@+id/registerBtn"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"

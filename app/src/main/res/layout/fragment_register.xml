@@ -11,10 +11,10 @@
         android:id="@+id/backImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/todo"
         android:src="@drawable/back_img"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/todo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_zhuCe"
@@ -102,62 +102,20 @@
         app:layout_constraintTop_toBottomOf="@+id/workNumEv"
         tools:ignore="TextFields" />
 
-    <ImageView
-        android:id="@+id/dean_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="110dp"
-        android:layout_marginBottom="35dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/signup_dean"
-        app:layout_constraintBottom_toTopOf="@+id/signupBth"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/student_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="110dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/signup_student"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pwdEv" />
-
-    <ImageView
-        android:id="@+id/teacher_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/signup_teacher"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pwdEv" />
-
-    <ImageView
-        android:id="@+id/provost_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
-        android:layout_marginBottom="35dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/signup_provost"
-        app:layout_constraintBottom_toTopOf="@+id/signupBth"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/signupBth"
+        android:id="@+id/registerBtn"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
         android:background="@drawable/btn_round_bg"
         android:text="@string/signup"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -185,55 +143,149 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/teacher"
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="9dp"
-        android:text="@string/teacher"
-        android:textColor="@color/blue"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/teacher_signup"
-        app:layout_constraintStart_toStartOf="@+id/teacher_signup"
-        app:layout_constraintTop_toBottomOf="@+id/teacher_signup"
-        tools:ignore="SmallSp" />
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/pwdEv"
+        app:layout_constraintStart_toStartOf="@+id/pwdEv"
+        app:layout_constraintTop_toBottomOf="@+id/pwdEv">
+
+        <LinearLayout
+            android:id="@+id/teacherLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="91dp"
+            tools:layout_editor_absoluteY="428dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/teacher_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/signup_teacher" />
+
+            <TextView
+                android:id="@+id/teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="11dp"
+                android:layout_marginStart="15dp"
+                android:text="@string/teacher"
+                android:textColor="@color/blue"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/studentLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="283dp"
+            tools:layout_editor_absoluteY="431dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/student_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/signup_student" />
+
+            <TextView
+                android:id="@+id/student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="@string/student"
+                android:textColor="@color/blue"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <LinearLayout
+            android:id="@+id/provostLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="114dp"
+            tools:layout_editor_absoluteY="522dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/provost_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/signup_provost" />
+
+            <TextView
+                android:id="@+id/provost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/provost"
+                android:textColor="@color/blue"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"
+                tools:layout_editor_absoluteX="120dp"
+                tools:layout_editor_absoluteY="574dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/deanLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="251dp"
+            tools:layout_editor_absoluteY="521dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/dean_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/signup_dean" />
+
+            <TextView
+                android:id="@+id/dean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dean"
+                android:textColor="@color/blue"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/student"
+        android:id="@+id/currentIdentification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/student"
-        android:textColor="@color/blue"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/teacher"
-        app:layout_constraintEnd_toEndOf="@+id/student_signup"
-        app:layout_constraintStart_toStartOf="@+id/student_signup"
-        app:layout_constraintTop_toBottomOf="@+id/teacher_signup"
-        tools:ignore="SmallSp" />
+        android:textColor="@color/grey_light"
+        app:layout_constraintBottom_toTopOf="@+id/nameEv"
+        app:layout_constraintEnd_toEndOf="@+id/text_zhuCe"
+        app:layout_constraintStart_toStartOf="@+id/text_zhuCe"
+        app:layout_constraintTop_toBottomOf="@+id/text_zhuCe" />
 
-    <TextView
-        android:id="@+id/dean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dean"
-        android:textColor="@color/blue"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/provost"
-        app:layout_constraintEnd_toEndOf="@+id/dean_signup"
-        app:layout_constraintStart_toStartOf="@+id/dean_signup"
-        app:layout_constraintTop_toTopOf="@+id/provost"
-        tools:ignore="SmallSp" />
-
-    <TextView
-        android:id="@+id/provost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="@string/provost"
-        android:textColor="@color/blue"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/provost_signup"
-        app:layout_constraintStart_toStartOf="@+id/provost_signup"
-        app:layout_constraintTop_toBottomOf="@+id/provost_signup"
-        tools:ignore="SmallSp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

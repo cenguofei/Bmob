@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private lateinit var binding:FragmentLoginBinding
-    private val userViewModel:BmobUserViewModel by viewModels()
+    private val userViewModel:BmobUserViewModel by activityViewModels()
     //用户配置，记住密码，保存账号密码等
     private lateinit var settingsDataStore: SettingsDataStore
     private var isShowPwd = true
@@ -97,7 +98,7 @@ class LoginFragment : Fragment() {
                 }
             }
         }
-        binding.signupBth.setOnClickListener {
+        binding.registerBtn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         binding.loginBtn.setOnClickListener {

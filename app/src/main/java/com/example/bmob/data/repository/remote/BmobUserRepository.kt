@@ -49,9 +49,11 @@ class BmobUserRepository private constructor(){
         BmobUser.logOut()
     }
     //账号密码注册
-    fun register(userName:String,pwd:String,identification:Int,callback: (Boolean)->Unit){
-        User(identification = identification).run {
-            username = userName
+    fun signup(userName:String,workNum:String,phoneNumber: String,pwd: String, identify:Int, callback: (Boolean)->Unit){
+        User(identification = identify).run {
+            username = workNum
+            name = userName
+            mobilePhoneNumber = phoneNumber
             setPassword(pwd)
             signUp(object :SaveListener<User>(){
                 override fun done(p0: User?, p1: BmobException?) {
@@ -65,6 +67,47 @@ class BmobUserRepository private constructor(){
             })
         }
     }
+
+    /**
+     * 注册步骤
+     * 获取验证码
+     * 请求登录或注册操作的短信验证码
+     */
+    fun getSignupCode(phoneNumber: String,callback: (isResponseSuccess:Boolean,msgCode:String,msg:String) -> Unit){
+        BmobSMS.requestSMSCode(phoneNumber,"",object :QueryListener<Int>(){
+            override fun done(p0: Int?, p1: BmobException?) {
+                if (p1 == null){
+                    callback.invoke(true,p0.toString(), EMPTY_TEXT)
+                }else{
+                    callback.invoke(false,FAILED_REQUEST_SMS_CODE.toString(),p1.message.toString())
+                }
+            }
+        })
+    }
+    /**
+     * 一键注册或登录的同时保存其他字段的数据
+     * @param phoneNumber
+     * @param msgCode
+     */
+    fun signOrLogin(userName:String,workNum:String,pwd: String, identify:Int,phoneNumber: String,msgCode:String,callback: (isSuccess:Boolean,msg:String)->Unit){
+        with(User(identification = identify)){
+            name = userName
+            username = workNum
+            setPassword(pwd)
+            mobilePhoneNumber = phoneNumber
+            signOrLogin(msgCode,object :SaveListener<User>(){
+                override fun done(p0: User?, p1: BmobException?) {
+                    if(p1 == null){
+                        callback.invoke(true, EMPTY_TEXT)
+                    }else{
+                        Log.v(LOG_TAG,"验证失败：${p1.message.toString()}")
+                        callback.invoke(false,p1.message.toString())
+                    }
+                }
+            })
+        }
+    }
+
     //获取用户信息
     fun getUserInfo(callback:(Boolean,User?)->Unit){
         BmobQuery<User>().getObject(BmobUser.getCurrentUser().objectId,object :QueryListener<User>(){

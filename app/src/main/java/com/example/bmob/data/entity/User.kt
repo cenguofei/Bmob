@@ -10,7 +10,12 @@ data class User(
     val gender:Int? = null,  //性别
     val birth:String? = null, //生日
     val address:String? = null, //地址
-    val identification:Int //身份
+    val identification:Int, //身份
+
+    var name:String?=null,
+    val school:String?=null,
+    val department:String?=null,
+    val college:String?=null
 ):BmobUser()
 
 //identification取值
