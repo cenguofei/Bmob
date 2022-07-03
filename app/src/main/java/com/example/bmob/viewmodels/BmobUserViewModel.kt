@@ -7,6 +7,7 @@ import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
+import com.example.bmob.data.entity.School
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobUserRepository
 import com.example.bmob.data.storage.UserConfig
@@ -16,7 +17,6 @@ class BmobUserViewModel:ViewModel() {
     companion object{
         private val userRepository = BmobUserRepository.getInstance()
     }
-    val userInfo = MutableLiveData<User>()
     fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
         userRepository.loginByUsername(userName,pwd,callback)
     }
@@ -71,6 +71,14 @@ class BmobUserViewModel:ViewModel() {
     //2. 然后执行验证码的密码重置操作
     fun verifyCode(smsId:String,newPassword:String,callback: (isResetSuccess:Boolean,msg:String) -> Unit){
         userRepository.verifyCode(smsId,newPassword,callback)
+    }
+
+    /**
+     * 模糊查询
+     * 查询学校，系
+     */
+    fun dimQuerySchool(schoolName:String,callback: (isSuccess:Boolean, schools:List<School>?, error:String) -> Unit){
+        userRepository.dimQuerySchool(schoolName,callback)
     }
 }
 

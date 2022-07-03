@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK && event?.action == KeyEvent.ACTION_DOWN) {
             if (
                 navController.currentDestination?.id == R.id.homeFragment
+                || navController.currentDestination?.id == R.id.studentWorkFragment
+                || navController.currentDestination?.id == R.id.mineFragment
             ) {
                 gotoDesktop(this)
                 return true

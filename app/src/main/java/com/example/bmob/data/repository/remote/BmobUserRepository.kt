@@ -5,9 +5,11 @@ import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobSMS
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
+import com.example.bmob.data.entity.School
 import com.example.bmob.data.entity.User
 import com.example.bmob.utils.LOG_TAG
 
@@ -142,6 +144,35 @@ class BmobUserRepository private constructor(){
                 }
             }
         })
+    }
+
+    /**
+     * 模糊查询
+     * 查询学校，系
+     *
+     * 我好像不是付费用户，不可以模糊查询
+     */
+    fun dimQuerySchool(schoolName:String,callback: (isSuccess:Boolean,schools:List<School>?,error:String) -> Unit){
+        BmobQuery<School>()
+//            .addWhereMatches("schoolName","%西南大学%")
+//            .addWhereContains("schoolName","西南大学")
+            .addWhereEqualTo("schoolName",schoolName)
+//            .addWhereStartsWith("schoolName","西南大学")
+//            .addWhereEndsWith("schoolName","西南大学")
+            .findObjects(object :FindListener<School>(){
+                override fun done(p0: MutableList<School>?, p1: BmobException?) {
+                    if (p1 == null){
+                        if (p0 != null){
+                            callback.invoke(true,p0, EMPTY_TEXT)
+                        }else{
+                            callback.invoke(false,null, "没有匹配信息")
+                        }
+                    }else{
+                        callback.invoke(false,null,p1.message.toString())
+                    }
+                }
+            })
+
     }
 }
 
