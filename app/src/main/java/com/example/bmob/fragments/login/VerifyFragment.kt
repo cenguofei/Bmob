@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,7 +19,7 @@ import com.example.bmob.viewmodels.BmobUserViewModel
 
 class VerifyFragment : Fragment() {
     private lateinit var binding:FragmentVerifyBinding
-    private val viewModel:BmobUserViewModel by viewModels()
+    private val viewModel:BmobUserViewModel by activityViewModels()
     private val args:VerifyFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

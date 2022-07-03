@@ -1,20 +1,42 @@
 package com.example.bmob.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.BmobUser
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobUserRepository
 import com.example.bmob.data.storage.UserConfig
+import com.example.bmob.utils.LOG_TAG
 
 class BmobUserViewModel:ViewModel() {
     companion object{
         private val userRepository = BmobUserRepository.getInstance()
     }
+    val userInfo = MutableLiveData<User>()
     fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
         userRepository.loginByUsername(userName,pwd,callback)
     }
-    fun getUserInfo(callback:(Boolean, User?)->Unit){
+    fun getUserInfo(callback:(isSuccess:Boolean,user:User?)->Unit){
         userRepository.getUserInfo(callback)
+    }
+
+    fun getUserInfoByUsername(username:String,callback:(isSuccess:Boolean,user:User?,error:String)->Unit){
+        BmobQuery<User>()
+            .addWhereEqualTo("username",username)
+            .findObjects(object :FindListener<User>(){
+            override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                if (p1 == null && p0 != null && p0.isNotEmpty()){
+                    callback.invoke(true,p0[0], EMPTY_CONTENT)
+                    Log.v(LOG_TAG,"找到用户：${p0[0]}")
+                }else{
+                    callback.invoke(false,null, p1?.message.toString())
+                }
+            }
+        })
     }
 
     /**
@@ -33,10 +55,17 @@ class BmobUserViewModel:ViewModel() {
         userRepository.signOrLogin(userName,workNum,pwd,identify,phoneNumber,msgCode,callback)
     }
 
+    //退出登录
+    fun logout(){
+        BmobUser.logOut()
+    }
+    fun isLogin():Boolean{
+        return BmobUser.isLogin()
+    }
 
     //手机号码重置密码
     //1. 请求重置密码操作的短信验证码
-    fun findPassword(phoneNumber:String,callback: (smsId:Int,error:String?) -> Unit){
+    fun findPassword(phoneNumber:String,callback: (isSuccess: Boolean,smsId:Int,error:String?) -> Unit){
         userRepository.findPassword(phoneNumber,callback)
     }
     //2. 然后执行验证码的密码重置操作
@@ -44,3 +73,5 @@ class BmobUserViewModel:ViewModel() {
         userRepository.verifyCode(smsId,newPassword,callback)
     }
 }
+
+private const val EMPTY_CONTENT = ""

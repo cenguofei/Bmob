@@ -26,7 +26,8 @@ class BmobUserRepository private constructor(){
     }
 
     /**
-     * 用过username登录
+     * 通过username登录
+     * 也就是工号或学号
      */
     fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
         BmobUser().run {
@@ -44,10 +45,7 @@ class BmobUserRepository private constructor(){
             })
         }
     }
-    //退出登录
-    fun logout(){
-        BmobUser.logOut()
-    }
+
     //账号密码注册
     fun signup(userName:String,workNum:String,phoneNumber: String,pwd: String, identify:Int, callback: (Boolean)->Unit){
         User(identification = identify).run {
@@ -109,7 +107,7 @@ class BmobUserRepository private constructor(){
     }
 
     //获取用户信息
-    fun getUserInfo(callback:(Boolean,User?)->Unit){
+    fun getUserInfo(callback:(isSuccess:Boolean,user:User?)->Unit){
         BmobQuery<User>().getObject(BmobUser.getCurrentUser().objectId,object :QueryListener<User>(){
             override fun done(p0: User?, p1: BmobException?) {
                 if (p1 == null){
@@ -122,13 +120,13 @@ class BmobUserRepository private constructor(){
     }
     //手机号码重置密码
     //1. 请求重置密码操作的短信验证码
-    fun findPassword(phoneNumber:String,callback: (smsId:Int,error:String?) -> Unit){
+    fun findPassword(phoneNumber:String,callback: (isSuccess: Boolean,smsId:Int,error:String?) -> Unit){
         BmobSMS.requestSMSCode(phoneNumber,"",object :QueryListener<Int>(){
             override fun done(p0: Int?, p1: BmobException?) {
                 if (p1 == null){
-                    callback.invoke(p0!!, EMPTY_TEXT)
+                    callback.invoke(true,p0!!, EMPTY_TEXT)
                 }else{
-                    callback.invoke(FAILED_REQUEST_SMS_CODE,p1.message.toString())
+                    callback.invoke(false,FAILED_REQUEST_SMS_CODE,p1.message.toString())
                 }
             }
         })

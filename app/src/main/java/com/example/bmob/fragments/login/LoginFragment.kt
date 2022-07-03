@@ -71,6 +71,9 @@ class LoginFragment : Fragment() {
     }
     //设置点击事件
     private fun setEventListener(){
+        binding.forgetPwd.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_usernameFragment)
+        }
         binding.showPwdIv.setOnClickListener {
             if (isShowPwd){
                 //显示密码

@@ -57,6 +57,7 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:autofillHints=""
+            android:maxLength="1"
             android:inputType="number"
             tools:ignore="LabelFor" />
 
@@ -66,12 +67,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:autofillHints=""
+            android:maxLength="1"
             android:inputType="number"
             tools:ignore="LabelFor" />
 
         <EditText
             android:id="@+id/editText3"
             android:layout_width="40dp"
+            android:maxLength="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:autofillHints=""
@@ -81,6 +84,7 @@
         <EditText
             android:id="@+id/editText4"
             android:layout_width="40dp"
+            android:maxLength="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:autofillHints=""
@@ -90,6 +94,7 @@
         <EditText
             android:id="@+id/editText5"
             android:layout_width="40dp"
+            android:maxLength="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:autofillHints=""
@@ -102,6 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:autofillHints=""
+            android:maxLength="1"
             android:inputType="number"
             tools:ignore="LabelFor" />
     </LinearLayout>
@@ -116,14 +122,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/todo" />
-
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/beginVerify"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,4 +23,15 @@
     <string name="dean">系主任</string>
     <string name="please_input_code">请输入验证码</string>
     <string name="begin_verify">开始验证</string>
+    <string name="next_step">下一步</string>
+    <string name="find_pwd">找回密码</string>
+    <string name="account">账号</string>
+    <string name="input_phone_num">填写手机号码</string>
+    <string name="_86">+86</string>
+    <string name="commit">提交</string>
+    <string name="input_code">请输入短信验证码</string>
+    <string name="code">验证码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="confirm_pwd">确认密码</string>
+    <string name="confirm">确定</string>
 </resources>
