@@ -39,6 +39,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setEventListener(){
+        binding.accountLogin.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.provostLinearLayout.run {
             setOnClickListener {
                 userIdentification = IDENTIFICATION_PROVOST

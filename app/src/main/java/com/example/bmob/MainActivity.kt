@@ -9,6 +9,7 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import cn.bmob.v3.Bmob
 import com.example.bmob.databinding.ActivityMainBinding
 
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
                 as NavHostFragment
         navController = navHostFragment.navController
+        binding.bottomNavigationView.setupWithNavController(navController)
+
         setBottomNavigationView()
     }
     private fun setBottomNavigationView(){
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.startFragment
                 || destination.id == R.id.usernameFragment
                 || destination.id == R.id.phoneNumberFragment
+                || destination.id == R.id.resetPasswordFragment
             ) {
                 binding.bottomNavigationView.visibility = View.GONE
             }else{

@@ -47,6 +47,11 @@ class LoginFragment : Fragment() {
             Log.v(LOG_TAG, it.toString())
             if (it.isRememberPassword){
                 binding.userConfig = it
+                //如果是记住密码并在有登录状态的情况下就进入首页
+                if (userViewModel.isLogin()){
+                    Log.v(LOG_TAG,"有登录状态，进入首页")
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                }
             }
         }
         setEventListener()
@@ -111,6 +116,9 @@ class LoginFragment : Fragment() {
                 }else{
                     userViewModel.loginByUsername(username,password){isSuccess,msg->
                         if (isSuccess){
+                            lifecycleScope.launch {
+                                saveConfig(binding.rememberPwdCheckBox.isChecked,username,password)
+                            }
                             verifyUserIdentification{
                                 when(it){
                                     IDENTIFICATION_STUDENT->{

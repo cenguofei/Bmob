@@ -91,4 +91,14 @@
             android:id="@+id/action_resetPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mineFragment"
+        android:name="com.example.bmob.fragments.mine.MineFragment"
+        android:label="fragment_mine"
+        tools:layout="@layout/fragment_mine" />
+    <fragment
+        android:id="@+id/studentWorkFragment"
+        android:name="com.example.bmob.fragments.work.StudentWorkFragment"
+        android:label="fragment_student_work"
+        tools:layout="@layout/fragment_student_work" />
 </navigation>
