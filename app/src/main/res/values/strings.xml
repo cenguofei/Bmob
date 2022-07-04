@@ -42,4 +42,6 @@
     <string name="depart">系</string>
     <string name="reLogin">重新登录</string>
     <string name="good_morning_ugo">Good morning,Ugo</string>
+    <string name="name_1">姓名</string>
+    <string name="phone">电话</string>
 </resources>
