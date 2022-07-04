@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout11"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.student.StudentHomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:maxLines="2"
+        android:text="@string/good_morning_ugo"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/message_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_shape"
+        android:focusable="true"
+        android:imeOptions="actionSearch"
+        android:paddingStart="0dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="1dp"
+        android:paddingBottom="5dp"
+        android:textAlignment="center"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:queryHint="提示文字"
+        app:searchIcon="@drawable/search"
+        tools:ignore="MissingConstraints" />
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="362dp"
+        android:layout_height="154dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/banner_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
