@@ -17,7 +17,7 @@ import com.example.bmob.viewmodels.BmobUserViewModel
 
 class UsernameFragment : Fragment() {
     private lateinit var binding:FragmentUsernameBinding
-    private val userViewMode:BmobUserViewModel by activityViewModels()
+    private val userViewModel:BmobUserViewModel by activityViewModels()
     private var username = EMPTY_USERNAME
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,18 +29,24 @@ class UsernameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (userViewMode.isLogin()){
+        if (userViewModel.isLogin()){
             username = BmobUser.getCurrentUser().username.toString()
-            binding.phoneNumber = BmobUser.getCurrentUser().username.toString()
+            binding.username = username
         }
         binding.nextBtn.setOnClickListener {
             val text = binding.editText.text
             if (TextUtils.isEmpty(text)){
                 showMsg(requireContext(),"请输入账号")
             }else{
-                val navDirections =
-                    UsernameFragmentDirections.actionUsernameFragmentToPhoneNumberFragment(text.toString())
-                findNavController().navigate(navDirections)
+                userViewModel.ifExistUserForGivenUsername(text.toString()){isSuccess, msg ->
+                    if (isSuccess){
+                        val navDirections =
+                            UsernameFragmentDirections.actionUsernameFragmentToPhoneNumberFragment(text.toString())
+                        findNavController().navigate(navDirections)
+                    }else{
+                        showMsg(requireContext(),msg)
+                    }
+                }
             }
         }
     }

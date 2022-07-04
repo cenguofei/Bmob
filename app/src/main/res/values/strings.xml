@@ -42,9 +42,12 @@
     <string name="depart">系</string>
     <string name="reLogin">重新登录</string>
     <string name="good_morning_ugo">Good morning,Ugo</string>
+    <string name="stu_my_cls">我的班级</string>
+    <string name="my_cls">我的班级</string>
+    <string name="graduate_thesis">毕业课题</string>
     <string name="name_1">姓名</string>
     <string name="phone">电话</string>
-    <string name="morning">早上好，☀</string>
+    <string name="morning">Hello，☀</string>
     <string name="xxx">XXX</string>
     <string name="me">我</string>
     <string name="xx学校">XX学校</string>
@@ -58,4 +61,5 @@
     <string name="setting">设置</string>
     <string name="choose_task">选择课题</string>
     <string name="major">大学·学院·专业</string>
+    <string name="find_thesis">查找课题</string>
 </resources>

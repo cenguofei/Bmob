@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobUser
 import com.example.bmob.R
 import com.example.bmob.databinding.FragmentMineBinding
+import com.example.bmob.viewmodels.BmobUserViewModel
 
 
 class MineFragment : Fragment() {
     private lateinit var binding:FragmentMineBinding
+    private val userViewModel:BmobUserViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -22,6 +26,11 @@ class MineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMineBinding.inflate(inflater,container,false)
+        userViewModel.getUserInfo{isSuccess, user ->
+            if (isSuccess){
+                binding.user = user
+            }
+        }
         return binding.root
     }
 

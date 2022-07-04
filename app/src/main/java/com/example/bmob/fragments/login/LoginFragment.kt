@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
                 //如果是记住密码并在有登录状态的情况下就进入首页
                 if (userViewModel.isLogin()){
                     Log.v(LOG_TAG,"有登录状态，进入首页")
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
                 }
             }
         }
@@ -71,7 +71,7 @@ class LoginFragment : Fragment() {
         }
     }
     //获得用户输入的账号和密码
-    private fun getUserInfo(callback:(String,String)->Unit){
+    private fun getUserInputInfo(callback:(String,String)->Unit){
         callback.invoke(binding.usernameEv.text.toString(),binding.passwordEv.text.toString())
     }
     //设置点击事件
@@ -93,7 +93,7 @@ class LoginFragment : Fragment() {
         }
         with(binding.rememberPwdCheckBox) {
             setOnClickListener {
-                getUserInfo{username,pwd->
+                getUserInputInfo{username,pwd->
                     if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)){
                         lifecycleScope.launch{
                             if (isChecked) {
@@ -110,7 +110,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         binding.loginBtn.setOnClickListener {
-            getUserInfo{username,password->
+            getUserInputInfo{username,password->
                 if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
                     showMsg(requireContext(),"用户名或密码不能为空！")
                 }else{
@@ -123,7 +123,7 @@ class LoginFragment : Fragment() {
                                 when(it){
                                     IDENTIFICATION_STUDENT->{
                                         //登录成功，进入学生主页
-                                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                                        findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
                                     }
                                     IDENTIFICATION_TEACHER->{
 

@@ -11,17 +11,19 @@ import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.data.entity.School
 import com.example.bmob.data.entity.User
+import com.example.bmob.data.entity.BmobBannerObject
+import com.example.bmob.data.entity.Thesis
 import com.example.bmob.utils.LOG_TAG
 
 
-class BmobUserRepository private constructor(){
+class BmobRepository private constructor(){
 
     companion object{
-        @Volatile private var INSTANCE:BmobUserRepository? = null
+        @Volatile private var INSTANCE:BmobRepository? = null
         //单例模式，获取实例
         fun getInstance() = INSTANCE ?: synchronized(this){
             if (INSTANCE == null){
-                INSTANCE = BmobUserRepository()
+                INSTANCE = BmobRepository()
             }
             INSTANCE!!
         }
@@ -158,8 +160,6 @@ class BmobUserRepository private constructor(){
     /**
      * 模糊查询
      * 查询学校，系
-     *
-     * 我好像不是付费用户，不可以模糊查询
      */
     fun querySchool(schoolName:String, callback: (isSuccess:Boolean, school:School?, error:String) -> Unit){
         BmobQuery<School>()
@@ -184,9 +184,69 @@ class BmobUserRepository private constructor(){
             })
 
     }
+
+    /**
+     * 搜索学生首页的banner
+     */
+    fun queryBannerData(callback: (isSuccess:Boolean, data:MutableList<BmobBannerObject>?, msg:String) -> Unit){
+        BmobQuery<BmobBannerObject>()
+            .order("-likes")  // 根据likes字段降序显示数据
+            .setLimit(12)
+            .findObjects(object :FindListener<BmobBannerObject>(){
+            override fun done(p0: MutableList<BmobBannerObject>?, p1: BmobException?) {
+                if (p1 == null){
+                    if (p0 != null && p0.size > 0){
+                        callback.invoke(true,p0, EMPTY_TEXT)
+                    }else{
+                        callback.invoke(false,null,"没有banner数据")
+                    }
+                }else{
+                    callback.invoke(false,null, p1.message.toString())
+                }
+            }
+        })
+    }
+
+    /**
+     * 模糊查询能选的文章
+     */
+    fun searchAnyThesis(searchTitle:String,callback: (isSuccess:Boolean,thesis:MutableList<Thesis>?,msg:String) -> Unit){
+        BmobQuery<Thesis>()
+//            .addWhereEqualTo("title",searchTitle)
+            .addWhereContains("title",searchTitle)
+            .addWhereMatches("title","")
+            .findObjects(object :FindListener<Thesis>(){
+                override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
+                    if (p1 == null){
+                        if (p0 != null && p0.size > 0){
+                            callback.invoke(true,p0, EMPTY_TEXT)
+                        }else{
+                            callback.invoke(false,null,"没有匹配项")
+                        }
+                    }else{
+                        callback.invoke(false,null,p1.message.toString())
+                    }
+                }
+            })
+    }
+
+    /**
+     * 添加Thesis测试方法
+     */
+    fun addThesis(thesis: Thesis,callback: (isSuccess:Boolean,objectId:String?,msg:String?) -> Unit){
+        thesis.save(object : SaveListener<String>() {
+            override fun done(p0: String?, p1: BmobException?) {
+                if (p1 == null){
+                    callback.invoke(true,p0!!, EMPTY_TEXT)
+                }else{
+                    callback.invoke(false,null,p1.message)
+                }
+            }
+        })
+    }
 }
 
-private const val EMPTY_TEXT = ""
+const val EMPTY_TEXT = ""
 const val FAILED_REQUEST_SMS_CODE = -1
 
 

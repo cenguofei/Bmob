@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/home_icon"
+        android:icon="@drawable/message_icon"
         android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/studentWorkFragment"
-        android:icon="@drawable/ic_launcher_background"
+        android:id="@+id/studentHomeFragment"
+        android:icon="@drawable/work_platform_img"
         android:title="@string/work"
         app:showAsAction="ifRoom" />
     <item

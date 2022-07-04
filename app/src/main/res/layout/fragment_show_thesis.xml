@@ -17,7 +17,8 @@
         app:layout_constraintEnd_toStartOf="@+id/textView12"
         app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/textView12"
@@ -30,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@color/black" />
 
     <TextView
@@ -44,10 +45,11 @@
 工作。主要研究方向：信息检索，科学（信息）计量与
 科技评价。"
         android:textColor="@color/black"
-        android:textSize="9dp"
+        android:textSize="9sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+        app:layout_constraintTop_toTopOf="@+id/imageView7"
+        tools:ignore="SmallSp" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -59,47 +61,24 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        tools:src="@tools:sample/avatars" />
-
-    <SearchView
-        android:id="@+id/searchView2"
-        android:layout_width="372dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/search_shape"
-        android:focusable="true"
-        android:imeOptions="actionSearch"
-        android:paddingStart="0dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="1dp"
-        android:paddingBottom="5dp"
-        android:textAlignment="center"
-        app:hint="提示文字"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        app:searchIcon="@drawable/search"
-        tools:ignore="MissingConstraints" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="372dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/mine_info_bg"
         android:drawablePadding="15dp"
         android:gravity=""
-        android:hint="xx课题名称"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:text=""
+        android:text="xx课题名称"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <TextView
         android:id="@+id/textView15"
@@ -109,10 +88,10 @@
         android:background="@drawable/mine_info_bg"
         android:drawablePadding="15dp"
         android:gravity=""
-        android:hint="xx研究方向"
+        android:hint=""
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:text=""
+        android:text="xx研究方向"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,10 +105,9 @@
         android:background="@drawable/mine_info_bg"
         android:drawablePadding="15dp"
         android:gravity=""
-        android:hint="xx课题要求"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:text=""
+        android:text="xx课题要求"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,10 +121,9 @@
         android:background="@drawable/mine_info_bg"
         android:drawablePadding="15dp"
         android:gravity=""
-        android:hint="xx课题简介"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:text=""
+        android:text="xx课题简介"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"

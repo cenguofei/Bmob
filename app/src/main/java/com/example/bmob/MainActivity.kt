@@ -2,16 +2,17 @@ package com.example.bmob
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cn.bmob.v3.Bmob
 import com.example.bmob.databinding.ActivityMainBinding
+import com.example.bmob.utils.LOG_TAG
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -29,11 +30,10 @@ class MainActivity : AppCompatActivity() {
                 as NavHostFragment
         navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
-
         setBottomNavigationView()
     }
     private fun setBottomNavigationView(){
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             if (
                 destination.id == R.id.loginFragment
                 || destination.id == R.id.registerFragment
@@ -42,6 +42,9 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.usernameFragment
                 || destination.id == R.id.phoneNumberFragment
                 || destination.id == R.id.resetPasswordFragment
+
+                || destination.id == R.id.browseFragment
+                || destination.id == R.id.selectFragment
             ) {
                 binding.bottomNavigationView.visibility = View.GONE
             }else{
@@ -58,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK && event?.action == KeyEvent.ACTION_DOWN) {
             if (
                 navController.currentDestination?.id == R.id.homeFragment
-                || navController.currentDestination?.id == R.id.studentWorkFragment
+                || navController.currentDestination?.id == R.id.studentHomeFragment
                 || navController.currentDestination?.id == R.id.mineFragment
             ) {
                 gotoDesktop(this)

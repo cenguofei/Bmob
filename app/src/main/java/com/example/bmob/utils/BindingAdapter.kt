@@ -3,8 +3,13 @@ package com.example.bmob.utils
 import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.example.bmob.R
 
 object BindingAdapter {
     /**
@@ -38,6 +43,31 @@ object BindingAdapter {
                     textView.text = spannableString
                 }
             }
+        }
+    }
+
+
+    @JvmStatic
+    @BindingAdapter("loadRoundCircleHeadImage")
+    fun loadRoundCircleHeadImage(imageView: ImageView?, url: String?){
+        if (imageView != null) {
+            Glide.with(imageView.context)
+                .load(url)
+                .placeholder(R.drawable.ic_launcher_background)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(18)))
+                .into(imageView)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadCircleHeadImage")
+    fun loadCircleHeadImage(imageView: ImageView?, url: String?){
+        if (imageView != null) {
+            Glide.with(imageView.context)
+                .load(url)
+                .placeholder(R.drawable.ic_launcher_background)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(25)))
+                .into(imageView)
         }
     }
 }

@@ -3,15 +3,17 @@ package com.example.bmob.data.entity
 import cn.bmob.v3.BmobUser
 
 data class User(
+    //1. 公有属性
     val nickname:String? = null,  //昵称
     val avatarUrl:String? = null,  //头像url
     val backgroundUrl:String? = null,  //背景url
     val age:Int? = null,    //年龄
-    val gender:Int? = null,  //性别
+    val gender:String? = null,  //性别
     val birth:String? = null, //生日
     val address:String? = null, //地址
     val identification:Int, //身份
     var name:String?=null,  //姓名
+    var signature:String? = null,  //用户签名
     /**
      * 下面三个属性在注册页面的时候就确定了，
      * 只要用户现在有账号，他就有下面的属性，并且不为空
@@ -20,7 +22,18 @@ data class User(
      */
     var school:String?=null, //学校
     var department:String?=null,  //系
-    var college:String?=null  //学院
+    var college:String?=null,  //学院
+
+    //2. 特有属性
+    //1) 学生
+
+    //2) 老师
+
+    //3) 系主任
+
+    //4) 教务长
+
+
 ):BmobUser()
 
 //identification取值

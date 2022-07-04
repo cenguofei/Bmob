@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/headImg"
             android:layout_width="334dp"
             android:layout_height="70dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,8 +31,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:src="@mipmap/ic_launcher"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintBottom_toBottomOf="@+id/headImg"
+            app:layout_constraintStart_toStartOf="@+id/headImg"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 
@@ -47,7 +47,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/phoneNum"
             app:layout_constraintStart_toEndOf="@+id/iv_head"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+            app:layout_constraintTop_toTopOf="@+id/headImg" />
 
         <TextView
             android:id="@+id/phoneNum"
@@ -59,7 +59,7 @@
             android:text="@string/phone"
             android:textColor="@color/white"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintBottom_toBottomOf="@+id/headImg"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+            app:layout_constraintEnd_toEndOf="@+id/headImg"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/arrow_right" />
 

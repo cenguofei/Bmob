@@ -8,12 +8,12 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.example.bmob.data.entity.School
 import com.example.bmob.data.entity.User
-import com.example.bmob.data.repository.remote.BmobUserRepository
+import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.LOG_TAG
 
 class BmobUserViewModel:ViewModel() {
     companion object{
-        private val userRepository = BmobUserRepository.getInstance()
+        private val userRepository = BmobRepository.getInstance()
     }
     fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
         userRepository.loginByUsername(userName,pwd,callback)
@@ -83,6 +83,23 @@ class BmobUserViewModel:ViewModel() {
      */
     fun querySchool(schoolName:String, callback: (isSuccess:Boolean,  school:School?, error:String) -> Unit){
         userRepository.querySchool(schoolName,callback)
+    }
+
+    /**
+     * 通过账号/工号/学号判断是否存在该用户
+     */
+    fun ifExistUserForGivenUsername(userName: String,callback: (isSuccess:Boolean, msg:String) -> Unit){
+        BmobQuery<User>()
+            .addWhereEqualTo("username",userName)
+            .findObjects(object :FindListener<User>(){
+                override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                    if (p1 == null && p0 != null && p0.size == 1){
+                        callback.invoke(true, EMPTY_CONTENT)
+                    }else{
+                        callback.invoke(false,"改账户不存在${p1?.message}")
+                    }
+                }
+            })
     }
 }
 

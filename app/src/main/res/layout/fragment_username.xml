@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="phoneNumber"
+            name="username"
             type="java.lang.String" />
     </data>
 
@@ -45,14 +45,14 @@
             android:id="@+id/editText"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:autofillHints=""
+            android:text="@{username}"
             android:inputType="number"
             android:padding="25dp"
             android:paddingStart="60dp"
-            android:text="@{phoneNumber}"
             android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             tools:ignore="LabelFor,RtlSymmetry" />

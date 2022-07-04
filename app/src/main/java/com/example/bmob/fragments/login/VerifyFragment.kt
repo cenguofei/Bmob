@@ -56,8 +56,14 @@ class VerifyFragment : Fragment() {
                         args.codeVerifySuccessUser.code
                     ){ isSuccess, msg ->
                         if (isSuccess){
+                            //这里需要识别身份再进入对应主页
+
+
+
+
+
                             Log.v(LOG_TAG,"输入code=$code1$code2$code3$code4$code5$code6")
-                            findNavController().navigate(R.id.action_verifyFragment_to_homeFragment)
+                            findNavController().navigate(R.id.action_verifyFragment_to_studentHomeFragment)
                         }else{
                             showMsg(requireContext(),msg)
                         }

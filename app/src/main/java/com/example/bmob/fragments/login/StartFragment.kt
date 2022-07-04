@@ -48,8 +48,7 @@ class StartFragment : Fragment() {
                             if (userViewModel.isLogin()){
                                 val user = BmobUser.getCurrentUser()
                                 Log.v(LOG_TAG,"已经登录:账号username：${user.username} 电话：${user.mobilePhoneNumber}")
-//                                findNavController().navigate(R.id.action_startFragment_to_homeFragment)
-                                findNavController().navigate(R.id.action_startFragment_to_loginFragment)
+                                findNavController().navigate(R.id.action_startFragment_to_studentHomeFragment)
                             }else{ //不是
                                 findNavController().navigate(R.id.action_startFragment_to_loginFragment)
                             }

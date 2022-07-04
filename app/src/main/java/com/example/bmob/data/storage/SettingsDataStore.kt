@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.bmob.data.entity.USER_HAS_NOT_IDENTIFICATION
-import com.example.bmob.data.repository.remote.BmobUserRepository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
