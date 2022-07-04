@@ -19,49 +19,47 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <LinearLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="80dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="113dp"
-        tools:layout_editor_absoluteY="118dp">
+        android:layout_marginStart="15dp"
+        android:text="早上好，☀"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintStart_toEndOf="@+id/iv_head" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_head"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="54dp"
-            tools:layout_editor_absoluteY="160dp" />
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="XXX"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_head"
+        app:layout_constraintStart_toStartOf="@+id/textView8" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="早上好，☀"
-            android:textColor="@color/black"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="153dp" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="XXX"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="132dp"
-            tools:layout_editor_absoluteY="183dp" />
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="14dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="我"
         android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -70,25 +68,114 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:background="@drawable/mine_info_bg"
-        android:drawableStart="@drawable/username_img"
+        android:drawableStart="@drawable/school"
         android:drawablePadding="15dp"
         android:gravity=""
         android:hint="XX学校"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:text=""
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="232dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_head" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/mine_info_bg"
+        android:drawableStart="@drawable/college"
+        android:drawablePadding="15dp"
+        android:gravity=""
+        android:hint="XX学院"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/mine_info_bg"
+        android:drawableStart="@drawable/department"
+        android:drawablePadding="15dp"
+        android:gravity=""
+        android:hint="XX系"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/mine_info_bg"
+        android:drawableStart="@drawable/mine_class"
+        android:drawablePadding="15dp"
+        android:gravity=""
+        android:hint="XX班级"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/mine_info_bg"
+        android:drawableStart="@drawable/work_num"
+        android:drawablePadding="15dp"
+        android:gravity=""
+        android:hint="学号"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/mine_info_bg"
+        android:drawableStart="@drawable/sex"
+        android:drawablePadding="15dp"
+        android:gravity=""
+        android:hint="性别"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <LinearLayout
         android:id="@+id/reLogin"
         android:layout_width="350dp"
-        android:background="@drawable/mine_option_bg"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/mine_option_bg"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="438dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
 
         <ImageView
             android:layout_width="19dp"
@@ -114,10 +201,12 @@
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@drawable/mine_option_bg"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="539dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reLogin">
 
         <ImageView
             android:layout_width="19dp"
@@ -144,13 +233,15 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="26dp"
+        android:drawableStart="@drawable/mine_setting"
         android:text=" 设置"
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:drawableStart="@drawable/mine_setting"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="378dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
