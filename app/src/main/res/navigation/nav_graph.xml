@@ -95,7 +95,11 @@
         android:id="@+id/mineFragment"
         android:name="com.example.bmob.fragments.mine.MineFragment"
         android:label="fragment_mine"
-        tools:layout="@layout/fragment_mine" />
+        tools:layout="@layout/fragment_mine" >
+        <action
+            android:id="@+id/action_mineFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/studentWorkFragment"
         android:name="com.example.bmob.fragments.work.StudentWorkFragment"

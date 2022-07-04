@@ -37,4 +37,8 @@
     <string name="home">首页</string>
     <string name="work">工作台</string>
     <string name="mine">我的</string>
+    <string name="school">学校</string>
+    <string name="college">院</string>
+    <string name="depart">系</string>
+    <string name="reLogin">重新登录</string>
 </resources>

@@ -50,7 +50,11 @@ class VerifyFragment : Fragment() {
                 Log.v(LOG_TAG,"codeVerifySuccessUser=${args.codeVerifySuccessUser}")
                 args.codeVerifySuccessUser.run {
                     viewModel.signOrLogin(name,workNum,pwd,identification,phoneNum,
-                        "$code1$code2$code3$code4$code5$code6"){ isSuccess, msg ->
+                        "$code1$code2$code3$code4$code5$code6",
+                        args.codeVerifySuccessUser.school,
+                        args.codeVerifySuccessUser.department,
+                        args.codeVerifySuccessUser.code
+                    ){ isSuccess, msg ->
                         if (isSuccess){
                             Log.v(LOG_TAG,"输入code=$code1$code2$code3$code4$code5$code6")
                             findNavController().navigate(R.id.action_verifyFragment_to_homeFragment)

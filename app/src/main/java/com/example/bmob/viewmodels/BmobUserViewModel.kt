@@ -1,7 +1,6 @@
 package com.example.bmob.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
@@ -10,7 +9,6 @@ import cn.bmob.v3.listener.FindListener
 import com.example.bmob.data.entity.School
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobUserRepository
-import com.example.bmob.data.storage.UserConfig
 import com.example.bmob.utils.LOG_TAG
 
 class BmobUserViewModel:ViewModel() {
@@ -51,8 +49,14 @@ class BmobUserViewModel:ViewModel() {
      * @param phoneNumber
      * @param msgCode
      */
-    fun signOrLogin(userName:String,workNum:String,pwd: String, identify:Int,phoneNumber: String,msgCode:String,callback: (isSuccess:Boolean,msg:String)->Unit){
-        userRepository.signOrLogin(userName,workNum,pwd,identify,phoneNumber,msgCode,callback)
+    fun signOrLogin(userName:String,workNum:String,pwd: String, identify:Int,phoneNumber: String,msgCode:String,
+                    s:String,
+                    d:String,
+                    c:String,
+                    callback: (isSuccess:Boolean,msg:String)->Unit){
+        userRepository.signOrLogin(userName,workNum,pwd,identify,phoneNumber,msgCode,
+            s,d,c,
+            callback)
     }
 
     //退出登录
@@ -77,8 +81,8 @@ class BmobUserViewModel:ViewModel() {
      * 模糊查询
      * 查询学校，系
      */
-    fun dimQuerySchool(schoolName:String,callback: (isSuccess:Boolean, schools:List<School>?, error:String) -> Unit){
-        userRepository.dimQuerySchool(schoolName,callback)
+    fun querySchool(schoolName:String, callback: (isSuccess:Boolean,  school:School?, error:String) -> Unit){
+        userRepository.querySchool(schoolName,callback)
     }
 }
 

@@ -89,12 +89,21 @@ class BmobUserRepository private constructor(){
      * @param phoneNumber
      * @param msgCode
      */
-    fun signOrLogin(userName:String,workNum:String,pwd: String, identify:Int,phoneNumber: String,msgCode:String,callback: (isSuccess:Boolean,msg:String)->Unit){
+    fun signOrLogin(userName:String,workNum:String,pwd: String, identify:Int,phoneNumber: String, msgCode:String,
+                    s:String,
+                    d:String,
+                    c:String,
+                    callback: (isSuccess:Boolean,msg:String)->Unit){
         with(User(identification = identify)){
             name = userName
             username = workNum
             setPassword(pwd)
             mobilePhoneNumber = phoneNumber
+
+            school = s
+            department = d
+            college = c
+
             signOrLogin(msgCode,object :SaveListener<User>(){
                 override fun done(p0: User?, p1: BmobException?) {
                     if(p1 == null){
@@ -152,18 +161,19 @@ class BmobUserRepository private constructor(){
      *
      * 我好像不是付费用户，不可以模糊查询
      */
-    fun dimQuerySchool(schoolName:String,callback: (isSuccess:Boolean,schools:List<School>?,error:String) -> Unit){
+    fun querySchool(schoolName:String, callback: (isSuccess:Boolean, school:School?, error:String) -> Unit){
         BmobQuery<School>()
 //            .addWhereMatches("schoolName","%西南大学%")
 //            .addWhereContains("schoolName","西南大学")
             .addWhereEqualTo("schoolName",schoolName)
+            .setLimit(1)
 //            .addWhereStartsWith("schoolName","西南大学")
 //            .addWhereEndsWith("schoolName","西南大学")
             .findObjects(object :FindListener<School>(){
                 override fun done(p0: MutableList<School>?, p1: BmobException?) {
                     if (p1 == null){
-                        if (p0 != null){
-                            callback.invoke(true,p0, EMPTY_TEXT)
+                        if (p0 != null && p0.size > 0){
+                            callback.invoke(true,p0[0], EMPTY_TEXT)
                         }else{
                             callback.invoke(false,null, "没有匹配信息")
                         }

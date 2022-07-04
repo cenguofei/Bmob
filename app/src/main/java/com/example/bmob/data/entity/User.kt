@@ -18,9 +18,9 @@ data class User(
      *
      * 用户也可以修改这些属性
      */
-    val school:String?=null, //学校
-    val department:String?=null,  //系
-    val college:String?=null  //学院
+    var school:String?=null, //学校
+    var department:String?=null,  //系
+    var college:String?=null  //学院
 ):BmobUser()
 
 //identification取值
