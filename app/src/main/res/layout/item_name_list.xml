@@ -18,12 +18,12 @@
             android:id="@+id/headImg"
             android:layout_width="334dp"
             android:layout_height="70dp"
+            android:contentDescription="@string/todo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/name_list_bg"
-            android:contentDescription="@string/todo" />
+            app:srcCompat="@drawable/name_list_bg" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_head"

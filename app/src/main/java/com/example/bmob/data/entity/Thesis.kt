@@ -9,7 +9,7 @@ data class Thesis(
     val classIds:List<String>,  //班级id，该论文属于哪些班级选
     val version:Int,  //论文版本
     val title:String, //标题
-    val content:String, //内容
+    val content:String, //内容//可以不用管
     val description:String, //论文描述
     val field:String, //所属领域
     val teacherId:String, //创造该选题的教师id
@@ -36,7 +36,7 @@ data class Thesis(
     val college:String?=null,
 
     val userDetail:String? = null,
-    val require:String? = null,
+    val require:String? = null,//论文要求
 
 
     //针对学生 ，论文是否可选，当审核通过并且选题时间开始后为true，表示可选
