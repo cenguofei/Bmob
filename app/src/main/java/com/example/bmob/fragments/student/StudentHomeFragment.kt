@@ -15,6 +15,7 @@ import com.example.bmob.R
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.databinding.FragmentStudentHomeBinding
+import com.example.bmob.fragments.thesis.ShowThesisFragmentArgs
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
@@ -60,7 +61,11 @@ class StudentHomeFragment : Fragment() {
             if (adapter == null) {
                 adapter = SearchRecyclerViewAdapter(it) { thesis ->
                     Log.v(LOG_TAG, "回调：$thesis")
-
+                    val actionStudentHomeFragmentToShowThesisFragment =
+                        StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
+                            thesis
+                        )
+                    findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
                 }
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(

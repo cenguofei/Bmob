@@ -19,6 +19,8 @@ data class User(
      * 只要用户现在有账号，他就有下面的属性，并且不为空
      *
      * 用户也可以修改这些属性
+     *
+     * 通过这三个属性可以把老师和学生联系起来
      */
     var school:String?=null, //学校
     var department:String?=null,  //系
@@ -26,10 +28,15 @@ data class User(
 
     //2. 特有属性
     //1) 学生
+    val studentClass:String?=null, //学生所属班级
+    val studentSelectState:Boolean? = null, //true已选，false未选
+
 
     //2) 老师
+    val teacherDetail:String? = null, //老师的描述，查看课题详情的时候显示，这个是系统自动为老师生成的资料
 
     //3) 系主任
+
 
     //4) 教务长
 
