@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
 import com.example.bmob.viewmodels.StudentHomeViewModel
+import com.example.bmob.viewmodels.StudentSelectViewModel
 import com.youth.banner.indicator.CircleIndicator
 
 /**
@@ -31,6 +33,8 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
     private val model: StudentHomeViewModel by activityViewModels()
     private var adapter: SearchRecyclerViewAdapter? = null
     private val userViewModel: BmobUserViewModel by activityViewModels()
+
+    private val testViewModel:StudentSelectViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,18 +59,30 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
-        binding.banner.addBannerLifecycleObserver(this)
 
+
+        //测试
+//        binding.headImg.setOnClickListener {
+//            testViewModel.addStudentToThesis("", emptyList()){isSuccess, msg ->
+//                if (isSuccess){
+//                    Log.v(LOG_TAG,"成功添加学生到课题")
+//                }else{
+//                    Log.v(LOG_TAG,msg)
+//                }
+//            }
+//        }
+
+        binding.banner.addBannerLifecycleObserver(this)
         model.queryThesisListLiveData.observe(viewLifecycleOwner) {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (adapter == null) {
                 adapter = SearchRecyclerViewAdapter(it) { thesis ->
                     Log.v(LOG_TAG, "回调：$thesis")
-//                    val actionStudentHomeFragmentToShowThesisFragment =
-//                        StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
-//                            thesis
-//                        )
-//                    findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
+                    val actionStudentHomeFragmentToShowThesisFragment =
+                        StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
+                            thesis
+                        )
+                    findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
                 }
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(
