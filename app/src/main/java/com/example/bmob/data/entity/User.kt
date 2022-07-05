@@ -1,11 +1,14 @@
 package com.example.bmob.data.entity
 
+import android.os.Parcelable
 import cn.bmob.v3.BmobUser
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class User(
     //1. 公有属性
     val nickname:String? = null,  //昵称
-    val avatarUrl:String? = null,  //头像url
+    var avatarUrl:String? = null,  //头像url
     val backgroundUrl:String? = null,  //背景url
     val age:Int? = null,    //年龄
     val gender:String? = null,  //性别
@@ -41,7 +44,7 @@ data class User(
     //4) 教务长
 
 
-):BmobUser()
+):BmobUser(), Parcelable
 
 //identification取值
 const val IDENTIFICATION_STUDENT = 1 //身份为学生

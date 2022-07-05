@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bmob.R
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.*
 import com.example.bmob.databinding.FragmentRegisterBinding
 import com.example.bmob.utils.LOG_TAG
@@ -23,7 +24,7 @@ import com.example.bmob.viewmodels.BmobUserViewModel
 import kotlinx.parcelize.Parcelize
 
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : Fragment(), FragmentEventListener{
     private lateinit var binding:FragmentRegisterBinding
     private val userViewModel:BmobUserViewModel by activityViewModels()
     private var userIdentification = USER_HAS_NOT_IDENTIFICATION
@@ -60,7 +61,7 @@ class RegisterFragment : Fragment() {
         drawable!!.setBounds(0,0,55,55)
         editText.setCompoundDrawables(drawable,null,null,null)
     }
-    private fun setEventListener(){
+    override fun setEventListener(){
         binding.schoolEv.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Log.v(LOG_TAG,"编辑学校beforeTextChanged：s:${s} start:$start  count:$count")

@@ -7,6 +7,9 @@
         <variable
             name="user"
             type="com.example.bmob.data.entity.User" />
+        <variable
+            name="bmobUser"
+            type="cn.bmob.v3.BmobUser" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,9 +35,13 @@
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
+            android:maxWidth="230dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="@string/morning"
+            android:text='@{"Hello，☀  "+user.name}'
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView9"
@@ -44,11 +51,12 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="@{user.name}"
+            android:ellipsize="end"
+            android:maxWidth="230dp"
+            android:maxLines="1"
+            android:text="@{user.signature}"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_head"
             app:layout_constraintStart_toStartOf="@+id/textView8" />
 
@@ -63,8 +71,8 @@
             android:gravity="center_vertical"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:text="@{user.school}"
-            app:drawableStartCompat="@drawable/school"
+            android:text="@{user.name}"
+            app:drawableStartCompat="@drawable/username_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_head" />
@@ -79,8 +87,8 @@
             android:gravity="center_vertical"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:text="@{user.college}"
-            app:drawableStartCompat="@drawable/college"
+            android:text="@{String.valueOf(user.age)}"
+            app:drawableStartCompat="@drawable/age"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -95,8 +103,8 @@
             android:gravity="center_vertical"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:text="@{user.department}"
-            app:drawableStartCompat="@drawable/department"
+            android:text="@{user.gender}"
+            app:drawableStartCompat="@drawable/sex"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -109,11 +117,10 @@
             android:background="@drawable/mine_info_bg"
             android:drawablePadding="15dp"
             android:gravity="center_vertical"
-            android:hint="@string/xxClass"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:text=""
-            app:drawableStartCompat="@drawable/mine_class"
+            android:text="@{user.username}"
+            app:drawableStartCompat="@drawable/work_num"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -128,8 +135,8 @@
             android:gravity="center_vertical"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:text="@{user.username}"
-            app:drawableStartCompat="@drawable/work_num"
+            android:text='@{user.school+" | "+user.college+" | "+user.department}'
+            app:drawableStartCompat="@drawable/school"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,10 +153,60 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:text="@{user.gender}"
-            app:drawableStartCompat="@drawable/sex"
+            app:drawableStartCompat="@drawable/birth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/mine_info_bg"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@{bmobUser.mobilePhoneNumber}"
+            app:drawableStartCompat="@drawable/signup_phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/mine_info_bg"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@{bmobUser.email}"
+            app:drawableStartCompat="@drawable/email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/mine_info_bg"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@{user.address}"
+            app:drawableStartCompat="@drawable/address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
         <LinearLayout
             android:id="@+id/reLogin"
@@ -166,9 +223,9 @@
                 android:layout_width="19dp"
                 android:layout_height="19dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:contentDescription="@string/todo"
-                android:src="@drawable/mine_relogin" />
+                android:src="@drawable/mine_re_login" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -184,11 +241,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/exchangeAccount"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/mine_option_bg"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reLogin">
@@ -219,7 +279,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:drawablePadding="10dp"
             android:text="@string/setting"
             android:textColor="@color/black"
@@ -227,7 +287,18 @@
             android:textStyle="bold"
             app:drawableStartCompat="@drawable/mine_setting"
             app:layout_constraintStart_toStartOf="@+id/reLogin"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+        <ImageView
+            android:id="@+id/editUserInfoIv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_head"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_head"
+            app:srcCompat="@drawable/modify_user_info_img"
+            android:contentDescription="@string/todo" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

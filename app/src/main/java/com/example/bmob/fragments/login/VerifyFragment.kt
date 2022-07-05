@@ -12,12 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bmob.R
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentVerifyBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
 
-class VerifyFragment : Fragment() {
+class VerifyFragment : Fragment() ,FragmentEventListener{
     private lateinit var binding:FragmentVerifyBinding
     private val viewModel:BmobUserViewModel by activityViewModels()
     private val args:VerifyFragmentArgs by navArgs()
@@ -30,6 +31,10 @@ class VerifyFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setEventListener()
+    }
+
+    override fun setEventListener() {
         binding.beginVerify.setOnClickListener {
             val code1 = binding.editText1.text.toString()
             val code2 = binding.editText2.text.toString()

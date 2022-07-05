@@ -11,15 +11,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bmob.R
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentRegisterBinding
 import com.example.bmob.databinding.FragmentResetPasswordBinding
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
 
-class ResetPasswordFragment : Fragment() {
+class ResetPasswordFragment : Fragment(),FragmentEventListener {
     private lateinit var binding:FragmentResetPasswordBinding
     private val userViewModel: BmobUserViewModel by activityViewModels()
-    private val args:ResetPasswordFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,10 @@ class ResetPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setEventListener()
+    }
 
+    override fun setEventListener() {
         binding.confirmBtn.setOnClickListener {
             val firstPwd = binding.editText.text.toString()
             val secondPwd = binding.confirm.text.toString()

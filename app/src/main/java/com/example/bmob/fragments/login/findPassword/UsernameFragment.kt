@@ -11,11 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobUser
 import com.example.bmob.R
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentUsernameBinding
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
 
-class UsernameFragment : Fragment() {
+class UsernameFragment : Fragment(),FragmentEventListener {
     private lateinit var binding:FragmentUsernameBinding
     private val userViewModel:BmobUserViewModel by activityViewModels()
     private var username = EMPTY_USERNAME
@@ -33,6 +34,10 @@ class UsernameFragment : Fragment() {
             username = BmobUser.getCurrentUser().username.toString()
             binding.username = username
         }
+        setEventListener()
+    }
+
+    override fun setEventListener() {
         binding.nextBtn.setOnClickListener {
             val text = binding.editText.text
             if (TextUtils.isEmpty(text)){

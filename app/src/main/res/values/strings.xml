@@ -62,4 +62,5 @@
     <string name="choose_task">选择课题</string>
     <string name="major">大学·学院·专业</string>
     <string name="find_thesis">查找课题</string>
+    <string name="empty_text" />
 </resources>
