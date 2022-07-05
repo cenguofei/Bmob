@@ -33,7 +33,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.bmob.fragments.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
+    </fragment>
     <fragment
         android:id="@+id/verifyFragment"
         android:name="com.example.bmob.fragments.login.VerifyFragment"
@@ -129,4 +133,9 @@
         android:name="com.example.bmob.fragments.student.select.SelectFragment"
         android:label="fragment_select"
         tools:layout="@layout/fragment_select" />
+    <fragment
+        android:id="@+id/showThesisFragment"
+        android:name="com.example.bmob.fragments.thesis.ShowThesisFragment"
+        android:label="fragment_show_thesis"
+        tools:layout="@layout/fragment_show_thesis" />
 </navigation>

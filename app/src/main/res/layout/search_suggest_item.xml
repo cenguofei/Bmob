@@ -32,6 +32,7 @@
                 android:layout_height="77dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
+                tools:ignore="UselessParent"
                 tools:layout_editor_absoluteY="327dp">
 
                 <LinearLayout
@@ -63,20 +64,25 @@
                             android:id="@+id/fieldTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/student_home_item_tv_bg"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:text="@{thesis.field}"
-                            android:textColor="@color/grey_light"
-                            android:textSize="16sp" />
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
 
                         <TextView
                             android:id="@+id/teacherNameTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
+                            android:layout_marginStart="8dp"
                             android:text="@{thesis.teacherName}"
                             android:textColor="@color/grey_light"
-                            android:textSize="16sp" />
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
                     </LinearLayout>
 
                     <TextView
@@ -87,7 +93,8 @@
                         android:maxLines="1"
                         android:text="@{thesis.description}"
                         android:textColor="@color/grey_light"
-                        android:textSize="16sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -114,13 +121,14 @@
 
             <TextView
                 android:id="@+id/tv1"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="7dp"
-                android:text="@{String.valueOf(thesis.selectedNum)}" />
+                android:maxLines="1"
+                android:text='@{String.valueOf(thesis.selectedNum)+"人已选"}'
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
