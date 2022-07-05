@@ -121,6 +121,9 @@
         <action
             android:id="@+id/action_studentHomeFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
+        <action
+            android:id="@+id/action_studentHomeFragment_to_selectFragment"
+            app:destination="@id/selectFragment" />
     </fragment>
     <fragment
         android:id="@+id/browseFragment"

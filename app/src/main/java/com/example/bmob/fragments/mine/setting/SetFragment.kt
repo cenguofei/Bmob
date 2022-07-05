@@ -1,33 +1,25 @@
 package com.example.bmob.fragments.mine.setting
 
-import android.Manifest
-import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.FileUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentSetBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.SetViewModel
 import java.io.File
-import java.io.FileOutputStream
-import kotlin.random.Random
 
+/**
+ * 设置用户信息界面
+ */
 class SetFragment : Fragment() ,FragmentEventListener{
     private lateinit var binding:FragmentSetBinding
     private var register: ActivityResultLauncher<Intent>? = null

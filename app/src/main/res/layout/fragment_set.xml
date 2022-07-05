@@ -5,4 +5,29 @@
     android:id="@+id/frameLayout13"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.mine.setting.SetFragment"/>
+    tools:context=".fragments.mine.setting.SetFragment">
+
+
+    <EditText
+        android:id="@+id/textView000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mine_info_bg"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:inputType="text"
+        app:drawableStartCompat="@drawable/username_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints=""
+        tools:ignore="LabelFor" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+
+-->
