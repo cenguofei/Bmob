@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.bmob.R
 import com.example.bmob.data.entity.*
 import com.example.bmob.data.storage.SettingsDataStore
@@ -30,6 +31,7 @@ class LoginFragment : Fragment() {
     //用户配置，记住密码，保存账号密码等
     private lateinit var settingsDataStore: SettingsDataStore
     private var isShowPwd = true
+    private val args:LoginFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,15 +44,20 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         settingsDataStore = SettingsDataStore.getInstance(requireContext())
-        settingsDataStore.preferenceFlow.asLiveData().observe(viewLifecycleOwner) {
-            //设置CheckBox选择状态
-            Log.v(LOG_TAG, it.toString())
-            if (it.isRememberPassword){
-                binding.userConfig = it
-                //如果是记住密码并在有登录状态的情况下就进入首页
-                if (userViewModel.isLogin()){
-                    Log.v(LOG_TAG,"有登录状态，进入首页")
-                    findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
+        if (args.isChangeAccount){
+            binding.passwordEv.setText(R.string.empty_text)
+            binding.usernameEv.setText(R.string.empty_text)
+        }else{
+            settingsDataStore.preferenceFlow.asLiveData().observe(viewLifecycleOwner) {
+                //设置CheckBox选择状态
+                Log.v(LOG_TAG, it.toString())
+                if (it.isRememberPassword){
+                    binding.userConfig = it
+                    //如果是记住密码并在有登录状态的情况下就进入首页
+                    if (userViewModel.isLogin()){
+                        Log.v(LOG_TAG,"有登录状态，进入首页")
+                        findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
+                    }
                 }
             }
         }
@@ -123,7 +130,12 @@ class LoginFragment : Fragment() {
                                 when(it){
                                     IDENTIFICATION_STUDENT->{
                                         //登录成功，进入学生主页
-                                        findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
+                                        try {
+                                            findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
+                                        }catch (e:Exception){
+                                            Log.v(LOG_TAG,"登录出错：${e.message}")
+                                            showMsg(requireContext(),"系统出错，请稍后再试")
+                                        }
                                     }
                                     IDENTIFICATION_TEACHER->{
 

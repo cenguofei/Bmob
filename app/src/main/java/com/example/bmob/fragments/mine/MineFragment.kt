@@ -26,19 +26,35 @@ class MineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMineBinding.inflate(inflater,container,false)
-        userViewModel.getUserInfo{isSuccess, user ->
-            if (isSuccess){
-                binding.user = user
-            }
-        }
+        setUserInfo()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setEventListener()
+    }
+
+    //设置点击事件
+    private fun setEventListener(){
         binding.reLogin.setOnClickListener {
             BmobUser.logOut()
             findNavController().navigate(R.id.action_mineFragment_to_loginFragment)
         }
+        binding.exchangeAccount.setOnClickListener {
+            val actionMineFragmentToLoginFragment =
+                MineFragmentDirections.actionMineFragmentToLoginFragment(true)
+            findNavController().navigate(actionMineFragmentToLoginFragment)
+        }
+    }
+    //设置用户的基本信息
+    private fun setUserInfo(){
+        userViewModel.getUserInfo{isSuccess, user ->
+            if (isSuccess){
+                binding.user = user
+            }
+        }
+        val bmobUser = BmobUser.getCurrentUser()
+        binding.bmobUser = bmobUser
     }
 }

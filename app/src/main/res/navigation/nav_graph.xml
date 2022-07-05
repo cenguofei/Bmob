@@ -19,6 +19,10 @@
         <action
             android:id="@+id/action_loginFragment_to_studentHomeFragment"
             app:destination="@id/studentHomeFragment" />
+        <argument
+            android:name="isChangeAccount"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
