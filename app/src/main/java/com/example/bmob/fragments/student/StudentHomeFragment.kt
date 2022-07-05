@@ -62,11 +62,11 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
             if (adapter == null) {
                 adapter = SearchRecyclerViewAdapter(it) { thesis ->
                     Log.v(LOG_TAG, "回调：$thesis")
-                    val actionStudentHomeFragmentToShowThesisFragment =
-                        StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
-                            thesis
-                        )
-                    findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
+//                    val actionStudentHomeFragmentToShowThesisFragment =
+//                        StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
+//                            thesis
+//                        )
+//                    findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
                 }
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(

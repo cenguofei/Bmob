@@ -60,13 +60,25 @@ object BindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("loadCircleHeadImage")
-    fun loadCircleHeadImage(imageView: ImageView?, url: String?){
+    @BindingAdapter("loadRoundCornerHeadImage")
+    fun loadRoundCornerHeadImage(imageView: ImageView?, url: String?){
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
                 .placeholder(R.drawable.ic_launcher_background)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(25)))
+                .into(imageView)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadUserCircleImage")
+    fun loadUserCircleImage(imageView: ImageView?, url: String?){
+        if (imageView != null) {
+            Glide.with(imageView.context)
+                .load(url)
+                .placeholder(R.drawable.ic_launcher_background)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(50)))
                 .into(imageView)
         }
     }

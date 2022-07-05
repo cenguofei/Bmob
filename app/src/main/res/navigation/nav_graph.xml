@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
-        android:name="com.example.bmob.fragments.student.select.BrowseFragment"
+        android:name="com.example.bmob.fragments.student.select.SelectFragment"
         android:label="fragment_browse"
         tools:layout="@layout/fragment_browse" >
         <action
@@ -138,7 +138,14 @@
         android:id="@+id/selectFragment"
         android:name="com.example.bmob.fragments.student.select.SelectFragment"
         android:label="fragment_select"
-        tools:layout="@layout/fragment_select" />
+        tools:layout="@layout/fragment_select" >
+        <argument
+            android:name="thesis"
+            app:argType="com.example.bmob.data.entity.Thesis" />
+        <action
+            android:id="@+id/action_selectFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
+    </fragment>
     <fragment
         android:id="@+id/showThesisFragment"
         android:name="com.example.bmob.fragments.thesis.ShowThesisFragment"
