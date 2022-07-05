@@ -9,17 +9,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobUser
 import com.example.bmob.R
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentMineBinding
 import com.example.bmob.viewmodels.BmobUserViewModel
 
 
-class MineFragment : Fragment() {
+class MineFragment : Fragment() ,FragmentEventListener{
     private lateinit var binding:FragmentMineBinding
     private val userViewModel:BmobUserViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +33,7 @@ class MineFragment : Fragment() {
     }
 
     //设置点击事件
-    private fun setEventListener(){
+    override fun setEventListener(){
         binding.reLogin.setOnClickListener {
             BmobUser.logOut()
             findNavController().navigate(R.id.action_mineFragment_to_loginFragment)

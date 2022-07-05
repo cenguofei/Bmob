@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.selectFragment
 
                 || destination.id == R.id.showThesisFragment
+
+                || destination.id == R.id.setFragment
             ) {
                 binding.bottomNavigationView.visibility = View.GONE
             }else{

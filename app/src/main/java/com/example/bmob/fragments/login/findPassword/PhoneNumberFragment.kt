@@ -12,13 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cn.bmob.v3.BmobUser
 import com.example.bmob.R
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentPhoneNumberBinding
 import com.example.bmob.databinding.FragmentUsernameBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
 
-class PhoneNumberFragment : Fragment() {
+class PhoneNumberFragment : Fragment(),FragmentEventListener {
     private lateinit var binding: FragmentPhoneNumberBinding
     private val userViewModel:BmobUserViewModel by activityViewModels()
     private var phoneNumber = EMPTY_PHONE_NUMBER
@@ -47,6 +48,10 @@ class PhoneNumberFragment : Fragment() {
             phoneNumber = BmobUser.getCurrentUser().mobilePhoneNumber
             binding.phoneNumber = phoneNumber
         }
+        setEventListener()
+    }
+
+    override fun setEventListener() {
         binding.nextBtn.setOnClickListener {
             val phone = binding.editText.text.toString()
             if (phone != EMPTY_PHONE_NUMBER){

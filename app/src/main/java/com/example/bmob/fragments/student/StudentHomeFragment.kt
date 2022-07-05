@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.R
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.databinding.FragmentStudentHomeBinding
@@ -25,7 +26,7 @@ import com.youth.banner.indicator.CircleIndicator
 /**
  * 学生首页
  */
-class StudentHomeFragment : Fragment() {
+class StudentHomeFragment : Fragment() ,FragmentEventListener{
     private lateinit var binding: FragmentStudentHomeBinding
     private val model: StudentHomeViewModel by activityViewModels()
     private var adapter: SearchRecyclerViewAdapter? = null
@@ -135,7 +136,7 @@ class StudentHomeFragment : Fragment() {
     }
 
     //设置点击事件
-    private fun setEventListener() {
+    override fun setEventListener() {
         binding.myClass.setOnClickListener {
             findNavController().navigate(R.id.action_studentHomeFragment_to_browseFragment)
         }

@@ -92,9 +92,6 @@
         android:name="com.example.bmob.fragments.login.findPassword.ResetPasswordFragment"
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password" >
-        <argument
-            android:name="smsId"
-            app:argType="string" />
         <action
             android:id="@+id/action_resetPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -109,6 +106,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/mineFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mineFragment_to_setFragment"
+            app:destination="@id/setFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentHomeFragment"
@@ -144,5 +144,14 @@
         <argument
             android:name="thesis"
             app:argType="com.example.bmob.data.entity.Thesis" />
+    </fragment>
+    <fragment
+        android:id="@+id/setFragment"
+        android:name="com.example.bmob.fragments.mine.setting.SetFragment"
+        android:label="fragment_set"
+        tools:layout="@layout/fragment_set" >
+        <argument
+            android:name="user"
+            app:argType="com.example.bmob.data.entity.User" />
     </fragment>
 </navigation>
