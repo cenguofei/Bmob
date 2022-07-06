@@ -214,7 +214,7 @@ class BmobRepository private constructor(){
         BmobQuery<Thesis>()
 //            .addWhereEqualTo("title",searchTitle)
             .addWhereContains("title",searchTitle)
-            .addWhereMatches("title","")
+//            .addWhereMatches("title","")
             .findObjects(object :FindListener<Thesis>(){
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null){

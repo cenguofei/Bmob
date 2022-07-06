@@ -82,4 +82,15 @@ object BindingAdapter {
                 .into(imageView)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("loadRectImage")
+    fun loadRectImage(imageView: ImageView?, url: String?){
+        if (imageView != null) {
+            Glide.with(imageView.context)
+                .load(url)
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(imageView)
+        }
+    }
 }
