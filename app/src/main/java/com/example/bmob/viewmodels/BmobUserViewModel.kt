@@ -28,7 +28,7 @@ class BmobUserViewModel:ViewModel() {
                 fragment.findNavController().navigate(R.id.action_startFragment_to_studentHomeFragment)
             }
             IDENTIFICATION_TEACHER -> {
-                fragment.findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
+                fragment.findNavController().navigate(R.id.action_startFragment_to_teacherHomeFragment)
             }
             IDENTIFICATION_DEAN -> {
                 //

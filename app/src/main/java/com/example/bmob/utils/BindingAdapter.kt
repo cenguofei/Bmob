@@ -120,4 +120,16 @@ object BindingAdapter {
             textView.text = text
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("loadUserCircleImage1")
+    fun loadUserCircleImage1(imageView: ImageView?, url: String?){
+        if (imageView != null) {
+            Glide.with(imageView.context)
+                .load(url)
+                .placeholder(R.drawable.default_head)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(150)))
+                .into(imageView)
+        }
+    }
 }

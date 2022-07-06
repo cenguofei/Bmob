@@ -11,7 +11,6 @@
         android:id="@+id/backImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/back_img"
@@ -25,6 +24,7 @@
         android:text="@string/signup"
         android:textColor="@color/blue"
         android:textSize="30sp"
+        android:layout_marginBottom="5dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/backImg"
         app:layout_constraintStart_toEndOf="@+id/backImg"
@@ -276,20 +276,16 @@
 
 
     <EditText
-        android:id="@+id/departmentEv"
+        android:id="@+id/collegeEv"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:autofillHints=""
-        android:hint="@string/depart"
+        android:hint="@string/college"
         android:inputType="text"
-
-
         android:drawablePadding="15dp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-
-
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -299,12 +295,12 @@
 
 
     <EditText
-        android:id="@+id/collegeEv"
+        android:id="@+id/departmentEv"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:autofillHints=""
-        android:hint="@string/college"
+        android:hint="@string/depart"
         android:inputType="text"
         android:textSize="18sp"
 
@@ -314,7 +310,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/departmentEv"
+        app:layout_constraintTop_toBottomOf="@+id/collegeEv"
         tools:ignore="LabelFor,RtlSymmetry" />
 
     <TextView
@@ -327,5 +323,5 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collegeEv" />
+        app:layout_constraintTop_toBottomOf="@+id/departmentEv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

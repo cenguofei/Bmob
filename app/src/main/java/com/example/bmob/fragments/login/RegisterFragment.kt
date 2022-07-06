@@ -62,6 +62,9 @@ class RegisterFragment : Fragment(), FragmentEventListener{
         editText.setCompoundDrawables(drawable,null,null,null)
     }
     override fun setEventListener(){
+        binding.backImg.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.schoolEv.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Log.v(LOG_TAG,"编辑学校beforeTextChanged：s:${s} start:$start  count:$count")
@@ -83,10 +86,12 @@ class RegisterFragment : Fragment(), FragmentEventListener{
                         if (school!!.schoolName == inputSchool){
                             departments = school.departments
                             colleges = school.college
-                            binding.departmentEv.visibility = View.VISIBLE
+                            binding.collegeEv.visibility = View.VISIBLE
                             binding.isValidTextView.text = "输入学校合法"
+
+                            Log.v(LOG_TAG,"departs=$departments \ncolleges=$colleges\n")
                         }else{
-                            binding.departmentEv.visibility = View.GONE
+                            binding.collegeEv.visibility = View.GONE
                             binding.isValidTextView.text = "输入的学校不存在"
                         }
                     }else{
@@ -95,13 +100,33 @@ class RegisterFragment : Fragment(), FragmentEventListener{
                 }
             }
         })
+        binding.collegeEv.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.departmentEv.visibility = View.GONE
+            }
+            override fun afterTextChanged(s: Editable?) {
+                finalInput = EMPTY_TEXT
+
+                var flag = false
+                colleges.forEach {
+                    if (s.toString() == it){
+                        binding.isValidTextView.text = "输入的院合法"
+                        flag = true
+                        binding.departmentEv.visibility = View.VISIBLE
+                    }
+                }
+                if (!flag){
+                    binding.isValidTextView.text = "输入的院不在该学校"
+                    binding.departmentEv.visibility = View.GONE
+                }
+            }
+        })
         binding.departmentEv.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.collegeEv.visibility = View.GONE
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -111,33 +136,11 @@ class RegisterFragment : Fragment(), FragmentEventListener{
                     if (s.toString() == it){
                         binding.isValidTextView.text = "输入的系合法"
                         flag = true
-                        binding.collegeEv.visibility = View.VISIBLE
-                    }
-                }
-                if (!flag){
-                    binding.isValidTextView.text = "输入的系不在该学校"
-                    binding.collegeEv.visibility = View.GONE
-                }
-            }
-        })
-        binding.collegeEv.addTextChangedListener(object :TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                var flag = false
-                colleges.forEach {
-                    if (s.toString() == it){
-                        binding.isValidTextView.text = FINAL_VALID_INPUT
-                        flag = true
                         finalInput = FINAL_VALID_INPUT
                     }
                 }
                 if (!flag){
-                    binding.isValidTextView.text = "输入的院不在该学校"
+                    binding.isValidTextView.text = "输入的系不在该院"
                     finalInput = EMPTY_TEXT
                 }
             }
@@ -222,5 +225,5 @@ data class CodeVerifySuccessUser(
 ): Parcelable
 
 
-private const val FINAL_VALID_INPUT = "输入的院合法"
+private const val FINAL_VALID_INPUT = "depart_"
 private const val EMPTY_TEXT = ""

@@ -51,7 +51,7 @@
 
             <ImageView
                 android:id="@+id/editHeadIv"
-                loadRoundCircleHeadImage="@{user.avatarUrl}"
+                loadUserCircleImage1="@{user.avatarUrl}"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="210dp"
