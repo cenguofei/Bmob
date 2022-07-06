@@ -7,8 +7,6 @@
         <variable
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
-
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -151,7 +149,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="70dp"
             android:background="@drawable/btn_round_bg"
-            android:text="加入"
+            android:text="@string/into"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
