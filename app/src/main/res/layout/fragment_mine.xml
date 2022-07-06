@@ -18,17 +18,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".fragments.mine.MineFragment">
+
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
                 loadRectImage="@{user.backgroundUrl}"
-                android:src="@drawable/ic_launcher_background"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/todo"
                 android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/todo" />
+                app:layout_constraintTop_toTopOf="parent" />
             <ImageView
                 android:id="@+id/editHeadIv"
                 loadRoundCircleHeadImage="@{user.avatarUrl}"
