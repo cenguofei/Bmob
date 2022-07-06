@@ -1,4 +1,4 @@
-package com.example.bmob.fragments.student
+package com.example.bmob.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ class SearchRecyclerViewAdapter(
     private var thesisList:List<Thesis>? = null
     class SearchViewHolder(val binding:SearchSuggestItemBinding):RecyclerView.ViewHolder(binding.root) {
         companion object{
-            fun createViewHolder(parent: ViewGroup):SearchViewHolder{
+            fun createViewHolder(parent: ViewGroup): SearchViewHolder {
                 val from = LayoutInflater.from(parent.context)
                 val itemBinding = SearchSuggestItemBinding.inflate(from, parent, false)
                 return SearchViewHolder(itemBinding)

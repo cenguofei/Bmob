@@ -1,4 +1,4 @@
-package com.example.bmob.fragments.student
+package com.example.bmob.common
 
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +11,9 @@ import com.example.bmob.R
 import com.example.bmob.data.entity.BmobBannerObject
 import com.youth.banner.adapter.BannerAdapter
 
-class StudentBannerAdapter(
+class BannerAdapter(
     data:List<BmobBannerObject>
-): BannerAdapter<BmobBannerObject, StudentBannerAdapter.BannerViewHolder>(data) {
+): BannerAdapter<BmobBannerObject, com.example.bmob.common.BannerAdapter.BannerViewHolder>(data) {
 
     class BannerViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         val imageView = itemView as ImageView

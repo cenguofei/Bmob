@@ -9,11 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentBrowseBinding
-import com.example.bmob.databinding.FragmentSelectBinding
-import com.example.bmob.fragments.student.SearchRecyclerViewAdapter
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.StudentSelectViewModel
 
