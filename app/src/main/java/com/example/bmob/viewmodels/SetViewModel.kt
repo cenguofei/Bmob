@@ -40,7 +40,7 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.random.Random
 
-class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
+class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     private val repository = BmobRepository.getInstance()
     private var register: ActivityResultLauncher<Intent>? = null
     private var file: File? = null
@@ -294,6 +294,15 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
                         email = editEmailEv.text.toString()
                     }
                 }
+
+                //SetFragment修改后让MineFragment接受到
+                val bmobUser = BmobUser()
+                bmobUser.username = userName
+                bmobUser.mobilePhoneNumber = fragment.binding.editPhoneNumberEv.text.toString()
+                bmobUser.email = fragment.binding.editEmailEv.text.toString()
+                handler.set(BMOB_USER_KEY,bmobUser)
+                handler.set(QUERY_USER_KEY,user)
+
                 repository.updateUser(user!!) { isSuccess, msg ->
                     if (isSuccess) {
                         fragment.findNavController().navigateUp()

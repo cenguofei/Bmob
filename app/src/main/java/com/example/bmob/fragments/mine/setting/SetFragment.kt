@@ -38,6 +38,7 @@ class SetFragment : Fragment() ,FragmentEventListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.setRegister(this)
+        Log.v(LOG_TAG,"SetFragment  viewModel $viewModel")
     }
 
     override fun onCreateView(
@@ -54,7 +55,13 @@ class SetFragment : Fragment() ,FragmentEventListener{
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
 
-        Log.v(LOG_TAG,"SetFragment  viewModel:$viewModel")
+        Log.v(LOG_TAG,"SetFragment  viewModel:$viewModel  viewModel.handler:${viewModel.handler}")
+        viewModel.getBmobUser().observe(viewLifecycleOwner){
+            Log.v(LOG_TAG,"SetFragment BmobUser  id  :$it")
+        }
+        viewModel.getUserByQuery().observe(viewLifecycleOwner){
+            Log.v(LOG_TAG,"SetFragment User  id  :$it")
+        }
     }
 
     override fun setEventListener() {
