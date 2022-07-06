@@ -10,6 +10,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.bmob.R
+import com.example.bmob.data.entity.IDENTIFICATION_DEAN
+import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
+import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
+import com.example.bmob.data.entity.User
 
 object BindingAdapter {
     /**
@@ -91,6 +95,29 @@ object BindingAdapter {
                 .load(url)
                 .placeholder(R.drawable.default_background)
                 .into(imageView)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setRoleStartHello")
+    fun setRoleStartHello(textView: TextView?,user: User?){
+        val identity = when (user?.identification) {
+            IDENTIFICATION_STUDENT -> {
+                "学生"
+            }
+            IDENTIFICATION_TEACHER -> {
+                "老师"
+            }
+            IDENTIFICATION_DEAN -> {
+                "系主任"
+            }
+            else -> {
+                "教务长"
+            }
+        }
+        val text = "你好，${user?.school}的$identity，欢迎来到Bmob"
+        if (textView != null) {
+            textView.text = text
         }
     }
 }

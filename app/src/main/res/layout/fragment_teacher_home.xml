@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:text="@string/my_cls"
+                    android:text="@string/my_t"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:text="@string/graduate_thesis"
+                    android:text="@string/s_s_m"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />

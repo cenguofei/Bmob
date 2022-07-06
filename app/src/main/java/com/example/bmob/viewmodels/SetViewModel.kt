@@ -179,7 +179,7 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
                 if (imageType == IMAGE_TYPE_HEAD) {
                     this.avatarUrl = fileUrl
                 } else if (imageType == IMAGE_TYPE_BACKGROUND) {
-                    this.backgroundUrl = IMAGE_TYPE_BACKGROUND
+                    this.backgroundUrl = fileUrl
                 }
                 update(object : UpdateListener() {
                     override fun done(p0: BmobException?) {

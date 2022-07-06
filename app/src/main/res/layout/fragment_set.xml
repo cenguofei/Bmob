@@ -295,7 +295,7 @@
 
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="@={user.email}"
+                android:text="@={user.birth}"
                 app:layout_constraintBottom_toTopOf="@+id/editPhoneNumberEv"
                 app:layout_constraintEnd_toEndOf="@+id/editDepartmentEv"
                 app:layout_constraintStart_toStartOf="@+id/editDepartmentEv"

@@ -50,11 +50,7 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
         binding.banner.addBannerLifecycleObserver(this)
         //观测头像url并保存到handler
         viewModel.getStudentInfo(this).observe(viewLifecycleOwner){
-            if (it == EMPTY_SEARCH){
-                binding.headImg.setImageResource(R.drawable.default_head)
-            }else{
-                binding.avatarUrl = it
-            }
+            binding.user = it
         }
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {

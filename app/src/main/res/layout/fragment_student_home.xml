@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="avatarUrl"
-            type="java.lang.String" />
+            name="user"
+            type="com.example.bmob.data.entity.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
 
         <ImageView
             android:id="@+id/headImg"
-            loadUserCircleImage="@{avatarUrl}"
+            loadUserCircleImage="@{user.avatarUrl}"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:maxLines="2"
-            android:text="@string/good_morning_ugo"
+            setRoleStartHello="@{user}"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"

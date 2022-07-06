@@ -164,4 +164,8 @@
             android:name="userInfo"
             app:argType="com.example.bmob.fragments.mine.SetUserInfo" />
     </fragment>
+    <fragment
+        android:id="@+id/teacherHomeFragment"
+        android:name="com.example.bmob.fragments.teacher.TeacherHomeFragment"
+        android:label="TeacherHomeFragment" />
 </navigation>

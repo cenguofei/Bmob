@@ -18,6 +18,7 @@ import com.example.bmob.R
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.data.entity.BmobBannerObject
 import com.example.bmob.data.entity.Thesis
+import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.fragments.student.StudentHomeFragment
 import com.example.bmob.utils.LOG_TAG
@@ -62,18 +63,18 @@ class CommonViewModel(private val handler:SavedStateHandle):ViewModel() {
     /**
      * fragment通过observe观察数据
      */
-    fun getStudentInfo(fragment:StudentHomeFragment):MutableLiveData<String>{
-        if (!handler.contains(USER_AVATAR_URL)){
+    fun getStudentInfo(fragment:StudentHomeFragment):MutableLiveData<User>{
+        if (!handler.contains(USER)){
             repository.getUserInfo{isSuccess, user ->
                 if (isSuccess) {
-                    handler.set(USER_AVATAR_URL,user!!.avatarUrl)
+                    handler.set(USER,user)
                 } else {
-                    handler.set(USER_AVATAR_URL, EMPTY_SEARCH)
+                    handler.set(USER, EMPTY_SEARCH)
                     fragment.binding.headImg.setImageResource(R.drawable.default_head)
                 }
             }
         }
-        return handler.getLiveData(USER_AVATAR_URL)
+        return handler.getLiveData(USER)
     }
 
     //初始化界面
@@ -166,7 +167,7 @@ class CommonViewModel(private val handler:SavedStateHandle):ViewModel() {
     }
 }
 
-private const val USER_AVATAR_URL = "user_"
+private const val USER = "user_"
 private const val BANNER_DATA = "banner_data_"
 
 const val EMPTY_SEARCH = ""
