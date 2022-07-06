@@ -161,7 +161,7 @@
         android:label="fragment_set"
         tools:layout="@layout/fragment_set" >
         <argument
-            android:name="user"
-            app:argType="com.example.bmob.data.entity.User" />
+            android:name="userInfo"
+            app:argType="com.example.bmob.fragments.mine.SetUserInfo" />
     </fragment>
 </navigation>

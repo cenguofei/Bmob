@@ -1,6 +1,7 @@
 package com.example.bmob.fragments.mine
 
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,21 +12,32 @@ import cn.bmob.v3.BmobUser
 import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentMineBinding
-import com.example.bmob.viewmodels.BmobUserViewModel
+import com.example.bmob.viewmodels.SetViewModel
+import kotlinx.parcelize.Parcelize
+import okhttp3.internal.notify
+import okhttp3.internal.notifyAll
 
 
 class MineFragment : Fragment() ,FragmentEventListener{
     private lateinit var binding:FragmentMineBinding
-    private val userViewModel:BmobUserViewModel by activityViewModels()
+    private val setViewModel:SetViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMineBinding.inflate(inflater,container,false)
-        setUserInfo()
+
+        setViewModel.getBmobUser().observe(viewLifecycleOwner){
+            binding.bmobUser = it
+        }
+        setViewModel.getUserByQuery().observe(viewLifecycleOwner){
+            binding.user = it
+        }
+
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,15 +55,51 @@ class MineFragment : Fragment() ,FragmentEventListener{
                 MineFragmentDirections.actionMineFragmentToLoginFragment(true)
             findNavController().navigate(actionMineFragmentToLoginFragment)
         }
-    }
-    //设置用户的基本信息
-    private fun setUserInfo(){
-        userViewModel.getUserInfo{isSuccess, user ->
-            if (isSuccess){
-                binding.user = user
+        binding.editUserInfoIv.setOnClickListener {
+            val userInfo = SetUserInfo()
+            with(setViewModel.getUserByQuery()){
+                value?.backgroundUrl.let { userInfo.backgroundUrl = it }
+                value?.avatarUrl.let { userInfo.avatarUrl = it }
+                value?.name.let { userInfo.name = it }
+                value?.signature.let { userInfo.signature = it }
+                value?.age.let { userInfo.age = it }
+                value?.gender.let { userInfo.gender = it }
+                value?.username.let { userInfo.username = it }
+                value?.school.let { userInfo.school = it }
+                value?.college.let { userInfo.college = it }
+                value?.department.let { userInfo.department = it }
+                value?.birth.let { userInfo.birth = it }
+                value?.address.let { userInfo.address = it }
             }
+            with(setViewModel.getBmobUser()){
+                value?.mobilePhoneNumber.let { userInfo.phoneNumber = it }
+                value?.email.let { userInfo.email = it }
+            }
+            val actionMineFragmentToSetFragment =
+                MineFragmentDirections.actionMineFragmentToSetFragment(userInfo)
+            findNavController().navigate(actionMineFragmentToSetFragment)
         }
-        val bmobUser = BmobUser.getCurrentUser()
-        binding.bmobUser = bmobUser
+    }
+    companion object{
+        const val QUERY_USER_KEY = "_query"
+        const val BMOB_USER_KEY = "_bmob"
     }
 }
+
+@Parcelize
+data class SetUserInfo(
+    var backgroundUrl:String? = null,
+    var avatarUrl:String? = null,
+    var name:String? = null,
+    var signature:String? = null,
+    var age:Int? = null,
+    var gender:String? = null,
+    var username:String? = null,  //即工号
+    var school:String? = null,
+    var college:String? = null,
+    var department:String? = null,
+    var birth:String? = null,
+    var phoneNumber:String? = null,
+    var email:String? = null,
+    var address:String? = null
+):Parcelable

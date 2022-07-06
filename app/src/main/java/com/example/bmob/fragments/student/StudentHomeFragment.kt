@@ -22,6 +22,7 @@ import com.example.bmob.fragments.thesis.ShowThesisFragmentArgs
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
+import com.example.bmob.viewmodels.ERROR
 import com.example.bmob.viewmodels.StudentHomeViewModel
 import com.example.bmob.viewmodels.StudentSelectViewModel
 import com.youth.banner.indicator.CircleIndicator
@@ -38,15 +39,6 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
 
     private val testViewModel:StudentSelectViewModel by viewModels()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.v(LOG_TAG,"StudentHomeFragment onAttach")
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.v(LOG_TAG,"StudentHomeFragment onCreate")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,20 +51,17 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
                 binding.headImg.setImageResource(R.drawable.ic_launcher_background)
             }
         }
-        Log.v(LOG_TAG,"StudentHomeFragment onCreateView")
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
         binding.banner.start()
-        Log.v(LOG_TAG,"StudentHomeFragment onStart")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
-        Log.v(LOG_TAG,"StudentHomeFragment onViewCreated")
 
         //测试
 //        binding.headImg.setOnClickListener {
@@ -89,28 +78,30 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
 
         model.searchResult.observe(viewLifecycleOwner){
             Log.v(LOG_TAG, "观测到数据：$it")
-            if (adapter == null && it.second.isNotEmpty()) {
-                adapter = SearchRecyclerViewAdapter { thesis ->
-                    Log.v(LOG_TAG, "回调：$thesis")
-                    val actionStudentHomeFragmentToShowThesisFragment =
-                        StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
-                            thesis
-                        )
-                    findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
-                }
-                adapter!!.setThesisListForFirst(it.second)
-                binding.recyclerView.adapter = adapter
-                binding.recyclerView.layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    RecyclerView.VERTICAL, false
-                )
-            }else{
-                if (it.second.isNotEmpty() && currentQuery == it.first){
-                    Log.v(LOG_TAG, "设置thesisList：$it")
-                    isShowRecyclerView(true)
-                    adapter!!.setThesisList(it.second)
+            if (it.first != ERROR){
+                if (adapter == null && it.second.isNotEmpty()) {
+                    adapter = SearchRecyclerViewAdapter { thesis ->
+                        Log.v(LOG_TAG, "回调：$thesis")
+                        val actionStudentHomeFragmentToShowThesisFragment =
+                            StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
+                                thesis
+                            )
+                        findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
+                    }
+                    adapter!!.setThesisListForFirst(it.second)
+                    binding.recyclerView.adapter = adapter
+                    binding.recyclerView.layoutManager = LinearLayoutManager(
+                        requireContext(),
+                        RecyclerView.VERTICAL, false
+                    )
                 }else{
-                    isShowRecyclerView(false)
+                    if (it.second.isNotEmpty() && currentQuery == it.first){
+                        Log.v(LOG_TAG, "设置thesisList：$it")
+                        isShowRecyclerView(true)
+                        adapter!!.setThesisList(it.second)
+                    }else{
+                        isShowRecyclerView(false)
+                    }
                 }
             }
         }
@@ -147,37 +138,17 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.v(LOG_TAG,"StudentHomeFragment onPause")
-    }
 
     override fun onStop() {
         super.onStop()
         binding.banner.stop()
-        Log.v(LOG_TAG,"StudentHomeFragment onStop")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.v(LOG_TAG,"StudentHomeFragment onResume")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.v(LOG_TAG,"StudentHomeFragment onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.banner.destroy()
-        Log.v(LOG_TAG,"StudentHomeFragment onDestroy")
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.v(LOG_TAG,"StudentHomeFragment onDetach")
-    }
     //初始化界面
     private fun isShowRecyclerView(isShow: Boolean) {
 //        requireActivity().runOnUiThread {

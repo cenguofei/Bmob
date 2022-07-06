@@ -26,7 +26,7 @@
             app:srcCompat="@drawable/name_list_bg" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_head"
+            android:id="@+id/editHeadIv"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
@@ -46,7 +46,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/phoneNum"
-            app:layout_constraintStart_toEndOf="@+id/iv_head"
+            app:layout_constraintStart_toEndOf="@+id/editHeadIv"
             app:layout_constraintTop_toTopOf="@+id/headImg" />
 
         <TextView

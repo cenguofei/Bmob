@@ -53,7 +53,7 @@ object BindingAdapter {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.default_head)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(18)))
                 .into(imageView)
         }
@@ -65,7 +65,7 @@ object BindingAdapter {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.default_head)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(25)))
                 .into(imageView)
         }
@@ -77,7 +77,7 @@ object BindingAdapter {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.default_head)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(50)))
                 .into(imageView)
         }
@@ -89,7 +89,7 @@ object BindingAdapter {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.default_background)
                 .into(imageView)
         }
     }
