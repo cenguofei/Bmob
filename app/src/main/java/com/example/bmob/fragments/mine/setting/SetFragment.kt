@@ -54,8 +54,5 @@ class SetFragment : Fragment() ,FragmentEventListener{
         binding.editHeadIv.setOnClickListener {
             viewModel.openFile(IMAGE_TYPE_HEAD)
         }
-        binding.floatingActionButton.setOnClickListener{
-
-        }
     }
 }
