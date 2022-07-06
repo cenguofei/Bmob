@@ -24,6 +24,8 @@
             android:layout_marginTop="10dp"
             android:contentDescription="@string/todo"
             android:src="@drawable/back_img"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
