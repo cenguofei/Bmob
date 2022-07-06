@@ -5,20 +5,21 @@
 
     <data>
         <variable
-            name="avatarUrl"
-            type="java.lang.String" />
+            name="user"
+            type="com.example.bmob.data.entity.User" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/frameLayout11"
+        android:id="@+id/frameLayout111"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragments.teacher.TeacherHomeFragment">
 
 
         <ImageView
-            android:id="@+id/headImg"
-            loadUserCircleImage="@{avatarUrl}"
+            android:id="@+id/headImg11"
+            loadUserCircleImage="@{user.avatarUrl}"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
@@ -29,22 +30,23 @@
             tools:src="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView41"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:maxLines="2"
             android:text="@string/good_morning_ugo"
+            setRoleStartHello="@{user}"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/headImg"
-            app:layout_constraintStart_toEndOf="@+id/headImg"
-            app:layout_constraintTop_toTopOf="@+id/headImg" />
+            app:layout_constraintBottom_toBottomOf="@+id/headImg11"
+            app:layout_constraintStart_toEndOf="@+id/headImg11"
+            app:layout_constraintTop_toTopOf="@+id/headImg11" />
 
 
         <SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/searchView1"
             android:layout_width="0dp"
             android:layout_height="40dp"
 
@@ -73,12 +75,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headImg"
+            app:layout_constraintTop_toBottomOf="@+id/headImg11"
             tools:ignore="MissingConstraints" />
 
 
         <LinearLayout
-            android:id="@+id/contentLinearLayout"
+            android:id="@+id/contentLinearLayout1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
@@ -86,10 +88,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            app:layout_constraintTop_toBottomOf="@+id/searchView1">
 
             <com.youth.banner.Banner
-                android:id="@+id/banner"
+                android:id="@+id/banner1"
                 android:layout_width="match_parent"
                 android:layout_height="154dp"
                 android:layout_marginStart="10dp"
@@ -104,7 +106,7 @@
 
             <LinearLayout
                 android:layout_gravity="center"
-                android:id="@+id/myClass"
+                android:id="@+id/myThesisLinearLayout"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
@@ -141,7 +143,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/graduateThesis"
+                android:id="@+id/selectedStudentListLinearLayout"
                 android:layout_width="350dp"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
@@ -180,7 +182,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerView1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="25dp"
@@ -190,7 +192,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:layout_constraintTop_toBottomOf="@+id/searchView1"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
@@ -199,9 +201,9 @@
             android:layout_height="30dp"
             android:src="@drawable/search"
             android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/searchView"
-            app:layout_constraintStart_toStartOf="@+id/searchView"
-            app:layout_constraintTop_toTopOf="@+id/searchView"
+            app:layout_constraintBottom_toBottomOf="@+id/searchView1"
+            app:layout_constraintStart_toStartOf="@+id/searchView1"
+            app:layout_constraintTop_toTopOf="@+id/searchView1"
             android:contentDescription="@string/todo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

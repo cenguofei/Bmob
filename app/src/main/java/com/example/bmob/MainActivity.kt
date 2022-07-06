@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.showThesisFragment
 
                 || destination.id == R.id.setFragment
+
+                || destination.id == R.id.teacherReleaseFragment
+                || destination.id == R.id.teacherSelectResultFragment
+                ||destination.id == R.id.teacherNewThesisFragment
             ) {
                 binding.bottomNavigationView.visibility = View.GONE
             }else{

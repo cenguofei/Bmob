@@ -23,6 +23,10 @@
             android:name="isChangeAccount"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_loginFragment_to_teacherHomeFragment"
+            app:destination="@id/teacherHomeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -49,10 +53,14 @@
         <action
             android:id="@+id/action_verifyFragment_to_studentHomeFragment"
             app:destination="@id/studentHomeFragment" />
+        <action
+            android:id="@+id/action_verifyFragment_to_teacherHomeFragment"
+            app:destination="@id/teacherHomeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.example.bmob.fragments.login.StartFragment"
+        android:name="com.example.bmob.fragments.start.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
@@ -65,6 +73,9 @@
             app:destination="@id/studentHomeFragment"
             app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_startFragment_to_teacherHomeFragment"
+            app:destination="@id/teacherHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/usernameFragment"
@@ -167,5 +178,32 @@
     <fragment
         android:id="@+id/teacherHomeFragment"
         android:name="com.example.bmob.fragments.teacher.TeacherHomeFragment"
-        android:label="TeacherHomeFragment" />
+        android:label="fragment_teacher_home"
+        tools:layout="@layout/fragment_teacher_home" >
+        <action
+            android:id="@+id/action_teacherHomeFragment_to_teacherReleaseFragment"
+            app:destination="@id/teacherReleaseFragment" />
+        <action
+            android:id="@+id/action_teacherHomeFragment_to_teacherSelectResultFragment"
+            app:destination="@id/teacherSelectResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherReleaseFragment"
+        android:name="com.example.bmob.fragments.teacher.TeacherReleaseFragment"
+        android:label="fragment_teacher_release"
+        tools:layout="@layout/fragment_teacher_release" >
+        <action
+            android:id="@+id/action_teacherReleaseFragment_to_teacherNewThesisFragment"
+            app:destination="@id/teacherNewThesisFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherNewThesisFragment"
+        android:name="com.example.bmob.fragments.teacher.TeacherNewThesisFragment"
+        android:label="fragment_teacher_new_thesis"
+        tools:layout="@layout/fragment_teacher_new_thesis" />
+    <fragment
+        android:id="@+id/teacherSelectResultFragment"
+        android:name="com.example.bmob.fragments.teacher.TeacherSelectResultFragment"
+        android:label="fragment_teacher_select_result"
+        tools:layout="@layout/fragment_teacher_select_result" />
 </navigation>

@@ -1,20 +1,114 @@
 package com.example.bmob.fragments.teacher
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.R
+import com.example.bmob.common.BannerAdapter
+import com.example.bmob.common.FragmentEventListener
+import com.example.bmob.common.SearchRecyclerViewAdapter
+import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.databinding.FragmentTeacherHomeBinding
+import com.example.bmob.fragments.student.StudentHomeFragmentDirections
+import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.viewmodels.CommonHomeViewModel
+import com.example.bmob.viewmodels.ERROR
+import com.youth.banner.indicator.CircleIndicator
 
-class TeacherHomeFragment : Fragment() {
-    private lateinit var binding:FragmentTeacherHomeBinding
+class TeacherHomeFragment : Fragment(),FragmentEventListener {
+    lateinit var binding:FragmentTeacherHomeBinding
+    private var adapter: SearchRecyclerViewAdapter? = null
+    private val viewModel: CommonHomeViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTeacherHomeBinding.inflate(inflater,container,false)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.banner1.start()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setEventListener()
+        viewModel.setFragment(this)
+
+        binding.banner1.addBannerLifecycleObserver(this)
+        //观测头像url并保存到handler
+        viewModel.getTeacherInfo(this).observe(viewLifecycleOwner){
+            binding.user = it
+            Log.v(LOG_TAG,"首页观测的user id: $it")
+        }
+        //观测搜索结果
+        viewModel.searchResult.observe(viewLifecycleOwner) {
+            Log.v(LOG_TAG, "观测到数据：$it")
+            if (it.first != ERROR) {
+                if (adapter == null && it.second.isNotEmpty()) {
+                    adapter = SearchRecyclerViewAdapter { thesis ->
+                        Log.v(LOG_TAG, "回调：$thesis")
+                        val actionStudentHomeFragmentToShowThesisFragment =
+                            StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
+                                thesis
+                            )
+                        findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
+                    }
+                    adapter!!.setThesisListForFirst(it.second)
+                    binding.recyclerView1.adapter = adapter
+                    binding.recyclerView1.layoutManager = LinearLayoutManager(
+                        requireContext(),
+                        RecyclerView.VERTICAL, false
+                    )
+                } else {
+                    if (it.second.isNotEmpty() && viewModel.nowSearch.value == it.first) {
+                        Log.v(LOG_TAG, "设置thesisList：$it")
+                        viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout1,true)
+                        adapter!!.setThesisList(it.second)
+                    } else {
+                        viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout1,false)
+                    }
+                }
+            }
+        }
+        //观测banner数据
+        viewModel.queryBannerData().observe(viewLifecycleOwner){
+            binding.banner1
+                .setAdapter(BannerAdapter(it!!))
+                .indicator = CircleIndicator(requireContext())
+        }
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        binding.banner1.stop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.banner1.destroy()
+    }
+
+    override fun setEventListener() {
+        //导航到 我的课题 详情页面，查看已经 上传 的课题
+        binding.myThesisLinearLayout.setOnClickListener {
+
+        }
+        //查看选择自己每个课题的学生
+        binding.selectedStudentListLinearLayout.setOnClickListener {
+
+        }
     }
 }

@@ -16,8 +16,7 @@ import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.viewmodels.CommonViewModel
-import com.example.bmob.viewmodels.EMPTY_SEARCH
+import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
 import com.youth.banner.indicator.CircleIndicator
 
@@ -27,7 +26,7 @@ import com.youth.banner.indicator.CircleIndicator
 class StudentHomeFragment : Fragment(), FragmentEventListener {
     lateinit var binding: FragmentStudentHomeBinding
     private var adapter: SearchRecyclerViewAdapter? = null
-    private val viewModel:CommonViewModel by viewModels()
+    private val viewModel:CommonHomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +50,7 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
         //观测头像url并保存到handler
         viewModel.getStudentInfo(this).observe(viewLifecycleOwner){
             binding.user = it
+            Log.v(LOG_TAG,"首页观测的user id: $it")
         }
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {

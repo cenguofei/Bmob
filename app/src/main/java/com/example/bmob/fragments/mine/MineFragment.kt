@@ -30,14 +30,14 @@ class MineFragment : Fragment() ,FragmentEventListener{
     ): View {
         binding = FragmentMineBinding.inflate(inflater,container,false)
 
-        Log.v(LOG_TAG,"MineFragment  viewModel $setViewModel viewModel.handler:${setViewModel.handler}")
+//        Log.v(LOG_TAG,"MineFragment  viewModel $setViewModel viewModel.handler:${setViewModel.handler}")
 
         setViewModel.getBmobUser().observe(viewLifecycleOwner){
-            Log.v(LOG_TAG,"MineFragment BmobUser  id  :$it")
+//            Log.v(LOG_TAG,"MineFragment BmobUser  id  :$it")
             binding.bmobUser = it
         }
         setViewModel.getUserByQuery().observe(viewLifecycleOwner){
-            Log.v(LOG_TAG,"MineFragment User  id  :$it")
+//            Log.v(LOG_TAG,"MineFragment User  id  :$it")
             binding.user = it
         }
 

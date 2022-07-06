@@ -135,7 +135,8 @@ class BmobRepository private constructor(){
             override fun done(p0: User?, p1: BmobException?) {
                 if (p1 == null){
                     callback.invoke(true,p0!!)
-                }else{
+                }
+                else{
                     callback.invoke(false,null)
                 }
             }

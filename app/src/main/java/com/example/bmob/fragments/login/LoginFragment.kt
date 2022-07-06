@@ -49,7 +49,8 @@ class LoginFragment : Fragment(), FragmentEventListener {
         if (args.isChangeAccount) {
             binding.passwordEv.setText(R.string.empty_text)
             binding.usernameEv.setText(R.string.empty_text)
-        } else {
+        }
+        else {
             settingsDataStore.preferenceFlow.asLiveData().observe(viewLifecycleOwner) {
                 //设置CheckBox选择状态
                 Log.v(LOG_TAG, it.toString())
@@ -72,7 +73,7 @@ class LoginFragment : Fragment(), FragmentEventListener {
             lifecycleScope.launch {
                 if (isSuccess) {
                     settingsDataStore.saveIdentificationToPreferencesStore(
-                        user!!.identification ?: -1, requireContext()
+                        user!!.identification, requireContext()
                     )
                     callback.invoke(user.identification)
                 } else {
@@ -140,29 +141,39 @@ class LoginFragment : Fragment(), FragmentEventListener {
                                     password
                                 )
                             }
-                            verifyUserIdentification {
-                                when (it) {
-                                    IDENTIFICATION_STUDENT -> {
-                                        //登录成功，进入学生主页
-                                        try {
-                                            findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
-                                        } catch (e: Exception) {
-                                            Log.v(LOG_TAG, "登录出错：${e.message}")
-                                            showMsg(requireContext(), "系统出错，请稍后再试")
+                            verifyUserIdentification {identification->
+                                if (identification != USER_HAS_NOT_IDENTIFICATION){
+                                    when (identification) {
+                                        IDENTIFICATION_STUDENT -> {
+                                            //登录成功，进入学生主页
+                                            try {
+                                                findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
+                                            } catch (e: Exception) {
+                                                Log.v(LOG_TAG, "登录出错：${e.message}")
+                                                showMsg(requireContext(), "系统出错，请稍后再试")
+                                            }
+                                        }
+                                        IDENTIFICATION_TEACHER -> {
+                                            //登录成功，进入教师主页
+                                            try {
+                                                findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
+                                            } catch (e: Exception) {
+                                                Log.v(LOG_TAG, "登录出错：${e.message}")
+                                                showMsg(requireContext(), "系统出错，请稍后再试")
+                                            }
+                                        }
+                                        IDENTIFICATION_DEAN -> {
+
+                                        }
+                                        IDENTIFICATION_PROVOST -> {
+
+                                        }
+                                        else -> {
+
                                         }
                                     }
-                                    IDENTIFICATION_TEACHER -> {
-
-                                    }
-                                    IDENTIFICATION_DEAN -> {
-
-                                    }
-                                    IDENTIFICATION_PROVOST -> {
-
-                                    }
-                                    else -> {
-
-                                    }
+                                }else{
+                                    showMsg(requireContext(),"登录异常，请稍后再试")
                                 }
                             }
                         } else {

@@ -1,13 +1,15 @@
 package com.example.bmob.viewmodels
 
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
-import com.example.bmob.data.entity.School
-import com.example.bmob.data.entity.User
+import com.example.bmob.R
+import com.example.bmob.data.entity.*
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.LOG_TAG
 
@@ -15,6 +17,28 @@ class BmobUserViewModel:ViewModel() {
     companion object{
         private val userRepository = BmobRepository.getInstance()
     }
+
+
+    /**
+     * 判断当前用户身份
+     */
+    fun getUserIdentificationAndNavigate(identification:Int,fragment: Fragment){
+        when (identification) {
+            IDENTIFICATION_STUDENT -> {
+                fragment.findNavController().navigate(R.id.action_startFragment_to_studentHomeFragment)
+            }
+            IDENTIFICATION_TEACHER -> {
+                fragment.findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
+            }
+            IDENTIFICATION_DEAN -> {
+                //
+            }
+            IDENTIFICATION_PROVOST -> {
+                //
+            }
+        }
+    }
+
     fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
         userRepository.loginByUsername(userName,pwd,callback)
     }

@@ -1,4 +1,4 @@
-package com.example.bmob.fragments.login
+package com.example.bmob.fragments.start
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,10 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobUser
 import com.example.bmob.R
+import com.example.bmob.data.entity.IDENTIFICATION_DEAN
+import com.example.bmob.data.entity.IDENTIFICATION_PROVOST
+import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
+import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.data.storage.SettingsDataStore
 import com.example.bmob.databinding.FragmentStartBinding
 import com.example.bmob.utils.LOG_TAG
@@ -46,9 +50,13 @@ class StartFragment : Fragment() {
                             //判断用户是否处于登录状态
                             //是
                             if (userViewModel.isLogin()){
-                                val user = BmobUser.getCurrentUser()
-                                Log.v(LOG_TAG,"已经登录:账号username：${user.username} 电话：${user.mobilePhoneNumber}")
-                                findNavController().navigate(R.id.action_startFragment_to_studentHomeFragment)
+                                val bmobUser = BmobUser.getCurrentUser()
+                                Log.v(LOG_TAG,"已经登录:账号username：${bmobUser.username} 电话：${bmobUser.mobilePhoneNumber}")
+                                userViewModel.getUserInfo { isSuccess, user ->
+                                    if (isSuccess){
+                                        userViewModel.getUserIdentificationAndNavigate(user!!.identification,this@StartFragment)
+                                    }
+                                }
                             }else{ //不是
                                 findNavController().navigate(R.id.action_startFragment_to_loginFragment)
                             }
@@ -58,4 +66,24 @@ class StartFragment : Fragment() {
                                                 },2000)
         }
     }
+
+//    /**
+//     * 判断当前用户身份
+//     */
+//    fun getUserIdentificationAndNavigate(identification:Int){
+//        when (identification) {
+//            IDENTIFICATION_STUDENT -> {
+//                findNavController().navigate(R.id.action_startFragment_to_studentHomeFragment)
+//            }
+//            IDENTIFICATION_TEACHER -> {
+//                findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
+//            }
+//            IDENTIFICATION_DEAN -> {
+//                //
+//            }
+//            IDENTIFICATION_PROVOST -> {
+//                //
+//            }
+//        }
+//    }
 }

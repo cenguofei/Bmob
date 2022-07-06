@@ -21,10 +21,11 @@ import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.fragments.student.StudentHomeFragment
+import com.example.bmob.fragments.teacher.TeacherHomeFragment
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 
-class CommonViewModel(private val handler:SavedStateHandle):ViewModel() {
+class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
     private val repository = BmobRepository.getInstance()
     var nowSearch = MutableLiveData<String>()
     private var adapter: SearchRecyclerViewAdapter? = null
@@ -67,10 +68,31 @@ class CommonViewModel(private val handler:SavedStateHandle):ViewModel() {
         if (!handler.contains(USER)){
             repository.getUserInfo{isSuccess, user ->
                 if (isSuccess) {
+                    Log.v(LOG_TAG,"CommonHomeViewModel 设置user到handler")
                     handler.set(USER,user)
                 } else {
+                    Log.v(LOG_TAG,"CommonHomeViewModel 没有搜索到用户")
                     handler.set(USER, EMPTY_SEARCH)
                     fragment.binding.headImg.setImageResource(R.drawable.default_head)
+                }
+            }
+        }
+        return handler.getLiveData(USER)
+    }
+
+    /**
+     * fragment通过observe观察数据
+     */
+    fun getTeacherInfo(fragment:TeacherHomeFragment):MutableLiveData<User>{
+        if (!handler.contains(USER)){
+            repository.getUserInfo{isSuccess, user ->
+                if (isSuccess) {
+                    Log.v(LOG_TAG,"CommonHomeViewModel 设置user到handler")
+                    handler.set(USER,user)
+                } else {
+                    Log.v(LOG_TAG,"CommonHomeViewModel 没有搜索到用户")
+                    handler.set(USER, EMPTY_SEARCH)
+                    fragment.binding.headImg11.setImageResource(R.drawable.default_head)
                 }
             }
         }
