@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.bmob.R
 import com.example.bmob.databinding.FragmentBrowseBinding
+import com.example.bmob.databinding.FragmentSelectBinding
 
 
 /**
@@ -14,12 +15,12 @@ import com.example.bmob.databinding.FragmentBrowseBinding
  * 浏览班级人员
  */
 class SelectFragment : Fragment() {
-    private lateinit var binding:FragmentBrowseBinding
+    private lateinit var binding:FragmentSelectBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBrowseBinding.inflate(inflater,container,false)
+        binding = FragmentSelectBinding.inflate(inflater,container,false)
         return binding.root
     }
 

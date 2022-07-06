@@ -36,7 +36,7 @@ class SetFragment : Fragment() ,FragmentEventListener{
     ): View {
         binding = FragmentSetBinding.inflate(inflater,container,false)
         binding.user = args.userInfo
-
+        viewModel.setSettingsDataStore(requireContext())
         return binding.root
     }
 
@@ -56,10 +56,10 @@ class SetFragment : Fragment() ,FragmentEventListener{
         binding.editHeadIv.setOnClickListener {
             viewModel.openFile(IMAGE_TYPE_HEAD)
         }
-    }
-    private fun save(){
-        if (isInputAllInvalid()){
-            viewModel.saveUserEdit(this)
+        binding.saveConfigBtn.setOnClickListener {
+            if (isInputAllInvalid()){
+                viewModel.saveUserEdit(this)
+            }
         }
     }
     private fun isInputAllInvalid():Boolean{

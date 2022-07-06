@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
@@ -27,11 +29,13 @@ import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
+import com.example.bmob.data.storage.SettingsDataStore
 import com.example.bmob.fragments.mine.MineFragment.Companion.BMOB_USER_KEY
 import com.example.bmob.fragments.mine.MineFragment.Companion.QUERY_USER_KEY
 import com.example.bmob.fragments.mine.setting.SetFragment
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.random.Random
@@ -41,6 +45,18 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
     private var register: ActivityResultLauncher<Intent>? = null
     private var file: File? = null
     private var imageType: String? = null
+    //用户配置，记住密码，保存账号密码等
+    private lateinit var settingsDataStore: SettingsDataStore
+
+    fun setSettingsDataStore(context: Context){
+        this.settingsDataStore = SettingsDataStore.getInstance(context)
+    }
+
+    private fun saveUsernameToPreferencesStore(username:String,context: Context){
+        viewModelScope.launch {
+            settingsDataStore.saveUsernameToPreferencesStore(username = username, context = context)
+        }
+    }
 
     fun setRegister(fragment: SetFragment) {
         register = fragment.registerForActivityResult(
@@ -261,13 +277,14 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
     fun saveUserEdit(fragment: SetFragment) {
         repository.getUserInfo { isSuccess, user ->
             if (isSuccess) {
+                val userName = fragment.binding.editUsernameEv.text.toString()
                 user?.run {
                     with(fragment.binding) {
                         name = editNameEv.text.toString()
                         signature = editSignatureEv.text.toString()
                         age = Integer.parseInt(editAgeEv.text.toString())
                         gender = editGenderEv.text.toString()
-                        username = editUsernameEv.text.toString()
+                        username = userName
                         school = editSchoolEv.text.toString()
                         college = editCollegeEv.text.toString()
                         department = editDepartmentEv.text.toString()
@@ -279,11 +296,13 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
                 }
                 repository.updateUser(user!!) { isSuccess, msg ->
                     if (isSuccess) {
+                        fragment.findNavController().navigateUp()
                         showMsg(fragment.requireContext(), "用户信息已更新")
                     } else {
                         showMsg(fragment.requireContext(), "用户信息更新失败:$msg")
                     }
                 }
+                saveUsernameToPreferencesStore(username = userName,fragment.requireContext())
             }
         }
     }

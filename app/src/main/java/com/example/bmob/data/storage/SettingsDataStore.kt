@@ -56,6 +56,12 @@ class SettingsDataStore private constructor(){
         }
     }
 
+    suspend fun saveUsernameToPreferencesStore(username: String,context: Context){
+        context.dataStore.edit {preferenceFlow->
+            preferenceFlow[USERNAME] = username
+        }
+    }
+
     val preferenceFlow: Flow<UserConfig> = CONTEXT!!.dataStore.data
         .catch {
             if (it is IOException) {

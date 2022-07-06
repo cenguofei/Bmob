@@ -15,7 +15,8 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/back_img"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/textView29"
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="20dp"
-        android:text="发布课题"
+        android:text="@string/release_thesis"
         android:textSize="20sp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,10 +38,10 @@
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:loadRectImage="@{thesis.teacherAvatarUrl}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView29"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/textView30"
@@ -49,9 +50,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:text="@{User.school}·@{User.college}·@{User.department}"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView13"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,6 @@
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="40dp"
-
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
@@ -69,7 +68,6 @@
         android:layout_weight="1"
         android:background="@drawable/search_shape"
         android:focusable="true"
-
         android:iconifiedByDefault="false"
         android:imeOptions="actionSearch"
         android:paddingStart="40dp"
@@ -108,9 +106,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="268dp"
-        android:text="我的课题"
+        android:text="@string/my_thesis"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
@@ -121,9 +119,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/thesis_bule"
+        android:src="@drawable/thesis_blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        android:contentDescription="@string/todo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"

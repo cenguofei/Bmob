@@ -331,9 +331,9 @@
         android:layout_height="100dp"
         android:orientation="vertical">
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/saveConfigBtn"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_gravity="center"
         android:background="@drawable/done"
         app:layout_constraintEnd_toEndOf="parent"
