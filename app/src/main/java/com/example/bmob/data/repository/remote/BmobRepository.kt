@@ -4,6 +4,7 @@ import android.util.Log
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobSMS
 import cn.bmob.v3.BmobUser
+import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.*
 import com.example.bmob.data.entity.School
@@ -265,6 +266,23 @@ class BmobRepository private constructor(){
                 }
             }
         })
+    }
+
+    //下载图片
+    fun downloadImage(){
+        BmobFile("16570959234301576.jpg","","http://bmob-cdn-30807.bmobpay.com/2022/07/06/2da1c22294734cf2ac8855bf7f271fce.jpg")
+            .download(object :DownloadFileListener(){
+                override fun done(p0: String?, p1: BmobException?) {
+                    if (p1 == null){
+                        Log.v(LOG_TAG,"下载成功:p0=$p0")
+                    }else{
+                        Log.v(LOG_TAG,"下载失败:${p1.message}")
+                    }
+                }
+                override fun onProgress(p0: Int?, p1: Long) {
+                    Log.v(LOG_TAG,"p0=$p0  p1=$p1")
+                }
+            })
     }
 }
 

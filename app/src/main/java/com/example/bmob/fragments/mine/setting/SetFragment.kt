@@ -19,6 +19,16 @@ import com.example.bmob.viewmodels.SetViewModel
 
 /**
  * 设置用户信息界面
+ *
+ * not permitted by network
+ * 显然是一个系统限制访问的问题
+ * 在高版本安卓不允许访问非https域名的接口
+ *
+ * CLEARTEXT communication to bmob-cdn-30807.bmobpay.com not permitted by network security policy
+ *
+ * 下载文件的时候发下出现上面异常，然后就找到了解决上传图片成功，
+ * 但是显示不了方法：
+ * android:usesCleartextTraffic="true"
  */
 class SetFragment : Fragment() ,FragmentEventListener{
     lateinit var binding:FragmentSetBinding
