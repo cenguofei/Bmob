@@ -34,6 +34,7 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
     private val model: StudentHomeViewModel by activityViewModels()
     private var adapter: SearchRecyclerViewAdapter? = null
     private val userViewModel: BmobUserViewModel by activityViewModels()
+    private var currentQuery = ""
 
     private val testViewModel:StudentSelectViewModel by viewModels()
 
@@ -88,8 +89,8 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
 
         model.searchResult.observe(viewLifecycleOwner){
             Log.v(LOG_TAG, "观测到数据：$it")
-            if (adapter == null) {
-                adapter = SearchRecyclerViewAdapter(it) { thesis ->
+            if (adapter == null && it.second.isNotEmpty()) {
+                adapter = SearchRecyclerViewAdapter { thesis ->
                     Log.v(LOG_TAG, "回调：$thesis")
                     val actionStudentHomeFragmentToShowThesisFragment =
                         StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
@@ -97,15 +98,21 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
                         )
                     findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
                 }
+                adapter!!.setThesisListForFirst(it.second)
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(
                     requireContext(),
                     RecyclerView.VERTICAL, false
                 )
+            }else{
+                if (it.second.isNotEmpty() && currentQuery == it.first){
+                    Log.v(LOG_TAG, "设置thesisList：$it")
+                    isShowRecyclerView(true)
+                    adapter!!.setThesisList(it.second)
+                }else{
+                    isShowRecyclerView(false)
+                }
             }
-            Log.v(LOG_TAG, "设置thesisList：$it")
-            isShowRecyclerView(true)
-            adapter!!.setThesisList(it)
         }
 //        model.queryThesisListLiveData.observe(viewLifecycleOwner) {
 //            Log.v(LOG_TAG, "观测到数据：$it")
@@ -207,8 +214,10 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
                 Log.v(LOG_TAG, "newText:${newText}")
                 if (!TextUtils.isEmpty(newText)) {
 //                    model.searchAnyThesis(newText!!)
-                    model.setNowSearch(newText!!)
+                    currentQuery = newText!!
+                    model.setNowSearch(newText)
                 } else {
+                    currentQuery = ""
                     isShowRecyclerView(false)
                 }
                 return true

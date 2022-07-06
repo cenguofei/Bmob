@@ -8,9 +8,9 @@ import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.SearchSuggestItemBinding
 
 class SearchRecyclerViewAdapter(
-    private var thesisList:List<Thesis>,
     private val callback:(thesis:Thesis)->Unit
 ):RecyclerView.Adapter<SearchRecyclerViewAdapter.SearchViewHolder>() {
+    private var thesisList:List<Thesis>? = null
     class SearchViewHolder(val binding:SearchSuggestItemBinding):RecyclerView.ViewHolder(binding.root) {
         companion object{
             fun createViewHolder(parent: ViewGroup):SearchViewHolder{
@@ -32,17 +32,20 @@ class SearchRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(thesis = thesisList[position],callback)
+        holder.bind(thesis = thesisList!![position],callback)
 
     }
 
-    override fun getItemCount(): Int = thesisList.size
+    override fun getItemCount(): Int = thesisList!!.size
+
+    fun setThesisListForFirst(newThesisList: List<Thesis>){
+        this.thesisList = newThesisList
+    }
 
     fun setThesisList(newThesisList: List<Thesis>){
 //        this.thesisList = newThesisList
 //        this.notifyDataSetChanged()
-
-        val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.thesisList, newThesisList))
+        val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.thesisList!!, newThesisList))
         diffResult.dispatchUpdatesTo(this)
     }
 }

@@ -34,8 +34,8 @@ class StudentHomeViewModel : ViewModel() {
     /**
      * 模糊查询能选的文章
      */
-    private fun switchSearchAnyThesis(query: String): MutableLiveData<MutableList<Thesis>> {
-        val results: MutableLiveData<MutableList<Thesis>> = MutableLiveData()
+    private fun switchSearchAnyThesis(query: String): MutableLiveData<Pair<String,MutableList<Thesis>>> {
+        val results: MutableLiveData<Pair<String,MutableList<Thesis>>> = MutableLiveData()
         repository.searchAnyThesis(query) { isSuccess, thesisList, msg ->
             if (isSuccess) {
                 results.value = thesisList
@@ -59,17 +59,17 @@ class StudentHomeViewModel : ViewModel() {
      * 用这种方法直接查找到的课题不能及时显示到搜索结果的显示页面中，
      * 需要用switchMap转换
      */
-    fun searchAnyThesis(searchTitle: String) {
-        viewModelScope.launch {
-            repository.searchAnyThesis(searchTitle) { isSuccess, thesisList, msg ->
-                if (isSuccess) {
-                    queryThesisListLiveData.value = thesisList
-                } else {
-                    Log.v(LOG_TAG, "searchAnyThesis：$isSuccess $thesisList $msg")
-                }
-            }
-        }
-    }
+//    fun searchAnyThesis(searchTitle: String) {
+//        viewModelScope.launch {
+//            repository.searchAnyThesis(searchTitle) { isSuccess, thesisList, msg ->
+//                if (isSuccess) {
+//                    queryThesisListLiveData.value = thesisList
+//                } else {
+//                    Log.v(LOG_TAG, "searchAnyThesis：$isSuccess $thesisList $msg")
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 添加Thesis测试方法

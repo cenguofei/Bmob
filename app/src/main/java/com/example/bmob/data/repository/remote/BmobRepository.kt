@@ -210,7 +210,7 @@ class BmobRepository private constructor(){
     /**
      * 模糊查询能选的文章
      */
-    fun searchAnyThesis(searchTitle:String,callback: (isSuccess:Boolean,thesis:MutableList<Thesis>?,msg:String) -> Unit){
+    fun searchAnyThesis(searchTitle:String,callback: (isSuccess:Boolean,thesis:Pair<String,MutableList<Thesis>>?,msg:String) -> Unit){
         BmobQuery<Thesis>()
 //            .addWhereEqualTo("title",searchTitle)
             .addWhereContains("title",searchTitle)
@@ -219,7 +219,7 @@ class BmobRepository private constructor(){
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null){
                         if (p0 != null && p0.size > 0){
-                            callback.invoke(true,p0, EMPTY_TEXT)
+                            callback.invoke(true,Pair(searchTitle,p0), EMPTY_TEXT)
                         }else{
                             callback.invoke(false,null,"没有匹配项")
                         }
