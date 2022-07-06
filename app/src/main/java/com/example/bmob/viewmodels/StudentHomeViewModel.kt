@@ -35,12 +35,12 @@ class StudentHomeViewModel : ViewModel() {
      * 模糊查询能选的文章
      */
     private fun switchSearchAnyThesis(query: String): MutableLiveData<Pair<String,MutableList<Thesis>>> {
-        val results: MutableLiveData<Pair<String,MutableList<Thesis>>> = MutableLiveData()
+        val results: MutableLiveData<Pair<String,MutableList<Thesis>>> = MutableLiveData<Pair<String,MutableList<Thesis>>>()
         repository.searchAnyThesis(query) { isSuccess, thesisList, msg ->
             if (isSuccess) {
                 results.value = thesisList
             } else {
-                results.value = null
+                results.value = Pair(ERROR, mutableListOf())
             }
         }
         return results
@@ -81,3 +81,5 @@ class StudentHomeViewModel : ViewModel() {
         repository.addThesis(thesis, callback)
     }
 }
+
+const val ERROR = "_error_"

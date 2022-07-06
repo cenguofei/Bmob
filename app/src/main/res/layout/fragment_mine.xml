@@ -22,6 +22,7 @@
                 android:id="@+id/imageView3"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
+                loadRectImage="@{user.backgroundUrl}"
                 android:src="@drawable/ic_launcher_background"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:contentDescription="@string/todo" />
             <ImageView
-                android:id="@+id/iv_head"
+                android:id="@+id/editHeadIv"
                 loadRoundCircleHeadImage="@{user.avatarUrl}"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -53,7 +54,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView9"
-                app:layout_constraintStart_toEndOf="@+id/iv_head" />
+                app:layout_constraintStart_toEndOf="@+id/editHeadIv" />
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
@@ -64,7 +65,7 @@
                 android:text="@{user.signature}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_head"
+                app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
                 app:layout_constraintStart_toStartOf="@+id/textView8" />
             <TextView
                 android:id="@+id/textView10"
@@ -80,7 +81,7 @@
                 app:drawableStartCompat="@drawable/username_img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_head" />
+                app:layout_constraintTop_toBottomOf="@+id/editHeadIv" />
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
@@ -152,7 +153,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="@{user.gender}"
+                android:text="@{user.birth}"
                 app:drawableStartCompat="@drawable/birth"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +174,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/editSignatureEv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
@@ -201,7 +202,7 @@
                 app:drawableStartCompat="@drawable/address"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                app:layout_constraintTop_toBottomOf="@+id/editSignatureEv" />
             <LinearLayout
                 android:id="@+id/reLogin"
                 android:layout_width="350dp"
@@ -277,9 +278,9 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_head"
+                app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_head"
+                app:layout_constraintTop_toTopOf="@+id/editHeadIv"
                 app:srcCompat="@drawable/modify_user_info_img"
                 android:contentDescription="@string/todo" />
         </androidx.constraintlayout.widget.ConstraintLayout>

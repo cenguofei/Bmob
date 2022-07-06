@@ -22,6 +22,7 @@ import com.example.bmob.fragments.thesis.ShowThesisFragmentArgs
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
+import com.example.bmob.viewmodels.ERROR
 import com.example.bmob.viewmodels.StudentHomeViewModel
 import com.example.bmob.viewmodels.StudentSelectViewModel
 import com.youth.banner.indicator.CircleIndicator
@@ -89,28 +90,30 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
 
         model.searchResult.observe(viewLifecycleOwner){
             Log.v(LOG_TAG, "观测到数据：$it")
-            if (adapter == null && it.second.isNotEmpty()) {
-                adapter = SearchRecyclerViewAdapter { thesis ->
-                    Log.v(LOG_TAG, "回调：$thesis")
-                    val actionStudentHomeFragmentToShowThesisFragment =
-                        StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
-                            thesis
-                        )
-                    findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
-                }
-                adapter!!.setThesisListForFirst(it.second)
-                binding.recyclerView.adapter = adapter
-                binding.recyclerView.layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    RecyclerView.VERTICAL, false
-                )
-            }else{
-                if (it.second.isNotEmpty() && currentQuery == it.first){
-                    Log.v(LOG_TAG, "设置thesisList：$it")
-                    isShowRecyclerView(true)
-                    adapter!!.setThesisList(it.second)
+            if (it.first != ERROR){
+                if (adapter == null && it.second.isNotEmpty()) {
+                    adapter = SearchRecyclerViewAdapter { thesis ->
+                        Log.v(LOG_TAG, "回调：$thesis")
+                        val actionStudentHomeFragmentToShowThesisFragment =
+                            StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
+                                thesis
+                            )
+                        findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
+                    }
+                    adapter!!.setThesisListForFirst(it.second)
+                    binding.recyclerView.adapter = adapter
+                    binding.recyclerView.layoutManager = LinearLayoutManager(
+                        requireContext(),
+                        RecyclerView.VERTICAL, false
+                    )
                 }else{
-                    isShowRecyclerView(false)
+                    if (it.second.isNotEmpty() && currentQuery == it.first){
+                        Log.v(LOG_TAG, "设置thesisList：$it")
+                        isShowRecyclerView(true)
+                        adapter!!.setThesisList(it.second)
+                    }else{
+                        isShowRecyclerView(false)
+                    }
                 }
             }
         }
