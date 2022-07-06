@@ -9,7 +9,7 @@ data class User(
     //1. 公有属性
     val nickname:String? = null,  //昵称
     var avatarUrl:String? = null,  //头像url
-    val backgroundUrl:String? = null,  //背景url
+    var backgroundUrl:String? = null,  //背景url
     val age:Int? = null,    //年龄
     val gender:String? = null,  //性别
     val birth:String? = null, //生日

@@ -1,5 +1,6 @@
 package com.example.bmob.viewmodels
 
+import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -10,7 +11,10 @@ import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -25,81 +29,173 @@ import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.fragments.mine.MineFragment.Companion.BMOB_USER_KEY
 import com.example.bmob.fragments.mine.MineFragment.Companion.QUERY_USER_KEY
+import com.example.bmob.fragments.mine.setting.SetFragment
 import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.showMsg
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.random.Random
 
 class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
     private val repository = BmobRepository.getInstance()
+    private var register: ActivityResultLauncher<Intent>? = null
+    private var file: File? = null
+    private var imageType: String? = null
 
-    fun getUserByQuery():MutableLiveData<User> {
+    fun setRegister(fragment: SetFragment) {
+        register = fragment.registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            fragment.binding.progressBar.visibility = View.VISIBLE
+            val data = it.data
+            val resultCode = it.resultCode
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                val uri = data?.data
+                file = uriToFileQ(fragment.requireContext(), uri!!)
+                Log.v(LOG_TAG, "uriToFileQ path = ${file?.path}  uri=$uri")
+                //存储图片
+                Log.v(LOG_TAG, "图片类型:${imageType}")
+
+                //上传头像
+                uploadImage(file!!, { isSuccess, msg ->
+                    if (isSuccess) {
+                        Log.v(LOG_TAG, "图片上传成功")
+                        //改变ui
+                        if (imageType!! == IMAGE_TYPE_HEAD) {
+                            fragment.binding.editHeadIv.setImageURI(uri)
+                        } else {
+                            fragment.binding.backgroundIv.setImageURI(uri)
+                        }
+                    } else {
+                        Log.v(LOG_TAG, "图片上传失败")
+                        showMsg(fragment.requireContext(), msg)
+                    }
+                }) { progress ->
+                    if (progress != null) {
+                        //显示上传进度
+                        Log.v(LOG_TAG, "progress=$progress")
+                        fragment.binding.progressBar.progress = progress
+                        if (progress == 100) {
+                            fragment.binding.progressBar.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //打开相册选择图片
+    fun openFile(imageType: String) {
+        this.imageType = imageType
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "image/*"
+        register?.launch(intent)
+    }
+
+    /**
+     * 查询自定义用户User
+     */
+    fun getUserByQuery(): MutableLiveData<User> {
         if (!handler.contains(QUERY_USER_KEY)) {
             repository.getUserInfo { isSuccess, user ->
-                if (isSuccess){
-                    handler.set(QUERY_USER_KEY,user)
+                if (isSuccess) {
+                    handler.set(QUERY_USER_KEY, user)
                 }
             }
         }
         return handler.getLiveData(QUERY_USER_KEY)
     }
 
-    fun getBmobUser():MutableLiveData<BmobUser> {
-        if (!handler.contains(BMOB_USER_KEY)){
+    /**
+     * 查询BmobUser
+     */
+    fun getBmobUser(): MutableLiveData<BmobUser> {
+        if (!handler.contains(BMOB_USER_KEY)) {
             val currentUser = BmobUser.getCurrentUser()
-            handler.set(BMOB_USER_KEY,currentUser)
+            handler.set(BMOB_USER_KEY, currentUser)
         }
         return handler.getLiveData(BMOB_USER_KEY)
     }
 
     //返回的progress可能为null  需要判断
-    fun uploadImage(
-        view: View,
+    private fun uploadImage(
         file: File,
-        callback: (isSuccess: Boolean, progress: Int?, msg: String) -> Unit
+        callback: (isSuccess: Boolean, msg: String) -> Unit,
+        progressCallback: (progress: Int?) -> Unit
     ) {
+        Log.v(LOG_TAG, "开始上传图片")
         val bmobFile = BmobFile(file)
         bmobFile.uploadblock(object : UploadFileListener() {
             override fun done(p0: BmobException?) {
                 if (p0 == null) {
                     Log.v(LOG_TAG, "上传文件成功 url:${bmobFile.url}  fileUrl:${bmobFile.fileUrl}")
-                    addImageToCurrentUser(bmobFile.fileUrl) { isSuccess, message ->
+                    addImageUrlToCurrentUser(bmobFile.fileUrl) { isSuccess, message ->
                         if (isSuccess) {
-                            callback.invoke(true, null, EMPTY_TEXT)
+                            Log.v(LOG_TAG, "type=$imageType 图片url已经添加到用户")
+                            Log.v(LOG_TAG, "添加图片后的用户:${getUserByQuery().value.toString()}")
+                            callback.invoke(true, EMPTY_TEXT)
                         } else {
-                            callback.invoke(false, null, message)
+                            Log.v(LOG_TAG, "type=$imageType 图片url没有添加到用户")
+                            callback.invoke(false, message)
                         }
                     }
                 } else {
                     Log.v(LOG_TAG, "上传文件失败 msg:${p0.message}")
-                    callback.invoke(false, null, p0.message.toString())
+                    callback.invoke(false, p0.message.toString())
                 }
             }
 
             override fun onProgress(value: Int?) {
-                callback.invoke(false, value, EMPTY_TEXT)
+                Log.v(LOG_TAG, "pro value = $value")
+                progressCallback.invoke(value)
             }
         })
     }
 
-    fun addImageToCurrentUser(
+    fun addImageUrlToCurrentUser(
         fileUrl: String,
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
-        findCurrentUser { isSuccess, user, message ->
-            if (isSuccess) {
-                user!!.avatarUrl = fileUrl
-                user.update(object : UpdateListener() {
+        getUserByQuery()
+            .value?.run {
+                Log.v(LOG_TAG,"找到的添加图片的用户:${this}")
+                if (imageType == IMAGE_TYPE_HEAD){
+                    this.avatarUrl = fileUrl
+                }else if (imageType == IMAGE_TYPE_BACKGROUND){
+                    this.backgroundUrl = IMAGE_TYPE_BACKGROUND
+                }
+                update(object : UpdateListener() {
                     override fun done(p0: BmobException?) {
-                        if (p0 == null) {
+                        if (p0 == null){
                             callback.invoke(true, EMPTY_TEXT)
-                        } else {
-                            callback.invoke(false, p0.message.toString())
+                        }else{
+                            callback.invoke(false,p0.message.toString())
                         }
                     }
                 })
-            } else callback.invoke(false, message)
-        }
+            }
+        repository.fetchUserInfo()
+//        findCurrentUser { isSuccess, user, message ->
+//            if (isSuccess) {
+//                if (imageType == IMAGE_TYPE_HEAD){
+//                    user!!.avatarUrl = fileUrl
+//                    getUserByQuery().value?.avatarUrl = fileUrl
+//                }else if (imageType == IMAGE_TYPE_BACKGROUND){
+//                    user!!.backgroundUrl = fileUrl
+//                    getUserByQuery().value?.backgroundUrl = fileUrl
+//                }
+//                user!!.update(object : UpdateListener() {
+//                    override fun done(p0: BmobException?) {
+//                        if (p0 == null) {
+//                            callback.invoke(true, EMPTY_TEXT)
+//                        } else {
+//                            callback.invoke(false, p0.message.toString())
+//                        }
+//                    }
+//                })
+//            } else callback.invoke(false, message)
+//        }
     }
 
     private fun findCurrentUser(callback: (isSuccess: Boolean, user: User?, msg: String) -> Unit) {
@@ -148,13 +244,14 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
             } else null
         } else null
 
-    //打开相册选择图片
-    fun openFile(imageType: String, register: ActivityResultLauncher<Intent>?) {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "image/*"
-        intent.putExtra(IMAGE_TYPE, imageType)
-        register?.launch(intent)
+
+    fun requestPermissions(fragment: Fragment) {
+        //申请权限
+        fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (!it) {
+                Log.v(LOG_TAG, "用户拒绝权限请求")
+            }
+        }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 }
 

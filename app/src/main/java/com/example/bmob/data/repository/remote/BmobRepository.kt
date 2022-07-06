@@ -5,10 +5,7 @@ import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobSMS
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
-import cn.bmob.v3.listener.QueryListener
-import cn.bmob.v3.listener.SaveListener
-import cn.bmob.v3.listener.UpdateListener
+import cn.bmob.v3.listener.*
 import com.example.bmob.data.entity.School
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.entity.BmobBannerObject
@@ -240,6 +237,19 @@ class BmobRepository private constructor(){
                     callback.invoke(true,p0!!, EMPTY_TEXT)
                 }else{
                     callback.invoke(false,null,p1.message)
+                }
+            }
+        })
+    }
+
+    //同步控制台数据到缓存中
+    fun fetchUserInfo(){
+        BmobUser.fetchUserInfo(object :FetchUserInfoListener<User>(){
+            override fun done(p0: User?, p1: BmobException?) {
+                if (p1 == null){
+                    Log.v(LOG_TAG,"更新用户本地缓存信息成功:${p0?.username}  ${p0?.name}")
+                }else{
+                    Log.v(LOG_TAG,"更新用户本地缓存信息失败:${p1.message}")
                 }
             }
         })

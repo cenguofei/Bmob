@@ -39,15 +39,6 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
 
     private val testViewModel:StudentSelectViewModel by viewModels()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.v(LOG_TAG,"StudentHomeFragment onAttach")
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.v(LOG_TAG,"StudentHomeFragment onCreate")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,20 +51,17 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
                 binding.headImg.setImageResource(R.drawable.ic_launcher_background)
             }
         }
-        Log.v(LOG_TAG,"StudentHomeFragment onCreateView")
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
         binding.banner.start()
-        Log.v(LOG_TAG,"StudentHomeFragment onStart")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
-        Log.v(LOG_TAG,"StudentHomeFragment onViewCreated")
 
         //测试
 //        binding.headImg.setOnClickListener {
@@ -150,37 +138,17 @@ class StudentHomeFragment : Fragment() ,FragmentEventListener{
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.v(LOG_TAG,"StudentHomeFragment onPause")
-    }
 
     override fun onStop() {
         super.onStop()
         binding.banner.stop()
-        Log.v(LOG_TAG,"StudentHomeFragment onStop")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.v(LOG_TAG,"StudentHomeFragment onResume")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.v(LOG_TAG,"StudentHomeFragment onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.banner.destroy()
-        Log.v(LOG_TAG,"StudentHomeFragment onDestroy")
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.v(LOG_TAG,"StudentHomeFragment onDetach")
-    }
     //初始化界面
     private fun isShowRecyclerView(isShow: Boolean) {
 //        requireActivity().runOnUiThread {
