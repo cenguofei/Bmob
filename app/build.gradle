@@ -85,4 +85,8 @@ dependencies {
 
     //banner
     implementation 'io.github.youth5201314:banner:2.2.2'
+    //SwipeRefreshLayout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+
 }

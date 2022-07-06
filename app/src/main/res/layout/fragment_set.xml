@@ -9,10 +9,14 @@
             name="user"
             type="com.example.bmob.fragments.mine.SetUserInfo" />
     </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="650dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout5"
@@ -322,4 +326,19 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAddressEv" />
+    </LinearLayout>
+    </LinearLayout>
 </layout>

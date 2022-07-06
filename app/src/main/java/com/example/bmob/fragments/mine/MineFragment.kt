@@ -46,6 +46,9 @@ class MineFragment : Fragment() ,FragmentEventListener{
 
     //设置点击事件
     override fun setEventListener(){
+        binding.editUserInfoIv.setOnClickListener {
+            findNavController().navigate(R.id.action_mineFragment_to_setFragment)
+        }
         binding.reLogin.setOnClickListener {
             BmobUser.logOut()
             findNavController().navigate(R.id.action_mineFragment_to_loginFragment)
