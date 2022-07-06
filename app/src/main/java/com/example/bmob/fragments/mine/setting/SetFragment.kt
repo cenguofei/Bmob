@@ -1,6 +1,7 @@
 package com.example.bmob.fragments.mine.setting
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentSetBinding
 import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.IMAGE_TYPE_BACKGROUND
 import com.example.bmob.viewmodels.IMAGE_TYPE_HEAD
 import com.example.bmob.viewmodels.SetViewModel
@@ -54,5 +56,33 @@ class SetFragment : Fragment() ,FragmentEventListener{
         binding.editHeadIv.setOnClickListener {
             viewModel.openFile(IMAGE_TYPE_HEAD)
         }
+    }
+    private fun save(){
+        if (isInputAllInvalid()){
+            viewModel.saveUserEdit(this)
+        }
+    }
+    private fun isInputAllInvalid():Boolean{
+        if (binding.editUsernameEv.text.isEmpty()){
+            showMsg(requireContext(),"用户名不能为空")
+            return false
+        }
+        if (binding.editSchoolEv.text.isEmpty()){
+            showMsg(requireContext(),"学校不能为空")
+            return false
+        }
+        if (binding.editCollegeEv.text.isEmpty()){
+            showMsg(requireContext(),"学院不能为空")
+            return false
+        }
+        if (binding.editDepartmentEv.text.isEmpty()){
+            showMsg(requireContext(),"系不能为空")
+            return false
+        }
+        if (binding.editPhoneNumberEv.text.isEmpty()){
+            showMsg(requireContext(),"手机号不能为空")
+            return false
+        }
+        return true
     }
 }

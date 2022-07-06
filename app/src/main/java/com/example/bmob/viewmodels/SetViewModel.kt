@@ -159,23 +159,23 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
     ) {
         getUserByQuery()
             .value?.run {
-                Log.v(LOG_TAG,"找到的添加图片的用户:${this}")
-                if (imageType == IMAGE_TYPE_HEAD){
+                Log.v(LOG_TAG, "找到的添加图片的用户:${this}")
+                if (imageType == IMAGE_TYPE_HEAD) {
                     this.avatarUrl = fileUrl
-                }else if (imageType == IMAGE_TYPE_BACKGROUND){
+                } else if (imageType == IMAGE_TYPE_BACKGROUND) {
                     this.backgroundUrl = IMAGE_TYPE_BACKGROUND
                 }
                 update(object : UpdateListener() {
                     override fun done(p0: BmobException?) {
-                        if (p0 == null){
+                        if (p0 == null) {
                             callback.invoke(true, EMPTY_TEXT)
-                        }else{
-                            callback.invoke(false,p0.message.toString())
+                        } else {
+                            callback.invoke(false, p0.message.toString())
                         }
                     }
                 })
             }
-        repository.fetchUserInfo()
+//        repository.fetchUserInfo()
 //        findCurrentUser { isSuccess, user, message ->
 //            if (isSuccess) {
 //                if (imageType == IMAGE_TYPE_HEAD){
@@ -219,7 +219,9 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
             })
     }
 
-    //找到uri对应的文件
+    /**
+     * 找到uri对应的文件
+     */
     @RequiresApi(Build.VERSION_CODES.Q)
     fun uriToFileQ(context: Context, uri: Uri): File? =
         if (uri.scheme == ContentResolver.SCHEME_FILE) {
@@ -244,7 +246,9 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
             } else null
         } else null
 
-
+    /**
+     * 申请权限
+     */
     fun requestPermissions(fragment: Fragment) {
         //申请权限
         fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -252,6 +256,36 @@ class SetViewModel(private val handler: SavedStateHandle) : ViewModel() {
                 Log.v(LOG_TAG, "用户拒绝权限请求")
             }
         }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
+
+    fun saveUserEdit(fragment: SetFragment) {
+        repository.getUserInfo { isSuccess, user ->
+            if (isSuccess) {
+                user?.run {
+                    with(fragment.binding) {
+                        name = editNameEv.text.toString()
+                        signature = editSignatureEv.text.toString()
+                        age = Integer.parseInt(editAgeEv.text.toString())
+                        gender = editGenderEv.text.toString()
+                        username = editUsernameEv.text.toString()
+                        school = editSchoolEv.text.toString()
+                        college = editCollegeEv.text.toString()
+                        department = editDepartmentEv.text.toString()
+                        birth = editBirthEv.text.toString()
+                        mobilePhoneNumber = editPhoneNumberEv.text.toString()
+                        address = editAddressEv.text.toString()
+                        email = editEmailEv.text.toString()
+                    }
+                }
+                repository.updateUser(user!!) { isSuccess, msg ->
+                    if (isSuccess) {
+                        showMsg(fragment.requireContext(), "用户信息已更新")
+                    } else {
+                        showMsg(fragment.requireContext(), "用户信息更新失败:$msg")
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -26,6 +26,18 @@ class BmobRepository private constructor(){
         }
     }
 
+    fun updateUser(user:User,callback: (isSuccess: Boolean, msg: String) -> Unit){
+        user.update(object :UpdateListener(){
+            override fun done(p0: BmobException?) {
+                if (p0 == null){
+                    callback.invoke(true, EMPTY_TEXT)
+                }else{
+                    callback.invoke(false,p0.message.toString())
+                }
+            }
+        })
+    }
+
     /**
      * 通过username登录
      * 也就是工号或学号

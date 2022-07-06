@@ -10,13 +10,14 @@ data class User(
     val nickname:String? = null,  //昵称
     var avatarUrl:String? = null,  //头像url
     var backgroundUrl:String? = null,  //背景url
-    val age:Int? = null,    //年龄
-    val gender:String? = null,  //性别
-    val birth:String? = null, //生日
-    val address:String? = null, //地址
+    var age:Int? = null,    //年龄
+    var gender:String? = null,  //性别
+    var birth:String? = null, //生日
+    var address:String? = null, //地址
     val identification:Int, //身份
     var name:String?=null,  //姓名
     var signature:String? = null,  //用户签名
+
     /**
      * 下面三个属性在注册页面的时候就确定了，
      * 只要用户现在有账号，他就有下面的属性，并且不为空
