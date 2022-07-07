@@ -27,7 +27,7 @@ import com.example.bmob.utils.showMsg
 
 class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
     private val repository = BmobRepository.getInstance()
-    var nowSearch = MutableLiveData<String>()
+    private var nowSearch = MutableLiveData<String>()
     private var adapter: SearchRecyclerViewAdapter? = null
     private lateinit var fragment:Fragment
 
@@ -36,9 +36,10 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
     }
 
     //设置当前的搜索内容
-    private fun setNowSearch(query: String) {
+    fun setNowSearch(query: String) {
         nowSearch.postValue(query)
     }
+    fun getNowSearch() = nowSearch
 
     //外部观察
     var searchResult = Transformations.switchMap(nowSearch) { query ->

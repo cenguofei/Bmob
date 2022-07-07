@@ -66,11 +66,11 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
                 if (adapter == null && it.second.isNotEmpty()) {
                     adapter = SearchRecyclerViewAdapter { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
-                        val actionStudentHomeFragmentToShowThesisFragment =
-                            StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
+                        val actionTeacherHomeFragmentToShowThesisFragment =
+                            TeacherHomeFragmentDirections.actionTeacherHomeFragmentToShowThesisFragment(
                                 thesis
                             )
-                        findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
+                        findNavController().navigate(actionTeacherHomeFragmentToShowThesisFragment)
                     }
                     adapter!!.setThesisListForFirst(it.second)
                     binding.recyclerView1.adapter = adapter
@@ -79,7 +79,7 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
                         RecyclerView.VERTICAL, false
                     )
                 } else {
-                    if (it.second.isNotEmpty() && viewModel.nowSearch.value == it.first) {
+                    if (it.second.isNotEmpty() && viewModel.getNowSearch().value == it.first) {
                         Log.v(LOG_TAG, "设置thesisList：$it")
                         viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout1,true)
                         adapter!!.setThesisList(it.second)
