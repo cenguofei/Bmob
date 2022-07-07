@@ -35,6 +35,9 @@ class VerifyFragment : Fragment() ,FragmentEventListener{
     }
 
     override fun setEventListener() {
+        binding.backIv.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.beginVerify.setOnClickListener {
             val code1 = binding.editText1.text.toString()
             val code2 = binding.editText2.text.toString()
