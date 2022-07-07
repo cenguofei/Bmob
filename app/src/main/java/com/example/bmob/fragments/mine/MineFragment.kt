@@ -55,11 +55,15 @@ class MineFragment : Fragment() ,FragmentEventListener{
         binding.editUserInfoIv.setOnClickListener {
             findNavController().navigate(R.id.action_mineFragment_to_setFragment)
         }
+        //退出登录
         binding.reLogin.setOnClickListener {
+            setViewModel.removeUser()
             BmobUser.logOut()
             findNavController().navigate(R.id.action_mineFragment_to_loginFragment)
         }
         binding.exchangeAccount.setOnClickListener {
+            setViewModel.removeUser()
+            BmobUser.logOut()
             val actionMineFragmentToLoginFragment =
                 MineFragmentDirections.actionMineFragmentToLoginFragment(true)
             findNavController().navigate(actionMineFragmentToLoginFragment)

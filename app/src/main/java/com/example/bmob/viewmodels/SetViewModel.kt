@@ -124,6 +124,16 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     }
 
     /**
+     * 当用户切换身份登录时如果不刷新，会使用到前一个其他角色的用户，
+     * 所以当要退出登录  或者切换账号时，
+     * 需要清除当前用户信息
+     */
+    fun removeUser(){
+        handler.remove<BmobUser>(BMOB_USER_KEY)
+        handler.remove<User>(QUERY_USER_KEY)
+    }
+
+    /**
      * 查询BmobUser
      */
     fun getBmobUser(): MutableLiveData<BmobUser> {

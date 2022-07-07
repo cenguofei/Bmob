@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +21,15 @@ import com.example.bmob.fragments.student.StudentHomeFragmentDirections
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
+import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
 
 class TeacherHomeFragment : Fragment(),FragmentEventListener {
     lateinit var binding:FragmentTeacherHomeBinding
     private var adapter: SearchRecyclerViewAdapter? = null
     private val viewModel: CommonHomeViewModel by viewModels()
+    //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
+    private val setViewModel: SetViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,9 +52,12 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
 
         binding.banner1.addBannerLifecycleObserver(this)
         //观测头像url并保存到handler
-        viewModel.getTeacherInfo(this).observe(viewLifecycleOwner){
+//        viewModel.getTeacherInfo(this).observe(viewLifecycleOwner){
+//            binding.user = it
+//            Log.v(LOG_TAG,"首页观测的user id: $it")
+//        }
+        setViewModel.getUserByQuery().observe(viewLifecycleOwner){
             binding.user = it
-            Log.v(LOG_TAG,"首页观测的user id: $it")
         }
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {
@@ -110,5 +117,6 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
         binding.selectedStudentListLinearLayout.setOnClickListener {
 
         }
+        viewModel.setSearchViewListener(binding.searchView1,binding.recyclerView1,binding.contentLinearLayout1)
     }
 }
