@@ -181,17 +181,17 @@
         android:label="fragment_teacher_home"
         tools:layout="@layout/fragment_teacher_home" >
         <action
-            android:id="@+id/action_teacherHomeFragment_to_teacherReleaseFragment"
-            app:destination="@id/teacherReleaseFragment" />
+            android:id="@+id/action_teacherHomeFragment_to_teacherReleasedFragment"
+            app:destination="@id/teacherReleasedFragment" />
         <action
             android:id="@+id/action_teacherHomeFragment_to_teacherSelectResultFragment"
             app:destination="@id/teacherSelectResultFragment" />
     </fragment>
     <fragment
-        android:id="@+id/teacherReleaseFragment"
-        android:name="com.example.bmob.fragments.teacher.TeacherReleaseFragment"
+        android:id="@+id/teacherReleasedFragment"
+        android:name="com.example.bmob.fragments.teacher.TeacherReleasedFragment"
         android:label="fragment_teacher_release"
-        tools:layout="@layout/fragment_teacher_release" >
+        tools:layout="@layout/fragment_teacher_released" >
         <action
             android:id="@+id/action_teacherReleaseFragment_to_teacherNewThesisFragment"
             app:destination="@id/teacherNewThesisFragment" />

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/message_icon"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/teacherHomeFragment"
+        android:icon="@drawable/work_platform_img"
+        android:title="@string/work"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mineFragment"
+        android:icon="@drawable/mine_icon"
+        android:title="@string/mine"
+        app:showAsAction="ifRoom" />
+</menu>
