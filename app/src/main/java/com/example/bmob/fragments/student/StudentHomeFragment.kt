@@ -21,7 +21,6 @@ import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentHomeBinding
-import com.example.bmob.fragments.student.file.File
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
@@ -35,8 +34,6 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
     lateinit var binding: FragmentStudentHomeBinding
     private var adapter: SearchRecyclerViewAdapter? = null
 
-    private lateinit var file:File
-    private lateinit var addressesFormat:Array<Array<Array<String>>>
 
     private val viewModel:CommonHomeViewModel by viewModels()
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
@@ -127,23 +124,6 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
 
     //设置点击事件
     override fun setEventListener() {
-
-        binding.headImg.setOnClickListener {
-
-
-//            val filePath = getFilesDir().getAbsolutePath() + "/DeviceMsg"
-
-            val path = Environment.getExternalStorageDirectory().absolutePath
-            val filname = "/aa.xlsx"
-
-            val filePath = "$path$filname"
-
-            file = File()
-            addressesFormat = arrayOf()
-
-            file.writeExcel(addressesFormat,filePath)
-            Log.v("test","执行导出为excel $filePath")
-        }
         binding.graduateThesis.setOnClickListener {
             findNavController().navigate(R.id.action_studentHomeFragment_to_selectFragment)
         }
