@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="thesis"
+            type="com.example.bmob.data.entity.Thesis" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/show_teacher_thesis_shape">
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="10dp"
+
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+
+            android:layout_marginEnd="4dp"
+
+            android:background="@drawable/mine_info_bg"
+            android:gravity="center_vertical"
+            android:text='@{"课题名称:"+thesis.title}'
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/editUsernameEv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:background="@drawable/mine_info_bg"
+            android:gravity="center_vertical"
+            android:text='@{"研究方向:"+thesis.field}'
+            android:textSize="16sp"
+            android:textColor="@color/grey_light"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+        <TextView
+            android:id="@+id/editGenderEv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="16sp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textColor="@color/grey_light"
+            android:background="@drawable/mine_info_bg"
+            android:gravity="center_vertical"
+            android:text='@{"课题要求:"+thesis.require}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editUsernameEv" />
+
+        <TextView
+            android:id="@+id/editSchoolEv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/mine_info_bg"
+            android:gravity="center_vertical"
+            android:text='@{"课程简介:"+thesis.description}'
+            android:textColor="@color/grey_light"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editGenderEv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

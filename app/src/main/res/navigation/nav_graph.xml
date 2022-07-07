@@ -132,30 +132,15 @@
         <action
             android:id="@+id/action_studentHomeFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
-        <action
-            android:id="@+id/action_studentHomeFragment_to_selectFragment"
-            app:destination="@id/selectFragment" />
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
-        android:name="com.example.bmob.fragments.student.select.SelectFragment"
+        android:name="com.example.bmob.fragments.student.select.BrowseFragment"
         android:label="fragment_browse"
         tools:layout="@layout/fragment_browse" >
         <action
             android:id="@+id/action_browseFragment_to_selectFragment"
             app:destination="@id/selectFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/selectFragment"
-        android:name="com.example.bmob.fragments.student.select.SelectFragment"
-        android:label="fragment_select"
-        tools:layout="@layout/fragment_select" >
-        <argument
-            android:name="thesis"
-            app:argType="com.example.bmob.data.entity.Thesis" />
-        <action
-            android:id="@+id/action_selectFragment_to_showThesisFragment"
-            app:destination="@id/showThesisFragment" />
     </fragment>
     <fragment
         android:id="@+id/showThesisFragment"
@@ -165,6 +150,10 @@
         <argument
             android:name="thesis"
             app:argType="com.example.bmob.data.entity.Thesis" />
+        <argument
+            android:name="isShowParticipateButton"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/setFragment"
@@ -214,4 +203,15 @@
         android:name="com.example.bmob.fragments.teacher.TeacherSelectResultFragment"
         android:label="fragment_teacher_select_result"
         tools:layout="@layout/fragment_teacher_select_result" />
+    <fragment
+        android:id="@+id/selectFragment"
+        android:name="com.example.bmob.fragments.student.select.SelectFragment"
+        android:label="SelectFragment" >
+        <action
+            android:id="@+id/action_selectFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.example.bmob.data.entity.User" />
+    </fragment>
 </navigation>

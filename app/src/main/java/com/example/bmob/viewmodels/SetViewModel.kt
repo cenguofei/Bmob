@@ -320,6 +320,13 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                         showMsg(fragment.requireContext(), "用户信息更新失败:$msg")
                     }
                 }
+
+                //修改用户信息后，如果该用户是老师，就还要把老师对应课题的信息修改掉
+
+
+                //修改了学生信息后，课题里面学生的信息也要修改
+
+
                 saveUsernameToPreferencesStore(username = userName,fragment.requireContext())
             }
         }

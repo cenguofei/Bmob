@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.visibility = View.GONE
         binding.root.invalidate()
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
                 as NavHostFragment
         navController = navHostFragment.navController
@@ -57,10 +56,10 @@ class MainActivity : AppCompatActivity() {
         userViewModel.getUserIdentification().observe(this){
             when(it){
                 IDENTIFICATION_STUDENT -> {
-                    binding.bottomNavigationView.inflateMenu(R.menu.student_bottom_menu)
+//                    binding.bottomNavigationView.inflateMenu(R.menu.student_bottom_menu)
                 }
                 IDENTIFICATION_TEACHER -> {
-                    binding.bottomNavigationView.inflateMenu(R.menu.teacher_bottom_menu)
+//                    binding.bottomNavigationView.inflateMenu(R.menu.teacher_bottom_menu)
                 }
                 IDENTIFICATION_DEAN -> {
 

@@ -5,12 +5,8 @@
 
     <data>
         <variable
-            name="thesis"
-            type="com.example.bmob.data.entity.Thesis" />
-
-        <variable
-            name="user"
-            type="com.example.bmob.data.entity.User" />
+            name="selectedModel"
+            type="com.example.bmob.viewmodels.SelectedModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +22,7 @@
             android:maxLines="1"
             android:maxWidth="150dp"
             android:ellipsize="end"
-            android:text="@{thesis.title}"
+            android:text="@{selectedModel.title}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -43,7 +39,7 @@
             android:padding="4dp"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text='@{user.department+" | "+user.studentClass+" | "+user.name}'
+            android:text='@{selectedModel.department+" | "+selectedModel.studentClass+" | "+selectedModel.studentName}'
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/itemThesisTitle"
             app:layout_constraintEnd_toEndOf="parent"

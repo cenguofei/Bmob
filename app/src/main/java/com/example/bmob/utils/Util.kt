@@ -6,3 +6,5 @@ import android.widget.Toast
 fun showMsg(context: Context, msg:String){
     Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
 }
+
+const val EMPTY_TEXT = ""

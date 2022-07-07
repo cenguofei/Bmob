@@ -15,6 +15,7 @@ import com.example.bmob.R
 import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
+import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
 import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
@@ -69,7 +70,7 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionStudentHomeFragmentToShowThesisFragment =
                             StudentHomeFragmentDirections.actionStudentHomeFragmentToShowThesisFragment(
-                                thesis
+                                thesis,false
                             )
                         findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
                     }
@@ -111,10 +112,13 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
     //设置点击事件
     override fun setEventListener() {
         binding.graduateThesis.setOnClickListener {
-            findNavController().navigate(R.id.action_studentHomeFragment_to_selectFragment)
+            val actionStudentHomeFragmentToBrowseFragment =
+                StudentHomeFragmentDirections.actionStudentHomeFragmentToBrowseFragment()
+            findNavController().navigate(actionStudentHomeFragmentToBrowseFragment)
         }
-        binding.myClass.setOnClickListener {
-            findNavController().navigate(R.id.action_studentHomeFragment_to_browseFragment)
+        binding.myThesis1.setOnClickListener {
+            //显示学生的已选的课题
+
         }
         viewModel.setSearchViewListener(binding.searchView,binding.recyclerView,binding.contentLinearLayout)
     }

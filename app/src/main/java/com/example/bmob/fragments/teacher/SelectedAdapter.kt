@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.StudentChooseThesisItemBinding
+import com.example.bmob.viewmodels.SelectedModel
 
-class SelectedAdapter: RecyclerView.Adapter<SelectedAdapter.SearchViewHolder>() {
-    private var thesisList:List<Thesis>? = null
-    private var userList:List<User>? = null
+class SelectedAdapter(
+    private val selectedModelList: MutableList<SelectedModel>
+): RecyclerView.Adapter<SelectedAdapter.SearchViewHolder>() {
     class SearchViewHolder(val binding:StudentChooseThesisItemBinding):RecyclerView.ViewHolder(binding.root) {
         companion object{
             fun createViewHolder(parent: ViewGroup): SearchViewHolder {
@@ -18,9 +19,8 @@ class SelectedAdapter: RecyclerView.Adapter<SelectedAdapter.SearchViewHolder>() 
                 return SearchViewHolder(itemBinding)
             }
         }
-        fun bind(user: User,thesis:Thesis){
-            binding.user = user
-            binding.thesis = thesis
+        fun bind(selectedModel: SelectedModel){
+            binding.selectedModel = selectedModel
         }
     }
 
@@ -29,13 +29,8 @@ class SelectedAdapter: RecyclerView.Adapter<SelectedAdapter.SearchViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(user = userList!![position], thesis = thesisList!![position])
+        holder.bind(selectedModelList[position])
     }
 
-    override fun getItemCount(): Int = userList!!.size
-
-    fun setThesisListForFirst(newThesisList: List<Thesis>){
-        this.thesisList = newThesisList
-        this.notifyDataSetChanged()
-    }
+    override fun getItemCount(): Int = selectedModelList.size
 }

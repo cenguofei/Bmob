@@ -15,6 +15,7 @@ import com.example.bmob.R
 import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
+import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.databinding.FragmentTeacherHomeBinding
 import com.example.bmob.fragments.student.StudentHomeFragmentDirections
@@ -68,7 +69,7 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionTeacherHomeFragmentToShowThesisFragment =
                             TeacherHomeFragmentDirections.actionTeacherHomeFragmentToShowThesisFragment(
-                                thesis
+                                thesis,false
                             )
                         findNavController().navigate(actionTeacherHomeFragmentToShowThesisFragment)
                     }

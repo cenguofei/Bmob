@@ -27,6 +27,7 @@
         app:itemIconTint="@color/blue"
         app:itemTextColor="@color/blue"
         app:labelVisibilityMode="labeled"
+        app:menu="@menu/provost_bottom_menu"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

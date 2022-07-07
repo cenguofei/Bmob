@@ -104,7 +104,7 @@
 
             <LinearLayout
                 android:layout_gravity="center"
-                android:id="@+id/myClass"
+                android:id="@+id/myThesis1"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:text="@string/my_cls"
+                    android:text="@string/my_th"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -149,7 +149,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/myClass">
+                app:layout_constraintTop_toBottomOf="@+id/myThesis1">
 
                 <ImageView
                     android:layout_width="30dp"

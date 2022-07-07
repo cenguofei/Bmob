@@ -88,5 +88,7 @@ dependencies {
     //SwipeRefreshLayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    // https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
 
 }

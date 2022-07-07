@@ -144,7 +144,7 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/participateButton"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginBottom="70dp"
