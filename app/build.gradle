@@ -87,6 +87,13 @@ dependencies {
     implementation 'io.github.youth5201314:banner:2.2.2'
     //SwipeRefreshLayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    //poi
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
+    implementation 'javax.xml.stream:stax-api:1.0'
+    implementation 'com.fasterxml:aalto-xml:1.2.2'
+    //viewpager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl
     implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'

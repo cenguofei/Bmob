@@ -71,7 +71,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textView8" />
             <TextView
                 android:id="@+id/textView10"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/mine_info_bg"
@@ -86,7 +86,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editHeadIv" />
             <TextView
                 android:id="@+id/textView17"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/mine_info_bg"
@@ -101,7 +101,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/mine_info_bg"
@@ -116,7 +116,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/mine_info_bg"
@@ -131,7 +131,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
             <TextView
                 android:id="@+id/textView14"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/mine_info_bg"
@@ -147,7 +147,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
             <TextView
                 android:id="@+id/textView15"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/mine_info_bg"
@@ -162,7 +162,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
             <TextView
                 android:id="@+id/textView22"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/mine_info_bg"
@@ -177,7 +177,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
             <TextView
                 android:id="@+id/editSignatureEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/mine_info_bg"
@@ -192,7 +192,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView22" />
             <TextView
                 android:id="@+id/textView24"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/mine_info_bg"

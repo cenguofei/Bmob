@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="user"
+            type="com.example.bmob.data.entity.User" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/headImg"
+            android:layout_width="380dp"
+            android:layout_height="70dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/name_list_bg" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/editHeadIv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/back_img"
+            android:rotation="270"
+            app:layout_constraintBottom_toBottomOf="@+id/headImg"
+            app:layout_constraintStart_toStartOf="@+id/headImg"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/teacher_name"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
+            app:layout_constraintStart_toEndOf="@+id/editHeadIv"
+            app:layout_constraintTop_toTopOf="@+id/editHeadIv" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

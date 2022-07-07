@@ -10,7 +10,7 @@ import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentDeanHomeBinding
 
 /**
- * 这个界面时系主任首页
+ * 这个界面是系主任首页
  *
  * 也有banner
  */
