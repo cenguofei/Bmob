@@ -174,9 +174,10 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="200dp"
+                    android:layout_marginStart="163dp"
                     android:contentDescription="@string/todo"
                     android:src="@drawable/arrow_right" />
+
             </LinearLayout>
 
         </LinearLayout>

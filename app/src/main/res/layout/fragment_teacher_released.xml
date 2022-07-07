@@ -48,7 +48,7 @@
             android:src="@drawable/thesis_blue" />
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/itemThesisTitle"
             android:layout_width="87dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"

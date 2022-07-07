@@ -90,7 +90,23 @@ class TeacherNewThesisFragment : Fragment(),FragmentEventListener {
         }
 
         binding.updateButton.setOnClickListener {
-//            viewModel.updateThesis()
+            if (viewModel.isInputValid(binding)){
+                viewModel.getThesis().value?.let {
+                    it.title = binding.thesisTitle.text.toString()
+                    it.field = binding.thesisField.text.toString()
+                    it.require = binding.thesisRequire.text.toString()
+                    it.description = binding.thesisBrief.text.toString()
+                    viewModel.updateThesis(user = setViewModel.getUserByQuery().value!!, thesis = it){isSuccess, msg ->
+                        if (isSuccess){
+                            showMsg(requireContext(),"更新成功")
+                        }else{
+                            showMsg(requireContext(),"更新失败：$msg")
+                        }
+                    }
+                }
+            }else{
+                showMsg(requireContext(),"请完善信息")
+            }
         }
     }
     private fun back(){

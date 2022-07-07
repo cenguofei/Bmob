@@ -18,7 +18,7 @@
         android:background="@drawable/show_teacher_thesis_shape">
 
         <TextView
-            android:id="@+id/textView32"
+            android:id="@+id/itemUserDeanClassName"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView32" />
+            app:layout_constraintTop_toBottomOf="@+id/itemUserDeanClassName" />
 
         <TextView
             android:id="@+id/textView34"
@@ -98,11 +98,11 @@
             android:padding="4dp"
             android:textColor="@color/white"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/textView32"
+            app:layout_constraintBottom_toBottomOf="@+id/itemUserDeanClassName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView32"
-            app:layout_constraintTop_toTopOf="@+id/textView32"
+            app:layout_constraintStart_toEndOf="@+id/itemUserDeanClassName"
+            app:layout_constraintTop_toTopOf="@+id/itemUserDeanClassName"
             tools:ignore="SmallSp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

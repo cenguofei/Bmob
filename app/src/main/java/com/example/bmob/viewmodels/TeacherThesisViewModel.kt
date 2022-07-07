@@ -8,6 +8,7 @@ import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.SaveListener
+import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.data.entity.*
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.data.repository.remote.EMPTY_TEXT
@@ -152,8 +153,25 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
                 && binding.thesisRequire.text.isNotEmpty()
     }
 
-    fun updateThesis(thesis: Thesis) {
+    fun updateThesis(user: User,thesis: Thesis,callback: (isSuccess: Boolean, msg: String) -> Unit) {
+        thesis.update(object :UpdateListener(){
+            override fun done(p0: BmobException?) {
+                if (p0 == null){
+                    val mutableList = getThesisList(user).value
+                    mutableList?.forEach {
+                        if (it.objectId == thesis.objectId){
+                            mutableList.remove(it)
+                        }
+                    }
+                    mutableList?.add(0,thesis)
+                    handler.set(CURRENT_TEACHER_THESIS,mutableList)
 
+                    callback.invoke(true, EMPTY_TEXT)
+                }else{
+                    callback.invoke(false,p0.message.toString())
+                }
+            }
+        })
     }
 
     companion object{

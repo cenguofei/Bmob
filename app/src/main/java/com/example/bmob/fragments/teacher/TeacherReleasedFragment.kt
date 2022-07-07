@@ -22,7 +22,6 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentTeacherReleasedBinding
     private val thesisViewModel: TeacherThesisViewModel by activityViewModels()
     private val setViewModel: SetViewModel by activityViewModels()
-    private var adapter: TeacherThesisAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
