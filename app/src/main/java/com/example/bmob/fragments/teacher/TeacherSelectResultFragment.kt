@@ -18,4 +18,5 @@ class TeacherSelectResultFragment : Fragment() {
         return binding.root
     }
 
+
 }

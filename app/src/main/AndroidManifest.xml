@@ -17,6 +17,9 @@
         tools:ignore="ScopedStorage" />
     <!-- 允许读取手机状态 用于创建BmobInstallation -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 储存权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
     <application
@@ -48,7 +51,9 @@
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.example.bmob.BmobContentProvider"
-            android:exported="false" >
+            android:exported="false"
+            android:grantUriPermissions="true">
+
         </provider>
 
 

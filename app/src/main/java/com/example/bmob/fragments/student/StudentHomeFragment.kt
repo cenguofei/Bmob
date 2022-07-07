@@ -16,6 +16,7 @@ import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentHomeBinding
+import com.example.bmob.fragments.student.file.File
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
@@ -28,6 +29,9 @@ import com.youth.banner.indicator.CircleIndicator
 class StudentHomeFragment : Fragment(), FragmentEventListener {
     lateinit var binding: FragmentStudentHomeBinding
     private var adapter: SearchRecyclerViewAdapter? = null
+
+    private lateinit var file:File
+
     private val viewModel:CommonHomeViewModel by viewModels()
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
     private val setViewModel:SetViewModel by activityViewModels()
@@ -110,6 +114,10 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
 
     //设置点击事件
     override fun setEventListener() {
+
+        binding.headImg.setOnClickListener {
+            file.writeExcel("/Users/mac/Desktop/test.xlsx")
+        }
         binding.graduateThesis.setOnClickListener {
             findNavController().navigate(R.id.action_studentHomeFragment_to_selectFragment)
         }
