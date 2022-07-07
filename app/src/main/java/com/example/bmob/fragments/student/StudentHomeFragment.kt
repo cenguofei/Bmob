@@ -1,16 +1,21 @@
 package com.example.bmob.fragments.student
 
+import android.Manifest
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.bmob.v3.Bmob
+import cn.bmob.v3.Bmob.getFilesDir
 import com.example.bmob.R
 import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
@@ -31,6 +36,7 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
     private var adapter: SearchRecyclerViewAdapter? = null
 
     private lateinit var file:File
+    private lateinit var addressesFormat:Array<Array<Array<String>>>
 
     private val viewModel:CommonHomeViewModel by viewModels()
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
@@ -51,6 +57,13 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (!it) {
+                Log.v(LOG_TAG, "用户拒绝权限请求")
+            }
+        }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
         setEventListener()
         viewModel.setFragment(this)
 
@@ -116,7 +129,20 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
     override fun setEventListener() {
 
         binding.headImg.setOnClickListener {
-            file.writeExcel("/Users/mac/Desktop/test.xlsx")
+
+
+//            val filePath = getFilesDir().getAbsolutePath() + "/DeviceMsg"
+
+            val path = Environment.getExternalStorageDirectory().absolutePath
+            val filname = "/aa.xlsx"
+
+            val filePath = "$path$filname"
+
+            file = File()
+            addressesFormat = arrayOf()
+
+            file.writeExcel(addressesFormat,filePath)
+            Log.v("test","执行导出为excel $filePath")
         }
         binding.graduateThesis.setOnClickListener {
             findNavController().navigate(R.id.action_studentHomeFragment_to_selectFragment)

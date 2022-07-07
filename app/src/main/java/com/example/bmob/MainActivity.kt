@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         userViewModel.getUserIdentification().observe(this){
             when(it){
                 IDENTIFICATION_STUDENT -> {
-//                    binding.bottomNavigationView.inflateMenu(R.menu.student_bottom_menu)
+                    binding.bottomNavigationView.inflateMenu(R.menu.student_bottom_menu)
                 }
                 IDENTIFICATION_TEACHER -> {
                     binding.bottomNavigationView.inflateMenu(R.menu.teacher_bottom_menu)
@@ -132,4 +132,6 @@ class MainActivity : AppCompatActivity() {
         intent.addCategory(Intent.CATEGORY_HOME)
         context.startActivity(intent)
     }
+
+
 }

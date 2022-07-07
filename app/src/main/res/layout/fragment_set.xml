@@ -84,7 +84,7 @@
 
             <EditText
                 android:id="@+id/editNameEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:autofillHints=""
@@ -104,7 +104,7 @@
 
             <EditText
                 android:id="@+id/editSignatureEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:autofillHints=""
@@ -124,7 +124,7 @@
 
             <EditText
                 android:id="@+id/editAddressEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
@@ -145,7 +145,7 @@
 
             <EditText
                 android:id="@+id/editEmailEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
@@ -166,7 +166,7 @@
 
             <EditText
                 android:id="@+id/editAgeEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="15dp"
@@ -187,7 +187,7 @@
 
             <EditText
                 android:id="@+id/editGenderEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:autofillHints=""
@@ -206,7 +206,7 @@
 
             <EditText
                 android:id="@+id/editUsernameEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:autofillHints=""
@@ -225,7 +225,7 @@
 
             <EditText
                 android:id="@+id/editSchoolEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:autofillHints=""
@@ -244,7 +244,7 @@
 
             <EditText
                 android:id="@+id/editCollegeEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:autofillHints=""
@@ -263,7 +263,7 @@
 
             <EditText
                 android:id="@+id/editDepartmentEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:autofillHints=""
@@ -282,7 +282,7 @@
 
             <EditText
                 android:id="@+id/editBirthEv"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:autofillHints=""
