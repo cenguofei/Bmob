@@ -79,6 +79,19 @@ class StudentSelectViewModel:ViewModel() {
     fun getTeacherAllThesis(thesisUser: User,callback:(message:String)->Unit){
         BmobQuery<Thesis>()
             .addWhereEqualTo("teacherId",thesisUser.objectId)
+
+            /**
+             * 这里还要添加条件
+             * 等系主任
+             * 等教务长功能完善后再依次更改
+             *
+             *
+             *     //针对学生 ，论文是否可选，当审核通过并且选题时间开始后为true，表示可选
+             *     var enabledToStudent:Boolean? = null,
+             *     //针对老师,审批状态
+             *     var thesisState:Int? = null
+             */
+
             .findObjects(object :FindListener<Thesis>(){
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null){
@@ -92,6 +105,19 @@ class StudentSelectViewModel:ViewModel() {
                     }
                 }
             })
+    }
+
+    /**
+     * 学生选课
+     */
+    fun addStudentToTeacherThesis(student:User,thesis: Thesis,callback: (message: String) -> Unit){
+        thesis.studentsList?.forEach {
+            if (it.objectId == student.objectId){
+                callback.invoke("已经选择该课题，不能重复选")
+                return
+            }
+        }
+
     }
 
     fun addStudentToThesis(thesisObjectId:String,studentsList:List<User>,

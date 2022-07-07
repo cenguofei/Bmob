@@ -26,6 +26,7 @@ import com.example.bmob.viewmodels.StudentSelectViewModel
 class SelectFragment : Fragment(),FragmentEventListener {
     private val args:SelectFragmentArgs by navArgs()
     private val selectViewModel:StudentSelectViewModel by viewModels()
+    private val setViewModel:SetViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSelectBinding
     override fun onCreateView(
