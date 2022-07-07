@@ -24,6 +24,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
+import com.example.bmob.data.entity.STUDENT_NOT_SELECT_THESIS
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
@@ -312,7 +313,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 handler.set(BMOB_USER_KEY,bmobUser)
                 handler.set(QUERY_USER_KEY,user)
 
-                repository.updateUser(user!!) { isSuccess, msg ->
+                repository.updateUser(STUDENT_NOT_SELECT_THESIS,user!!) { isSuccess, msg ->
                     if (isSuccess) {
                         fragment.findNavController().navigateUp()
                         showMsg(fragment.requireContext(), "用户信息已更新")

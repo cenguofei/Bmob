@@ -24,6 +24,14 @@ import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.BmobUserViewModel
 import com.google.android.material.navigation.NavigationBarView
 
+
+/**
+ * 后期待完善：
+ * 1.StudentSelectViewModel.getTeacherAllThesis()
+ *
+ * 2.
+ */
+
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var binding:ActivityMainBinding

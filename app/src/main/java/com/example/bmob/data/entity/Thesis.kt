@@ -21,8 +21,7 @@ data class Thesis(
      * 老师的特有功能->导出选题学生名单(包括课题名称，学生姓名，班级)
      */
     //导出选择该课题的学生信息
-    var studentsList:List<User>?=null, //选择该论文的学生
-
+    var studentsList:MutableList<User>?=null, //选择该论文的学生
 
     var level:Int?=null,  //难度 1简单，2中等，3困难
 

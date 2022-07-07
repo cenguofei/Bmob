@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
 import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.databinding.FragmentShowThesisBinding
+import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.StudentSelectViewModel
 
@@ -46,10 +48,13 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
     }
 
     override fun setEventListener() {
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.participateButton.setOnClickListener {
             setViewModel.getUserByQuery().value?.let {
-                viewModel.addStudentToTeacherThesis(it,args.thesis){message: String ->
-
+                viewModel.addStudentToTeacherThesis(it,args.thesis){isSuccess, message ->
+                    showMsg(requireContext(), msg = message)
                 }
             }
         }

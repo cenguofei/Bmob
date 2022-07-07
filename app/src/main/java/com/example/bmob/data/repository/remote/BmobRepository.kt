@@ -7,10 +7,7 @@ import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.*
-import com.example.bmob.data.entity.School
-import com.example.bmob.data.entity.User
-import com.example.bmob.data.entity.BmobBannerObject
-import com.example.bmob.data.entity.Thesis
+import com.example.bmob.data.entity.*
 import com.example.bmob.utils.LOG_TAG
 
 
@@ -27,7 +24,8 @@ class BmobRepository private constructor(){
         }
     }
 
-    fun updateUser(user:User,callback: (isSuccess: Boolean, msg: String) -> Unit){
+    fun updateUser(studentSelectState:Boolean,user:User,callback: (isSuccess: Boolean, msg: String) -> Unit){
+        user.studentSelectState = studentSelectState
         user.update(object :UpdateListener(){
             override fun done(p0: BmobException?) {
                 if (p0 == null){
@@ -115,6 +113,12 @@ class BmobRepository private constructor(){
             school = s
             department = d
             college = c
+
+            /**
+             * 针对所有用户都统一设置
+             * 因为非学生用户根本用不到该属性
+             */
+            studentSelectState = STUDENT_NOT_SELECT_THESIS
 
             signOrLogin(msgCode,object :SaveListener<User>(){
                 override fun done(p0: User?, p1: BmobException?) {

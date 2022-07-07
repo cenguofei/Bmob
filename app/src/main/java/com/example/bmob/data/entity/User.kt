@@ -32,8 +32,13 @@ data class User(
 
     //2. 特有属性
     //1) 学生
+    /**
+     * 当学生选择课题时，标识学生是否已经成功选择该课题
+     *
+     * 所谓成功，就是 开放时间后->教师决定->最终是否被留下
+     */
     val studentClass:String?=null, //学生所属班级
-    val studentSelectState:Boolean? = null, //true已选，false未选
+    var studentSelectState:Boolean? = null, //true已选，false未选
 
 
     //2) 老师
@@ -53,3 +58,9 @@ const val IDENTIFICATION_TEACHER = 2 //身份为老师
 const val IDENTIFICATION_DEAN = 3 //身份为系主任
 const val IDENTIFICATION_PROVOST = 4 //身份为教务长
 const val USER_HAS_NOT_IDENTIFICATION = -1  //不写入云数据库，只在本地dataStore里面使用
+
+
+
+//针对学生 selectThesisState取值
+const val STUDENT_NOT_SELECT_THESIS = false
+const val STUDENT_HAS_SELECTED_THESIS = true
