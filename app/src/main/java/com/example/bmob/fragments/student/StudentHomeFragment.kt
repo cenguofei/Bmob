@@ -74,13 +74,13 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
                         findNavController().navigate(actionStudentHomeFragmentToShowThesisFragment)
                     }
                     adapter!!.setThesisListForFirst(it.second)
-                    binding.recyclerView.adapter = adapter
                     binding.recyclerView.layoutManager = LinearLayoutManager(
                         requireContext(),
                         RecyclerView.VERTICAL, false
                     )
+                    binding.recyclerView.adapter = adapter
                 } else {
-                    if (it.second.isNotEmpty() && viewModel.nowSearch.value == it.first) {
+                    if (it.second.isNotEmpty() && viewModel.getNowSearch().value == it.first) {
                         Log.v(LOG_TAG, "设置thesisList：$it")
                         viewModel.isShowRecyclerView(binding.recyclerView,binding.contentLinearLayout,true)
                         adapter!!.setThesisList(it.second)

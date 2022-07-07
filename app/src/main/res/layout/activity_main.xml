@@ -23,8 +23,6 @@
         android:layout_width="0dp"
         android:layout_height="55dp"
 
-        app:menu="@menu/student_bottom_menu"
-
         android:background="@color/white"
         app:itemIconTint="@color/blue"
         app:itemTextColor="@color/blue"

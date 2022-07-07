@@ -6,44 +6,44 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Thesis(
-    val classIds:List<String>?=null,  //班级id，该论文属于哪些班级选
-    val version:Int?=null,  //论文版本
-    val title:String?=null, //标题
-    val content:String?=null, //内容//可以不用管
-    val description:String?=null, //论文描述
-    val field:String?=null, //所属领域
-    val teacherId:String?=null, //创造该选题的教师id
-    val teacherAvatarUrl:String?=null, //教师的头像地址
+//    val classIds:List<String>?=null,  //班级id，该论文属于哪些班级选
+    var version:Int?=null,  //论文版本
+    var title:String?=null, //标题
+//    val content:String?=null, //内容//可以不用管
+    var description:String?=null, //论文描述
+    var field:String?=null, //所属领域
 
-    val teacherName:String?=null, //创造该选题的教师
+    var teacherId:String?=null, //创造该选题的教师id
+    var teacherAvatarUrl:String?=null, //教师的头像地址
+    var teacherName:String?=null, //创造该选题的教师
 
     /**
      * 老师的特有功能->导出选题学生名单(包括课题名称，学生姓名，班级)
      */
     //导出选择该课题的学生信息
-    val studentsList:List<User>?=null, //选择该论文的学生
+    var studentsList:List<User>?=null, //选择该论文的学生
 
 
-    val level:Int?=null,  //难度 1简单，2中等，3困难
+    var level:Int?=null,  //难度 1简单，2中等，3困难
 
-    val selectState:Int?=null, //论文是否被选，0未选，1已选
+    var selectState:Int?=null, //论文是否被选，0未选，1已选
 
-    val selectedNum:Int?=null, //被学生选择的次数
+    var selectedNum:Int?=null, //被学生选择的次数
 
 
-    val school:String?=null,
-    val department:String?=null,
-    val college:String?=null,
+    var school:String?=null,
+    var department:String?=null,
+    var college:String?=null,
 
-    val userDetail:String? = null,
-    val require:String? = null,//论文要求
+    var userDetail:String? = null,
+    var require:String? = null,//论文要求
 
 
     //针对学生 ，论文是否可选，当审核通过并且选题时间开始后为true，表示可选
-    val enabledToStudent:Boolean? = null,
+    var enabledToStudent:Boolean? = null,
 
     //针对老师,审批状态
-    val thesisState:Int? = null
+    var thesisState:Int? = null
 
     //针对系主任
     //看整个系/专业每个老师  每个课题的选择人数

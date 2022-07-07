@@ -10,10 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.bmob.R
-import com.example.bmob.data.entity.IDENTIFICATION_DEAN
-import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
-import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
-import com.example.bmob.data.entity.User
+import com.example.bmob.data.entity.*
 
 object BindingAdapter {
     /**
@@ -130,6 +127,23 @@ object BindingAdapter {
                 .placeholder(R.drawable.default_head)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(150)))
                 .into(imageView)
+        }
+    }
+
+
+    @JvmStatic
+    @BindingAdapter("teacherThesisIsApproved")
+    fun teacherThesisIsApproved(textView: TextView?,thesis: Thesis){
+        when(thesis.thesisState){
+            NOT_APPROVED -> {
+                textView?.text = "审核中"
+            }
+            ALREADY_APPROVED -> {
+                textView?.text = "审核通过"
+            }
+            THESIS_APPROVED_REJECTED -> {
+                textView?.text = "审核未通过"
+            }
         }
     }
 }

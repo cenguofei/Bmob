@@ -1,54 +1,96 @@
 package com.example.bmob.fragments.teacher
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.bmob.common.FragmentEventListener
+import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.FragmentTeacherNewThesisBinding
+import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
+import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherThesisViewModel
+import java.lang.Exception
 
 class TeacherNewThesisFragment : Fragment(),FragmentEventListener {
     private lateinit var binding:FragmentTeacherNewThesisBinding
     private val viewModel:TeacherThesisViewModel by activityViewModels()
+    private val setViewModel: SetViewModel by activityViewModels()
+    private val args:TeacherNewThesisFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTeacherNewThesisBinding.inflate(inflater,container,false)
+        binding.teacherAvatarUrl = setViewModel.getUserByQuery().value!!.avatarUrl
+
+        if (args.isUpdate){
+            binding.updateButton.visibility = View.VISIBLE
+            binding.ensureButton.visibility = View.GONE
+        }
+
+        viewModel.getThesis().observe(viewLifecycleOwner){
+            if (args.isUpdate){
+                binding.thesis = it
+            }
+        }
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setEventListener()
     }
 
     override fun setEventListener() {
         //确定保存可以
         binding.ensureButton.setOnClickListener {
-            if (viewModel.isInputValid(binding)){
-                viewModel.saveThesis(
-                    Thesis(
-                        title = binding.thesisTitle.text.toString(),
-                        field = binding.thesisField.text.toString(),
-                        require = binding.thesisRequire.text.toString(),
-                        description = binding.thesisBrief.text.toString()
-                    )
-                ){isSuccess, msg ->
-                    if (isSuccess){
-                        showMsg(requireContext(),"课题上传成功")
-                        back()
+            try {
+                val userLiveData = setViewModel.getUserByQuery()
+                //仅当用户身份为教师时才能上传
+                //前面我们已经确定过用户身份了，但是这里有必要再做一次检查
+                if (userLiveData.value != null && userLiveData.value!!.identification == IDENTIFICATION_TEACHER){
+                    if (viewModel.isInputValid(binding)){
+                        viewModel.saveThesis(
+                            userLiveData.value!!,
+                            Thesis(
+                                title = binding.thesisTitle.text.toString(),
+                                field = binding.thesisField.text.toString(),
+                                require = binding.thesisRequire.text.toString(),
+                                description = binding.thesisBrief.text.toString()
+                            )
+                        ){isSuccess, msg ->
+                            if (isSuccess){
+                                showMsg(requireContext(),"课题上传成功")
+                                back()
+                            }else{
+                                showMsg(requireContext(),"课题上传失败，请稍后再试:$msg")
+                            }
+                        }
                     }else{
-                        showMsg(requireContext(),"课题上传失败:$msg")
+                        showMsg(requireContext(),"请完善信息")
                     }
                 }
+            }catch (e:Exception){
+                Log.v(LOG_TAG,"TeacherNewThesis出错了：${e.message}")
             }
         }
         //取消课题
         binding.cancelButton.setOnClickListener {
             back()
+        }
+
+        binding.updateButton.setOnClickListener {
+//            viewModel.updateThesis()
         }
     }
     private fun back(){

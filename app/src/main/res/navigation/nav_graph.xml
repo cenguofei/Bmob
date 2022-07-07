@@ -186,6 +186,9 @@
         <action
             android:id="@+id/action_teacherHomeFragment_to_teacherSelectResultFragment"
             app:destination="@id/teacherSelectResultFragment" />
+        <action
+            android:id="@+id/action_teacherHomeFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
     </fragment>
     <fragment
         android:id="@+id/teacherReleasedFragment"
@@ -193,14 +196,19 @@
         android:label="fragment_teacher_release"
         tools:layout="@layout/fragment_teacher_released" >
         <action
-            android:id="@+id/action_teacherReleaseFragment_to_teacherNewThesisFragment"
+            android:id="@+id/action_teacherReleasedFragment_to_teacherNewThesisFragment"
             app:destination="@id/teacherNewThesisFragment" />
     </fragment>
     <fragment
         android:id="@+id/teacherNewThesisFragment"
         android:name="com.example.bmob.fragments.teacher.TeacherNewThesisFragment"
         android:label="fragment_teacher_new_thesis"
-        tools:layout="@layout/fragment_teacher_new_thesis" />
+        tools:layout="@layout/fragment_teacher_new_thesis" >
+        <argument
+            android:name="isUpdate"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
     <fragment
         android:id="@+id/teacherSelectResultFragment"
         android:name="com.example.bmob.fragments.teacher.TeacherSelectResultFragment"

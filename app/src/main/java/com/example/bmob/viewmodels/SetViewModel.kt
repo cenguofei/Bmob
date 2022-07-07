@@ -15,10 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
@@ -27,6 +24,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
+import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.data.storage.SettingsDataStore
@@ -35,6 +33,7 @@ import com.example.bmob.fragments.mine.MineFragment.Companion.QUERY_USER_KEY
 import com.example.bmob.fragments.mine.setting.SetFragment
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream

@@ -76,4 +76,6 @@
     <string name="new_thesis">新建课题</string>
     <string name="ensure">确定</string>
     <string name="cancel">取消</string>
+    <string name="has_approved">已审核</string>
+    <string name="update_thesis_button">更新</string>
 </resources>

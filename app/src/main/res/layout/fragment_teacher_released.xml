@@ -34,9 +34,11 @@
         android:id="@+id/linearLayout7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12">
+        app:layout_constraintTop_toBottomOf="@+id/imageView12"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/imageView16"
@@ -58,12 +60,12 @@
 
 
     <Button
-        android:id="@+id/newThesisButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:id="@+id/addNewThesis"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/new_thesis"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerView2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -77,3 +79,5 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
