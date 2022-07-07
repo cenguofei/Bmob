@@ -64,9 +64,16 @@
     <string name="find_thesis">查找课题</string>
     <string name="empty_text" />
     <string name="thesis_detail">课题详情</string>
-    <string name="release_thesis">发布课题</string>
+    <string name="th">课题</string>
     <string name="my_thesis">我的课题</string>
     <string name="into">加入</string>
     <string name="my_t">我的课题</string>
     <string name="s_s_m">选题学生名单</string>
+    <string name="thesisName">课题名称</string>
+    <string name="field">研究方向</string>
+    <string name="require">课题要求</string>
+    <string name="brief">课题简介</string>
+    <string name="new_thesis">新建课题</string>
+    <string name="ensure">确定</string>
+    <string name="cancel">取消</string>
 </resources>

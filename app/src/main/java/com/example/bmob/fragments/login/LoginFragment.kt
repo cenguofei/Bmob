@@ -57,10 +57,10 @@ class LoginFragment : Fragment(), FragmentEventListener {
                 if (it.isRememberPassword) {
                     binding.userConfig = it
                     //如果是记住密码并在有登录状态的情况下就进入首页
-                    if (userViewModel.isLogin()) {
-                        Log.v(LOG_TAG, "有登录状态，进入首页")
-                        findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
-                    }
+//                    if (userViewModel.isLogin()) {
+//                        Log.v(LOG_TAG, "有登录状态，进入首页")
+//                        findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
+//                    }
                 }
             }
         }
@@ -124,9 +124,13 @@ class LoginFragment : Fragment(), FragmentEventListener {
                 }
             }
         }
+
+        //到注册页面
         binding.registerBtn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
+
+        //需要判断并且保存身份
         binding.loginBtn.setOnClickListener {
             getUserInputInfo { username, password ->
                 if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
@@ -147,6 +151,7 @@ class LoginFragment : Fragment(), FragmentEventListener {
                                         IDENTIFICATION_STUDENT -> {
                                             //登录成功，进入学生主页
                                             try {
+                                                userViewModel.setUserIdentification(IDENTIFICATION_STUDENT)
                                                 findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
                                             } catch (e: Exception) {
                                                 Log.v(LOG_TAG, "登录出错：${e.message}")
@@ -156,6 +161,7 @@ class LoginFragment : Fragment(), FragmentEventListener {
                                         IDENTIFICATION_TEACHER -> {
                                             //登录成功，进入教师主页
                                             try {
+                                                userViewModel.setUserIdentification(IDENTIFICATION_TEACHER)
                                                 findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
                                             } catch (e: Exception) {
                                                 Log.v(LOG_TAG, "登录出错：${e.message}")
