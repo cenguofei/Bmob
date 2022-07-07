@@ -34,7 +34,6 @@ data class Thesis(
     var school:String?=null,
     var department:String?=null,
     var college:String?=null,
-
     var userDetail:String? = null,
     var require:String? = null,//论文要求
 
