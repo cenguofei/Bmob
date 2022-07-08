@@ -235,7 +235,11 @@
     <fragment
         android:id="@+id/deanHomeFragment"
         android:name="com.example.bmob.fragments.dean.DeanHomeFragment"
-        android:label="DeanHomeFragment" />
+        android:label="DeanHomeFragment" >
+        <action
+            android:id="@+id/action_deanHomeFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
+    </fragment>
     <fragment
         android:id="@+id/approveFragment"
         android:name="com.example.bmob.fragments.dean.approve.ApproveFragment"
