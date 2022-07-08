@@ -73,7 +73,7 @@
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="2dp"
+        android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="35dp"

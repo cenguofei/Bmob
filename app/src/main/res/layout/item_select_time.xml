@@ -1,0 +1,67 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout10"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/blue_light">
+
+    <DatePicker
+        android:id="@+id/new_act_date_picker"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+
+        android:background="@color/blue_light"
+        android:calendarTextColor="#79FF79"
+        android:calendarViewShown="false"
+        android:headerBackground="@color/blue_light"
+        android:outlineAmbientShadowColor="#0096FF"
+        android:outlineSpotShadowColor="#0096FF"
+        android:spinnersShown="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TimePicker
+
+        android:id="@+id/new_act_time_picker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_light"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_act_date_picker" />
+
+    <Button
+        android:id="@+id/Btn1"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_round_bg"
+        android:text="@string/back"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/Btn2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_act_time_picker" />
+
+    <Button
+        android:id="@+id/Btn2"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_round_bg"
+        android:text="@string/commit_1"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Btn1"
+        app:layout_constraintTop_toTopOf="@+id/Btn1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
