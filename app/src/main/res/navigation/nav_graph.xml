@@ -242,6 +242,9 @@
         <action
             android:id="@+id/action_deanHomeFragment_to_approvedNotApprovedFragment"
             app:destination="@id/approvedNotApprovedFragment" />
+        <action
+            android:id="@+id/action_deanHomeFragment_to_studentSelectedFragment"
+            app:destination="@id/studentSelectedFragment" />
     </fragment>
     <fragment
         android:id="@+id/approveFragment"

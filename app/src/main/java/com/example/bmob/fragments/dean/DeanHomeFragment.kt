@@ -119,5 +119,9 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
         binding.approveThesisLayout.setOnClickListener {
             findNavController().navigate(R.id.action_deanHomeFragment_to_approvedNotApprovedFragment)
         }
+
+        binding.selectedResultLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_deanHomeFragment_to_studentSelectedFragment)
+        }
     }
 }

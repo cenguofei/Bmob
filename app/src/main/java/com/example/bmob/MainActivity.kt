@@ -30,6 +30,8 @@ import com.google.android.material.navigation.NavigationBarView
  * 1.StudentSelectViewModel.getTeacherAllThesis()
  *
  * 2. FragmentShowThesis教师修改信息了但是Thesis表没有同步
+ *
+ * 3. 添加childView有问题
  */
 
 class MainActivity : AppCompatActivity() {

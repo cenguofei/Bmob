@@ -113,7 +113,7 @@
             </com.youth.banner.Banner>
 
             <LinearLayout
-                android:id="@+id/myThesisLinearLayout"
+                android:id="@+id/selectedResultLayout"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

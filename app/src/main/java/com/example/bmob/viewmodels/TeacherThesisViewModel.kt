@@ -88,11 +88,14 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
             .addWhereEqualTo("department",user.department)
         val equalToCollege = BmobQuery<Thesis>()
             .addWhereEqualTo("college",user.college)
+        val equalToTeacher = BmobQuery<Thesis>()
+            .addWhereEqualTo("teacherId",user.objectId)
 
         val queryList = ArrayList<BmobQuery<Thesis>>().run {
             add(equalToSchool)
             add(equalToDepartment)
             add(equalToCollege)
+            add(equalToTeacher)
             this@run
         }
 

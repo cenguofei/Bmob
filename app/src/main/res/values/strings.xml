@@ -96,4 +96,8 @@
     <string name="define_choose_thesis_time">定义选题时间</string>
     <string name="back">返回</string>
     <string name="commit_1">确定</string>
+    <string name="choose_result">选题结果</string>
+    <string name="not_se_stu_li">未选学生名单</string>
+    <string name="app_th">审批课题</string>
+    <string name="s_r">选题结果</string>
 </resources>

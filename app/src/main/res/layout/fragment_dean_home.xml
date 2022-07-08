@@ -116,7 +116,7 @@
             </com.youth.banner.Banner>
 
             <LinearLayout
-                android:id="@+id/myThesisLinearLayout"
+                android:id="@+id/selectedResultLayout"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:text="选题结果"
+                    android:text="@string/choose_result"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:text="未选学生名单"
+                    android:text="@string/not_se_stu_li"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -220,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:text="审批课题"
+                    android:text="@string/app_th"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:textSize="18sp"

@@ -111,7 +111,7 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
 
     override fun setEventListener() {
         //导航到 我的课题 详情页面，查看已经 上传 的课题
-        binding.myThesisLinearLayout.setOnClickListener {
+        binding.selectedResultLayout.setOnClickListener {
             findNavController().navigate(R.id.action_teacherHomeFragment_to_teacherReleasedFragment)
         }
         //查看选择自己每个课题的学生
