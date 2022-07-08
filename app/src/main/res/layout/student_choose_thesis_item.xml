@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content">
 
 
         <TextView
@@ -23,9 +24,9 @@
             android:maxWidth="150dp"
             android:ellipsize="end"
             android:text="@{selectedModel.title}"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textColor="@color/grey_light"
+            android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,8 +38,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:padding="4dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/grey_light"
+            android:textSize="16sp"
             android:text='@{selectedModel.department+" | "+selectedModel.studentClass+" | "+selectedModel.studentName}'
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/itemThesisTitle"

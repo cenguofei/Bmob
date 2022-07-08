@@ -34,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:maxLines="2"
-            android:text="Good Morning,Ugo"
+            android:text="@string/good_morning_ugo"
+            setRoleStartHello="@{user}"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -49,6 +50,9 @@
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+
+            loadRectImage="@{user.avatarUrl}"
+
             android:contentDescription="@string/todo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -194,6 +198,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/approveThesisLayout"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

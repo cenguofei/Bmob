@@ -70,11 +70,11 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
                 if (adapter == null && it.second.isNotEmpty()) {
                     adapter = SearchRecyclerViewAdapter { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
-                        val actionTeacherHomeFragmentToShowThesisFragment =
-                            TeacherHomeFragmentDirections.actionTeacherHomeFragmentToShowThesisFragment(
+                        val actionDeanHomeFragmentToShowThesisFragment =
+                            DeanHomeFragmentDirections.actionDeanHomeFragmentToShowThesisFragment(
                                 thesis,false
                             )
-                        findNavController().navigate(actionTeacherHomeFragmentToShowThesisFragment)
+                        findNavController().navigate(actionDeanHomeFragmentToShowThesisFragment)
                     }
                     adapter!!.setThesisListForFirst(it.second)
                     binding.recyclerView1.adapter = adapter
@@ -113,8 +113,11 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
     }
 
     override fun setEventListener() {
-
-
         viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout)
+
+        //审批课题按钮
+        binding.approveThesisLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_deanHomeFragment_to_approvedNotApprovedFragment)
+        }
     }
 }

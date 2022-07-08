@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_loginFragment_to_deanHomeFragment"
             app:destination="@id/deanHomeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_provostHomeFragment"
+            app:destination="@id/provostHomeFragment" />
 
     </fragment>
     <fragment
@@ -62,6 +65,9 @@
         <action
             android:id="@+id/action_verifyFragment_to_deanHomeFragment"
             app:destination="@id/deanHomeFragment" />
+        <action
+            android:id="@+id/action_verifyFragment_to_provostHomeFragment"
+            app:destination="@id/provostHomeFragment" />
 
     </fragment>
     <fragment
@@ -85,6 +91,9 @@
         <action
             android:id="@+id/action_startFragment_to_deanHomeFragment"
             app:destination="@id/deanHomeFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_provostHomeFragment"
+            app:destination="@id/provostHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/usernameFragment"
@@ -226,7 +235,14 @@
     <fragment
         android:id="@+id/deanHomeFragment"
         android:name="com.example.bmob.fragments.dean.DeanHomeFragment"
-        android:label="DeanHomeFragment" />
+        android:label="DeanHomeFragment" >
+        <action
+            android:id="@+id/action_deanHomeFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
+        <action
+            android:id="@+id/action_deanHomeFragment_to_approvedNotApprovedFragment"
+            app:destination="@id/approvedNotApprovedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/approveFragment"
         android:name="com.example.bmob.fragments.dean.approve.ApproveFragment"
@@ -235,7 +251,11 @@
         android:id="@+id/approvedNotApprovedFragment"
         android:name="com.example.bmob.fragments.dean.approve.ApprovedNotApprovedFragment"
         android:label="fragment_approved_not_approved"
-        tools:layout="@layout/fragment_approved_not_approved" />
+        tools:layout="@layout/fragment_approved_not_approved" >
+        <action
+            android:id="@+id/action_approvedNotApprovedFragment_to_approveFragment"
+            app:destination="@id/approveFragment" />
+    </fragment>
     <fragment
         android:id="@+id/studentSelectedFragment"
         android:name="com.example.bmob.fragments.dean.select.StudentSelectedFragment"
