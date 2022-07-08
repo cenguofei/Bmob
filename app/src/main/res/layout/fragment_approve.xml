@@ -168,8 +168,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageView13"
+            app:riv_corner_radius="15dp"
+            android:scaleType="centerCrop"
             loadRectImage="@{teacherAvatarUrl}"
             android:layout_width="70dp"
             android:layout_height="70dp"

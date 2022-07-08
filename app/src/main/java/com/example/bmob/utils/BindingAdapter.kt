@@ -61,13 +61,13 @@ object BindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("loadRoundCornerHeadImage")
-    fun loadRoundCornerHeadImage(imageView: ImageView?, url: String?){
+    @BindingAdapter("loadHeadImage")
+    fun loadHeadImage(imageView: ImageView?, url: String?){
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
                 .placeholder(R.drawable.default_head)
-                .apply(RequestOptions.bitmapTransform(RoundedCorners(25)))
+//                .apply(RequestOptions.bitmapTransform(RoundedCorners(25)))
                 .into(imageView)
         }
     }
