@@ -99,14 +99,18 @@
 
         <TextView
             android:id="@+id/textView18"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
+            android:maxWidth="250dp"
+
             android:layout_height="19dp"
             android:layout_marginStart="25dp"
+
             android:layout_marginTop="35dp"
             android:text='@{dean.school+"·"+dean.college+"·"+dean.department}'
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@color/grey_light"
+            android:textSize="16sp"
             android:textStyle="bold"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/backImg" />
 
