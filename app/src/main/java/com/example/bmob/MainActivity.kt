@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.visibility = View.GONE
         binding.root.invalidate()
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
                 as NavHostFragment
@@ -54,31 +53,42 @@ class MainActivity : AppCompatActivity() {
          * 当重新选择当前选定的项目时，此侦听器也会收到通知，
          * 除非出现NavigationBarView
          */
-        binding.bottomNavigationView.setOnItemSelectedListener(object :
-            NavigationBarView.OnItemSelectedListener{
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-                return true
-            }
-        })
+//        binding.bottomNavigationView.setOnItemSelectedListener(object :
+//            NavigationBarView.OnItemSelectedListener{
+//            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//
+//                return true
+//            }
+//        })
         userViewModel.getUserIdentification().observe(this){
             when(it){
                 IDENTIFICATION_STUDENT -> {
-//                    binding.bottomNavigationView.inflateMenu(R.menu.student_bottom_menu)
+                    binding.bottomDeanNavigationView.visibility = View.GONE
+                    binding.bottomTeacherNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.setupWithNavController(navController)
                 }
                 IDENTIFICATION_TEACHER -> {
-//                    binding.bottomNavigationView.inflateMenu(R.menu.teacher_bottom_menu)
+                    binding.bottomDeanNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.visibility = View.GONE
+                    binding.bottomTeacherNavigationView.setupWithNavController(navController)
                 }
                 IDENTIFICATION_DEAN -> {
-
+                    binding.bottomTeacherNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.visibility = View.GONE
+                    binding.bottomDeanNavigationView.setupWithNavController(navController)
                 }
                 IDENTIFICATION_PROVOST -> {
-
+                    binding.bottomDeanNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.visibility = View.GONE
+                    binding.bottomTeacherNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.setupWithNavController(navController)
                 }
             }
         }
 
-        binding.bottomNavigationView.setupWithNavController(navController)
         setBottomNavigationView()
     }
     private fun setBottomNavigationView(){
@@ -112,9 +122,37 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.provostHomeFragment
                 || destination.id == R.id.provostSelectTimeFragment
             ) {
-                binding.bottomNavigationView.visibility = View.GONE
+                when(userViewModel.getUserIdentification().value){
+                    IDENTIFICATION_STUDENT -> {
+                        binding.bottomStudentNavigationView.visibility = View.GONE
+                    }
+                    IDENTIFICATION_TEACHER -> {
+                        binding.bottomTeacherNavigationView.visibility = View.GONE
+                    }
+                    IDENTIFICATION_DEAN -> {
+                        binding.bottomDeanNavigationView.visibility = View.GONE
+                    }
+                    IDENTIFICATION_PROVOST -> {
+                        binding.bottomProvostNavigationView.visibility = View.GONE
+                    }
+                }
+//                binding.bottomNavigationView.visibility = View.GONE
             }else{
-                binding.bottomNavigationView.visibility = View.VISIBLE
+                when(userViewModel.getUserIdentification().value){
+                    IDENTIFICATION_STUDENT -> {
+                        binding.bottomStudentNavigationView.visibility = View.VISIBLE
+                    }
+                    IDENTIFICATION_TEACHER -> {
+                        binding.bottomTeacherNavigationView.visibility = View.VISIBLE
+                    }
+                    IDENTIFICATION_DEAN -> {
+                        binding.bottomDeanNavigationView.visibility = View.VISIBLE
+                    }
+                    IDENTIFICATION_PROVOST -> {
+                        binding.bottomProvostNavigationView.visibility = View.VISIBLE
+                    }
+                }
+//                binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }
     }

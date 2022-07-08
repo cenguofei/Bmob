@@ -1,173 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout15"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.dean.approve.ApprovedNotApprovedFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/backImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/back_img"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <variable
+            name="dean"
+            type= "com.example.bmob.data.entity.User"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/approve_task"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </data>
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="392dp"
-        android:layout_height="40dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout15"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.dean.approve.ApprovedNotApprovedFragment">
 
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_weight="1"
-        android:background="@drawable/search_shape"
-
-        android:focusable="true"
-        android:iconifiedByDefault="false"
-        android:imeOptions="actionSearch"
-        android:paddingStart="40dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="1dp"
-        android:paddingBottom="5dp"
-        android:queryBackground="@null"
-        android:queryHint="@string/find_teacher"
-        android:searchIcon="@null"
-        android:showDividers="none"
-
-        android:submitBackground="@null"
-        android:textAlignment="center"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/search"
-        app:layout_constraintBottom_toBottomOf="@+id/searchView"
-        app:layout_constraintStart_toStartOf="@+id/searchView"
-        app:layout_constraintTop_toTopOf="@+id/searchView" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="2dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="35dp"
-        android:text='@{user.school+"·"+user.college+"·"+user.department}'
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backImg" />
-
-    <ImageView
-        android:id="@+id/headImg"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="40dp"
-        android:contentDescription="@string/todo"
-        app:layout_constraintBottom_toBottomOf="@+id/textView18"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView18"
-        app:layout_constraintVertical_bias="0.472"
-        tools:src="@tools:sample/avatars" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout9"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout8"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        tools:ignore="UseCompoundDrawables">
-
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/resultsTabLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/blue"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="scrollable"
+            app:tabPaddingBottom="1dp"
+            app:tabRippleColor="@color/cardview_shadow_end_color"
+            app:tabSelectedTextColor="@color/blue"
+            app:tabTextColor="@color/blue" />
         <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="40dp"
+            android:id="@+id/backImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/back_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/approve_task"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/thesis_blue"
-            android:contentDescription="@string/todo" />
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+
             android:layout_weight="1"
-            android:text="@string/has_approved_"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:background="@drawable/search_shape"
+            android:focusable="true"
+            android:iconifiedByDefault="false"
+            android:imeOptions="actionSearch"
+            android:paddingStart="40dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="1dp"
+            android:paddingBottom="5dp"
+            android:queryBackground="@null"
+            android:queryHint="@string/find_teacher"
 
-    <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout9"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        tools:ignore="UseCompoundDrawables">
+            android:searchIcon="@null"
+            android:showDividers="none"
+            android:submitBackground="@null"
+            android:textAlignment="center"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView18"
+            tools:ignore="MissingConstraints" />
 
         <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/approve_thesis"
-            android:contentDescription="@string/todo" />
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/search"
+            app:layout_constraintBottom_toBottomOf="@+id/searchView"
+            app:layout_constraintStart_toStartOf="@+id/searchView"
+            app:layout_constraintTop_toTopOf="@+id/searchView" />
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/textView18"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="@string/wait_to_approve"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="35dp"
+            android:text='@{dean.school+"·"+dean.college+"·"+dean.department}'
             android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backImg" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:layout_width="409dp"
-        android:layout_height="466dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+        <ImageView
+            android:id="@+id/headImg"
+            android:layout_width="60dp"
+            loadRectImage="@{dean.avatarUrl}"
+            android:layout_height="60dp"
+            android:layout_marginEnd="40dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintBottom_toBottomOf="@+id/textView18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView18"
+            app:layout_constraintVertical_bias="0.472"
+            tools:src="@tools:sample/avatars" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultsTabLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

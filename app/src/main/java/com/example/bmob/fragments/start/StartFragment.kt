@@ -54,7 +54,7 @@ class StartFragment : Fragment() {
                                 Log.v(LOG_TAG,"已经登录:账号username：${bmobUser.username} 电话：${bmobUser.mobilePhoneNumber}")
                                 userViewModel.getUserInfo { isSuccess, user ->
                                     if (isSuccess){
-                                        userViewModel.getUserIdentificationAndNavigate(user!!.identification,this@StartFragment)
+                                        userViewModel.getUserIdentificationAndNavigateForStart(user!!.identification,this@StartFragment)
                                     }
                                 }
                             }else{ //不是

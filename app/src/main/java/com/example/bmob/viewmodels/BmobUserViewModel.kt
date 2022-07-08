@@ -26,19 +26,56 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
 
     //得到当前用户身份，进入该身份的首页
     fun getUserIdentification(): MutableLiveData<Int> {
+        Log.v(LOG_TAG,"MainActivity getUserIdentification")
+        if (!handler.contains(USER_IDENTIFICATION)){
+            setUserIdentification(USER_HAS_NOT_IDENTIFICATION)
+        }
         return handler.getLiveData(USER_IDENTIFICATION)
     }
 
     //设置当前用户身份
     fun setUserIdentification(identification: Int) {
+        Log.v(LOG_TAG,"setUserIdentification")
         handler.set(USER_IDENTIFICATION, identification)
+    }
+
+    fun getUserIdentificationAndNavigateForVerify(identification: Int, fragment: Fragment) {
+        /**
+         * setUserIdentification()暂时不起作用
+         * 因为MainActivity并没有判断用户身份，然后显示不同的底部导航栏的中间图标
+         */
+        when (identification) {
+            IDENTIFICATION_STUDENT -> {
+                setUserIdentification(IDENTIFICATION_STUDENT)
+                fragment.findNavController()
+                    .navigate(R.id.action_verifyFragment_to_studentHomeFragment)
+            }
+            IDENTIFICATION_TEACHER -> {
+                setUserIdentification(IDENTIFICATION_TEACHER)
+                fragment.findNavController()
+                    .navigate(R.id.action_verifyFragment_to_teacherHomeFragment)
+            }
+            IDENTIFICATION_DEAN -> {
+                setUserIdentification(IDENTIFICATION_DEAN)
+                fragment.findNavController()
+                    .navigate(R.id.action_verifyFragment_to_deanHomeFragment)
+            }
+            IDENTIFICATION_PROVOST -> {
+                setUserIdentification(IDENTIFICATION_PROVOST)
+                fragment.findNavController()
+                    .navigate(R.id.action_verifyFragment_to_provostHomeFragment)
+            }
+        }
     }
 
     /**
      * 判断当前用户身份，
      * 并导航到对应首页
      */
-    fun getUserIdentificationAndNavigate(identification: Int, fragment: Fragment) {
+    fun getUserIdentificationAndNavigateForStart(
+        identification: Int,
+        fragment: Fragment
+    ) {
         /**
          * setUserIdentification()暂时不起作用
          * 因为MainActivity并没有判断用户身份，然后显示不同的底部导航栏的中间图标
@@ -62,7 +99,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
             IDENTIFICATION_PROVOST -> {
                 setUserIdentification(IDENTIFICATION_PROVOST)
                 fragment.findNavController()
-                    .navigate(R.id.action_loginFragment_to_provostHomeFragment)
+                    .navigate(R.id.action_startFragment_to_provostHomeFragment)
             }
         }
     }
