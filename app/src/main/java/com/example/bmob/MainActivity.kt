@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
                 || destination.id == R.id.browseFragment
                 || destination.id == R.id.selectFragment
+                || destination.id == R.id.studentThesisInformationFragment
 
                 || destination.id == R.id.showThesisFragment
 
@@ -101,7 +102,15 @@ class MainActivity : AppCompatActivity() {
 
                 || destination.id == R.id.teacherReleasedFragment
                 || destination.id == R.id.teacherSelectResultFragment
-                ||destination.id == R.id.teacherNewThesisFragment
+                || destination.id == R.id.teacherNewThesisFragment
+
+                || destination.id == R.id.approveFragment
+                || destination.id == R.id.approvedNotApprovedFragment
+                || destination.id == R.id.studentSelectedFragment
+                || destination.id == R.id.studentUnselectedFragment
+
+                || destination.id == R.id.provostHomeFragment
+                || destination.id == R.id.provostSelectTimeFragment
             ) {
                 binding.bottomNavigationView.visibility = View.GONE
             }else{

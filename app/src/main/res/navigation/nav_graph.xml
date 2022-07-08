@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_loginFragment_to_teacherHomeFragment"
             app:destination="@id/teacherHomeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_deanHomeFragment"
+            app:destination="@id/deanHomeFragment" />
 
     </fragment>
     <fragment
@@ -56,6 +59,9 @@
         <action
             android:id="@+id/action_verifyFragment_to_teacherHomeFragment"
             app:destination="@id/teacherHomeFragment" />
+        <action
+            android:id="@+id/action_verifyFragment_to_deanHomeFragment"
+            app:destination="@id/deanHomeFragment" />
 
     </fragment>
     <fragment
@@ -76,6 +82,9 @@
         <action
             android:id="@+id/action_startFragment_to_teacherHomeFragment"
             app:destination="@id/teacherHomeFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_deanHomeFragment"
+            app:destination="@id/deanHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/usernameFragment"
@@ -214,4 +223,42 @@
             android:name="user"
             app:argType="com.example.bmob.data.entity.User" />
     </fragment>
+    <fragment
+        android:id="@+id/deanHomeFragment"
+        android:name="com.example.bmob.fragments.dean.DeanHomeFragment"
+        android:label="DeanHomeFragment" />
+    <fragment
+        android:id="@+id/approveFragment"
+        android:name="com.example.bmob.fragments.dean.approve.ApproveFragment"
+        android:label="ApproveFragment" />
+    <fragment
+        android:id="@+id/approvedNotApprovedFragment"
+        android:name="com.example.bmob.fragments.dean.approve.ApprovedNotApprovedFragment"
+        android:label="fragment_approved_not_approved"
+        tools:layout="@layout/fragment_approved_not_approved" />
+    <fragment
+        android:id="@+id/studentSelectedFragment"
+        android:name="com.example.bmob.fragments.dean.select.StudentSelectedFragment"
+        android:label="fragment_student_selected"
+        tools:layout="@layout/fragment_student_selected" />
+    <fragment
+        android:id="@+id/studentUnselectedFragment"
+        android:name="com.example.bmob.fragments.dean.select.StudentUnselectedFragment"
+        android:label="fragment_student_unselected"
+        tools:layout="@layout/fragment_student_unselected" />
+    <fragment
+        android:id="@+id/provostHomeFragment"
+        android:name="com.example.bmob.fragments.provost.ProvostHomeFragment"
+        android:label="fragment_provost_home"
+        tools:layout="@layout/fragment_provost_home" />
+    <fragment
+        android:id="@+id/provostSelectTimeFragment"
+        android:name="com.example.bmob.fragments.provost.ProvostSelectTimeFragment"
+        android:label="fragment_provost_select_time"
+        tools:layout="@layout/fragment_provost_select_time" />
+    <fragment
+        android:id="@+id/studentThesisInformationFragment"
+        android:name="com.example.bmob.fragments.student.select.StudentThesisInformationFragment"
+        android:label="fragment_student_thesis_information"
+        tools:layout="@layout/fragment_student_thesis_information" />
 </navigation>

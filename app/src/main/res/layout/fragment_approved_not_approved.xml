@@ -73,8 +73,8 @@
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="2dp"
+        android:layout_height="23dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="35dp"
         android:text='@{user.school+"·"+user.college+"·"+user.department}'
@@ -93,6 +93,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView18"
+        app:layout_constraintVertical_bias="0.472"
         tools:src="@tools:sample/avatars" />
 
     <LinearLayout
@@ -104,22 +105,24 @@
         app:layout_constraintEnd_toStartOf="@+id/linearLayout8"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/imageView10"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/thesis_blue" />
+            android:src="@drawable/thesis_blue"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/textView19"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="已审批课题"
+            android:text="@string/has_approved_"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -134,23 +137,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/linearLayout9"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/imageView11"
             android:layout_width="31dp"
             android:layout_height="31dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/approve_thesis" />
+            android:src="@drawable/approve_thesis"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/textView20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="已审批课题"
+            android:text="@string/wait_to_approve"
             android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold" />
