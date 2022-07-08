@@ -88,4 +88,12 @@
     <string name="repulse">打回</string>
     <string name="has_approved_">已审批课题</string>
     <string name="wait_to_approve">待审批课题</string>
+    <string name="find_name">查找姓名</string>
+    <string name="teacher_1">老师</string>
+    <string name="student_1">学生</string>
+    <string name="dean_1">系主任</string>
+    <string name="choose_thesis_time">选题时间</string>
+    <string name="define_choose_thesis_time">定义选题时间</string>
+    <string name="back">返回</string>
+    <string name="commit_1">确定</string>
 </resources>
