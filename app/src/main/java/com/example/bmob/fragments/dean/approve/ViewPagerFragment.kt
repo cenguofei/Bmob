@@ -14,7 +14,7 @@ import com.example.bmob.common.ThesisDiffUtil
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.*
 
-class ViewPagerFragment : Fragment(), FragmentEventListener {
+class ViewPagerFragment : Fragment(){
     lateinit var binding: FragmentViewPagerBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,15 +22,6 @@ class ViewPagerFragment : Fragment(), FragmentEventListener {
     ): View {
         binding = FragmentViewPagerBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    override fun setEventListener() {
-
     }
 }
 

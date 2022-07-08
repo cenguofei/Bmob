@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentStudentSelectedBinding
 import com.example.bmob.databinding.FragmentStudentUnselectedBinding
+import com.example.bmob.viewmodels.DeanStudentSelectedViewModel
 
 
 /**
@@ -16,6 +18,8 @@ import com.example.bmob.databinding.FragmentStudentUnselectedBinding
  */
 class StudentSelectedFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentStudentSelectedBinding
+    private val viewModel:DeanStudentSelectedViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

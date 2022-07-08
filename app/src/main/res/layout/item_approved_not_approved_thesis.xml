@@ -7,50 +7,64 @@
         <variable
             name="tile"
             type="java.lang.String" />
-
+        <variable
+            name="desc"
+            type="java.lang.String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/headImg"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:contentDescription="@string/todo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/name_list_bg" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/editHeadIv"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/blue"
+            android:layout_marginStart="20sp"
             android:rotation="270"
-            app:layout_constraintBottom_toBottomOf="@+id/headImg"
-            app:layout_constraintStart_toStartOf="@+id/headImg"
+            android:src="@drawable/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/name"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@{tile}"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editHeadIv"
-            app:layout_constraintTop_toTopOf="@+id/editHeadIv" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:ellipsize="end"
+                android:maxWidth="320dp"
+                android:singleLine="true"
+                android:layout_marginStart="8dp"
+                android:text="@{tile}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/descTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxWidth="320dp"
+                android:layout_marginStart="8dp"
+                android:singleLine="true"
+                android:text="@{desc}"
+                android:textColor="@color/grey_light"
+                android:textSize="12sp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

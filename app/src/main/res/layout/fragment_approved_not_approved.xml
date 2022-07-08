@@ -24,6 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchView"
             app:tabGravity="start"
+            android:textSize="18sp"
             app:tabIndicatorColor="@color/blue"
             app:tabIndicatorFullWidth="false"
             app:tabMode="scrollable"
@@ -99,20 +100,26 @@
 
         <TextView
             android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:maxWidth="250dp"
+            android:layout_width="245dp"
+
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
 
             android:layout_height="19dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="10dp"
 
             android:layout_marginTop="35dp"
             android:text='@{dean.school+"·"+dean.college+"·"+dean.department}'
             android:textColor="@color/grey_light"
             android:textSize="16sp"
-            android:textStyle="bold"
-
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backImg" />
+            app:layout_constraintTop_toBottomOf="@+id/backImg"
+            >
+            <requestFocus/>
+        </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/headImg"

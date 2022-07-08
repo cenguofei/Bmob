@@ -5,13 +5,8 @@
 
     <data>
         <variable
-            name="teacherAvatarUrl"
-            type="java.lang.String" />
-
-        <variable
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -185,9 +180,9 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageView13"
+            loadRectImage="@{thesis.teacherAvatarUrl}"
             app:riv_corner_radius="15dp"
             android:scaleType="centerCrop"
-            loadRectImage="@{teacherAvatarUrl}"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="40dp"
@@ -211,7 +206,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
         <Button
-            android:id="@+id/ensure_button"
+            android:id="@+id/agreeBtn"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginBottom="15dp"
@@ -219,7 +214,7 @@
             android:text="@string/agree"
             android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/cancel_button"
+            app:layout_constraintBottom_toTopOf="@+id/repulseBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -233,12 +228,12 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/cancel_button"
+            app:layout_constraintBottom_toTopOf="@+id/repulseBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/cancel_button"
+            android:id="@+id/repulseBtn"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginBottom="40dp"
@@ -250,6 +245,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back_img"
+            android:contentDescription="@string/todo" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

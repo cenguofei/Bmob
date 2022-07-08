@@ -85,7 +85,7 @@ class TeacherNewThesisFragment : Fragment(),FragmentEventListener {
             }
         }
         //取消课题
-        binding.cancelButton.setOnClickListener {
+        binding.cancelBtn.setOnClickListener {
             back()
         }
 
