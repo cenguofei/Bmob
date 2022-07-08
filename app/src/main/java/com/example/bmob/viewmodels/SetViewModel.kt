@@ -77,9 +77,9 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                     if (isSuccess) {
                         Log.v(LOG_TAG, "图片上传成功")
                         //改变ui
-                        if (imageType!! == IMAGE_TYPE_HEAD) {
+                        if ((imageType!!) == IMAGE_TYPE_HEAD) {
                             fragment.binding.editHeadIv.setImageURI(uri)
-                        } else {
+                        } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND){
                             fragment.binding.backgroundIv.setImageURI(uri)
                         }
                     } else {

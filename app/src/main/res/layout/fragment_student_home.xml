@@ -54,7 +54,6 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/search_shape"
-            android:focusable="true"
             android:iconifiedByDefault="false"
 
             android:imeOptions="actionSearch"

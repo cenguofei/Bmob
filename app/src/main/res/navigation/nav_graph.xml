@@ -246,7 +246,15 @@
     <fragment
         android:id="@+id/approveFragment"
         android:name="com.example.bmob.fragments.dean.approve.ApproveFragment"
-        android:label="ApproveFragment" />
+        android:label="ApproveFragment" >
+        <argument
+            android:name="deanApproveThesis"
+            app:argType="com.example.bmob.data.entity.Thesis" />
+        <argument
+            android:name="isShowActionButton"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
     <fragment
         android:id="@+id/approvedNotApprovedFragment"
         android:name="com.example.bmob.fragments.dean.approve.ApprovedNotApprovedFragment"

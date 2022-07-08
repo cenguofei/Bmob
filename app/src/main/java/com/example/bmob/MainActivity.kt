@@ -95,7 +95,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
         setBottomNavigationView()
     }
     private fun setBottomNavigationView(){
