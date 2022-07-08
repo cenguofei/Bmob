@@ -109,6 +109,7 @@
                 android:layout_marginTop="15dp"
                 android:autofillHints=""
                 android:background="@drawable/mine_info_bg"
+                android:drawableStart="@drawable/signature"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
                 android:inputType="text"
