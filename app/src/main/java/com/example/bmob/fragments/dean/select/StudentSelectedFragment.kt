@@ -31,6 +31,7 @@ class StudentSelectedFragment : Fragment(), FragmentEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
+
     }
 
     override fun setEventListener() {

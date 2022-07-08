@@ -34,13 +34,12 @@ import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
-    private lateinit var binding:ActivityMainBinding
-    private val userViewModel:BmobUserViewModel by viewModels()
-    private var isFirst = false
+    private lateinit var binding: ActivityMainBinding
+    private val userViewModel: BmobUserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Bmob.initialize(this,"6c64658a44bd4a2260c527c3ca385248")
+        Bmob.initialize(this, "6c64658a44bd4a2260c527c3ca385248")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -61,43 +60,38 @@ class MainActivity : AppCompatActivity() {
 //                return true
 //            }
 //        })
-        userViewModel.getUserIdentification().observe(this){
-            if (!isFirst){
-                when(it){
-                    IDENTIFICATION_STUDENT -> {
-                        isFirst = true
-                        binding.bottomDeanNavigationView.visibility = View.GONE
-                        binding.bottomTeacherNavigationView.visibility = View.GONE
-                        binding.bottomProvostNavigationView.visibility = View.GONE
-                        binding.bottomStudentNavigationView.setupWithNavController(navController)
-                    }
-                    IDENTIFICATION_TEACHER -> {
-                        isFirst = true
-                        binding.bottomDeanNavigationView.visibility = View.GONE
-                        binding.bottomStudentNavigationView.visibility = View.GONE
-                        binding.bottomProvostNavigationView.visibility = View.GONE
-                        binding.bottomTeacherNavigationView.setupWithNavController(navController)
-                    }
-                    IDENTIFICATION_DEAN -> {
-                        isFirst = true
-                        binding.bottomTeacherNavigationView.visibility = View.GONE
-                        binding.bottomStudentNavigationView.visibility = View.GONE
-                        binding.bottomProvostNavigationView.visibility = View.GONE
-                        binding.bottomDeanNavigationView.setupWithNavController(navController)
-                    }
-                    IDENTIFICATION_PROVOST -> {
-                        isFirst = true
-                        binding.bottomDeanNavigationView.visibility = View.GONE
-                        binding.bottomStudentNavigationView.visibility = View.GONE
-                        binding.bottomTeacherNavigationView.visibility = View.GONE
-                        binding.bottomProvostNavigationView.setupWithNavController(navController)
-                    }
+        userViewModel.getUserIdentification().observe(this) {
+            when (it) {
+                IDENTIFICATION_STUDENT -> {
+                    binding.bottomDeanNavigationView.visibility = View.GONE
+                    binding.bottomTeacherNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.setupWithNavController(navController)
+                }
+                IDENTIFICATION_TEACHER -> {
+                    binding.bottomDeanNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.visibility = View.GONE
+                    binding.bottomTeacherNavigationView.setupWithNavController(navController)
+                }
+                IDENTIFICATION_DEAN -> {
+                    binding.bottomTeacherNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.visibility = View.GONE
+                    binding.bottomDeanNavigationView.setupWithNavController(navController)
+                }
+                IDENTIFICATION_PROVOST -> {
+                    binding.bottomDeanNavigationView.visibility = View.GONE
+                    binding.bottomStudentNavigationView.visibility = View.GONE
+                    binding.bottomTeacherNavigationView.visibility = View.GONE
+                    binding.bottomProvostNavigationView.setupWithNavController(navController)
                 }
             }
         }
         setBottomNavigationView()
     }
-    private fun setBottomNavigationView(){
+
+    private fun setBottomNavigationView() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (
                 destination.id == R.id.loginFragment
@@ -128,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.provostHomeFragment
                 || destination.id == R.id.provostSelectTimeFragment
             ) {
-                when(userViewModel.getUserIdentification().value){
+                when (userViewModel.getUserIdentification().value) {
                     IDENTIFICATION_STUDENT -> {
                         binding.bottomStudentNavigationView.visibility = View.GONE
                     }
@@ -143,8 +137,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 //                binding.bottomNavigationView.visibility = View.GONE
-            }else{
-                when(userViewModel.getUserIdentification().value){
+            } else {
+                when (userViewModel.getUserIdentification().value) {
                     IDENTIFICATION_STUDENT -> {
                         binding.bottomStudentNavigationView.visibility = View.VISIBLE
                     }

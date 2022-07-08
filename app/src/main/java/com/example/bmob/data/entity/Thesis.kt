@@ -19,9 +19,18 @@ data class Thesis(
 
     /**
      * 老师的特有功能->导出选题学生名单(包括课题名称，学生姓名，班级)
+     *
+     * 导出选择该课题的学生信息
+     *
+     * 系主任查询到该课题时，需要判断studentList
+     * @see studentsList
+     * @see teacherIsSelectOneStudent
+     * 当老师决定哪个学生选择该课题后更新 teacherIsSelectOneStudent
+     *      false代表老师还没有决定哪个学生选
+     *      true代表老师决定某个学生选择了该课题
      */
-    //导出选择该课题的学生信息
     var studentsList:MutableList<User>?=null, //选择该论文的学生
+    var teacherIsSelectOneStudent:Boolean?=null,
 
     var level:Int?=null,  //难度 1简单，2中等，3困难
 
