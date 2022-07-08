@@ -70,9 +70,9 @@ data class Thesis(
 const val SELECT_STATE_SELECTED = 1
 const val SELECT_STATE_UNSELECTED = 0
 
+//针对老师,审批状态 thesisState:Int
 // 针对老师 课题状态 Not approved
 //这三个状态都不在选课时间段
 const val NOT_APPROVED = 0  //表示系主任还没审批课题
 const val ALREADY_APPROVED = 1  //审批通过
 const val THESIS_APPROVED_REJECTED = 2 //审批未通过
-

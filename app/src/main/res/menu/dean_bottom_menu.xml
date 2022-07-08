@@ -7,7 +7,7 @@
         android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/studentHomeFragment"
+        android:id="@+id/deanHomeFragment"
         android:icon="@drawable/dean_bottom_item_icon"
         android:title="@string/work"
         app:showAsAction="ifRoom" />

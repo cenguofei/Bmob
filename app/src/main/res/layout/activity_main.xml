@@ -11,15 +11,16 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="55dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomStudentNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@+id/bottomStudentNavigationView"
         android:layout_width="0dp"
         android:layout_height="55dp"
 
@@ -32,4 +33,53 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomTeacherNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+
+        android:background="@color/white"
+        app:itemIconTint="@color/blue"
+        app:itemTextColor="@color/blue"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/teacher_bottom_menu"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomDeanNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+
+        android:background="@color/white"
+        app:itemIconTint="@color/blue"
+        app:itemTextColor="@color/blue"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/dean_bottom_menu"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomProvostNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+
+        android:background="@color/white"
+        app:itemIconTint="@color/blue"
+        app:itemTextColor="@color/blue"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/provost_bottom_menu"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

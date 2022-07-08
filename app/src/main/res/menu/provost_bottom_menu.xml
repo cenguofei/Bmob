@@ -7,8 +7,8 @@
         android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/studentHomeFragment"
-        android:icon="@drawable/work_platform_img"
+        android:id="@+id/provostHomeFragment"
+        android:icon="@drawable/provost_bottom_item_icon"
         android:title="@string/work"
         app:showAsAction="ifRoom" />
     <item
