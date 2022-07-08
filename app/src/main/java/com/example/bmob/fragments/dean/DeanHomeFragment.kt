@@ -114,5 +114,10 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
 
     override fun setEventListener() {
         viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout)
+
+        //审批课题按钮
+        binding.approveThesisLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_deanHomeFragment_to_approvedNotApprovedFragment)
+        }
     }
 }
