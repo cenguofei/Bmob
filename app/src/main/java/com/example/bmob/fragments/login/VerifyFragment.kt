@@ -60,8 +60,9 @@ class VerifyFragment : Fragment() ,FragmentEventListener{
                     viewModel.signOrLogin(name,workNum,pwd,identification,phoneNum,
                         "$code1$code2$code3$code4$code5$code6",
                         args.codeVerifySuccessUser.school,
+//                        args.codeVerifySuccessUser.college,
                         args.codeVerifySuccessUser.department,
-                        args.codeVerifySuccessUser.code
+                        args.codeVerifySuccessUser.college
                     ){ isSuccess, msg ->
                         if (isSuccess){
                             //这里需要识别身份再进入对应主页

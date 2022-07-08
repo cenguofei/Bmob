@@ -31,6 +31,7 @@ class ApprovedNotApprovedFragment : Fragment(), FragmentEventListener {
     private val viewModel: ApprovedNotApprovedViewModel by viewModels()
     private val setViewModel: SetViewModel by activityViewModels()
     private var currentPagePos = -1
+    private val fragments = listOf(ViewPagerFragment(), ViewPagerFragment())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +69,8 @@ class ApprovedNotApprovedFragment : Fragment(), FragmentEventListener {
 
     }
 
+
+
     private fun initViewPager() {
         val tabs = listOf(
             "已审批课题", "待审批课题"
@@ -100,9 +103,6 @@ class ApprovedNotApprovedFragment : Fragment(), FragmentEventListener {
     companion object {
         const val HAS_APPROVED_PAGE = 0
         const val NO_APPROVED_PAGE = 1
-        private val fragments = listOf(
-            ViewPagerFragment(), ViewPagerFragment()
-        )
     }
 }
 
