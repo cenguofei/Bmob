@@ -169,13 +169,27 @@ class LoginFragment : Fragment(), FragmentEventListener {
                                             }
                                         }
                                         IDENTIFICATION_DEAN -> {
-
+                                            //登录成功，进入教师主页
+                                            try {
+                                                userViewModel.setUserIdentification(IDENTIFICATION_DEAN)
+                                                findNavController().navigate(R.id.action_loginFragment_to_deanHomeFragment)
+                                            } catch (e: Exception) {
+                                                Log.v(LOG_TAG, "登录出错：${e.message}")
+                                                showMsg(requireContext(), "系统出错，请稍后再试")
+                                            }
                                         }
                                         IDENTIFICATION_PROVOST -> {
-
+                                            //登录成功，进入教师主页
+                                            try {
+                                                userViewModel.setUserIdentification(IDENTIFICATION_PROVOST)
+                                                findNavController().navigate(R.id.action_loginFragment_to_provostHomeFragment)
+                                            } catch (e: Exception) {
+                                                Log.v(LOG_TAG, "登录出错：${e.message}")
+                                                showMsg(requireContext(), "系统出错，请稍后再试")
+                                            }
                                         }
                                         else -> {
-
+                                            showMsg(requireContext(),"系统出错")
                                         }
                                     }
                                 }else{

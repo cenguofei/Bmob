@@ -29,7 +29,7 @@ import com.google.android.material.navigation.NavigationBarView
  * 后期待完善：
  * 1.StudentSelectViewModel.getTeacherAllThesis()
  *
- * 2.
+ * 2. FragmentShowThesis教师修改信息了但是Thesis表没有同步
  */
 
 class MainActivity : AppCompatActivity() {

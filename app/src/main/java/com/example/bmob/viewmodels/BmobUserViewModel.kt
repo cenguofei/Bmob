@@ -35,9 +35,14 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
     }
 
     /**
-     * 判断当前用户身份
+     * 判断当前用户身份，
+     * 并导航到对应首页
      */
     fun getUserIdentificationAndNavigate(identification: Int, fragment: Fragment) {
+        /**
+         * setUserIdentification()暂时不起作用
+         * 因为MainActivity并没有判断用户身份，然后显示不同的底部导航栏的中间图标
+         */
         when (identification) {
             IDENTIFICATION_STUDENT -> {
                 setUserIdentification(IDENTIFICATION_STUDENT)
@@ -50,10 +55,14 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
                     .navigate(R.id.action_startFragment_to_teacherHomeFragment)
             }
             IDENTIFICATION_DEAN -> {
-
+                setUserIdentification(IDENTIFICATION_DEAN)
+                fragment.findNavController()
+                    .navigate(R.id.action_startFragment_to_deanHomeFragment)
             }
             IDENTIFICATION_PROVOST -> {
-                //
+                setUserIdentification(IDENTIFICATION_PROVOST)
+                fragment.findNavController()
+                    .navigate(R.id.action_loginFragment_to_provostHomeFragment)
             }
         }
     }

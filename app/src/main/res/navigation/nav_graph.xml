@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_loginFragment_to_deanHomeFragment"
             app:destination="@id/deanHomeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_provostHomeFragment"
+            app:destination="@id/provostHomeFragment" />
 
     </fragment>
     <fragment
@@ -62,6 +65,9 @@
         <action
             android:id="@+id/action_verifyFragment_to_deanHomeFragment"
             app:destination="@id/deanHomeFragment" />
+        <action
+            android:id="@+id/action_verifyFragment_to_provostHomeFragment"
+            app:destination="@id/provostHomeFragment" />
 
     </fragment>
     <fragment
@@ -85,6 +91,9 @@
         <action
             android:id="@+id/action_startFragment_to_deanHomeFragment"
             app:destination="@id/deanHomeFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_provostHomeFragment"
+            app:destination="@id/provostHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/usernameFragment"
