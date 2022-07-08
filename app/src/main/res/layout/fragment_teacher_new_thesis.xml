@@ -159,7 +159,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="start"
                     android:hint="@string/brief"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:text="@{thesis.description}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
