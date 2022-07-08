@@ -54,8 +54,10 @@
             app:layout_constraintStart_toEndOf="@+id/imageView7"
             tools:ignore="SmallSp" />
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageView7"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="15dp"
             loadRectImage="@{thesis.teacherAvatarUrl}"
             android:layout_width="90dp"
             android:layout_height="90dp"

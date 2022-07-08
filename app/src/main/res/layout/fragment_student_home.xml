@@ -16,11 +16,11 @@
         tools:context=".fragments.student.StudentHomeFragment">
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/headImg"
             loadUserCircleImage="@{user.avatarUrl}"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:contentDescription="@string/todo"

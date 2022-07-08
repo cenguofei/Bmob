@@ -71,8 +71,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageView9"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="15dp"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginStart="10dp"

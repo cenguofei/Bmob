@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bmob_update_dialog_bg">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView20"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/default_head"/>
 
     <TextView
         android:id="@+id/textView27"

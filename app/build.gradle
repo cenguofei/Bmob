@@ -70,6 +70,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
     //圆形图片
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //圆角图片
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
     //by viewModels
     implementation "androidx.activity:activity-ktx:1.2.3"

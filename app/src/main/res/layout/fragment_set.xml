@@ -49,7 +49,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/editHeadIv"
                 loadUserCircleImage1="@{user.avatarUrl}"
                 android:layout_width="80dp"
@@ -109,6 +109,7 @@
                 android:layout_marginTop="15dp"
                 android:autofillHints=""
                 android:background="@drawable/mine_info_bg"
+                android:drawableStart="@drawable/signature"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
                 android:inputType="text"

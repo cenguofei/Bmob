@@ -121,7 +121,7 @@
             <requestFocus/>
         </TextView>
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/headImg"
             android:layout_width="60dp"
             loadRectImage="@{dean.avatarUrl}"
