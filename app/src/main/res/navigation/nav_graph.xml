@@ -288,6 +288,9 @@
         <action
             android:id="@+id/action_provostHomeFragment_to_provostSelectTimeFragment"
             app:destination="@id/provostSelectTimeFragment" />
+        <action
+            android:id="@+id/action_provostHomeFragment_to_skimFragment"
+            app:destination="@id/skimFragment" />
     </fragment>
     <fragment
         android:id="@+id/provostSelectTimeFragment"
@@ -318,5 +321,14 @@
         <action
             android:id="@+id/action_studentThesisFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/skimFragment"
+        android:name="com.example.bmob.fragments.provost.SkimFragment"
+        android:label="fragment_skim"
+        tools:layout="@layout/fragment_skim" >
+        <argument
+            android:name="identification"
+            app:argType="integer" />
     </fragment>
 </navigation>

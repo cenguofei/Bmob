@@ -116,7 +116,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     fun getUserByQuery(): MutableLiveData<User> {
         if (!handler.contains(QUERY_USER_KEY)) {
             repository.getUserInfo { isSuccess, user ->
-                if (isSuccess) {
+                if (isSuccess && user != null) {
                     handler.set(QUERY_USER_KEY, user)
                 }
             }

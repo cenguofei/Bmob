@@ -29,7 +29,9 @@ import com.youth.banner.indicator.CircleIndicator
  * 也有banner
  */
 class DeanHomeFragment : Fragment(),FragmentEventListener {
-    private lateinit var binding:FragmentDeanHomeBinding
+    companion object{
+        private lateinit var binding:FragmentDeanHomeBinding
+    }
     private var adapter: SearchRecyclerViewAdapter? = null
     private val viewModel: CommonHomeViewModel by viewModels()
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
