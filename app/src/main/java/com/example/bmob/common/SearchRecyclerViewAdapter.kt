@@ -10,9 +10,9 @@ import com.example.bmob.databinding.SearchSuggestItemBinding
 import com.example.bmob.utils.LOG_TAG
 
 class SearchRecyclerViewAdapter(
+    private var data:MutableList<Thesis>?,
     private val callback:(thesis:Thesis)->Unit
 ):RecyclerView.Adapter<SearchRecyclerViewAdapter.SearchViewHolder>() {
-    private var thesisList:List<Thesis>? = null
     class SearchViewHolder(val binding:SearchSuggestItemBinding):RecyclerView.ViewHolder(binding.root) {
         companion object{
             fun createViewHolder(parent: ViewGroup): SearchViewHolder {
@@ -34,27 +34,27 @@ class SearchRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(thesis = thesisList!![position],callback)
+        holder.bind(thesis = data!![position],callback)
 
     }
 
-    override fun getItemCount(): Int = thesisList!!.size
+    override fun getItemCount(): Int = data!!.size
 
-    fun setThesisListForFirst(newThesisList: List<Thesis>){
-        this.thesisList = newThesisList
-    }
+//    fun setThesisListForFirst(newThesisList: MutableList<Thesis>){
+//        this.data = newThesisList
+//    }
 
-    fun setThesisList(newThesisList: List<Thesis>){
+    fun setThesisList(newThesisList: MutableList<Thesis>){
 //        this.thesisList = newThesisList
 //        this.notifyDataSetChanged()
-        val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.thesisList!!, newThesisList))
+        val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.data!!, newThesisList))
         diffResult.dispatchUpdatesTo(this)
     }
 }
 
 class ThesisDiffUtil(
-    private val oldList: List<Thesis>,
-    private val newList: List<Thesis>
+    private val oldList: MutableList<Thesis>,
+    private val newList: MutableList<Thesis>
 ): DiffUtil.Callback() {
     //获取旧数据元素个数
     override fun getOldListSize(): Int {

@@ -63,29 +63,38 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        })
         userViewModel.getUserIdentification().observe(this) {
+            Log.v(LOG_TAG,"在这 getUserIdentification observe")
             when (it) {
                 IDENTIFICATION_STUDENT -> {
                     binding.bottomDeanNavigationView.visibility = View.GONE
                     binding.bottomTeacherNavigationView.visibility = View.GONE
                     binding.bottomProvostNavigationView.visibility = View.GONE
+
+                    binding.bottomStudentNavigationView.visibility = View.VISIBLE
                     binding.bottomStudentNavigationView.setupWithNavController(navController)
                 }
                 IDENTIFICATION_TEACHER -> {
                     binding.bottomDeanNavigationView.visibility = View.GONE
                     binding.bottomStudentNavigationView.visibility = View.GONE
                     binding.bottomProvostNavigationView.visibility = View.GONE
+
+                    binding.bottomTeacherNavigationView.visibility = View.VISIBLE
                     binding.bottomTeacherNavigationView.setupWithNavController(navController)
                 }
                 IDENTIFICATION_DEAN -> {
                     binding.bottomTeacherNavigationView.visibility = View.GONE
                     binding.bottomStudentNavigationView.visibility = View.GONE
                     binding.bottomProvostNavigationView.visibility = View.GONE
+
+                    binding.bottomDeanNavigationView.visibility = View.VISIBLE
                     binding.bottomDeanNavigationView.setupWithNavController(navController)
                 }
                 IDENTIFICATION_PROVOST -> {
                     binding.bottomDeanNavigationView.visibility = View.GONE
                     binding.bottomStudentNavigationView.visibility = View.GONE
                     binding.bottomTeacherNavigationView.visibility = View.GONE
+
+                    binding.bottomProvostNavigationView.visibility = View.VISIBLE
                     binding.bottomProvostNavigationView.setupWithNavController(navController)
                 }
             }
@@ -122,9 +131,10 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.studentSelectedFragment
                 || destination.id == R.id.studentUnselectedFragment
 
-                || destination.id == R.id.provostHomeFragment
+//                || destination.id == R.id.provostHomeFragment
                 || destination.id == R.id.provostSelectTimeFragment
             ) {
+                Log.v(LOG_TAG,"在这 addOnDestinationChangedListener getUserIdentification.value")
                 when (userViewModel.getUserIdentification().value) {
                     IDENTIFICATION_STUDENT -> {
                         binding.bottomStudentNavigationView.visibility = View.GONE
@@ -170,6 +180,7 @@ class MainActivity : AppCompatActivity() {
                 navController.currentDestination?.id == R.id.homeFragment
                 || navController.currentDestination?.id == R.id.studentHomeFragment
                 || navController.currentDestination?.id == R.id.mineFragment
+                || navController.currentDestination?.id == R.id.provostHomeFragment
             ) {
                 gotoDesktop(this)
                 return true
@@ -189,6 +200,4 @@ class MainActivity : AppCompatActivity() {
         intent.addCategory(Intent.CATEGORY_HOME)
         context.startActivity(intent)
     }
-
-
 }

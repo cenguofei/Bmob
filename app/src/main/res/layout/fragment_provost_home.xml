@@ -34,18 +34,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:maxLines="2"
-            android:text="Good Morning,Ugo"
+            android:text='@{"你好，"+user.school+"的"+"教务长"}'
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-            app:layout_constraintStart_toEndOf="@+id/imageView10"
-            app:layout_constraintTop_toTopOf="@+id/imageView10" />
+            app:layout_constraintStart_toEndOf="@+id/imageView10" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView10"
             android:layout_width="60dp"
+            loadHeadImage="@{user.avatarUrl}"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
@@ -113,7 +113,7 @@
             </com.youth.banner.Banner>
 
             <LinearLayout
-                android:id="@+id/selectedResultLayout"
+                android:id="@+id/teacherInfo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -155,7 +155,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/unselected_students_list"
+                android:id="@+id/studentInfo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -171,7 +171,8 @@
                     android:layout_marginTop="1dp"
                     android:contentDescription="@string/todo"
                     android:paddingStart="6dp"
-                    android:src="@drawable/signup_student" />
+                    android:src="@drawable/signup_student"
+                    tools:ignore="RtlSymmetry" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -195,6 +196,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/deanInfo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -229,6 +231,45 @@
                     android:layout_gravity="center_vertical"
                     android:contentDescription="@string/todo"
                     android:layout_marginStart="225dp"
+                    android:src="@drawable/arrow_right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/issueTime"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/unselected_students_list">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="2dp"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/signup_dean" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/issue_select_time"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/todo"
+                    android:layout_marginStart="172dp"
                     android:src="@drawable/arrow_right" />
             </LinearLayout>
 

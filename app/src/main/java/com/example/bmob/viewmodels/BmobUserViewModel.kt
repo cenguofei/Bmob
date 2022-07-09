@@ -28,6 +28,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
     fun getUserIdentification(): MutableLiveData<Int> {
         Log.v(LOG_TAG,"MainActivity getUserIdentification")
         if (!handler.contains(USER_IDENTIFICATION)){
+            Log.v(LOG_TAG,"BmobUserViewModel handler没有存储USER_IDENTIFICATION")
             setUserIdentification(USER_HAS_NOT_IDENTIFICATION)
         }
         return handler.getLiveData(USER_IDENTIFICATION)
@@ -35,7 +36,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
 
     //设置当前用户身份
     fun setUserIdentification(identification: Int) {
-        Log.v(LOG_TAG,"setUserIdentification")
+        Log.v(LOG_TAG,"setUserIdentification:$identification")
         handler.set(USER_IDENTIFICATION, identification)
     }
 
@@ -44,6 +45,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
          * setUserIdentification()暂时不起作用
          * 因为MainActivity并没有判断用户身份，然后显示不同的底部导航栏的中间图标
          */
+        Log.v(LOG_TAG,"VerifyFragment getUserIdentificationAndNavigateForVerify 当前身份为：$identification")
         when (identification) {
             IDENTIFICATION_STUDENT -> {
                 setUserIdentification(IDENTIFICATION_STUDENT)
@@ -76,6 +78,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         identification: Int,
         fragment: Fragment
     ) {
+        Log.v(LOG_TAG,"StartFragment getUserIdentificationAndNavigateForStart 当前身份为：$identification")
         /**
          * setUserIdentification()暂时不起作用
          * 因为MainActivity并没有判断用户身份，然后显示不同的底部导航栏的中间图标

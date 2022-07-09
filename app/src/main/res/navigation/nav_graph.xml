@@ -281,7 +281,11 @@
         android:id="@+id/provostHomeFragment"
         android:name="com.example.bmob.fragments.provost.ProvostHomeFragment"
         android:label="fragment_provost_home"
-        tools:layout="@layout/fragment_provost_home" />
+        tools:layout="@layout/fragment_provost_home" >
+        <action
+            android:id="@+id/action_provostHomeFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
+    </fragment>
     <fragment
         android:id="@+id/provostSelectTimeFragment"
         android:name="com.example.bmob.fragments.provost.ProvostSelectTimeFragment"

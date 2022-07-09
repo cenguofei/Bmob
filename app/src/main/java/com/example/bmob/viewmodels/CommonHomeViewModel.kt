@@ -147,47 +147,6 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
         }
         return handler.getLiveData(BANNER_DATA)
     }
-
-    fun setAdapter(
-        directions:NavDirections,
-        recyclerView: RecyclerView,
-        data:Pair<String,MutableList<Thesis>>,
-        linearLayout: LinearLayout
-    ){
-        Log.v(LOG_TAG, "观测到数据：$data")
-        if (data.first != ERROR) {
-            if (adapter == null && data.second.isNotEmpty()) {
-                adapter = SearchRecyclerViewAdapter { thesis ->
-                    Log.v(LOG_TAG, "回调：$thesis")
-                    fragment.findNavController().navigate(directions)
-                }
-                adapter!!.setThesisListForFirst(data.second)
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(
-                    fragment.requireContext(),
-                    RecyclerView.VERTICAL, false
-                )
-            } else {
-                if (data.second.isNotEmpty() && nowSearch.value == data.first) {
-                    Log.v(LOG_TAG, "设置thesisList：$data")
-                    isShowRecyclerView(recyclerView,linearLayout,true)
-                    adapter!!.setThesisList(data.second)
-                } else {
-                    isShowRecyclerView(recyclerView,linearLayout,false)
-                }
-            }
-        }
-    }
-
-    /**
-     * 添加Thesis测试方法
-     */
-    fun addThesis(
-        thesis: Thesis,
-        callback: (isSuccess: Boolean, objectId: String?, msg: String?) -> Unit
-    ) {
-        repository.addThesis(thesis, callback)
-    }
 }
 
 private const val USER = "user_"

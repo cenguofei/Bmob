@@ -78,6 +78,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                         Log.v(LOG_TAG, "图片上传成功")
                         //改变ui
                         if ((imageType!!) == IMAGE_TYPE_HEAD) {
+
                             fragment.binding.editHeadIv.setImageURI(uri)
                         } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND){
                             fragment.binding.backgroundIv.setImageURI(uri)
@@ -192,6 +193,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 Log.v(LOG_TAG, "找到的添加图片的用户:${this}")
                 if (imageType == IMAGE_TYPE_HEAD) {
                     this.avatarUrl = fileUrl
+
                 } else if (imageType == IMAGE_TYPE_BACKGROUND) {
                     this.backgroundUrl = fileUrl
                 }

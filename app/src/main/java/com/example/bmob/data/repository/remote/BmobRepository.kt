@@ -105,6 +105,8 @@ class BmobRepository private constructor(){
                     c:String,
                     callback: (isSuccess:Boolean,msg:String)->Unit){
         with(User(identification = identify)){
+            avatarUrl = "https://bmob-cdn-30807.bmobpay.com/2022/07/09/a9a95cd5401e013d801ce9aa5160af32.jpg"
+            backgroundUrl="https://bmob-cdn-30807.bmobpay.com/2022/07/09/2fa8045040089d7780c2e4cd86e1b56a.jpg"
             name = userName
             username = workNum
             setPassword(pwd)

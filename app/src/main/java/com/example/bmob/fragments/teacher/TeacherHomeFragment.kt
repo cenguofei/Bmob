@@ -52,11 +52,7 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
         viewModel.setFragment(this)
 
         binding.banner1.addBannerLifecycleObserver(this)
-        //观测头像url并保存到handler
-//        viewModel.getTeacherInfo(this).observe(viewLifecycleOwner){
-//            binding.user = it
-//            Log.v(LOG_TAG,"首页观测的user id: $it")
-//        }
+
         setViewModel.getUserByQuery().observe(viewLifecycleOwner){
             binding.user = it
         }
@@ -65,7 +61,7 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
-                    adapter = SearchRecyclerViewAdapter { thesis ->
+                    adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionTeacherHomeFragmentToShowThesisFragment =
                             TeacherHomeFragmentDirections.actionTeacherHomeFragmentToShowThesisFragment(
@@ -73,7 +69,6 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
                             )
                         findNavController().navigate(actionTeacherHomeFragmentToShowThesisFragment)
                     }
-                    adapter!!.setThesisListForFirst(it.second)
                     binding.recyclerView1.adapter = adapter
                     binding.recyclerView1.layoutManager = LinearLayoutManager(
                         requireContext(),

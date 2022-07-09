@@ -88,7 +88,7 @@
     <string name="repulse">打回</string>
     <string name="has_approved_">已审批课题</string>
     <string name="wait_to_approve">待审批课题</string>
-    <string name="find_name">查找姓名</string>
+    <string name="find_name">查阅课题</string>
     <string name="teacher_1">老师</string>
     <string name="student_1">学生</string>
     <string name="dean_1">系主任</string>
@@ -105,4 +105,5 @@
     <string name="a_t_s">教师已退选</string>
     <string name="exit">退出课题</string>
     <string name="s_t">选择课题</string>
+    <string name="issue_select_time">发布选题时间</string>
 </resources>

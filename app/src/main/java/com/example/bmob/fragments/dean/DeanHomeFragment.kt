@@ -50,25 +50,21 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setEventListener()
         viewModel.setFragment(this)
 
         binding.banner1.addBannerLifecycleObserver(this)
-        //观测头像url并保存到handler
-//        viewModel.getTeacherInfo(this).observe(viewLifecycleOwner){
-//            binding.user = it
-//            Log.v(LOG_TAG,"首页观测的user id: $it")
-//        }
+
         setViewModel.getUserByQuery().observe(viewLifecycleOwner){
             binding.user = it
         }
+
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
-                    adapter = SearchRecyclerViewAdapter { thesis ->
+                    adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionDeanHomeFragmentToShowThesisFragment =
                             DeanHomeFragmentDirections.actionDeanHomeFragmentToShowThesisFragment(
@@ -76,7 +72,6 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
                             )
                         findNavController().navigate(actionDeanHomeFragmentToShowThesisFragment)
                     }
-                    adapter!!.setThesisListForFirst(it.second)
                     binding.recyclerView1.adapter = adapter
                     binding.recyclerView1.layoutManager = LinearLayoutManager(
                         requireContext(),

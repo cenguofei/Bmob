@@ -37,24 +37,7 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
 
         thesisViewModel.getThesisList(setViewModel.getUserByQuery().value!!)
             .observe(viewLifecycleOwner) {
-//            Log.v(LOG_TAG, "观测到教师课题数据：${it}")
-//            if (adapter == null){
-//                adapter = TeacherThesisAdapter {thesis->
-//                    val actionTeacherReleasedFragmentToTeacherNewThesisFragment =
-//                        TeacherReleasedFragmentDirections.actionTeacherReleasedFragmentToTeacherNewThesisFragment(
-//                            true
-//                        )
-//                    thesisViewModel.setThesis(thesis)
-//                    findNavController().navigate(actionTeacherReleasedFragmentToTeacherNewThesisFragment)
-//                }
-//                adapter!!.setThesisListForFirst(it)
-//                binding.recyclerView2.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
-//                binding.recyclerView2.adapter = adapter
-//            }else{
-//                adapter!!.setDiffThesisList(it)
-//            }
-
-                val mAdapter = TeacherThesisAdapter { thesis ->
+                val mAdapter = TeacherThesisAdapter(it) { thesis ->
                     val actionTeacherReleasedFragmentToTeacherNewThesisFragment =
                         TeacherReleasedFragmentDirections.actionTeacherReleasedFragmentToTeacherNewThesisFragment(
                             true
@@ -64,7 +47,6 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
                         actionTeacherReleasedFragmentToTeacherNewThesisFragment
                     )
                 }
-                mAdapter.setThesisListForFirst(it)
                 binding.recyclerView2.layoutManager =
                     LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 binding.recyclerView2.adapter = mAdapter
