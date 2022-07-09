@@ -106,4 +106,8 @@
     <string name="exit">退出课题</string>
     <string name="s_t">选择课题</string>
     <string name="issue_select_time">发布选题时间</string>
+    <string name="time_start">开始时间</string>
+    <string name="time_end">结束时间</string>
+    <string name="u">更新</string>
+    <string name="s">保存</string>
 </resources>

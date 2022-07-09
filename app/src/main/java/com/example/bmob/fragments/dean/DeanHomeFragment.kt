@@ -64,6 +64,7 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
+                    viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout,true)
                     adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionDeanHomeFragmentToShowThesisFragment =
@@ -108,7 +109,12 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
     }
 
     override fun setEventListener() {
-        viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout)
+        viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout){
+            if (it){
+                Log.v(LOG_TAG,"输入的内容空")
+                adapter = null
+            }
+        }
 
         //已审批课题
         binding.approveThesisLayout.setOnClickListener {

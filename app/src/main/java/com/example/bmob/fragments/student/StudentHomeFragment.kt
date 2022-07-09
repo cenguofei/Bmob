@@ -71,6 +71,7 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
+                    viewModel.isShowRecyclerView(binding.recyclerView,binding.contentLinearLayout,true)
                     adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionStudentHomeFragmentToShowThesisFragment =
@@ -85,7 +86,7 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
                     )
                     binding.recyclerView.adapter = adapter
                 } else {
-                    if (it.second.isNotEmpty() && viewModel.getNowSearch().value == it.first) {
+                    if (it.second.isNotEmpty()/** && viewModel.getNowSearch().value == it.first*/) {
                         Log.v(LOG_TAG, "设置thesisList：$it")
                         viewModel.isShowRecyclerView(binding.recyclerView,binding.contentLinearLayout,true)
                         adapter!!.setThesisList(it.second)
@@ -124,7 +125,15 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
             //显示学生的已选的课题
             findNavController().navigate(R.id.action_studentHomeFragment_to_studentThesisFragment)
         }
-        viewModel.setSearchViewListener(binding.searchView,binding.recyclerView,binding.contentLinearLayout)
+        viewModel.setSearchViewListener(binding.searchView,binding.recyclerView,binding.contentLinearLayout){
+            if (it){
+                Log.v(LOG_TAG,"输入的内容空")
+//                adapter?.data?.clear()
+//                adapter?.data = null
+
+                adapter = null
+            }
+        }
     }
 }
 

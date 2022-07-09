@@ -61,6 +61,7 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
+                    viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout1,true)
                     adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionTeacherHomeFragmentToShowThesisFragment =
@@ -113,6 +114,11 @@ class TeacherHomeFragment : Fragment(),FragmentEventListener {
         binding.selectedStudentListLinearLayout.setOnClickListener {
             findNavController().navigate(R.id.action_teacherHomeFragment_to_teacherSelectResultFragment)
         }
-        viewModel.setSearchViewListener(binding.searchView1,binding.recyclerView1,binding.contentLinearLayout1)
+        viewModel.setSearchViewListener(binding.searchView1,binding.recyclerView1,binding.contentLinearLayout1){
+            if (it){
+                Log.v(LOG_TAG,"输入的内容空")
+                adapter = null
+            }
+        }
     }
 }

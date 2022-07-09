@@ -10,7 +10,7 @@ import com.example.bmob.databinding.SearchSuggestItemBinding
 import com.example.bmob.utils.LOG_TAG
 
 class SearchRecyclerViewAdapter(
-    private var data:MutableList<Thesis>?,
+    var data:MutableList<Thesis>?,
     private val callback:(thesis:Thesis)->Unit
 ):RecyclerView.Adapter<SearchRecyclerViewAdapter.SearchViewHolder>() {
     class SearchViewHolder(val binding:SearchSuggestItemBinding):RecyclerView.ViewHolder(binding.root) {
@@ -47,8 +47,12 @@ class SearchRecyclerViewAdapter(
     fun setThesisList(newThesisList: MutableList<Thesis>){
 //        this.thesisList = newThesisList
 //        this.notifyDataSetChanged()
-        val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.data!!, newThesisList))
-        diffResult.dispatchUpdatesTo(this)
+        if (this.data != null){
+            val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.data!!, newThesisList))
+            diffResult.dispatchUpdatesTo(this)
+        }else{
+            Log.v(LOG_TAG,"data=null")
+        }
     }
 }
 

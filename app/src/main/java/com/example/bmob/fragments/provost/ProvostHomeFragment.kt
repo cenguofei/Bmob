@@ -2,10 +2,10 @@ package com.example.bmob.fragments.provost
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,7 +16,6 @@ import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentProvostHomeBinding
-import com.example.bmob.fragments.dean.DeanHomeFragmentDirections
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
@@ -58,6 +57,7 @@ class ProvostHomeFragment : Fragment(),FragmentEventListener {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
+                    viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout,true)
                     Log.v(LOG_TAG,"搜索结果是否为空:${ it.second.isEmpty()},$it")
                     adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
@@ -91,7 +91,6 @@ class ProvostHomeFragment : Fragment(),FragmentEventListener {
         }
     }
 
-
     override fun onStop() {
         super.onStop()
         binding.banner1.stop()
@@ -103,6 +102,15 @@ class ProvostHomeFragment : Fragment(),FragmentEventListener {
     }
 
     override fun setEventListener() {
-        viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout)
+        binding.issueTime.setOnClickListener {
+            findNavController().navigate(R.id.action_provostHomeFragment_to_provostSelectTimeFragment)
+        }
+        //初始化搜索框
+        viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout){
+            if (it){
+                Log.v(LOG_TAG,"输入的内容空")
+                adapter = null
+            }
+        }
     }
 }

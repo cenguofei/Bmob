@@ -1,23 +1,39 @@
 package com.example.bmob.fragments.provost
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.bmob.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.bmob.common.FragmentEventListener
-import com.example.bmob.databinding.FragmentProvostHomeBinding
 import com.example.bmob.databinding.FragmentProvostSelectTimeBinding
+import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.showMsg
+import com.example.bmob.viewmodels.ProvostViewModel
+import com.example.bmob.viewmodels.SetViewModel
 
 
 class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentProvostSelectTimeBinding
+    private val setViewModel:SetViewModel by activityViewModels()
+    private val viewModel:ProvostViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProvostSelectTimeBinding.inflate(inflater, container, false)
+        binding.provost = setViewModel.getUserByQuery().value
+        viewModel.getProvostReleaseSelectTimeLiveData(setViewModel.getUserByQuery().value!!)
+            .observe(viewLifecycleOwner){
+            binding.releaseTimeEntity = it
+            binding.confirmBtn.visibility = View.GONE
+            binding.updateBtn.visibility = View.VISIBLE
+        }
         return binding.root
     }
 
@@ -27,6 +43,66 @@ class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
     }
 
     override fun setEventListener() {
-
+        binding.timeStartTv.setOnClickListener {
+            viewModel.selectTime(requireContext(),"开始时间",0,0,0){
+                binding.chooseStartTime.text = it
+            }
+        }
+        binding.timeEndTv.setOnClickListener {
+            viewModel.selectTime(requireContext(),"结束时间",3,3,3) {
+                binding.chooseEndTime.text = it
+            }
+        }
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.confirmBtn.setOnClickListener {
+            Log.v(LOG_TAG,"被点击了")
+            val beginTime = binding.chooseStartTime.text.toString()
+            val endTime = binding.chooseEndTime.text.toString()
+            viewModel.checkIsEndValid(
+                beginTime,
+                endTime
+            ){isValid, message ->
+                Log.v(LOG_TAG,"回调")
+                if (!isValid){
+                    showMsg(requireContext(),message)
+                }else{
+                    //保存发布时间
+                    Log.v(LOG_TAG,"日期合法")
+                    viewModel.saveTime(beginTime,endTime,setViewModel.getUserByQuery().value!!)
+                    {isSuccess, msg ->
+                        showMsg(requireContext(),msg)
+                        if (isSuccess){
+                            binding.confirmBtn.visibility = View.GONE
+                            binding.updateBtn.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+        }
+        binding.updateBtn.setOnClickListener {
+            //更新时间
+            val beginTime = binding.chooseStartTime.text.toString()
+            val endTime = binding.chooseEndTime.text.toString()
+            viewModel.checkIsEndValid(
+                beginTime,
+                endTime
+            ){isValid, message ->
+                Log.v(LOG_TAG,"回调")
+                if (!isValid){
+                    showMsg(requireContext(),message)
+                }else{
+                    //保存发布时间
+                    viewModel.updateReleaseTime(
+                        viewModel.getProvostReleaseSelectTimeLiveData(setViewModel.getUserByQuery().value!!).value!!,
+                        beginTime,
+                        endTime
+                    ){
+                        showMsg(requireContext(),it)
+                    }
+                }
+            }
+        }
     }
 }

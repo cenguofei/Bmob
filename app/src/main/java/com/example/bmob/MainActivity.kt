@@ -55,13 +55,6 @@ class MainActivity : AppCompatActivity() {
          * 当重新选择当前选定的项目时，此侦听器也会收到通知，
          * 除非出现NavigationBarView
          */
-//        binding.bottomNavigationView.setOnItemSelectedListener(object :
-//            NavigationBarView.OnItemSelectedListener{
-//            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//
-//                return true
-//            }
-//        })
         userViewModel.getUserIdentification().observe(this) {
             Log.v(LOG_TAG,"在这 getUserIdentification observe")
             when (it) {

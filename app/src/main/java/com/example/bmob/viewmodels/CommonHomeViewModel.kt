@@ -111,7 +111,12 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
         }
     }
 
-    fun setSearchViewListener(searchView: SearchView,recyclerView: RecyclerView,linearLayout: LinearLayout){
+    fun setSearchViewListener(
+        searchView: SearchView,
+        recyclerView: RecyclerView,
+        linearLayout: LinearLayout,
+        callback:(isTextEmpty:Boolean)->Unit
+    ){
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             //点击搜索时调用
@@ -125,6 +130,7 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
                 if (!TextUtils.isEmpty(newText)) {
                     setNowSearch(newText!!)
                 } else {
+                    callback.invoke(true)
                     isShowRecyclerView(recyclerView,linearLayout,false)
                 }
                 return true

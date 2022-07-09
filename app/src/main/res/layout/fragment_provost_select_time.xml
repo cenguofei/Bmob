@@ -1,118 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout17"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.provost.ProvostSelectTimeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/teacher_new_thesis_info_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
+    <data>
+        <variable
+            name="provost"
+            type="com.example.bmob.data.entity.User" />
+        <variable
+            name="releaseTimeEntity"
+            type="com.example.bmob.data.entity.ReleaseTime" />
+    </data>
 
-        <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout17"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.provost.ProvostSelectTimeFragment">
+
+        <LinearLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/teacher_new_thesis_info_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView28">
+
+            <TextView
+                android:id="@+id/timeStartTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/time_start"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/time_start" />
+
+            <TextView
+                android:id="@+id/chooseStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{releaseTimeEntity.beginTime==null?"":releaseTimeEntity.beginTime}'
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/backImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:drawableStart="@drawable/time_end"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="  结束时间"
-            android:textSize="16sp" />
-
-        <EditText
-
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp" />
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/backImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/back_img"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/choose_thesis_time"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="35dp"
-        android:text='@{user.school+"·"+user.college+"·"+user.department}'
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backImg" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/choose_task_list_bg"
-        android:gravity="center_vertical"
-        android:paddingStart="15dp"
-        android:text="@string/define_choose_thesis_time"
-        android:textColor="@color/black"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout11"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/teacher_new_thesis_info_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/back_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:drawableStart="@drawable/time_start"
+            android:layout_marginTop="20dp"
+            android:text="@string/choose_thesis_time"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="30dp"
+            android:text='@{provost.school+"·"+provost.college+"·"+provost.department}'
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView28"
+            app:layout_constraintTop_toBottomOf="@+id/backImg" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/choose_task_list_bg"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="  开始时间"
-            android:textSize="16sp" />
-
-        <EditText
-
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp" />
-    </LinearLayout>
+            android:paddingStart="15dp"
+            android:text="@string/define_choose_thesis_time"
+            android:textColor="@color/black"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView18"
+            tools:ignore="RtlSymmetry" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/teacher_new_thesis_info_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+            <TextView
+                android:id="@+id/timeEndTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/time_end"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/time_end" />
+
+            <TextView
+                android:id="@+id/chooseEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text='@{releaseTimeEntity.endTime==null?"":releaseTimeEntity.endTime}'
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="50dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/backBtn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="140dp"
+                android:layout_height="45dp"
+                android:background="@drawable/btn_round_bg"
+                android:text="@string/back"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/confirmBtn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="140dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/btn_round_bg"
+                android:text="@string/s"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/updateBtn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="140dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="25dp"
+                android:background="@drawable/btn_round_bg"
+                android:text="@string/u"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

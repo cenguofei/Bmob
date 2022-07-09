@@ -15,4 +15,5 @@
     <color name="blue_light">#a4c2ff</color>
     <color name="red">#ff6565</color>
     <color name="silver">#f8f8f8</color>
+    <color name="blue_slight">#0096FF</color>
 </resources>
