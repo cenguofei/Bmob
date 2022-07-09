@@ -85,6 +85,11 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 
+    //圆角图片
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    //图片剪裁成圆形
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     //banner
     implementation 'io.github.youth5201314:banner:2.2.2'
     //SwipeRefreshLayout
