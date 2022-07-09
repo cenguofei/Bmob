@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.bmob.R
 import com.example.bmob.data.entity.*
+import com.example.bmob.viewmodels.DeanStudentSelectedModel
 
 object BindingAdapter {
     /**
@@ -143,6 +144,32 @@ object BindingAdapter {
             }
             THESIS_APPROVED_REJECTED -> {
                 textView?.text = "审核未通过"
+            }
+        }
+    }
+    @JvmStatic
+    @BindingAdapter("deanItemText")
+    fun deanItemText(textView: TextView?,user: User?){
+        if (textView != null){
+            if (user != null){
+                if (user.studentClass.equals(" ")){
+                    textView.text = "${user.name}"
+                }else{
+                    textView.text = "${user.studentClass} ${user.name}"
+                }
+            }
+        }
+    }
+    @JvmStatic
+    @BindingAdapter("deanStudentSelectedModelText")
+    fun deanStudentSelectedModelText(textView: TextView?,model:DeanStudentSelectedModel?){
+        if (textView != null){
+            if (model != null){
+                if (model.studentClass == " "){
+                    textView.text = model.studentName
+                }else{
+                    textView.text = "${model.studentClass} ${model.studentName}"
+                }
             }
         }
     }

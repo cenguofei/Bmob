@@ -41,7 +41,7 @@ class StudentSelectedFragment : Fragment(), FragmentEventListener {
         setEventListener()
         binding.dean = setViewModel.getUserByQuery().value
         Log.v(LOG_TAG,"onViewCreated StudentSelectedFragment")
-        viewModel.getStudentWhichHaveSelectedThesisLiveData(setViewModel.getUserByQuery().value!!){
+        viewModel.getStudentWhichHaveSelectedThesisLiveData(setViewModel.getUserByQuery().value!!,true){
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
             Log.v(LOG_TAG,"StudentSelectedFragment观测到已选结果：$it")

@@ -117,7 +117,8 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.teacherNewThesisFragment
 
                 || destination.id == R.id.approveFragment
-                || destination.id == R.id.approvedNotApprovedFragment
+                || destination.id == R.id.deanApprovedFragment
+                || destination.id == R.id.deanNotApprovedFragment
                 || destination.id == R.id.studentSelectedFragment
                 || destination.id == R.id.studentUnselectedFragment
 

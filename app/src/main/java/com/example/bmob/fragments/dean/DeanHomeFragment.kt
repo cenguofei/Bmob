@@ -115,13 +115,22 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
     override fun setEventListener() {
         viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout)
 
-        //审批课题按钮
+        //已审批课题
         binding.approveThesisLayout.setOnClickListener {
-            findNavController().navigate(R.id.action_deanHomeFragment_to_approvedNotApprovedFragment)
+            findNavController().navigate(R.id.action_deanHomeFragment_to_deanApprovedFragment)
         }
-
+        //未审批课题
+        binding.notApproveThesisLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_deanHomeFragment_to_deanNotApprovedFragment)
+        }
+        //已选学生名单  选题结果
         binding.selectedResultLayout.setOnClickListener {
             findNavController().navigate(R.id.action_deanHomeFragment_to_studentSelectedFragment)
+        }
+
+        //未选学生名单
+        binding.unselectedStudents.setOnClickListener {
+            findNavController().navigate(R.id.action_deanHomeFragment_to_studentUnselectedFragment)
         }
     }
 }

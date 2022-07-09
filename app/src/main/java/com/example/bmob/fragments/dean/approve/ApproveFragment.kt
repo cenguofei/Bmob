@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.ALREADY_APPROVED
 import com.example.bmob.data.entity.NOT_APPROVED
+import com.example.bmob.data.entity.THESIS_APPROVED_REJECTED
 import com.example.bmob.databinding.FragmentApproveBinding
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanApproveViewModel
@@ -44,7 +45,7 @@ class ApproveFragment : Fragment() ,FragmentEventListener{
     override fun setEventListener() {
         //拒绝
         binding.repulseBtn.setOnClickListener {
-            viewModel.updateThesisForDeanApprove(args.deanApproveThesis, NOT_APPROVED){ _, message->
+            viewModel.updateThesisForDeanApprove(args.deanApproveThesis, THESIS_APPROVED_REJECTED){ _, message->
                 showMsg(requireContext(),message)
             }
         }
