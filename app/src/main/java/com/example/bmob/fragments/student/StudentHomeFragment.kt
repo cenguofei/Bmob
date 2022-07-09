@@ -2,7 +2,6 @@ package com.example.bmob.fragments.student
 
 import android.Manifest
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cn.bmob.v3.Bmob
-import cn.bmob.v3.Bmob.getFilesDir
 import com.example.bmob.R
 import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
-import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
 import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
@@ -132,7 +128,7 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
         }
         binding.myThesis1.setOnClickListener {
             //显示学生的已选的课题
-
+            findNavController().navigate(R.id.action_studentHomeFragment_to_studentThesisFragment)
         }
         viewModel.setSearchViewListener(binding.searchView,binding.recyclerView,binding.contentLinearLayout)
     }

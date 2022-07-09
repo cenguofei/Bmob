@@ -123,6 +123,10 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         return handler.getLiveData(QUERY_USER_KEY)
     }
 
+    fun setUserByQuery(student:User){
+        handler.set(QUERY_USER_KEY,student)
+    }
+
     /**
      * 当用户切换身份登录时如果不刷新，会使用到前一个其他角色的用户，
      * 所以当要退出登录  或者切换账号时，

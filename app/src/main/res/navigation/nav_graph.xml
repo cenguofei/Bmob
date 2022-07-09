@@ -150,6 +150,9 @@
         <action
             android:id="@+id/action_studentHomeFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
+        <action
+            android:id="@+id/action_studentHomeFragment_to_studentThesisFragment"
+            app:destination="@id/studentThesisFragment" />
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
@@ -285,11 +288,6 @@
         android:label="fragment_provost_select_time"
         tools:layout="@layout/fragment_provost_select_time" />
     <fragment
-        android:id="@+id/studentThesisInformationFragment"
-        android:name="com.example.bmob.fragments.student.select.StudentThesisInformationFragment"
-        android:label="fragment_student_thesis_information"
-        tools:layout="@layout/fragment_student_thesis_information" />
-    <fragment
         android:id="@+id/deanApprovedFragment"
         android:name="com.example.bmob.fragments.dean.approve.DeanApprovedFragment"
         android:label="DeanApprovedFragment" >
@@ -304,5 +302,14 @@
         <action
             android:id="@+id/action_deanNotApprovedFragment_to_approveFragment"
             app:destination="@id/approveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentThesisFragment"
+        android:name="com.example.bmob.fragments.student.oneThesis.StudentThesisFragment"
+        android:label="fragment_student_thesis"
+        tools:layout="@layout/fragment_student_thesis" >
+        <action
+            android:id="@+id/action_studentThesisFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
     </fragment>
 </navigation>

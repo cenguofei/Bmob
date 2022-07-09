@@ -38,7 +38,16 @@ data class User(
      * 所谓成功，就是 开放时间后->教师决定->最终是否被留下
      */
     val studentClass:String?=null, //学生所属班级
+    var studentThesis:Thesis?=null,
+
+    var title:String?=null,
     var studentSelectState:Boolean? = null, //true已选，false未选
+    var field:String? = null,
+    var require:String? = null,
+    var desc:String?=null,
+    var isAgree:Boolean?=null,
+    var theTeaDetail:String?=null,
+    var theTeaAvaUrl:String?= null,
 
 
     //2) 老师

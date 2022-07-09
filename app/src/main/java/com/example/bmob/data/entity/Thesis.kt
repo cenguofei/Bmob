@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Thesis(
 //    val classIds:List<String>?=null,  //班级id，该论文属于哪些班级选
-    var version:Int?=null,  //论文版本
     var title:String?=null, //标题
 //    val content:String?=null, //内容//可以不用管
     var description:String?=null, //论文描述
@@ -24,15 +23,15 @@ data class Thesis(
      *
      * 系主任查询到该课题时，需要判断studentList
      * @see studentsList
-     * @see teacherIsSelectOneStudent
+     * @see teaIsSeOne
      * 当老师决定哪个学生选择该课题后更新 teacherIsSelectOneStudent
      *      false代表老师还没有决定哪个学生选
      *      true代表老师决定某个学生选择了该课题
      */
     var studentsList:MutableList<User>?=null, //选择该论文的学生
-    var teacherIsSelectOneStudent:Boolean?=null,
+    var teaIsSeOne:Boolean?=null,
 
-    var level:Int?=null,  //难度 1简单，2中等，3困难
+//    var level:Int?=null,  //难度 1简单，2中等，3困难
 
     var selectState:Int?=null, //论文是否被选，0未选，1已选
 

@@ -101,4 +101,8 @@
     <string name="app_th">审批课题</string>
     <string name="s_r">选题结果</string>
     <string name="not_app">未审批课题</string>
+    <string name="s_m_t">我的课题</string>
+    <string name="a_t_s">教师已退选</string>
+    <string name="exit">退出课题</string>
+    <string name="s_t">选择课题</string>
 </resources>

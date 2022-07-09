@@ -3,13 +3,18 @@ package com.example.bmob.viewmodels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
-import com.example.bmob.data.entity.*
+import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
+import com.example.bmob.data.entity.STUDENT_HAS_SELECTED_THESIS
+import com.example.bmob.data.entity.Thesis
+import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.LOG_TAG
+import kotlinx.coroutines.launch
 
 class StudentSelectViewModel : ViewModel() {
     private val repository = BmobRepository.getInstance()
@@ -115,44 +120,65 @@ class StudentSelectViewModel : ViewModel() {
     fun addStudentToTeacherThesis(
         student: User,
         thesis: Thesis,
-        callback: (isSuccess: Boolean, message: String) -> Unit
+        callback: (isSuccess: Boolean, message: String) -> Unit,
+        updateStudentCallback:(student:User)->Unit
     ) {
-//        thesis.studentsList?.forEach {
-//            if (it.objectId == student.objectId){
-//                callback.invoke(null,"已经选择该课题，不能重复选")
-//                return
-//            }
-//        }
-        if (student.studentSelectState == STUDENT_HAS_SELECTED_THESIS) {
-            callback.invoke(true, "已经选择该课题，不能重复选")
-            return
-        }
-        val thesisStudentList = thesis.studentsList ?: mutableListOf()
-        thesisStudentList.add(
-            if (thesisStudentList.size == 0) 0 else thesisStudentList.size,
-            student
-        )
-        thesis.studentsList = thesisStudentList
-        Log.v(LOG_TAG, "thesisStudentList=$thesisStudentList")
+        viewModelScope.launch {
+            if (student.studentSelectState == STUDENT_HAS_SELECTED_THESIS) {
+                callback.invoke(true, "已经选择课题，不能多选或重复选")
+            }else{
+                val thesisStudentList = thesis.studentsList ?: mutableListOf()
+                thesisStudentList.add(
+                    if (thesisStudentList.size == 0) 0 else thesisStudentList.size,
+                    student
+                )
+                thesis.studentsList = thesisStudentList
+                Log.v(LOG_TAG, "thesisStudentList=$thesisStudentList")
 
-        //更新课题
-        thesis.update(object : UpdateListener() {
-            override fun done(p0: BmobException?) {
-                if (p0 == null) {
-                    callback.invoke(true, "您已成功加入该课题")
-                } else {
-                    callback.invoke(false, "加入课题失败:${p0.message}")
-                }
-            }
-        })
-        //更新学生
-        repository.updateUser(STUDENT_HAS_SELECTED_THESIS,student){isSuccess, msg ->
-            if (!isSuccess){
-                callback.invoke(false,"更新用户信息失败:$msg")
+                /**
+                 * student.studentThesis = thesis
+                 * 上面的写法时错误的，会闪退，找了很久也没找到原因
+                 */
+                student.studentSelectState = STUDENT_HAS_SELECTED_THESIS
+                student.title = thesis.title
+                student.field = thesis.field
+                student.require = thesis.require
+                student.desc = thesis.description
+                student.isAgree = false
+                student.theTeaDetail = thesis.userDetail
+                student.theTeaAvaUrl = thesis.teacherAvatarUrl
+                student.update(student.objectId, object : UpdateListener() {
+                    override fun done(p0: BmobException?) {
+                        if (p0 == null) {
+                            updateStudentCallback.invoke(student)
+                            callback.invoke(true, com.example.bmob.data.repository.remote.EMPTY_TEXT)
+                        } else {
+                            callback.invoke(false, p0.message.toString())
+                        }
+                    }
+                })
+
+
+                //更新课题
+                thesis.update(object : UpdateListener() {
+                    override fun done(p0: BmobException?) {
+                        if (p0 == null) {
+                            callback.invoke(true, "您已成功加入该课题")
+                        } else {
+                            callback.invoke(false, "加入课题失败:${p0.message}")
+                        }
+                    }
+                })
             }
         }
     }
+}
 
+const val EMPTY_MESSAGE = ""
+const val EMPTY_SEARCH_RESULT = ""
+
+
+/*
     /**
      * 判断是否为开放时间
      */
@@ -194,7 +220,4 @@ class StudentSelectViewModel : ViewModel() {
                 }
             })
     }
-}
-
-const val EMPTY_MESSAGE = ""
-const val EMPTY_SEARCH_RESULT = ""
+ */
