@@ -9,6 +9,7 @@ import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
 import com.example.bmob.data.entity.STUDENT_HAS_SELECTED_THESIS
 import com.example.bmob.data.entity.STUDENT_NOT_SELECT_THESIS
 import com.example.bmob.data.entity.User
+import com.example.bmob.utils.*
 
 class StudentThesisViewModel:ViewModel() {
 
@@ -34,17 +35,17 @@ class StudentThesisViewModel:ViewModel() {
      */
     private fun queryStudentHasChosenThesis(student:User){
         val addWhereEqualToStudentSelectState =
-            BmobQuery<User>().addWhereEqualTo("studentSelectState", STUDENT_HAS_SELECTED_THESIS)
+            BmobQuery<User>().addWhereEqualTo(StudentSelectState, STUDENT_HAS_SELECTED_THESIS)
         val equalToSchool = BmobQuery<User>()
-            .addWhereEqualTo("school", student.school)
+            .addWhereEqualTo(School, student.school)
         val equalToDepartment = BmobQuery<User>()
-            .addWhereEqualTo("department", student.department)
+            .addWhereEqualTo(Department, student.department)
         val equalToCollege = BmobQuery<User>()
-            .addWhereEqualTo("college", student.college)
+            .addWhereEqualTo(College, student.college)
         val equalToIdentification = BmobQuery<User>()
-            .addWhereEqualTo("identification", IDENTIFICATION_STUDENT)
+            .addWhereEqualTo(Identification, IDENTIFICATION_STUDENT)
         val addWhereEqualTo = BmobQuery<User>()
-            .addWhereEqualTo("objectId", student.objectId)
+            .addWhereEqualTo(ObjectId, student.objectId)
 
         val queryList = ArrayList<BmobQuery<User>>().run {
             add(addWhereEqualToStudentSelectState)

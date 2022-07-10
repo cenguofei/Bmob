@@ -28,7 +28,6 @@ import com.example.bmob.utils.showMsg
 class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
     private val repository = BmobRepository.getInstance()
     private var nowSearch = MutableLiveData<String>()
-    private var adapter: SearchRecyclerViewAdapter? = null
     private lateinit var fragment:Fragment
 
     fun setFragment(fragment: Fragment){
@@ -157,5 +156,4 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
 
 private const val USER = "user_"
 private const val BANNER_DATA = "banner_data_"
-
 const val EMPTY_SEARCH = ""

@@ -8,6 +8,7 @@ import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.*
 import com.example.bmob.data.entity.*
+import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.LOG_TAG
 
 
@@ -293,7 +294,6 @@ class BmobRepository private constructor(){
     }
 }
 
-const val EMPTY_TEXT = ""
 const val FAILED_REQUEST_SMS_CODE = -1
 
 

@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
+import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentSelectBinding
+import com.example.bmob.databinding.ProvostSkimItemBinding
+import com.example.bmob.databinding.StudentSelectThesisItemBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.SetViewModel
@@ -38,12 +41,28 @@ class SelectFragment : Fragment(),FragmentEventListener {
         selectViewModel.getMutableTeacherThesisLiveData(args.teacher){
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
-            val adapter = StudentSelectThesisAdapter(it){thesis->
-                val actionSelectFragmentToShowThesisFragment =
-                    SelectFragmentDirections.actionSelectFragmentToShowThesisFragment(thesis, true)
-                findNavController().navigate(actionSelectFragmentToShowThesisFragment)
+            RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent->
+                val itemInflater = LayoutInflater.from(parent.context)
+                RecyclerViewAdapter.ResultViewHolder(StudentSelectThesisItemBinding.inflate(itemInflater,parent,false))
             }
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
+            val adapter = RecyclerViewAdapter(it){binding, result ->
+                (binding as StudentSelectThesisItemBinding).run {
+                    thesis = result
+                    root.setOnClickListener {
+                        val actionSelectFragmentToShowThesisFragment =
+                            SelectFragmentDirections.actionSelectFragmentToShowThesisFragment(result, true)
+                        /**
+                         * 设置为true，通知ShowThesisFragment，
+                         *
+                         * 判断身份
+                         */
+                        selectViewModel.isStudentSelectThesis.value = true
+                        findNavController().navigate(actionSelectFragmentToShowThesisFragment)
+                    }
+                }
+            }
+            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),
+                RecyclerView.VERTICAL,false)
             binding.recyclerView.adapter = adapter
         }
         return binding.root

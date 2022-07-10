@@ -14,7 +14,9 @@ import cn.bmob.v3.listener.FindListener
 import com.example.bmob.R
 import com.example.bmob.data.entity.*
 import com.example.bmob.data.repository.remote.BmobRepository
+import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.Username
 import kotlinx.coroutines.launch
 
 class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
@@ -120,11 +122,11 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         callback: (isSuccess: Boolean, user: User?, error: String) -> Unit
     ) {
         BmobQuery<User>()
-            .addWhereEqualTo("username", username)
+            .addWhereEqualTo(Username, username)
             .findObjects(object : FindListener<User>() {
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if (p1 == null && p0 != null && p0.isNotEmpty()) {
-                        callback.invoke(true, p0[0], EMPTY_CONTENT)
+                        callback.invoke(true, p0[0], EMPTY_TEXT)
                         Log.v(LOG_TAG, "找到用户：${p0[0]}")
                     } else {
                         callback.invoke(false, null, p1?.message.toString())
@@ -214,11 +216,11 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
         BmobQuery<User>()
-            .addWhereEqualTo("username", userName)
+            .addWhereEqualTo(Username, userName)
             .findObjects(object : FindListener<User>() {
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if (p1 == null && p0 != null && p0.size == 1) {
-                        callback.invoke(true, EMPTY_CONTENT)
+                        callback.invoke(true, EMPTY_TEXT)
                     } else {
                         callback.invoke(false, "改账户不存在${p1?.message}")
                     }
@@ -226,5 +228,3 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
             })
     }
 }
-
-private const val EMPTY_CONTENT = ""

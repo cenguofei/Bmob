@@ -24,20 +24,21 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
+import com.example.bmob.data.entity.ReleaseTime
 import com.example.bmob.data.entity.STUDENT_NOT_SELECT_THESIS
-import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.data.storage.SettingsDataStore
 import com.example.bmob.fragments.mine.MineFragment.Companion.BMOB_USER_KEY
 import com.example.bmob.fragments.mine.MineFragment.Companion.QUERY_USER_KEY
 import com.example.bmob.fragments.mine.setting.SetFragment
-import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.utils.showMsg
-import kotlinx.coroutines.flow.emptyFlow
+import com.example.bmob.utils.*
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.random.Random
 
 class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
@@ -45,19 +46,30 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     private var register: ActivityResultLauncher<Intent>? = null
     private var file: File? = null
     private var imageType: String? = null
+
     //用户配置，记住密码，保存账号密码等
     private lateinit var settingsDataStore: SettingsDataStore
 
-    fun setSettingsDataStore(context: Context){
+    /**
+     * 初始化dataStore
+     */
+    fun setSettingsDataStore(context: Context) {
         this.settingsDataStore = SettingsDataStore.getInstance(context)
     }
 
-    private fun saveUsernameToPreferencesStore(username:String,context: Context){
+    /**
+     * 保存用户名到dataStore
+     */
+    private fun saveUsernameToPreferencesStore(username: String, context: Context) {
         viewModelScope.launch {
             settingsDataStore.saveUsernameToPreferencesStore(username = username, context = context)
         }
     }
 
+    /**
+     * 初始化register，
+     * 必须要在onCreate的时候调用
+     */
     @RequiresApi(Build.VERSION_CODES.Q)
     fun setRegister(fragment: SetFragment) {
         register = fragment.registerForActivityResult(
@@ -81,7 +93,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                         if ((imageType!!) == IMAGE_TYPE_HEAD) {
 
                             fragment.binding.editHeadIv.setImageURI(uri)
-                        } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND){
+                        } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND) {
                             fragment.binding.backgroundIv.setImageURI(uri)
                         }
                     } else {
@@ -102,7 +114,9 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         }
     }
 
-    //打开相册选择图片
+    /**
+     * 打开相册选择图片
+     */
     fun openFile(imageType: String) {
         this.imageType = imageType
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -127,8 +141,8 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         return handler.getLiveData(QUERY_USER_KEY)
     }
 
-    fun setUserByQuery(student:User){
-        handler.set(QUERY_USER_KEY,student)
+    fun setUserByQuery(student: User) {
+        handler.set(QUERY_USER_KEY, student)
     }
 
     /**
@@ -136,7 +150,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
      * 所以当要退出登录  或者切换账号时，
      * 需要清除当前用户信息
      */
-    fun removeUser(){
+    fun removeUser() {
         handler.remove<BmobUser>(BMOB_USER_KEY)
         handler.remove<User>(QUERY_USER_KEY)
     }
@@ -152,7 +166,9 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         return handler.getLiveData(BMOB_USER_KEY)
     }
 
-    //返回的progress可能为null  需要判断
+    /**
+     * 返回的progress可能为null  需要判断
+     */
     private fun uploadImage(
         file: File,
         callback: (isSuccess: Boolean, msg: String) -> Unit,
@@ -187,6 +203,9 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         })
     }
 
+    /**
+     * 上传头像或背景后保存url到用户
+     */
     fun addImageUrlToCurrentUser(
         fileUrl: String,
         callback: (isSuccess: Boolean, msg: String) -> Unit
@@ -196,7 +215,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 Log.v(LOG_TAG, "找到的添加图片的用户:${this}")
                 if (imageType == IMAGE_TYPE_HEAD) {
                     this.avatarUrl = fileUrl
-
                 } else if (imageType == IMAGE_TYPE_BACKGROUND) {
                     this.backgroundUrl = fileUrl
                 }
@@ -210,27 +228,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                     }
                 })
             }
-//        repository.fetchUserInfo()
-//        findCurrentUser { isSuccess, user, message ->
-//            if (isSuccess) {
-//                if (imageType == IMAGE_TYPE_HEAD){
-//                    user!!.avatarUrl = fileUrl
-//                    getUserByQuery().value?.avatarUrl = fileUrl
-//                }else if (imageType == IMAGE_TYPE_BACKGROUND){
-//                    user!!.backgroundUrl = fileUrl
-//                    getUserByQuery().value?.backgroundUrl = fileUrl
-//                }
-//                user!!.update(object : UpdateListener() {
-//                    override fun done(p0: BmobException?) {
-//                        if (p0 == null) {
-//                            callback.invoke(true, EMPTY_TEXT)
-//                        } else {
-//                            callback.invoke(false, p0.message.toString())
-//                        }
-//                    }
-//                })
-//            } else callback.invoke(false, message)
-//        }
     }
 
     private fun findCurrentUser(callback: (isSuccess: Boolean, user: User?, msg: String) -> Unit) {
@@ -239,7 +236,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             return
         }
         BmobQuery<User>()
-            .addWhereEqualTo("username", BmobUser.getCurrentUser().username)
+            .addWhereEqualTo(Username, BmobUser.getCurrentUser().username)
             .findObjects(object : FindListener<User>() {
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if (p1 == null) {
@@ -319,11 +316,11 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 bmobUser.username = userName
                 bmobUser.mobilePhoneNumber = fragment.binding.editPhoneNumberEv.text.toString()
                 bmobUser.email = fragment.binding.editEmailEv.text.toString()
-                handler.set(BMOB_USER_KEY,bmobUser)
-                handler.set(QUERY_USER_KEY,user)
+                handler.set(BMOB_USER_KEY, bmobUser)
+                handler.set(QUERY_USER_KEY, user)
 
-                repository.updateUser(STUDENT_NOT_SELECT_THESIS,user!!) { isSuccess, msg ->
-                    if (isSuccess) {
+                repository.updateUser(STUDENT_NOT_SELECT_THESIS, user!!) { isResponseSuccess, msg ->
+                    if (isResponseSuccess) {
                         fragment.findNavController().navigateUp()
                         showMsg(fragment.requireContext(), "用户信息已更新")
                     } else {
@@ -337,13 +334,80 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 //修改了学生信息后，课题里面学生的信息也要修改
 
 
-                saveUsernameToPreferencesStore(username = userName,fragment.requireContext())
+                saveUsernameToPreferencesStore(username = userName, fragment.requireContext())
             }
         }
+    }
+
+    /**
+     * 针对学生，当没有开放选题时间时，
+     * 学生已选的课题状态为不可用，否则可用
+     */
+    /**
+     * 判断当前时间是否为课题可选时间
+     */
+    fun isSelectTime(
+        student: User,
+        callback: (isSelectTime: Boolean, message: String) -> Unit,
+    ) {
+        BmobQuery<ReleaseTime>()
+            .addWhereEqualTo(School, student.school)
+            .setLimit(1)
+            .findObjects(object : FindListener<ReleaseTime>() {
+                override fun done(p0: MutableList<ReleaseTime>?, p1: BmobException?) {
+                    if (p1 == null && p0 != null && p0.isNotEmpty()) {
+                        if (measureIsSelectTime(p0[0]) { callback.invoke(false, it) }) {
+                            callback.invoke(true, com.example.bmob.utils.EMPTY_TEXT)
+                        }
+                    } else {
+                        callback.invoke(false, p1?.message.toString())
+                    }
+                }
+            })
+    }
+
+    private fun measureIsSelectTime(
+        releaseTime: ReleaseTime,
+        callback: (message: String) -> Unit
+    ): Boolean {
+        try {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+            val beginTime = simpleDateFormat.parse(releaseTime.beginTime)
+            val endTime = simpleDateFormat.parse(releaseTime.endTime)
+
+            val calendar: Calendar = Calendar.getInstance()
+            val year: Int = calendar.get(Calendar.YEAR)
+            val month: Int = calendar.get(Calendar.MONTH) + 1
+            val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+            val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute: Int = calendar.get(Calendar.MINUTE)
+            val second: Int = calendar.get(Calendar.SECOND)
+
+            val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:$minute:$second")
+
+            //还没到选题时间
+            if (dateSystem != null) {
+                if (dateSystem.before(beginTime)) {
+                    callback.invoke("还没到选题时间")
+                    Log.v(LOG_TAG, "还没到选题时间:dateSystem:$dateSystem  beginTime$beginTime")
+                    return false
+                }
+            }
+            //选题时间已经过了
+            if (dateSystem != null) {
+                if (dateSystem.after(endTime)) {
+                    callback.invoke("来晚了，选题时间已过")
+                    callback.invoke("选题时间已过:dateSystem:$dateSystem  endTime:$endTime")
+                    return false
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return true
     }
 }
 
 const val IMAGE_TYPE = "_image_type_"
 const val IMAGE_TYPE_HEAD = "head_"
 const val IMAGE_TYPE_BACKGROUND = "background_"
-private const val EMPTY_TEXT = ""

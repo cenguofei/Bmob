@@ -124,8 +124,8 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.studentSelectedFragment
                 || destination.id == R.id.studentUnselectedFragment
 
-//                || destination.id == R.id.provostHomeFragment
                 || destination.id == R.id.provostSelectTimeFragment
+                || destination.id == R.id.skimFragment
             ) {
                 Log.v(LOG_TAG,"在这 addOnDestinationChangedListener getUserIdentification.value")
                 when (userViewModel.getUserIdentification().value) {
@@ -142,7 +142,6 @@ class MainActivity : AppCompatActivity() {
                         binding.bottomProvostNavigationView.visibility = View.GONE
                     }
                 }
-//                binding.bottomNavigationView.visibility = View.GONE
             } else {
                 when (userViewModel.getUserIdentification().value) {
                     IDENTIFICATION_STUDENT -> {
@@ -158,7 +157,6 @@ class MainActivity : AppCompatActivity() {
                         binding.bottomProvostNavigationView.visibility = View.VISIBLE
                     }
                 }
-//                binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }
     }

@@ -141,7 +141,7 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
             callback.invoke(false,"系统故障")
             e.printStackTrace()
         }
-        callback.invoke(true,"")
+        callback.invoke(true, EMPTY_TEXT)
     }
 
     private fun queryIssuedReleaseTime(provost: User,callback:(release:ReleaseTime)->Unit) {

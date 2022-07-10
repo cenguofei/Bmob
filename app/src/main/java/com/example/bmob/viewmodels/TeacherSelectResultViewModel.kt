@@ -10,6 +10,7 @@ import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.EMPTY_TEXT
+import com.example.bmob.utils.TeacherId
 import okhttp3.internal.cacheGet
 
 class TeacherSelectResultViewModel(private val handler: SavedStateHandle) : ViewModel() {
@@ -51,7 +52,7 @@ class TeacherSelectResultViewModel(private val handler: SavedStateHandle) : View
         callback: (isSuccess: Boolean, thesisList: MutableList<SelectedModel>?, msg: String) -> Unit
     ) {
         BmobQuery<Thesis>()
-            .addWhereEqualTo("teacherId", teacher.objectId)
+            .addWhereEqualTo(TeacherId, teacher.objectId)
             .findObjects(object : FindListener<Thesis>() {
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null) {

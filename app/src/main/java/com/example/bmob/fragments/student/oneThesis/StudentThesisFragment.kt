@@ -34,6 +34,13 @@ class StudentThesisFragment : Fragment(),FragmentEventListener {
         }else{
             showMsg(requireContext(),"您还没有选择课题，点击选择选择课题")
         }
+        setViewModel.isSelectTime(setViewModel.getUserByQuery().value!!){ isSelectTime, _ ->
+            if (!isSelectTime){
+                showMsg(requireContext(),"课题已过期")
+                binding.selectThesisBtn.setBackgroundColor(R.color.grey_light)
+                binding.selectThesisBtn.isEnabled = false
+            }
+        }
         setEventListener()
         return binding.root
     }

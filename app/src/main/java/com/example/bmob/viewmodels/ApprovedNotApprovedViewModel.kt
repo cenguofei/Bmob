@@ -3,72 +3,22 @@ package com.example.bmob.viewmodels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import cn.bmob.v3.Bmob
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.example.bmob.data.entity.ALREADY_APPROVED
-import com.example.bmob.data.entity.NOT_APPROVED
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
-import com.example.bmob.utils.EMPTY_TEXT
-import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.*
 
 class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : ViewModel() {
-
     companion object {
         private const val APPROVED_THESIS_LIST_LIST = "_approved_"
         private const val NOT_APPROVED_THESIS_LIST = "_not_approved_"
     }
 
     private var currentPos = MutableLiveData<Int>()
-
-    fun setCurrentPos(value:Int){
-        currentPos.value = value
-    }
-
-    fun getCurrentPos() = currentPos.value
-
-    var currentLiveData:MutableLiveData<MutableList<MutableList<Thesis>>> =
-        Transformations.switchMap(currentPos){
-            if (it == 0){
-                handler.getLiveData<MutableList<MutableList<Thesis>>>(APPROVED_THESIS_LIST_LIST)
-            }else{
-                handler.getLiveData<MutableList<MutableList<Thesis>>>(NOT_APPROVED_THESIS_LIST)
-            }
-        } as MutableLiveData<MutableList<MutableList<Thesis>>>
-
-    /**
-     * 获取未审批的课题
-     */
-//    fun getNotApprovedThesisList(dean: User, callback: (String) -> Unit): MutableLiveData<MutableList<MutableList<Thesis>>> {
-//        if (!handler.contains(NOT_APPROVED_THESIS_LIST)) {
-//            queryThesisToDean(dean, NOT_APPROVED) { isSuccess, message ->
-//                if (!isSuccess) {
-//                    callback.invoke(message)
-//                }
-//            }
-//        }
-//        return handler.getLiveData(NOT_APPROVED_THESIS_LIST)
-//    }
-
-
-    /**
-     * 获取已审批的课题
-     */
-//    fun getApprovedThesisList(dean: User, callback: (String) -> Unit):
-//            MutableLiveData<MutableList<MutableList<Thesis>>> {
-//        if (!handler.contains(APPROVED_THESIS_LIST_LIST)) {
-//            queryThesisToDean(dean, ALREADY_APPROVED) { isSuccess, message ->
-//                if (!isSuccess) {
-//                    callback.invoke(message)
-//                }
-//            }
-//        }
-//        return handler.getLiveData(APPROVED_THESIS_LIST_LIST)
-//    }
 
     fun convert(p0: MutableList<Thesis>, approvedState:Int) {
         val hashMapOf = hashMapOf<String, MutableList<Thesis>>()
@@ -93,7 +43,6 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
             handler.set(NOT_APPROVED_THESIS_LIST,listThesisList)
         }
     }
-
 
     /**
      * 获取已选该课题的学生名单
@@ -151,13 +100,13 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
         callback: (isSuccess: Boolean,data:MutableList<MutableList<Thesis>>?,  message: String) -> Unit
     ) {
         val addWhereEqualToSchool = BmobQuery<Thesis>()
-            .addWhereEqualTo("school", dean.school)
+            .addWhereEqualTo(School, dean.school)
         val addWhereEqualToCollege = BmobQuery<Thesis>()
-            .addWhereEqualTo("college", dean.college)
+            .addWhereEqualTo(College, dean.college)
         val addWhereEqualToDepartment = BmobQuery<Thesis>()
-            .addWhereEqualTo("department", dean.department)
+            .addWhereEqualTo(Department, dean.department)
         val addWhereEqualToState = BmobQuery<Thesis>()
-            .addWhereEqualTo("thesisState", approvedState)
+            .addWhereEqualTo(ThesisState, approvedState)
 
         val queryList = ArrayList<BmobQuery<Thesis>>().run {
             add(addWhereEqualToSchool)

@@ -11,9 +11,8 @@ import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.data.entity.*
 import com.example.bmob.data.repository.remote.BmobRepository
-import com.example.bmob.data.repository.remote.EMPTY_TEXT
 import com.example.bmob.databinding.FragmentTeacherNewThesisBinding
-import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.*
 
 class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
     private val repository = BmobRepository.getInstance()
@@ -83,13 +82,13 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
     ){
         //三个条件
         val equalToSchool = BmobQuery<Thesis>()
-            .addWhereEqualTo("school", user.school)
+            .addWhereEqualTo(School, user.school)
         val equalToDepartment = BmobQuery<Thesis>()
-            .addWhereEqualTo("department",user.department)
+            .addWhereEqualTo(Department,user.department)
         val equalToCollege = BmobQuery<Thesis>()
-            .addWhereEqualTo("college",user.college)
+            .addWhereEqualTo(College,user.college)
         val equalToTeacher = BmobQuery<Thesis>()
-            .addWhereEqualTo("teacherId",user.objectId)
+            .addWhereEqualTo(TeacherId,user.objectId)
 
         val queryList = ArrayList<BmobQuery<Thesis>>().run {
             add(equalToSchool)

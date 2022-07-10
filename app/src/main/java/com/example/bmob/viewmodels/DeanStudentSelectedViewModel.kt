@@ -9,7 +9,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
-import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.*
 import java.util.ArrayList
 
 class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : ViewModel() {
@@ -151,10 +151,10 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
         studentSelectState: Boolean,
         callback: (isSuccess: Boolean, data: MutableList<User>?, message: String) -> Unit
     ) {
-        val addWhereEqualTo = BmobQuery<User>().addWhereEqualTo("school", dean.school)
-        val addWhereEqualTo1 = BmobQuery<User>().addWhereEqualTo("college", dean.college)
-        val addWhereEqualTo2 = BmobQuery<User>().addWhereEqualTo("department", dean.department)
-        BmobQuery<User>().addWhereEqualTo("studentSelectState", studentSelectState)
+        val addWhereEqualTo = BmobQuery<User>().addWhereEqualTo(School, dean.school)
+        val addWhereEqualTo1 = BmobQuery<User>().addWhereEqualTo(College, dean.college)
+        val addWhereEqualTo2 = BmobQuery<User>().addWhereEqualTo(Department, dean.department)
+        BmobQuery<User>().addWhereEqualTo(StudentSelectState, studentSelectState)
 
         val queryList = ArrayList<BmobQuery<User>>()
         queryList.add(addWhereEqualTo)
@@ -167,7 +167,7 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if (p1 == null) {
                         if (p0 != null && p0.isNotEmpty()) {
-                            callback.invoke(true, p0, "")
+                            callback.invoke(true, p0, EMPTY_TEXT)
                         } else {
                             callback.invoke(false, null, "没有找到相关数据")
                         }

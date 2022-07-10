@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import cn.bmob.v3.BmobObject
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
+import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
@@ -25,12 +26,8 @@ import com.example.bmob.viewmodels.StudentSelectViewModel
 class ShowThesisFragment : Fragment(),FragmentEventListener{
     private lateinit var binding:FragmentShowThesisBinding
     private val args:ShowThesisFragmentArgs by navArgs()
-    private val viewModel:StudentSelectViewModel by viewModels()
+    private val viewModel:StudentSelectViewModel by activityViewModels()
     private val setViewModel:SetViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +40,19 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
             binding.participateButton.visibility = View.VISIBLE
         }else{
             binding.participateButton.visibility = View.GONE
+        }
+
+        viewModel.isStudentSelectThesis.observe(viewLifecycleOwner){
+            Log.v(LOG_TAG,"isStudentSelectThesis:$it")
+            if (it){
+                setViewModel.isSelectTime(setViewModel.getUserByQuery().value!!){isSelectTime, message ->
+                    if (!isSelectTime){
+                        showMsg(requireContext(),message)
+                        binding.participateButton.setBackgroundColor(R.color.grey_light)
+                        binding.participateButton.isEnabled = false
+                    }
+                }
+            }
         }
         return binding.root
     }
