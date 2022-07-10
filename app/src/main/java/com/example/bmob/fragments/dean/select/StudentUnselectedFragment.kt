@@ -37,7 +37,10 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
     ): View {
         binding = FragmentStudentUnselectedBinding.inflate(inflater, container, false)
         binding.dean = setViewModel.getUserByQuery().value
-        viewModel.getStudentsWhichNotSelectedThesisLiveData(setViewModel.getUserByQuery().value!!,false){
+        viewModel.getStudentsWhichNotSelectedThesisLiveData(
+            setViewModel.getUserByQuery().value!!,
+            false)
+        {
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
             Log.v(LOG_TAG,"StudentSelectedFragment观测到 未 选结果：$it")

@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
+import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentTeacherReleasedBinding
+import com.example.bmob.databinding.ItemTeacherReleaseBinding
+import com.example.bmob.databinding.StudentChooseThesisItemBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherThesisViewModel
@@ -37,19 +40,30 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
 
         thesisViewModel.getThesisList(setViewModel.getUserByQuery().value!!)
             .observe(viewLifecycleOwner) {
-                val mAdapter = TeacherThesisAdapter(it) { thesis ->
-                    val actionTeacherReleasedFragmentToTeacherNewThesisFragment =
-                        TeacherReleasedFragmentDirections.actionTeacherReleasedFragmentToTeacherNewThesisFragment(
-                            true
+                RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
+                    val itemInflater = LayoutInflater.from(parent.context)
+                    RecyclerViewAdapter.ResultViewHolder(
+                        ItemTeacherReleaseBinding.inflate(
+                            itemInflater,
+                            parent,
+                            false
                         )
-                    thesisViewModel.setThesis(thesis)
-                    findNavController().navigate(
-                        actionTeacherReleasedFragmentToTeacherNewThesisFragment
                     )
+                }
+                val adapter = RecyclerViewAdapter(it) { binding, result ->
+                    (binding as ItemTeacherReleaseBinding).run {
+                        thesis = result
+                        val actionTeacherReleasedFragmentToTeacherNewThesisFragment =
+                            TeacherReleasedFragmentDirections
+                                .actionTeacherReleasedFragmentToTeacherNewThesisFragment(true)
+                        root.setOnClickListener {
+                            findNavController().navigate(actionTeacherReleasedFragmentToTeacherNewThesisFragment)
+                        }
+                    }
                 }
                 binding.recyclerView2.layoutManager =
                     LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                binding.recyclerView2.adapter = mAdapter
+                binding.recyclerView2.adapter = adapter
             }
     }
 

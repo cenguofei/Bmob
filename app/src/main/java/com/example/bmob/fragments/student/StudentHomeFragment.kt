@@ -26,6 +26,9 @@ import com.youth.banner.indicator.CircleIndicator
 
 /**
  * 学生首页
+ *
+ * 学生选择课题：
+ *
  */
 class StudentHomeFragment : Fragment(), FragmentEventListener {
     lateinit var binding: FragmentStudentHomeBinding

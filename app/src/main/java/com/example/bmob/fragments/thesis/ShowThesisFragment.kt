@@ -59,7 +59,7 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
         binding.participateButton.setOnClickListener {
             setViewModel.getUserByQuery().value?.let {
                 viewModel.addStudentToTeacherThesis(it,args.thesis,{isSuccess, message ->
-                    showMsg(requireContext(), msg = message)
+                    if (!isSuccess){ showMsg(requireContext(), msg = message) }
                 }){student ->
                     setViewModel.setUserByQuery(student)
                     Log.v(LOG_TAG,"学生已更新：$student")

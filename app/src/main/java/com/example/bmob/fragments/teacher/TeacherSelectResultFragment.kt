@@ -11,7 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.common.FragmentEventListener
+import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentTeacherSelectResultBinding
+import com.example.bmob.databinding.ItemDeanStudentSelectedBinding
+import com.example.bmob.databinding.StudentChooseThesisItemBinding
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherSelectResultViewModel
@@ -31,8 +34,21 @@ class TeacherSelectResultFragment : Fragment(),FragmentEventListener{
         viewModel.getStudentOfSelectedThisThesisLiveData(setViewModel.getUserByQuery().value!!){
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
-            val adapter = SelectedAdapter(it!!)
-            binding.recyclerView2.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
+            RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
+                val itemInflater = LayoutInflater.from(parent.context)
+                RecyclerViewAdapter.ResultViewHolder(
+                    StudentChooseThesisItemBinding.inflate(
+                        itemInflater,
+                        parent,
+                        false
+                    )
+                )
+            }
+            val adapter = RecyclerViewAdapter(it) { binding, result ->
+                (binding as StudentChooseThesisItemBinding).selectedModel = result
+            }
+            binding.recyclerView2.layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.recyclerView2.adapter = adapter
         }
         return binding.root

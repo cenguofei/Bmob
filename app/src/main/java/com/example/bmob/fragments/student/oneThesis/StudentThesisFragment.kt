@@ -40,7 +40,6 @@ class StudentThesisFragment : Fragment(),FragmentEventListener {
 
     override fun setEventListener() {
         binding.outButton.setOnClickListener {
-            Log.v(LOG_TAG,"点击：outButton")
             viewModel.studentOutThesis(setViewModel.getUserByQuery().value!!){isSuccess,student,message ->
                 showMsg(requireContext(),message)
                 if (isSuccess){

@@ -24,25 +24,3 @@ class RecyclerViewAdapter<T>(
     }
     override fun getItemCount(): Int = data.size
 }
-
-
-/**
- * 使用
- *
- *         viewModel.songs.observe(viewLifecycleOwner) {
-Log.v(LOG_TAG, "SearchResultFragment 观查到 songs数据")
-if (currentPagerPos == SINGLE_SONG_POS) {
-ResultRecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent->
-ResultRecyclerViewAdapter.ResultViewHolder(SingleSongSearchResultBinding
-.inflate(inflater,parent,false))
-}
-val recyclerAdapter = ResultRecyclerViewAdapter(it)
-recyclerAdapter.setBindCallback { searchBinding, song->
-(searchBinding as SingleSongSearchResultBinding).apply {
-result = song
-}
-}
-setRecyclerData(recyclerAdapter)
-}
-}
- */

@@ -41,6 +41,9 @@ data class User(
     var studentThesis:Thesis?=null,
 
     var title:String?=null,
+    /**
+     * @see studentSelectState
+     */
     var studentSelectState:Boolean? = null, //true已选，false未选
     var field:String? = null,
     var require:String? = null,
