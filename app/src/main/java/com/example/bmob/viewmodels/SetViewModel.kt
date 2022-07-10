@@ -112,6 +112,8 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
 
     /**
      * 查询自定义用户User
+     *
+     * 关键方法，全局都会用到
      */
     fun getUserByQuery(): MutableLiveData<User> {
         if (!handler.contains(QUERY_USER_KEY)) {

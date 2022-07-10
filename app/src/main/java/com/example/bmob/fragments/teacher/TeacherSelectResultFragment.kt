@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,32 +13,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentTeacherSelectResultBinding
 import com.example.bmob.utils.showMsg
+import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherSelectResultViewModel
 
 
 class TeacherSelectResultFragment : Fragment(),FragmentEventListener{
     private lateinit var binding:FragmentTeacherSelectResultBinding
     private val viewModel:TeacherSelectResultViewModel by viewModels()
+    //一定要用全局的SetViewModel，不然会空指针
+    private val setViewModel:SetViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTeacherSelectResultBinding.inflate(inflater,container,false)
+        viewModel.getStudentOfSelectedThisThesisLiveData(setViewModel.getUserByQuery().value!!){
+            showMsg(requireContext(),it)
+        }.observe(viewLifecycleOwner){
+            val adapter = SelectedAdapter(it!!)
+            binding.recyclerView2.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
+            binding.recyclerView2.adapter = adapter
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
-        viewModel.getStudentOfSelectedThisThesis{isSuccess, selectedModelList, msg ->
-            if (isSuccess){
-                val adapter = SelectedAdapter(selectedModelList!!)
-                binding.recyclerView2.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
-                binding.recyclerView2.adapter = adapter
-            }else{
-                showMsg(requireContext(),msg)
-            }
-        }
     }
 
     override fun setEventListener() {

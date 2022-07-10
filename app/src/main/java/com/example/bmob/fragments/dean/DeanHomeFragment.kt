@@ -28,12 +28,11 @@ import com.youth.banner.indicator.CircleIndicator
  *
  * 也有banner
  */
-class DeanHomeFragment : Fragment(),FragmentEventListener {
-    companion object{
-        private lateinit var binding:FragmentDeanHomeBinding
-    }
+class DeanHomeFragment : Fragment(), FragmentEventListener {
+    private lateinit var binding: FragmentDeanHomeBinding
     private var adapter: SearchRecyclerViewAdapter? = null
     private val viewModel: CommonHomeViewModel by viewModels()
+
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
     private val setViewModel: SetViewModel by activityViewModels()
 
@@ -41,7 +40,7 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDeanHomeBinding.inflate(inflater,container,false)
+        binding = FragmentDeanHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -57,7 +56,7 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
 
         binding.banner1.addBannerLifecycleObserver(this)
 
-        setViewModel.getUserByQuery().observe(viewLifecycleOwner){
+        setViewModel.getUserByQuery().observe(viewLifecycleOwner) {
             binding.user = it
         }
 
@@ -66,12 +65,16 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
-                    viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout,true)
+                    viewModel.isShowRecyclerView(
+                        binding.recyclerView1,
+                        binding.contentLinearLayout,
+                        true
+                    )
                     adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
                         val actionDeanHomeFragmentToShowThesisFragment =
                             DeanHomeFragmentDirections.actionDeanHomeFragmentToShowThesisFragment(
-                                thesis,false
+                                thesis, false
                             )
                         findNavController().navigate(actionDeanHomeFragmentToShowThesisFragment)
                     }
@@ -83,16 +86,24 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
                 } else {
                     if (it.second.isNotEmpty() && viewModel.getNowSearch().value == it.first) {
                         Log.v(LOG_TAG, "设置thesisList：$it")
-                        viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout,true)
+                        viewModel.isShowRecyclerView(
+                            binding.recyclerView1,
+                            binding.contentLinearLayout,
+                            true
+                        )
                         adapter!!.setThesisList(it.second)
                     } else {
-                        viewModel.isShowRecyclerView(binding.recyclerView1,binding.contentLinearLayout,false)
+                        viewModel.isShowRecyclerView(
+                            binding.recyclerView1,
+                            binding.contentLinearLayout,
+                            false
+                        )
                     }
                 }
             }
         }
         //观测banner数据
-        viewModel.queryBannerData().observe(viewLifecycleOwner){
+        viewModel.queryBannerData().observe(viewLifecycleOwner) {
             binding.banner1
                 .setAdapter(BannerAdapter(it!!))
                 .indicator = CircleIndicator(requireContext())
@@ -111,9 +122,13 @@ class DeanHomeFragment : Fragment(),FragmentEventListener {
     }
 
     override fun setEventListener() {
-        viewModel.setSearchViewListener(binding.searchView2,binding.recyclerView1,binding.contentLinearLayout){
-            if (it){
-                Log.v(LOG_TAG,"输入的内容空")
+        viewModel.setSearchViewListener(
+            binding.searchView2,
+            binding.recyclerView1,
+            binding.contentLinearLayout
+        ) {
+            if (it) {
+                Log.v(LOG_TAG, "输入的内容空")
                 adapter = null
             }
         }

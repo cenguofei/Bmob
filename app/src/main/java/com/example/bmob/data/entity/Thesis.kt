@@ -45,7 +45,11 @@ data class Thesis(
     var require:String? = null,//论文要求
 
 
-    //针对学生 ，论文是否可选，当审核通过并且选题时间开始后为true，表示可选
+    /**
+     * 针对学生 ，论文是否可选，当审核通过并且选题时间开始后为true，表示可选
+     *  false 初始值
+     *  true  系主任审批通过
+     */
     var enabledToStudent:Boolean? = null,
 
     //针对老师,审批状态

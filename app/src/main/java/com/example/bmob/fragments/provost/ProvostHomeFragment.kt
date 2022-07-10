@@ -57,7 +57,6 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
         }
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {
-            Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
                 if (adapter == null && it.second.isNotEmpty()) {
                     viewModel.isShowRecyclerView(
@@ -65,9 +64,7 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
                         binding.contentLinearLayout,
                         true
                     )
-                    Log.v(LOG_TAG, "搜索结果是否为空:${it.second.isEmpty()},$it")
                     adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
-                        Log.v(LOG_TAG, "回调：$thesis")
                         val actionProvostHomeFragmentToShowThesisFragment =
                             ProvostHomeFragmentDirections.actionProvostHomeFragmentToShowThesisFragment(
                                 thesis, false
@@ -81,7 +78,6 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
                     )
                 } else {
                     if (it.second.isNotEmpty() && viewModel.getNowSearch().value == it.first) {
-                        Log.v(LOG_TAG, "设置thesisList：$it")
                         viewModel.isShowRecyclerView(
                             binding.recyclerView1,
                             binding.contentLinearLayout,

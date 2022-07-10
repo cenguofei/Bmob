@@ -2,6 +2,7 @@ package com.example.bmob.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cn.bmob.v3.BmobQuery
@@ -13,68 +14,96 @@ import com.example.bmob.data.entity.STUDENT_HAS_SELECTED_THESIS
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
+import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.LOG_TAG
 import kotlinx.coroutines.launch
+import okhttp3.internal.cacheGet
 
-class StudentSelectViewModel : ViewModel() {
+class StudentSelectViewModel(private val handler:SavedStateHandle): ViewModel() {
     private val repository = BmobRepository.getInstance()
-    private var mutableThesisLiveData = MutableLiveData<MutableList<Thesis>>()
 
-    fun getMutableThesisLiveData() = mutableThesisLiveData
+    companion object{
+        private const val TEACHER_IN_DEPARTMENT_KEY = "_teacher_in_depart_"
+        private const val MUTABLE_THESIS_KEY = "_mu_thesis_"
+    }
+
+    fun getMutableTeacherThesisLiveData(
+        teacher: User,
+        callback: (message: String) -> Unit
+    ):MutableLiveData<MutableList<Thesis>>{
+        if (!handler.contains(MUTABLE_THESIS_KEY)){
+            getTeacherAllThesis(teacher){isSuccess, thesisList, message ->
+                if (isSuccess){
+                    handler.set(MUTABLE_THESIS_KEY,thesisList)
+                }else{
+                    callback.invoke(message)
+                }
+            }
+        }
+        return handler.getLiveData(MUTABLE_THESIS_KEY)
+    }
+
+    fun getAllTeacherInDepartmentLiveData(
+        student: User,
+        callback: (message: String) -> Unit
+    ):MutableLiveData<MutableList<User>>{
+        if (!handler.contains(TEACHER_IN_DEPARTMENT_KEY)){
+            findAllTeacherInDepartment(student){isSuccess, teacherList, msg ->
+                if (isSuccess){
+                    handler.set(TEACHER_IN_DEPARTMENT_KEY,teacherList)
+                }else{
+                    callback.invoke(msg)
+                }
+            }
+        }
+        return handler.getLiveData(TEACHER_IN_DEPARTMENT_KEY)
+    }
 
     /**
      * 学生选择自己所在系里面的所有课题
      */
-    fun findAllTeacherInDepartment(
+    private fun findAllTeacherInDepartment(
+        student: User,
         callback: (
             isSuccess: Boolean, teacherList: MutableList<User>?, msg: String
         ) -> Unit
     ) {
-        getUserInfo { isSuccess, user ->
-            if (isSuccess) {
-                //三个条件
-                val equalToSchool = BmobQuery<User>()
-                    .addWhereEqualTo("school", user!!.school)
-                val equalToDepartment = BmobQuery<User>()
-                    .addWhereEqualTo("department", user.department)
-                val equalToCollege = BmobQuery<User>()
-                    .addWhereEqualTo("college", user.college)
-                val equalToIdentification = BmobQuery<User>()
-                    .addWhereEqualTo("identification", IDENTIFICATION_TEACHER)
 
-                val queryList = ArrayList<BmobQuery<User>>().run {
-                    add(equalToSchool)
-                    add(equalToDepartment)
-                    add(equalToCollege)
-                    add(equalToIdentification)
-                    this@run
-                }
+        //三个条件
+        val equalToSchool = BmobQuery<User>()
+            .addWhereEqualTo("school", student.school)
+        val equalToDepartment = BmobQuery<User>()
+            .addWhereEqualTo("department", student.department)
+        val equalToCollege = BmobQuery<User>()
+            .addWhereEqualTo("college", student.college)
+        val equalToIdentification = BmobQuery<User>()
+            .addWhereEqualTo("identification", IDENTIFICATION_TEACHER)
 
-                BmobQuery<User>()
-                    .and(queryList)
-                    .findObjects(object : FindListener<User>() {
-                        override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                            if (p1 == null) {
-                                if (p0 == null) {
-                                    callback.invoke(true, null, EMPTY_SEARCH_RESULT)
-                                } else {
-                                    callback.invoke(true, p0, EMPTY_MESSAGE)
-                                }
-                            } else {
-                                callback.invoke(false, null, p1.message.toString())
-                            }
-                        }
-                    })
-            } else {
-                callback.invoke(false, null, "查询不到用户信息")
-            }
+
+        val queryList = ArrayList<BmobQuery<User>>().run {
+            add(equalToSchool)
+            add(equalToDepartment)
+            add(equalToCollege)
+            add(equalToIdentification)
+            this@run
         }
-    }
 
-    private fun getUserInfo(callback: (isSuccess: Boolean, user: User?) -> Unit) {
-        repository.getUserInfo(callback)
+        BmobQuery<User>()
+            .and(queryList)
+            .findObjects(object : FindListener<User>() {
+                override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                    if (p1 == null) {
+                        if (p0 == null) {
+                            callback.invoke(false, null, EMPTY_SEARCH_RESULT)
+                        } else {
+                            callback.invoke(true, p0, EMPTY_MESSAGE)
+                        }
+                    } else {
+                        callback.invoke(false, null, p1.message.toString())
+                    }
+                }
+            })
     }
-
 
     /**
      * 查询SelectFragment中args.user
@@ -83,7 +112,7 @@ class StudentSelectViewModel : ViewModel() {
      * select * from Thesis
      *      where user.objectId = Thesis.teacherId
      */
-    fun getTeacherAllThesis(thesisUser: User, callback: (message: String) -> Unit) {
+    private fun getTeacherAllThesis(thesisUser: User, callback: (isSuccess: Boolean,thesisList:MutableList<Thesis>?,message: String) -> Unit) {
         BmobQuery<Thesis>()
             .addWhereEqualTo("teacherId", thesisUser.objectId)
 
@@ -98,17 +127,16 @@ class StudentSelectViewModel : ViewModel() {
              *     //针对老师,审批状态
              *     var thesisState:Int? = null
              */
-
             .findObjects(object : FindListener<Thesis>() {
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null) {
                         if (p0 == null) {
-                            callback.invoke("没有搜索到该教师的课题")
+                            callback.invoke(false,null,"没有搜索到该教师的课题")
                         } else {
-                            mutableThesisLiveData.value = p0
+                            callback.invoke(true,p0, EMPTY_TEXT)
                         }
                     } else {
-                        callback.invoke("出错了：${p1.message}")
+                        callback.invoke(false,null,"出错了：${p1.message}")
                     }
                 }
             })
@@ -121,12 +149,12 @@ class StudentSelectViewModel : ViewModel() {
         student: User,
         thesis: Thesis,
         callback: (isSuccess: Boolean, message: String) -> Unit,
-        updateStudentCallback:(student:User)->Unit
+        updateStudentCallback: (student: User) -> Unit
     ) {
         viewModelScope.launch {
             if (student.studentSelectState == STUDENT_HAS_SELECTED_THESIS) {
                 callback.invoke(true, "已经选择课题，不能多选或重复选")
-            }else{
+            } else {
                 val thesisStudentList = thesis.studentsList ?: mutableListOf()
                 thesisStudentList.add(
                     if (thesisStudentList.size == 0) 0 else thesisStudentList.size,
@@ -151,7 +179,10 @@ class StudentSelectViewModel : ViewModel() {
                     override fun done(p0: BmobException?) {
                         if (p0 == null) {
                             updateStudentCallback.invoke(student)
-                            callback.invoke(true, com.example.bmob.data.repository.remote.EMPTY_TEXT)
+                            callback.invoke(
+                                true,
+                                com.example.bmob.data.repository.remote.EMPTY_TEXT
+                            )
                         } else {
                             callback.invoke(false, p0.message.toString())
                         }

@@ -24,7 +24,7 @@ import com.example.bmob.viewmodels.StudentSelectViewModel
  */
 class BrowseFragment : Fragment(),FragmentEventListener {
     private lateinit var binding:FragmentBrowseBinding
-    private val selectViewModel:StudentSelectViewModel by viewModels()
+    private val selectViewModel:StudentSelectViewModel by activityViewModels()
     private val setViewModel:SetViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,25 +44,44 @@ class BrowseFragment : Fragment(),FragmentEventListener {
         }
 
         Log.v(LOG_TAG,"开始findAllTeacherInDepartment")
-        selectViewModel.findAllTeacherInDepartment{isSuccess, teacherList, msg ->
-            if (isSuccess){
+        selectViewModel.getAllTeacherInDepartmentLiveData(setViewModel.getUserByQuery().value!!){
+            showMsg(requireContext(),it)
+        }.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
                 Log.v(LOG_TAG,"BrowseFragment查询可选课题的老师的课题成功了")
                 val browseTeacherHasThesisAdapter =
-                    BrowseTeacherHasThesisAdapter(teacherList!!) {
-                        Log.v(LOG_TAG,"被点击：$it")
+                    BrowseTeacherHasThesisAdapter(it!!) {teacher->
+                        Log.v(LOG_TAG,"被点击：$teacher")
                         val actionBrowseFragmentToSelectFragment =
-                            BrowseFragmentDirections.actionBrowseFragmentToSelectFragment(it)
+                            BrowseFragmentDirections.actionBrowseFragmentToSelectFragment(teacher)
                         findNavController().navigate(actionBrowseFragmentToSelectFragment)
                     }
                 binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),
                     RecyclerView.VERTICAL,false
                 )
                 binding.recyclerView.adapter = browseTeacherHasThesisAdapter
-            }else{
-                Log.v(LOG_TAG,"BrowseFragment查询可选课题的老师的课题失败了")
-                showMsg(requireContext(),msg)
             }
         }
+
+//        selectViewModel.findAllTeacherInDepartment(setViewModel.getUserByQuery().value!!){isSuccess, teacherList, msg ->
+//            if (isSuccess){
+//                Log.v(LOG_TAG,"BrowseFragment查询可选课题的老师的课题成功了")
+//                val browseTeacherHasThesisAdapter =
+//                    BrowseTeacherHasThesisAdapter(teacherList!!) {
+//                        Log.v(LOG_TAG,"被点击：$it")
+//                        val actionBrowseFragmentToSelectFragment =
+//                            BrowseFragmentDirections.actionBrowseFragmentToSelectFragment(it)
+//                        findNavController().navigate(actionBrowseFragmentToSelectFragment)
+//                    }
+//                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),
+//                    RecyclerView.VERTICAL,false
+//                )
+//                binding.recyclerView.adapter = browseTeacherHasThesisAdapter
+//            }else{
+//                Log.v(LOG_TAG,"BrowseFragment查询可选课题的老师的课题失败了")
+//                showMsg(requireContext(),msg)
+//            }
+//        }
     }
 
     override fun setEventListener() {

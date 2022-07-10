@@ -25,8 +25,7 @@ import com.example.bmob.viewmodels.StudentSelectViewModel
  */
 class SelectFragment : Fragment(),FragmentEventListener {
     private val args:SelectFragmentArgs by navArgs()
-    private val selectViewModel:StudentSelectViewModel by viewModels()
-    private val setViewModel:SetViewModel by activityViewModels()
+    private val selectViewModel:StudentSelectViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSelectBinding
     override fun onCreateView(
@@ -34,15 +33,11 @@ class SelectFragment : Fragment(),FragmentEventListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSelectBinding.inflate(inflater,container,false)
+        binding.thesisUser = args.teacher
 
-        Log.v(LOG_TAG,"传递到SelectFragment的数据：${args.user}")
-        selectViewModel.getTeacherAllThesis(args.user){
+        selectViewModel.getMutableTeacherThesisLiveData(args.teacher){
             showMsg(requireContext(),it)
-        }
-
-        binding.thesisUser = args.user
-
-        selectViewModel.getMutableThesisLiveData().observe(viewLifecycleOwner){
+        }.observe(viewLifecycleOwner){
             val adapter = StudentSelectThesisAdapter(it){thesis->
                 val actionSelectFragmentToShowThesisFragment =
                     SelectFragmentDirections.actionSelectFragmentToShowThesisFragment(thesis, true)
@@ -51,7 +46,6 @@ class SelectFragment : Fragment(),FragmentEventListener {
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
             binding.recyclerView.adapter = adapter
         }
-
         return binding.root
     }
 

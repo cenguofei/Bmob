@@ -25,40 +25,46 @@ import com.example.bmob.viewmodels.SetViewModel
  */
 class StudentSelectedFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentStudentSelectedBinding
-    private val viewModel:DeanStudentSelectedViewModel by viewModels()
-    private val setViewModel:SetViewModel by activityViewModels()
+    private val viewModel: DeanStudentSelectedViewModel by viewModels()
+    private val setViewModel: SetViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStudentSelectedBinding.inflate(inflater, container, false)
+        binding.dean = setViewModel.getUserByQuery().value
+        viewModel.getStudentWhichHaveSelectedThesisLiveData(
+            setViewModel.getUserByQuery().value!!,
+            true
+        ) {
+            showMsg(requireContext(), it)
+        }.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()){
+                RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
+                    val itemInflater = LayoutInflater.from(parent.context)
+                    RecyclerViewAdapter.ResultViewHolder(
+                        ItemDeanStudentSelectedBinding.inflate(
+                            itemInflater,
+                            parent,
+                            false
+                        )
+                    )
+                }
+                val adapter = RecyclerViewAdapter(it) { binding, result ->
+                    (binding as ItemDeanStudentSelectedBinding).model = result
+                }
+                binding.recyclerView.layoutManager =
+                    LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                binding.recyclerView.adapter = adapter
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
-        binding.dean = setViewModel.getUserByQuery().value
-        Log.v(LOG_TAG,"onViewCreated StudentSelectedFragment")
-        viewModel.getStudentWhichHaveSelectedThesisLiveData(setViewModel.getUserByQuery().value!!,true){
-            showMsg(requireContext(),it)
-        }.observe(viewLifecycleOwner){
-            Log.v(LOG_TAG,"StudentSelectedFragment观测到已选结果：$it")
-            if (it.isNotEmpty()){
-                RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = {parent->
-                    val inflater = LayoutInflater.from(parent.context)
-                    RecyclerViewAdapter.ResultViewHolder(ItemDeanStudentSelectedBinding.inflate(inflater,parent,false))
-                }
-                val adapter = RecyclerViewAdapter(it){binding, result ->
-                    (binding as ItemDeanStudentSelectedBinding).model = result
-                }
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
-                binding.recyclerView.adapter = adapter
-            }else{
-                showMsg(requireContext(),"没有搜索到任何结果")
-            }
-        }
     }
 
     override fun setEventListener() {

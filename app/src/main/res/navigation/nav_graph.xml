@@ -232,7 +232,7 @@
             android:id="@+id/action_selectFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
         <argument
-            android:name="user"
+            android:name="teacher"
             app:argType="com.example.bmob.data.entity.User" />
     </fragment>
     <fragment

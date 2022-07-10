@@ -36,22 +36,15 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStudentUnselectedBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
         binding.dean = setViewModel.getUserByQuery().value
-        Log.v(LOG_TAG,"onViewCreated StudentSelectedFragment")
         viewModel.getStudentsWhichNotSelectedThesisLiveData(setViewModel.getUserByQuery().value!!,false){
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
             Log.v(LOG_TAG,"StudentSelectedFragment观测到 未 选结果：$it")
             if (it.isNotEmpty()){
                 RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent->
-                    val inflater = LayoutInflater.from(parent.context)
-                    RecyclerViewAdapter.ResultViewHolder(ItemDeanStudentNotSelectBinding.inflate(inflater,parent,false))
+                    val itemInflater = LayoutInflater.from(parent.context)
+                    RecyclerViewAdapter.ResultViewHolder(ItemDeanStudentNotSelectBinding.inflate(itemInflater,parent,false))
                 }
                 val adapter = RecyclerViewAdapter(it){binding, result ->
                     (binding as ItemDeanStudentNotSelectBinding).user = result
@@ -63,6 +56,12 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
                 showMsg(requireContext(),"没有搜索到任何结果")
             }
         }
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setEventListener()
     }
 
     override fun setEventListener() {

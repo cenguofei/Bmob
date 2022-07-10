@@ -33,10 +33,14 @@ class DeanNotApprovedFragment : Fragment() {
         binding = FragmentDeanNotApprovedBinding.inflate(inflater, container, false)
 
         binding.dean = setViewModel.getUserByQuery().value
-
-        viewModel.queryThesisToDeanInApprovedFragment(setViewModel.getUserByQuery().value!!, NOT_APPROVED){ isSuccess, data, message ->
-            if (isSuccess){
-                val approveThesisAdapter = ApproveThesisAdapter(data!!){thesis->
+        viewModel.getQueryThesisToDeanNotApprovedLiveData(
+            setViewModel.getUserByQuery().value!!,
+            NOT_APPROVED
+        ){
+            showMsg(requireContext(),it)
+        }.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                val approveThesisAdapter = ApproveThesisAdapter(it!!){thesis->
                     val actionDeanNotApprovedFragmentToApproveFragment =
                         DeanNotApprovedFragmentDirections.actionDeanNotApprovedFragmentToApproveFragment(
                             thesis,
@@ -50,11 +54,8 @@ class DeanNotApprovedFragment : Fragment() {
                         RecyclerView.VERTICAL,false)
                     adapter = approveThesisAdapter
                 }
-            }else{
-                showMsg(requireContext(),message)
             }
         }
-
         return binding.root
     }
 }

@@ -13,9 +13,15 @@ import com.example.bmob.data.entity.ALREADY_APPROVED
 import com.example.bmob.data.entity.NOT_APPROVED
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
+import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.LOG_TAG
 
 class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : ViewModel() {
+
+    companion object {
+        private const val APPROVED_THESIS_LIST_LIST = "_approved_"
+        private const val NOT_APPROVED_THESIS_LIST = "_not_approved_"
+    }
 
     private var currentPos = MutableLiveData<Int>()
 
@@ -88,6 +94,46 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
         }
     }
 
+
+    /**
+     * 获取已选该课题的学生名单
+     */
+    fun getQueryThesisToDeanNotApprovedLiveData(
+        dean: User,
+        approvedState:Int,
+        callback:(message:String)->Unit
+    ):MutableLiveData<MutableList<MutableList<Thesis>>>{
+        if (!handler.contains(NOT_APPROVED_THESIS_LIST)){
+            queryThesisToDeanInApprovedFragment(dean,approvedState){isSuccess, data, message ->
+                if (isSuccess){
+                    handler.set(NOT_APPROVED_THESIS_LIST,data)
+                }else{
+                    callback.invoke(message)
+                }
+            }
+        }
+        return handler.getLiveData(NOT_APPROVED_THESIS_LIST)
+    }
+    /**
+     * 获取未选该课题的学生名单
+     */
+    fun getQueryThesisToDeanApprovedLiveData(
+        dean: User,
+        approvedState:Int,
+        callback:(message:String)->Unit
+    ):MutableLiveData<MutableList<MutableList<Thesis>>>{
+        if (!handler.contains(APPROVED_THESIS_LIST_LIST)){
+            queryThesisToDeanInApprovedFragment(dean,approvedState){isSuccess, data, message ->
+                if (isSuccess){
+                    handler.set(APPROVED_THESIS_LIST_LIST,data)
+                }else{
+                    callback.invoke(message)
+                }
+            }
+        }
+        return handler.getLiveData(APPROVED_THESIS_LIST_LIST)
+    }
+
     /**
      * 查询系主任的已审批课题
      *
@@ -99,12 +145,11 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
      * NOT_APPROVED 还没审批
      * THESIS_APPROVED_REJECTED = 2 审批未通过
      */
-    fun queryThesisToDeanInApprovedFragment(
+    private fun queryThesisToDeanInApprovedFragment(
         dean: User,
         approvedState:Int,
         callback: (isSuccess: Boolean,data:MutableList<MutableList<Thesis>>?,  message: String) -> Unit
     ) {
-
         val addWhereEqualToSchool = BmobQuery<Thesis>()
             .addWhereEqualTo("school", dean.school)
         val addWhereEqualToCollege = BmobQuery<Thesis>()
@@ -127,7 +172,6 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null) {
                         if (p0 != null && p0.isNotEmpty()) {
-
                             val hashMapOf = hashMapOf<String, MutableList<Thesis>>()
                             p0.forEach {
                                 if (!hashMapOf.contains(it.teacherName!!)) {
@@ -142,11 +186,10 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
                             hashMapOf.values.forEach {
                                 listThesisList.add(it)
                             }
-
                             callback.invoke(
                                 true,
                                 listThesisList,
-                                ""
+                                EMPTY_TEXT
                             )
                         } else {
                             callback.invoke(false, null,"没有搜索到相应结果")
@@ -156,9 +199,5 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
                     }
                 }
             })
-    }
-    companion object {
-        private const val APPROVED_THESIS_LIST_LIST = "approved_"
-        private const val NOT_APPROVED_THESIS_LIST = "not_approved_"
     }
 }

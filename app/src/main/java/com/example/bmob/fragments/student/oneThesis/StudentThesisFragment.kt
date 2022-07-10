@@ -34,7 +34,6 @@ class StudentThesisFragment : Fragment(),FragmentEventListener {
         }else{
             showMsg(requireContext(),"您还没有选择课题，点击选择选择课题")
         }
-        Log.v(LOG_TAG,"StudentThesisFragment student:$student")
         setEventListener()
         return binding.root
     }
@@ -51,7 +50,6 @@ class StudentThesisFragment : Fragment(),FragmentEventListener {
         }
 
         binding.selectThesisBtn.setOnClickListener {
-            Log.v(LOG_TAG,"点击：selectThesisBtn")
             findNavController().navigate(R.id.action_studentThesisFragment_to_browseFragment)
         }
     }

@@ -12,7 +12,12 @@ import com.example.bmob.data.entity.User
 import com.example.bmob.utils.LOG_TAG
 import java.util.ArrayList
 
-class DeanStudentSelectedViewModel(private val handler:SavedStateHandle):ViewModel() {
+class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : ViewModel() {
+
+    companion object {
+        private const val WHICH_HAVE_SELECTED_THESIS_LIVE_DATA = "_have_selected_thesis_"
+        private const val WHICH_NOT_SELECT_ONE_THESIS = "_not_select_one_"
+    }
 
     /**
      * 查询已经选择课题的本系的学生
@@ -43,33 +48,40 @@ class DeanStudentSelectedViewModel(private val handler:SavedStateHandle):ViewMod
      */
     fun getStudentWhichHaveSelectedThesisLiveData(
         dean: User,
-        studentSelectState:Boolean,
+        studentSelectState: Boolean,
         callback: ((message: String) -> Unit)
-    ): MutableLiveData<MutableList<DeanStudentSelectedModel>>{
-        if (!handler.contains(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA)){
-            findStudentsWhichHaveSelectedThesis(dean,studentSelectState){ isSuccess, listThesis, message ->
-                if (isSuccess){
+    ): MutableLiveData<MutableList<DeanStudentSelectedModel>> {
+        if (!handler.contains(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA)) {
+            findStudentsWhichHaveSelectedThesis(
+                dean,
+                studentSelectState
+            ) { isSuccess, listThesis, message ->
+                if (isSuccess) {
+                    Log.v(LOG_TAG,"findStudentsWhichHaveSelectedThesis isSuccess")
                     val resultList = mutableListOf<DeanStudentSelectedModel>()
-                    listThesis!!.forEach { thesis->
-                        thesis.studentsList?.forEach {student->
-                            resultList.add(DeanStudentSelectedModel(thesis.title!!,thesis.teacherName!!,
-                                student.studentClass?:"x班级",student.name!!,student.avatarUrl?:""))
-                            Log.v(LOG_TAG,"student:$student")
+                    listThesis!!.forEach { thesis ->
+                        thesis.studentsList?.forEach { student ->
+                            resultList.add(
+                                DeanStudentSelectedModel(
+                                    thesis.title!!,
+                                    thesis.teacherName!!,
+                                    student.studentClass ?: "x班级",
+                                    student.name!!,
+                                    student.avatarUrl ?: ""
+                                )
+                            )
                         }
                     }
                     Log.v(LOG_TAG,"resultList:$resultList")
-                    handler.set(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA,resultList)
-                }else{
-                    Log.v(LOG_TAG,"resultList:没有学生已选信息")
+                    handler.set(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA, resultList)
+                } else {
                     callback.invoke(message)
                 }
             }
         }
-//        if (handler.contains(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA)) {
-            return handler.getLiveData(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA)
-//        }
-//        return MutableLiveData<MutableList<DeanStudentSelectedModel>>()
+        return handler.getLiveData(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA)
     }
+
     /**
      * Thesis表属性：
      *      @see Thesis->studentsList:MutableList<User>
@@ -80,53 +92,53 @@ class DeanStudentSelectedViewModel(private val handler:SavedStateHandle):ViewMod
      */
     private fun findStudentsWhichHaveSelectedThesis(
         dean: User,
-        studentSelectState:Boolean,
-        callback:(isSuccess:Boolean,listThesis:MutableList<Thesis>?,message:String)->Unit)
-    {
-
+        studentSelectState: Boolean,
+        callback: (isSuccess: Boolean, listThesis: MutableList<Thesis>?, message: String) -> Unit
+    ) {
         val addWhereEqualTo = BmobQuery<Thesis>().addWhereEqualTo("school", dean.school)
         val addWhereEqualTo1 = BmobQuery<Thesis>().addWhereEqualTo("college", dean.college)
         val addWhereEqualTo2 = BmobQuery<Thesis>().addWhereEqualTo("department", dean.department)
         val addWhereEqualTo3 =
             BmobQuery<Thesis>().addWhereEqualTo("studentSelectState", studentSelectState)
-//        BmobQuery<Thesis>().addWhereEqualTo("identification", IDENTIFICATION_STUDENT)
 
         val queryList = ArrayList<BmobQuery<Thesis>>()
         queryList.add(addWhereEqualTo)
         queryList.add(addWhereEqualTo1)
         queryList.add(addWhereEqualTo2)
-//        queryList.add(addWhereEqualTo3)
 
 
         BmobQuery<Thesis>()
             .and(queryList)
-            .findObjects(object :FindListener<Thesis>(){
+            .findObjects(object : FindListener<Thesis>() {
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.isNotEmpty()){
-                            Log.v(LOG_TAG,"搜索成功：$p0")
-                            callback.invoke(true,p0, com.example.bmob.utils.EMPTY_TEXT)
-                        }else{
-                            Log.v(LOG_TAG,"findStudentWhichHaveSelectedThesis没有匹配项")
-                            callback.invoke(false,null,"没有学生选题信息")
+                    if (p1 == null) {
+                        if (p0 != null && p0.isNotEmpty()) {
+                            Log.v(LOG_TAG, "搜索成功：$p0")
+                            callback.invoke(true, p0, com.example.bmob.utils.EMPTY_TEXT)
+                        } else {
+                            Log.v(LOG_TAG, "findStudentWhichHaveSelectedThesis没有匹配项")
+                            callback.invoke(false, null, "没有学生选题信息")
                         }
-                    }else{
-                        callback.invoke(false,null,"出错了:${p1.message}")
+                    } else {
+                        callback.invoke(false, null, "出错了:${p1.message}")
                     }
                 }
             })
     }
 
     fun getStudentsWhichNotSelectedThesisLiveData(
-        dean:User,
-        studentSelectState:Boolean,
+        dean: User,
+        studentSelectState: Boolean,
         callback: (message: String) -> Unit
-    ):MutableLiveData<MutableList<User>>{
-        if (!handler.contains(WHICH_NOT_SELECT_ONE_THESIS)){
-            findStudentsWhichNotSelectedThesis(dean,studentSelectState){isSuccess, data, message ->
-                if (isSuccess){
-                    handler.set(WHICH_NOT_SELECT_ONE_THESIS,data)
-                }else{
+    ): MutableLiveData<MutableList<User>> {
+        if (!handler.contains(WHICH_NOT_SELECT_ONE_THESIS)) {
+            findStudentsWhichNotSelectedThesis(
+                dean,
+                studentSelectState
+            ) { isSuccess, data, message ->
+                if (isSuccess) {
+                    handler.set(WHICH_NOT_SELECT_ONE_THESIS, data)
+                } else {
                     callback.invoke(message)
                 }
             }
@@ -134,15 +146,15 @@ class DeanStudentSelectedViewModel(private val handler:SavedStateHandle):ViewMod
         return handler.getLiveData(WHICH_NOT_SELECT_ONE_THESIS)
     }
 
-    fun findStudentsWhichNotSelectedThesis(
-        dean:User,
-        studentSelectState:Boolean,
-        callback: (isSuccess: Boolean,data:MutableList<User>?,message: String) -> Unit
-    ){
+    private fun findStudentsWhichNotSelectedThesis(
+        dean: User,
+        studentSelectState: Boolean,
+        callback: (isSuccess: Boolean, data: MutableList<User>?, message: String) -> Unit
+    ) {
         val addWhereEqualTo = BmobQuery<User>().addWhereEqualTo("school", dean.school)
         val addWhereEqualTo1 = BmobQuery<User>().addWhereEqualTo("college", dean.college)
         val addWhereEqualTo2 = BmobQuery<User>().addWhereEqualTo("department", dean.department)
-        BmobQuery<User>().addWhereEqualTo("studentSelectState",studentSelectState)
+        BmobQuery<User>().addWhereEqualTo("studentSelectState", studentSelectState)
 
         val queryList = ArrayList<BmobQuery<User>>()
         queryList.add(addWhereEqualTo)
@@ -151,35 +163,26 @@ class DeanStudentSelectedViewModel(private val handler:SavedStateHandle):ViewMod
 
         BmobQuery<User>()
             .and(queryList)
-            .findObjects(object :FindListener<User>(){
+            .findObjects(object : FindListener<User>() {
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.isNotEmpty()){
-                            callback.invoke(true,p0,"")
-                        }else{
-                            callback.invoke(false,null,"没有找到相关数据")
+                    if (p1 == null) {
+                        if (p0 != null && p0.isNotEmpty()) {
+                            callback.invoke(true, p0, "")
+                        } else {
+                            callback.invoke(false, null, "没有找到相关数据")
                         }
-                    }else{
-                        callback.invoke(false,null,"异常:${p1.message}")
+                    } else {
+                        callback.invoke(false, null, "异常:${p1.message}")
                     }
                 }
             })
     }
-
-
-
-
-
-    companion object{
-        private const val WHICH_HAVE_SELECTED_THESIS_LIVE_DATA = "_have_selected_thesis_"
-        private const val WHICH_NOT_SELECT_ONE_THESIS = "_not_select_one_"
-    }
 }
 
 data class DeanStudentSelectedModel(
-    val thesisTitle:String,
-    val thesisTeacherName:String,
-    val studentClass:String,
-    val studentName:String,
-    val studentAvatarUrl:String,
+    val thesisTitle: String,
+    val thesisTeacherName: String,
+    val studentClass: String,
+    val studentName: String,
+    val studentAvatarUrl: String,
 )
