@@ -36,24 +36,43 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
     ): View {
         binding = FragmentShowThesisBinding.inflate(inflater,container,false)
         binding.thesis = args.thesis
+        /**
+         * 判断当前用户身份
+         * 是学生则显示加入按钮，否则隐藏
+         */
         if (args.isShowParticipateButton){
             binding.participateButton.visibility = View.VISIBLE
+            viewModel.queryChooseThesisTime(setViewModel.getUserByQuery().value!!)
+            {isSuccess, releaseTime,message ->
+                if (isSuccess){
+                    binding.timeIntervalTv.visibility = View.VISIBLE
+                    binding.releaseTime = releaseTime
+                }else{
+                    binding.participateButton.setBackgroundColor(R.color.grey_light)
+                    Log.v(LOG_TAG,"isEnabled = false")
+                    showMsg(requireContext(),message)
+                }
+            }
         }else{
             binding.participateButton.visibility = View.GONE
         }
 
-        viewModel.isStudentSelectThesis.observe(viewLifecycleOwner){
-            Log.v(LOG_TAG,"isStudentSelectThesis:$it")
-            if (it){
-                setViewModel.isSelectTime(setViewModel.getUserByQuery().value!!){isSelectTime, message ->
-                    if (!isSelectTime){
-                        showMsg(requireContext(),message)
-                        binding.participateButton.setBackgroundColor(R.color.grey_light)
-                        binding.participateButton.isEnabled = false
-                    }
-                }
-            }
-        }
+        /**
+         * 判断是不是学生用户进入选题
+         * 如果不是选题时间，就让加入按钮失效
+         */
+//        viewModel.isStudentSelectThesis.observe(viewLifecycleOwner){
+//            Log.v(LOG_TAG,"isStudentSelectThesis:$it")
+//            if (it){
+//                setViewModel.isSelectTime(setViewModel.getUserByQuery().value!!){isSelectTime, message ->
+//                    if (!isSelectTime){
+//                        showMsg(requireContext(),message)
+//                        binding.participateButton.setBackgroundColor(R.color.grey_light)
+//                        binding.participateButton.isEnabled = false
+//                    }
+//                }
+//            }
+//        }
         return binding.root
     }
 
@@ -67,14 +86,25 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
             findNavController().navigateUp()
         }
         binding.participateButton.setOnClickListener {
-            setViewModel.getUserByQuery().value?.let {
-                viewModel.addStudentToTeacherThesis(it,args.thesis,{isSuccess, message ->
-                    if (!isSuccess){ showMsg(requireContext(), msg = message) }
-                }){student ->
-                    setViewModel.setUserByQuery(student)
-                    Log.v(LOG_TAG,"学生已更新：$student")
-                }
+            //如果有时间区间，先检查当前时间是否在可选范围内
+            if (viewModel.releaseTime != null){
+                if (viewModel.isInSelectTime(viewModel.releaseTime!!)){
+                    setViewModel.getUserByQuery().value?.let { student->
+                        viewModel.addStudentToTeacherThesis(student,args.thesis,{
+                            showMsg(requireContext(),it)
+                        }){stu ->
+                            setViewModel.setUserByQuery(stu)
+                            Log.v(LOG_TAG,"学生已更新：$stu")
+                        }
+                    }
+                }else showMsg(requireContext(),"当前不是选题时间")
+            }else{
+                showMsg(requireContext(),"不是选题时间段")
             }
+        }
+    }
+}
+
 //            //测试
 //            Test("测试Thesis",args.thesis)
 //                .save(object :SaveListener<String>(){
@@ -99,6 +129,3 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
 //                    }
 //                }
 //            })
-        }
-    }
-}

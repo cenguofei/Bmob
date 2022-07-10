@@ -17,6 +17,8 @@ import kotlin.collections.ArrayList
 
 class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel() {
     var isStudentSelectThesis = MutableLiveData<Boolean>()
+    var isParticipateThesis = MutableLiveData<Boolean>()
+    var releaseTime:ReleaseTime? = null
 
     companion object {
         private const val TEACHER_IN_DEPARTMENT_KEY = "_teacher_in_depart_"
@@ -154,12 +156,12 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
     fun addStudentToTeacherThesis(
         student: User,
         thesis: Thesis,
-        callback: (isSuccess: Boolean, message: String) -> Unit,
+        messageCallback:(message:String)->Unit,
         updateStudentCallback: (student: User) -> Unit
     ) {
         viewModelScope.launch {
             if (student.studentSelectState == STUDENT_HAS_SELECTED_THESIS) {
-                callback.invoke(true, "已经选择课题，不能多选或重复选")
+                messageCallback.invoke("已经选择课题，不能多选或重复选")
             } else {
                 val thesisStudentList = thesis.studentsList ?: mutableListOf()
                 thesisStudentList.add(
@@ -185,12 +187,8 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
                     override fun done(p0: BmobException?) {
                         if (p0 == null) {
                             updateStudentCallback.invoke(student)
-                            callback.invoke(
-                                true,
-                                EMPTY_TEXT
-                            )
                         } else {
-                            callback.invoke(false, p0.message.toString())
+                            messageCallback.invoke("更新用户信息失败:${p0.message.toString()}")
                         }
                     }
                 })
@@ -199,13 +197,102 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
                 thesis.update(object : UpdateListener() {
                     override fun done(p0: BmobException?) {
                         if (p0 == null) {
-                            callback.invoke(true, "您已成功加入该课题")
+                            messageCallback.invoke("您已成功选择该课题")
                         } else {
-                            callback.invoke(false, "加入课题失败:${p0.message}")
+                            messageCallback.invoke("加入课题失败:${p0.message}")
                         }
                     }
                 })
             }
+        }
+    }
+
+    /**
+     * 查询选题时间
+     */
+    fun queryChooseThesisTime(
+        student: User,
+        callback: (isSuccess: Boolean,releaseTime:ReleaseTime?,message: String) -> Unit
+    ){
+        BmobQuery<ReleaseTime>()
+            .addWhereEqualTo(School,student.school)
+            .setLimit(1)
+            .findObjects(object :FindListener<ReleaseTime>(){
+                override fun done(p0: MutableList<ReleaseTime>?, p1: BmobException?) {
+                    if (p1 == null){
+                        if (p0 != null && p0.isNotEmpty()){
+                            if (timeIsInDate(p0[0].beginTime)){
+                                releaseTime = p0[0]
+                                callback.invoke(true, p0[0],EMPTY_TEXT)
+                            }else{
+                                callback.invoke(false,null,"发布的选题时间已过期")
+                            }
+                        }else{
+                            callback.invoke(false,null,"还没有教务长发布选题时间，请耐心等待")
+                        }
+                    }else{
+                        callback.invoke(false,null,"查询选题时间失败:${p1.message}")
+                    }
+                }
+            })
+    }
+
+    /**
+     * 判断时间是否过期
+     */
+    private fun timeIsInDate(endTime:String):Boolean{
+        return try {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+            val dateEnd = simpleDateFormat.parse(endTime)
+
+            val calendar: Calendar = Calendar.getInstance()
+            val year: Int = calendar.get(Calendar.YEAR)
+            val month: Int = calendar.get(Calendar.MONTH) + 1
+            val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+            val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
+            val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:00:00")
+
+            if (dateSystem != null && dateEnd != null){
+                return !dateEnd.before(dateSystem)
+//                if (dateEnd.before(dateSystem)){
+//                    return false
+//                }else{
+//                    return true
+//                }
+            }else{
+                return false
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * 当学生点击加入按钮时，判断当前时间是否在选题时间内
+     */
+    fun isInSelectTime(releaseTime: ReleaseTime):Boolean{
+        return try {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+            val dateStart = simpleDateFormat.parse(releaseTime.beginTime)
+            val dateEnd = simpleDateFormat.parse(releaseTime.endTime)
+
+            val calendar: Calendar = Calendar.getInstance()
+            val year: Int = calendar.get(Calendar.YEAR)
+            val month: Int = calendar.get(Calendar.MONTH) + 1
+            val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+            val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
+            val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:00:00")
+
+            if (dateSystem != null && dateStart != null && dateEnd != null){
+                return dateSystem.after(dateStart) && dateSystem.before(dateEnd)
+//                if (dateSystem.after(dateStart) && dateSystem.before(dateEnd)){
+//                    return true
+//                }else return false
+            }else return false
+        }catch (e:Exception){
+            e.printStackTrace()
+            false
         }
     }
 }

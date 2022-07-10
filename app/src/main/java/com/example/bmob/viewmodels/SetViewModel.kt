@@ -410,12 +410,15 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         return true
     }
 
+    /**
+     * 设置时间选择器
+     */
     fun selectTime(context: Context, title:String, monthOff:Int, dayOff:Int, hourOff:Int, callback: (time:String)->Unit) {
         val calendar: Calendar = Calendar.getInstance()
         var yearBegin: Int = calendar.get(Calendar.YEAR)
-        var monthBegin: Int = calendar.get(Calendar.MONTH) + 1+monthOff
-        var dayBegin: Int = calendar.get(Calendar.DAY_OF_MONTH)+dayOff
-        var hourBegin: Int = calendar.get(Calendar.HOUR_OF_DAY)+hourOff
+        var monthBegin: Int = calendar.get(Calendar.MONTH) + 1
+        var dayBegin: Int = calendar.get(Calendar.DAY_OF_MONTH)
+        var hourBegin: Int = calendar.get(Calendar.HOUR_OF_DAY)
         var minuteBegin: Int = calendar.get(Calendar.MINUTE)
 
         val view =
