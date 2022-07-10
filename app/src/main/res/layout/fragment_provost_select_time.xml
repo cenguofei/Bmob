@@ -19,7 +19,7 @@
         tools:context=".fragments.provost.ProvostSelectTimeFragment">
 
         <LinearLayout
-            android:id="@+id/linearLayout9"
+            android:id="@+id/timeStartLayout"
             android:layout_width="350dp"
             android:layout_height="60dp"
             android:layout_marginTop="40dp"
@@ -107,13 +107,14 @@
 
 
         <LinearLayout
+            android:id="@+id/timeEndLayout"
             android:layout_width="350dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/teacher_new_thesis_info_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+            app:layout_constraintTop_toBottomOf="@+id/timeStartLayout">
 
             <TextView
                 android:id="@+id/timeEndTv"

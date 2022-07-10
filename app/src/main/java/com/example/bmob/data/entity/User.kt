@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User(
     //1. 公有属性
-    val nickname:String? = null,  //昵称
+    var nickname:String? = null,  //昵称
     var avatarUrl:String? = null,  //头像url
     var backgroundUrl:String? = null,  //背景url
     var age:Int? = null,    //年龄

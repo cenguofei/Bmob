@@ -146,20 +146,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
-                <TextView
-                    android:id="@+id/waitTeacherToSelectTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="26dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/blue_rounded_rectangle"
-                    android:gravity="center"
-                    android:text='@{student.studentSelectState?(student.isAgree?"已获选":"教师审批中"):"无课题"}'
-                    android:textColor="@color/blue"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
-                    app:layout_constraintEnd_toEndOf="@+id/textView14"
-                    app:layout_constraintTop_toTopOf="@+id/textView14" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
@@ -229,3 +216,18 @@
             android:contentDescription="@string/todo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+
+<!--<TextView-->
+<!--android:id="@+id/waitTeacherToSelectTv"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="26dp"-->
+<!--android:layout_marginEnd="16dp"-->
+<!--android:background="@drawable/blue_rounded_rectangle"-->
+<!--android:gravity="center"-->
+<!--android:text='@{student.studentSelectState?(student.isAgree?"已获选":"教师审批中"):"无课题"}'-->
+<!--android:textColor="@color/blue"-->
+<!--android:textSize="12sp"-->
+<!--android:textStyle="bold"-->
+<!--app:layout_constraintBottom_toBottomOf="@+id/textView14"-->
+<!--app:layout_constraintEnd_toEndOf="@+id/textView14"-->
+<!--app:layout_constraintTop_toTopOf="@+id/textView14" />-->

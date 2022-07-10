@@ -20,6 +20,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
+            loadHeadImage="@{user.avatarUrl}"
             android:layout_marginBottom="8dp"
             android:src="@drawable/default_head"
             app:layout_constraintBottom_toBottomOf="parent"

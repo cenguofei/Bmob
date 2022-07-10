@@ -43,7 +43,6 @@ class BrowseFragment : Fragment(),FragmentEventListener {
             binding.user = it
         }
 
-        Log.v(LOG_TAG,"开始findAllTeacherInDepartment")
         selectViewModel.getAllTeacherInDepartmentLiveData(setViewModel.getUserByQuery().value!!){
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
@@ -62,26 +61,6 @@ class BrowseFragment : Fragment(),FragmentEventListener {
                 binding.recyclerView.adapter = browseTeacherHasThesisAdapter
             }
         }
-
-//        selectViewModel.findAllTeacherInDepartment(setViewModel.getUserByQuery().value!!){isSuccess, teacherList, msg ->
-//            if (isSuccess){
-//                Log.v(LOG_TAG,"BrowseFragment查询可选课题的老师的课题成功了")
-//                val browseTeacherHasThesisAdapter =
-//                    BrowseTeacherHasThesisAdapter(teacherList!!) {
-//                        Log.v(LOG_TAG,"被点击：$it")
-//                        val actionBrowseFragmentToSelectFragment =
-//                            BrowseFragmentDirections.actionBrowseFragmentToSelectFragment(it)
-//                        findNavController().navigate(actionBrowseFragmentToSelectFragment)
-//                    }
-//                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),
-//                    RecyclerView.VERTICAL,false
-//                )
-//                binding.recyclerView.adapter = browseTeacherHasThesisAdapter
-//            }else{
-//                Log.v(LOG_TAG,"BrowseFragment查询可选课题的老师的课题失败了")
-//                showMsg(requireContext(),msg)
-//            }
-//        }
     }
 
     override fun setEventListener() {

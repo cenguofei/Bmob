@@ -43,13 +43,13 @@ class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
     }
 
     override fun setEventListener() {
-        binding.timeStartTv.setOnClickListener {
-            viewModel.selectTime(requireContext(),"开始时间",0,0,0){
+        binding.timeStartLayout.setOnClickListener {
+            setViewModel.selectTime(requireContext(),"开始时间",0,0,0){
                 binding.chooseStartTime.text = it
             }
         }
-        binding.timeEndTv.setOnClickListener {
-            viewModel.selectTime(requireContext(),"结束时间",3,3,3) {
+        binding.timeEndLayout.setOnClickListener {
+            setViewModel.selectTime(requireContext(),"结束时间",3,3,3) {
                 binding.chooseEndTime.text = it
             }
         }

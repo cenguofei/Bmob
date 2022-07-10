@@ -40,13 +40,8 @@ class SearchRecyclerViewAdapter(
 
     override fun getItemCount(): Int = data!!.size
 
-//    fun setThesisListForFirst(newThesisList: MutableList<Thesis>){
-//        this.data = newThesisList
-//    }
 
     fun setThesisList(newThesisList: MutableList<Thesis>){
-//        this.thesisList = newThesisList
-//        this.notifyDataSetChanged()
         if (this.data != null){
             val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.data!!, newThesisList))
             diffResult.dispatchUpdatesTo(this)

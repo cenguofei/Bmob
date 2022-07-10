@@ -62,42 +62,6 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
         }
     }
 
-    fun selectTime(context: Context, title:String, monthOff:Int, dayOff:Int, hourOff:Int, callback: (time:String)->Unit) {
-        val calendar: Calendar = Calendar.getInstance()
-        var yearBegin: Int = calendar.get(Calendar.YEAR)
-        var monthBegin: Int = calendar.get(Calendar.MONTH) + 1+monthOff
-        var dayBegin: Int = calendar.get(Calendar.DAY_OF_MONTH)+dayOff
-        var hourBegin: Int = calendar.get(Calendar.HOUR_OF_DAY)+hourOff
-        var minuteBegin: Int = calendar.get(Calendar.MINUTE)
-
-        val view =
-            View.inflate(context.applicationContext, R.layout.item_select_time, null)
-        val datePicker = view.findViewById<View>(R.id.new_act_date_picker) as DatePicker
-        val timePicker = view.findViewById<View>(R.id.new_act_time_picker) as TimePicker
-
-        datePicker.init(yearBegin, monthBegin - 1, dayBegin, null)
-        timePicker.setIs24HourView(true)
-        timePicker.hour = hourBegin
-        timePicker.minute = minuteBegin
-
-        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            .setView(view)
-            .setTitle(title)
-            .setPositiveButton("确定") { dialog, which ->
-                Log.v(LOG_TAG, "dialog=$dialog,which=$which")
-                yearBegin = datePicker.year
-                monthBegin = datePicker.month + 1
-                dayBegin = datePicker.dayOfMonth
-                hourBegin = timePicker.hour
-                minuteBegin = timePicker.minute
-                val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:00:00"
-                Log.v(LOG_TAG, "选择的时间1：$dateString")
-                callback.invoke(dateString)
-            }
-        builder.show()
-        val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:$minuteBegin:00"
-        Log.v(LOG_TAG, "选择的时间2：$dateString")
-    }
 
     fun checkIsEndValid(
         beginTime:String,

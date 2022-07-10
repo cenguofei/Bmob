@@ -80,39 +80,60 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
         user:User,
         callback: (isSuccess: Boolean, thesisList:MutableList<Thesis>?,msg: String) -> Unit
     ){
-        //三个条件
-        val equalToSchool = BmobQuery<Thesis>()
-            .addWhereEqualTo(School, user.school)
-        val equalToDepartment = BmobQuery<Thesis>()
-            .addWhereEqualTo(Department,user.department)
-        val equalToCollege = BmobQuery<Thesis>()
-            .addWhereEqualTo(College,user.college)
-        val equalToTeacher = BmobQuery<Thesis>()
-            .addWhereEqualTo(TeacherId,user.objectId)
+//        //三个条件
+//        val equalToSchool = BmobQuery<Thesis>()
+//            .addWhereEqualTo(School, user.school)
+//        val equalToDepartment = BmobQuery<Thesis>()
+//            .addWhereEqualTo(Department,user.department)
+//        val equalToCollege = BmobQuery<Thesis>()
+//            .addWhereEqualTo(College,user.college)
+//        val equalToTeacher = BmobQuery<Thesis>()
+//            .addWhereEqualTo(TeacherId,user.objectId)
+//
+//        val queryList = ArrayList<BmobQuery<Thesis>>().run {
+//            add(equalToSchool)
+//            add(equalToDepartment)
+//            add(equalToCollege)
+//            add(equalToTeacher)
+//            this@run
+//        }
 
-        val queryList = ArrayList<BmobQuery<Thesis>>().run {
-            add(equalToSchool)
-            add(equalToDepartment)
-            add(equalToCollege)
-            add(equalToTeacher)
-            this@run
-        }
-
-        BmobQuery<Thesis>()
-            .and(queryList)
-            .findObjects(object : FindListener<Thesis>(){
-                override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 == null){
-                            callback.invoke(false,null,"没有搜索到教师课题")
-                        }else{
-                            callback.invoke(true,p0, EMPTY_TEXT)
-                        }
-                    }else{
-                        callback.invoke(false,null,p1.message.toString())
-                    }
-                }
+        BmobQuery<Thesis>().run {
+            and(ArrayList<BmobQuery<Thesis>>().apply {
+                add(BmobQuery<Thesis>().addWhereEqualTo(School,user.school))
+                add(BmobQuery<Thesis>().addWhereEqualTo(Department,user.department))
+                add(BmobQuery<Thesis>().addWhereEqualTo(College,user.college))
+                add(BmobQuery<Thesis>().addWhereEqualTo(TeacherId,user.objectId))
             })
+        }.findObjects(object : FindListener<Thesis>(){
+            override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
+                if (p1 == null){
+                    if (p0 == null){
+                        callback.invoke(false,null,"没有搜索到教师课题")
+                    }else{
+                        callback.invoke(true,p0, EMPTY_TEXT)
+                    }
+                }else{
+                    callback.invoke(false,null,p1.message.toString())
+                }
+            }
+        })
+
+//        BmobQuery<Thesis>()
+//            .and(queryList)
+//            .findObjects(object : FindListener<Thesis>(){
+//                override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
+//                    if (p1 == null){
+//                        if (p0 == null){
+//                            callback.invoke(false,null,"没有搜索到教师课题")
+//                        }else{
+//                            callback.invoke(true,p0, EMPTY_TEXT)
+//                        }
+//                    }else{
+//                        callback.invoke(false,null,p1.message.toString())
+//                    }
+//                }
+//            })
     }
 
     /**

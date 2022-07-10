@@ -110,4 +110,18 @@
     <string name="time_end">结束时间</string>
     <string name="u">更新</string>
     <string name="s">保存</string>
+    <string name="nickname">昵称</string>
+    <string name="name_">名字</string>
+    <string name="_sig">个性签名</string>
+    <string name="_sex">性别</string>
+    <string name="_work_num">工号/学号</string>
+    <string name="sc">学校</string>
+    <string name="add">地址</string>
+    <string name="ema">邮箱</string>
+    <string name="phone_">电话</string>
+    <string name="bir_">生日</string>
+    <string name="d_">系</string>
+    <string name="y_">院</string>
+    <string name="w_">女</string>
+    <string name="n_">男</string>
 </resources>

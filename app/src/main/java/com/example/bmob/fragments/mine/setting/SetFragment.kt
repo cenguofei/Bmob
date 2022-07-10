@@ -1,16 +1,20 @@
 package com.example.bmob.fragments.mine.setting
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.inflate
 import android.view.ViewGroup
+import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentSetBinding
+import com.example.bmob.databinding.ItemSelectTimeBinding.inflate
+import com.example.bmob.databinding.SexPopupWindowBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.IMAGE_TYPE_BACKGROUND
@@ -76,6 +80,33 @@ class SetFragment : Fragment() ,FragmentEventListener{
         binding.saveConfigBtn.setOnClickListener {
             if (isInputAllInvalid()){
                 viewModel.saveUserEdit(this)
+            }
+        }
+        //选择性别
+        val from = LayoutInflater.from(requireContext())
+        val popupWindowBinding = SexPopupWindowBinding.inflate(from, null, false)
+        val popupWindow = PopupWindow(
+            popupWindowBinding.root,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindowBinding.radioButtonMan.setOnClickListener {
+            Log.v(LOG_TAG,"男")
+            binding.editGenderEv.text = "男"
+            popupWindow.dismiss()
+        }
+        popupWindowBinding.radioButtonWoman.setOnClickListener {
+            Log.v(LOG_TAG,"女")
+            binding.editGenderEv.text = "女"
+            popupWindow.dismiss()
+        }
+        binding.editGenderEv.setOnClickListener {
+            popupWindow.showAsDropDown(it)
+        }
+        binding.editBirthEv.setOnClickListener {
+            viewModel.selectTime(requireContext(),"选择生日",0,0,0){
+                binding.editBirthEv.text = it
             }
         }
     }

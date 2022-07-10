@@ -10,9 +10,12 @@ import android.os.FileUtils
 import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
@@ -24,6 +27,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
+import com.example.bmob.R
 import com.example.bmob.data.entity.ReleaseTime
 import com.example.bmob.data.entity.STUDENT_NOT_SELECT_THESIS
 import com.example.bmob.data.entity.User
@@ -298,7 +302,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                     with(fragment.binding) {
                         name = editNameEv.text.toString()
                         signature = editSignatureEv.text.toString()
-                        age = Integer.parseInt(editAgeEv.text.toString())
+                        nickname = editNicknameEv.text.toString()
                         gender = editGenderEv.text.toString()
                         username = userName
                         school = editSchoolEv.text.toString()
@@ -310,7 +314,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                         email = editEmailEv.text.toString()
                     }
                 }
-
                 //SetFragment修改后让MineFragment接受到
                 val bmobUser = BmobUser()
                 bmobUser.username = userName
@@ -405,6 +408,43 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             e.printStackTrace()
         }
         return true
+    }
+
+    fun selectTime(context: Context, title:String, monthOff:Int, dayOff:Int, hourOff:Int, callback: (time:String)->Unit) {
+        val calendar: Calendar = Calendar.getInstance()
+        var yearBegin: Int = calendar.get(Calendar.YEAR)
+        var monthBegin: Int = calendar.get(Calendar.MONTH) + 1+monthOff
+        var dayBegin: Int = calendar.get(Calendar.DAY_OF_MONTH)+dayOff
+        var hourBegin: Int = calendar.get(Calendar.HOUR_OF_DAY)+hourOff
+        var minuteBegin: Int = calendar.get(Calendar.MINUTE)
+
+        val view =
+            View.inflate(context.applicationContext, R.layout.item_select_time, null)
+        val datePicker = view.findViewById<View>(R.id.new_act_date_picker) as DatePicker
+        val timePicker = view.findViewById<View>(R.id.new_act_time_picker) as TimePicker
+
+        datePicker.init(yearBegin, monthBegin - 1, dayBegin, null)
+        timePicker.setIs24HourView(true)
+        timePicker.hour = hourBegin
+        timePicker.minute = minuteBegin
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            .setView(view)
+            .setTitle(title)
+            .setPositiveButton("确定") { dialog, which ->
+                Log.v(LOG_TAG, "dialog=$dialog,which=$which")
+                yearBegin = datePicker.year
+                monthBegin = datePicker.month + 1
+                dayBegin = datePicker.dayOfMonth
+                hourBegin = timePicker.hour
+                minuteBegin = timePicker.minute
+                val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:00:00"
+                Log.v(LOG_TAG, "选择的时间1：$dateString")
+                callback.invoke(dateString)
+            }
+        builder.show()
+        val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:$minuteBegin:00"
+        Log.v(LOG_TAG, "选择的时间2：$dateString")
     }
 }
 

@@ -1,13 +1,19 @@
 package com.example.bmob.fragments.provost
 
+import PhoneBillExpressBean
+import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +30,8 @@ import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
 import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
+import exportExcel
+import kotlinx.coroutines.launch
 
 
 class ProvostHomeFragment : Fragment(), FragmentEventListener {
@@ -100,6 +108,19 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
                 .setAdapter(BannerAdapter(it!!))
                 .indicator = CircleIndicator(requireContext())
         }
+
+
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ it->
+            //通过的权限
+            val grantedList = it.filterValues { it }.mapNotNull { it.key }
+            //是否所有权限都通过
+            val allGranted = grantedList.size == it.size
+            val list = (it - grantedList.toSet()).map { it.key }
+            //未通过的权限
+            val deniedList = list.filter { ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), it) }
+            //拒绝并且点了“不再询问”权限
+            val alwaysDeniedList = list - deniedList.toSet()
+        }.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
     }
 
     override fun onStop() {
@@ -113,6 +134,71 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
     }
 
     override fun setEventListener() {
+//        binding.imageView10.setOnClickListener {
+//            //开启一个子线程
+//            //开启一个子线程
+//            val listOf = listOf(
+//                PhoneBillExpressBean(
+//                    "ff",
+//                    8,
+//                    "fdf",
+//                    "ff",
+//                    "fdfs",
+//                    "ffsd",
+//                    "ffd",
+//                    "fdfs",
+//                    "fdf",
+//                    "fds",
+//                    "fdsf",
+//                    "fdsf"
+//                ),
+//                PhoneBillExpressBean(
+//                    "ff",
+//                    8,
+//                    "fdf",
+//                    "ff",
+//                    "fdfs",
+//                    "ffsd",
+//                    "ffd",
+//                    "fdfs",
+//                    "fdf",
+//                    "fds",
+//                    "fdsf",
+//                    "fdsf"
+//                ),
+//                PhoneBillExpressBean(
+//                    "ff",
+//                    8,
+//                    "fdf",
+//                    "ff",
+//                    "fdfs",
+//                    "ffsd",
+//                    "ffd",
+//                    "fdfs",
+//                    "fdf",
+//                    "fds",
+//                    "fdsf",
+//                    "fdsf"
+//                )
+//            )
+//            lifecycleScope.launch {
+//                val isSuccess: Boolean = exportExcel(listOf)
+//                //返回UI线程
+//                activity!!.runOnUiThread {
+//                    if (isSuccess) {
+//                        Toast.makeText(
+//                            context,
+//                            "导出成功:/storage/emulated/0/Download/",
+//                            Toast.LENGTH_LONG
+//                        )
+//                            .show()
+//                    } else {
+//                        Toast.makeText(context, "导出失败", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//        }
+
         binding.issueTime.setOnClickListener {
             findNavController().navigate(R.id.action_provostHomeFragment_to_provostSelectTimeFragment)
         }

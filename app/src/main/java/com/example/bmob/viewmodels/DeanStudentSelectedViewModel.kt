@@ -95,16 +95,17 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
         studentSelectState: Boolean,
         callback: (isSuccess: Boolean, listThesis: MutableList<Thesis>?, message: String) -> Unit
     ) {
-        val addWhereEqualTo = BmobQuery<Thesis>().addWhereEqualTo("school", dean.school)
-        val addWhereEqualTo1 = BmobQuery<Thesis>().addWhereEqualTo("college", dean.college)
-        val addWhereEqualTo2 = BmobQuery<Thesis>().addWhereEqualTo("department", dean.department)
+        val addWhereEqualTo = BmobQuery<Thesis>().addWhereEqualTo(School, dean.school)
+        val addWhereEqualTo1 = BmobQuery<Thesis>().addWhereEqualTo(College, dean.college)
+        val addWhereEqualTo2 = BmobQuery<Thesis>().addWhereEqualTo(Department, dean.department)
         val addWhereEqualTo3 =
-            BmobQuery<Thesis>().addWhereEqualTo("studentSelectState", studentSelectState)
+            BmobQuery<Thesis>().addWhereEqualTo(StudentSelectState, studentSelectState)
 
         val queryList = ArrayList<BmobQuery<Thesis>>()
         queryList.add(addWhereEqualTo)
         queryList.add(addWhereEqualTo1)
         queryList.add(addWhereEqualTo2)
+        queryList.add(addWhereEqualTo3)
 
 
         BmobQuery<Thesis>()
@@ -154,12 +155,14 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
         val addWhereEqualTo = BmobQuery<User>().addWhereEqualTo(School, dean.school)
         val addWhereEqualTo1 = BmobQuery<User>().addWhereEqualTo(College, dean.college)
         val addWhereEqualTo2 = BmobQuery<User>().addWhereEqualTo(Department, dean.department)
-        BmobQuery<User>().addWhereEqualTo(StudentSelectState, studentSelectState)
+        val addWhereEqualTo3 =
+            BmobQuery<User>().addWhereEqualTo(StudentSelectState, studentSelectState)
 
         val queryList = ArrayList<BmobQuery<User>>()
         queryList.add(addWhereEqualTo)
         queryList.add(addWhereEqualTo1)
         queryList.add(addWhereEqualTo2)
+        queryList.add(addWhereEqualTo3)
 
         BmobQuery<User>()
             .and(queryList)

@@ -128,11 +128,13 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
                 Log.v(LOG_TAG, "newText:${newText}")
                 if (!TextUtils.isEmpty(newText)) {
                     setNowSearch(newText!!)
+                    return true
+
                 } else {
                     callback.invoke(true)
                     isShowRecyclerView(recyclerView,linearLayout,false)
+                    return false
                 }
-                return true
             }
         })
     }

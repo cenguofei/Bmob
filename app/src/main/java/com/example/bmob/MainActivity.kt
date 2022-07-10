@@ -56,39 +56,36 @@ class MainActivity : AppCompatActivity() {
          * 除非出现NavigationBarView
          */
         userViewModel.getUserIdentification().observe(this) {
-            Log.v(LOG_TAG,"在这 getUserIdentification observe")
-            when (it) {
-                IDENTIFICATION_STUDENT -> {
-                    binding.bottomDeanNavigationView.visibility = View.GONE
-                    binding.bottomTeacherNavigationView.visibility = View.GONE
-                    binding.bottomProvostNavigationView.visibility = View.GONE
-
-                    binding.bottomStudentNavigationView.visibility = View.VISIBLE
-                    binding.bottomStudentNavigationView.setupWithNavController(navController)
-                }
-                IDENTIFICATION_TEACHER -> {
-                    binding.bottomDeanNavigationView.visibility = View.GONE
-                    binding.bottomStudentNavigationView.visibility = View.GONE
-                    binding.bottomProvostNavigationView.visibility = View.GONE
-
-                    binding.bottomTeacherNavigationView.visibility = View.VISIBLE
-                    binding.bottomTeacherNavigationView.setupWithNavController(navController)
-                }
-                IDENTIFICATION_DEAN -> {
-                    binding.bottomTeacherNavigationView.visibility = View.GONE
-                    binding.bottomStudentNavigationView.visibility = View.GONE
-                    binding.bottomProvostNavigationView.visibility = View.GONE
-
-                    binding.bottomDeanNavigationView.visibility = View.VISIBLE
-                    binding.bottomDeanNavigationView.setupWithNavController(navController)
-                }
-                IDENTIFICATION_PROVOST -> {
-                    binding.bottomDeanNavigationView.visibility = View.GONE
-                    binding.bottomStudentNavigationView.visibility = View.GONE
-                    binding.bottomTeacherNavigationView.visibility = View.GONE
-
-                    binding.bottomProvostNavigationView.visibility = View.VISIBLE
-                    binding.bottomProvostNavigationView.setupWithNavController(navController)
+            with(binding) {
+                when (it) {
+                    IDENTIFICATION_STUDENT -> {
+                        bottomDeanNavigationView.visibility = View.GONE
+                        bottomTeacherNavigationView.visibility = View.GONE
+                        bottomProvostNavigationView.visibility = View.GONE
+                        bottomStudentNavigationView.visibility = View.VISIBLE
+                        bottomStudentNavigationView.setupWithNavController(navController)
+                    }
+                    IDENTIFICATION_TEACHER -> {
+                        bottomDeanNavigationView.visibility = View.GONE
+                        bottomStudentNavigationView.visibility = View.GONE
+                        bottomProvostNavigationView.visibility = View.GONE
+                        bottomTeacherNavigationView.visibility = View.VISIBLE
+                        bottomTeacherNavigationView.setupWithNavController(navController)
+                    }
+                    IDENTIFICATION_DEAN -> {
+                        bottomTeacherNavigationView.visibility = View.GONE
+                        bottomStudentNavigationView.visibility = View.GONE
+                        bottomProvostNavigationView.visibility = View.GONE
+                        bottomDeanNavigationView.visibility = View.VISIBLE
+                        bottomDeanNavigationView.setupWithNavController(navController)
+                    }
+                    IDENTIFICATION_PROVOST -> {
+                        bottomDeanNavigationView.visibility = View.GONE
+                        bottomStudentNavigationView.visibility = View.GONE
+                        bottomTeacherNavigationView.visibility = View.GONE
+                        bottomProvostNavigationView.visibility = View.VISIBLE
+                        bottomProvostNavigationView.setupWithNavController(navController)
+                    }
                 }
             }
         }
@@ -127,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.provostSelectTimeFragment
                 || destination.id == R.id.skimFragment
             ) {
-                Log.v(LOG_TAG,"在这 addOnDestinationChangedListener getUserIdentification.value")
+                Log.v(LOG_TAG, "在这 addOnDestinationChangedListener getUserIdentification.value")
                 when (userViewModel.getUserIdentification().value) {
                     IDENTIFICATION_STUDENT -> {
                         binding.bottomStudentNavigationView.visibility = View.GONE
