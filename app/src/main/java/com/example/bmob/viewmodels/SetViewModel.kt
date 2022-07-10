@@ -58,6 +58,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     fun setRegister(fragment: SetFragment) {
         register = fragment.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
