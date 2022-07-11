@@ -5,13 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginLeft
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cn.bmob.v3.Bmob
@@ -22,7 +19,6 @@ import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.databinding.ActivityMainBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.BmobUserViewModel
-import com.google.android.material.navigation.NavigationBarView
 
 
 /**

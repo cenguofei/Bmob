@@ -2,15 +2,13 @@ package com.example.bmob.fragments.login.findPassword
 
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobUser
-import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentUsernameBinding
 import com.example.bmob.utils.showMsg

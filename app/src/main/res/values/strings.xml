@@ -34,7 +34,7 @@
     <string name="new_pwd">新密码</string>
     <string name="confirm_pwd">确认密码</string>
     <string name="confirm">确定</string>
-    <string name="home">首页</string>
+    <string name="home">留言</string>
     <string name="work">工作台</string>
     <string name="mine">我的</string>
     <string name="school">学校</string>
@@ -129,4 +129,5 @@
     <string name="cancel_">取消</string>
     <string name="_l_m">留言</string>
     <string name="h_l_m">历史留言</string>
+    <string name="h_s_">已选学生名单</string>
 </resources>

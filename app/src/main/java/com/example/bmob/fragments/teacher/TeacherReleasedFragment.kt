@@ -1,7 +1,6 @@
 package com.example.bmob.fragments.teacher
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,6 @@ import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentTeacherReleasedBinding
 import com.example.bmob.databinding.ItemTeacherReleaseBinding
-import com.example.bmob.databinding.StudentChooseThesisItemBinding
-import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherThesisViewModel
 

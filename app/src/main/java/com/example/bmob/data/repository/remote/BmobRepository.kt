@@ -9,7 +9,6 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.*
 import com.example.bmob.data.entity.*
 import com.example.bmob.utils.*
-import java.util.ArrayList
 
 
 class BmobRepository private constructor() {
@@ -32,10 +31,6 @@ class BmobRepository private constructor() {
         user: User,
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
-//        user.studentSelectState = studentSelectState
-//        if (!studentSelectState){
-//            user.studentThesis = null
-//        }
         user.update(object : UpdateListener() {
             override fun done(p0: BmobException?) {
                 if (p0 == null) {
@@ -62,33 +57,6 @@ class BmobRepository private constructor() {
                     } else {
                         callback.invoke(false, p1.message ?: EMPTY_TEXT)
                         Log.v(LOG_TAG, "登录失败：${p1.message}")
-                    }
-                }
-            })
-        }
-    }
-
-    //账号密码注册
-    fun signup(
-        userName: String,
-        workNum: String,
-        phoneNumber: String,
-        pwd: String,
-        identify: Int,
-        callback: (Boolean) -> Unit
-    ) {
-        User(identification = identify).run {
-            username = workNum
-            name = userName
-            mobilePhoneNumber = phoneNumber
-            setPassword(pwd)
-            signUp(object : SaveListener<User>() {
-                override fun done(p0: User?, p1: BmobException?) {
-                    if (p1 == null) {
-                        callback.invoke(true)
-                    } else {
-                        callback.invoke(false)
-                        Log.v(LOG_TAG, "${p1.message}")
                     }
                 }
             })
@@ -190,7 +158,7 @@ class BmobRepository private constructor() {
         phoneNumber: String,
         callback: (isSuccess: Boolean, smsId: Int, error: String?) -> Unit
     ) {
-        BmobSMS.requestSMSCode(phoneNumber, "", object : QueryListener<Int>() {
+        BmobSMS.requestSMSCode(phoneNumber, EMPTY_TEXT, object : QueryListener<Int>() {
             override fun done(p0: Int?, p1: BmobException?) {
                 if (p1 == null) {
                     callback.invoke(true, p0!!, EMPTY_TEXT)
@@ -227,12 +195,8 @@ class BmobRepository private constructor() {
         callback: (isSuccess: Boolean, school: School?, error: String) -> Unit
     ) {
         BmobQuery<School>()
-//            .addWhereMatches("schoolName","%西南大学%")
-//            .addWhereContains("schoolName","西南大学")
-            .addWhereEqualTo("schoolName", schoolName)
+            .addWhereEqualTo(SchoolName, schoolName)
             .setLimit(1)
-//            .addWhereStartsWith("schoolName","西南大学")
-//            .addWhereEndsWith("schoolName","西南大学")
             .findObjects(object : FindListener<School>() {
                 override fun done(p0: MutableList<School>?, p1: BmobException?) {
                     if (p1 == null) {
@@ -279,9 +243,7 @@ class BmobRepository private constructor() {
         callback: (isSuccess: Boolean, thesis: Pair<String, MutableList<Thesis>>?, msg: String) -> Unit
     ) {
         BmobQuery<Thesis>()
-//            .addWhereEqualTo("title",searchTitle)
-            .addWhereContains("title", searchTitle)
-//            .addWhereMatches("title","")
+            .addWhereContains(Title, searchTitle)
             .findObjects(object : FindListener<Thesis>() {
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null) {

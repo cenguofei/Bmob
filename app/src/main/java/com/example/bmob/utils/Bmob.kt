@@ -51,3 +51,9 @@ inline val StudentThesis:String
 
 inline val ProvostObjectId:String
     get() = "provostObjectId"
+
+inline val SchoolName:String
+    get() = "schoolName"
+
+inline val Title:String
+    get() = "title"

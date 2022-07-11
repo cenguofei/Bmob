@@ -11,7 +11,10 @@ import com.example.bmob.data.entity.IDENTIFICATION_DEAN
 import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
 import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.data.entity.User
-import com.example.bmob.utils.*
+import com.example.bmob.utils.EMPTY_TEXT
+import com.example.bmob.utils.Identification
+import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.School
 
 class ProvostSkimViewModel(val handler:SavedStateHandle):ViewModel() {
     companion object{

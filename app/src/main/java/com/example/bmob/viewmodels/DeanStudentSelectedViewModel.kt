@@ -8,10 +8,8 @@ import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
-import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.utils.*
-import java.util.ArrayList
 
 class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : ViewModel() {
 

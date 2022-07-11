@@ -45,23 +45,10 @@ data class User(
      * @see studentSelectState
      */
     var studentSelectState:Boolean? = null, //true已选，false未选
-//    var field:String? = null,
-//    var require:String? = null,
-//    var desc:String?=null,
-//    var theTeaDetail:String?=null,
-//    var theTeaAvaUrl:String?= null,
     var isAgree:Boolean?=null,
-
 
     //2) 老师
     val teacherDetail:String? = null, //老师的描述，查看课题详情的时候显示，这个是系统自动为老师生成的资料
-
-    //3) 系主任
-
-
-    //4) 教务长
-
-
 ):BmobUser(), Parcelable
 
 //identification取值

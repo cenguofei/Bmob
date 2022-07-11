@@ -3,31 +3,20 @@ package com.example.bmob.fragments.thesis
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.viewbinding.ViewBinding
-import cn.bmob.v3.BmobObject
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
-import cn.bmob.v3.listener.SaveListener
-import cn.bmob.v3.listener.UpdateListener
-import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
-import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.FragmentShowThesisBinding
-import com.example.bmob.databinding.LeaveMessagePopupWindowLayoutBinding
-import com.example.bmob.databinding.SexPopupWindowBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.ObjectId
 import com.example.bmob.utils.StudentThesis
@@ -101,38 +90,6 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
     }
 
     override fun setEventListener() {
-        //测试
-        //上传
-//        binding.imageView7.setOnClickListener {
-//            val value = setViewModel.getUserByQuery().value!!
-//            value.studentThesis = args.thesis
-//            value.update(object :UpdateListener(){
-//                override fun done(p0: BmobException?) {
-//                    Log.v(LOG_TAG,"${p0?.message}")
-//                }
-//            })
-//        }
-//        //下载
-//        binding.textView12.setOnClickListener {
-//            BmobQuery<User>()
-//                .addWhereEqualTo(ObjectId,setViewModel.getUserByQuery().value!!.objectId)
-//                .setLimit(1)
-//                .include(StudentThesis)
-//                .findObjects(object :FindListener<User>(){
-//                    override fun done(p0: MutableList<User>?, p1: BmobException?) {
-//                        if (p1 == null){
-//                            if (p0 != null && p0.isNotEmpty()){
-//                                Log.v(LOG_TAG,"查找成功：用户:${p0[0].studentThesis}")
-//                            }else{
-//                                Log.v(LOG_TAG,"查找用户失败了了,没有用户")
-//                            }
-//                        }else{
-//                            Log.v(LOG_TAG,"查找用户失败了了：${p1.message}")
-//                        }
-//                    }
-//                })
-//        }
-
         binding.leaveMessageBtn.setOnClickListener {
             if (!TextUtils.isEmpty(binding.leaveMessageEt.text)){
                 Log.v(LOG_TAG,"留言thesis：${args.thesis}")
@@ -172,7 +129,6 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
                                         }
                                     }
                                 })
-                            Log.v(LOG_TAG,"学生已更新：$stu")
                         }
                     }
                 }else showMsg(requireContext(),"当前不是选题时间")
@@ -182,28 +138,3 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
         }
     }
 }
-
-//            //测试
-//            Test("测试Thesis",args.thesis)
-//                .save(object :SaveListener<String>(){
-//                    override fun done(p0: String?, p1: BmobException?) {
-//                        if (p1 == null){
-//                            Log.v(LOG_TAG,"保存测试成功")
-//                        }else{
-//                            Log.v(LOG_TAG,"保存测试失败：${p1.message}")
-//                        }
-//                    }
-//                })
-
-//            Thesis("测试","测试","测试","测试","测试","测试",
-//                mutableListOf(),false,2,2,"测试","测试","测试",
-//                "测试","测试",true,2
-//            ).save(object :SaveListener<String>(){
-//                override fun done(p0: String?, p1: BmobException?) {
-//                    if (p1 == null) {
-//                        Log.v(LOG_TAG, "保存测试成功")
-//                    } else {
-//                        Log.v(LOG_TAG, "保存测试失败：${p1.message}")
-//                    }
-//                }
-//            })

@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentBrowseBinding
-import com.example.bmob.fragments.student.select.BrowseFragmentDirections.Companion.actionBrowseFragmentToSelectFragment
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.SetViewModel

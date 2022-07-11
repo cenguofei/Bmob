@@ -2,10 +2,10 @@ package com.example.bmob.fragments.teacher
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +17,6 @@ import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherThesisViewModel
-import java.lang.Exception
 
 class TeacherNewThesisFragment : Fragment(),FragmentEventListener {
     private lateinit var binding:FragmentTeacherNewThesisBinding

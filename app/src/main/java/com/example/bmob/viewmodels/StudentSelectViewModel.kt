@@ -1,20 +1,19 @@
 package com.example.bmob.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cn.bmob.v3.BmobQuery
-import cn.bmob.v3.datatype.BmobPointer
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.data.entity.*
-import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.*
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel() {
     var isStudentSelectThesis = MutableLiveData<Boolean>()
@@ -34,16 +33,16 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
         teacher: User,
         callback: (message: String) -> Unit
     ): MutableLiveData<MutableList<Thesis>> {
-        if (!handler.contains(MUTABLE_THESIS_KEY)) {
+        if (!handler.contains(MUTABLE_THESIS_KEY+teacher.objectId)) {
             getTeacherAllThesis(teacher) { isSuccess, thesisList, message ->
                 if (isSuccess) {
-                    handler.set(MUTABLE_THESIS_KEY, thesisList)
+                    handler.set(MUTABLE_THESIS_KEY+teacher.objectId, thesisList)
                 } else {
                     callback.invoke(message)
                 }
             }
         }
-        return handler.getLiveData(MUTABLE_THESIS_KEY)
+        return handler.getLiveData(MUTABLE_THESIS_KEY+teacher.objectId)
     }
 
     /**

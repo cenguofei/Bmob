@@ -2,24 +2,19 @@ package com.example.bmob.fragments.start
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobUser
 import com.example.bmob.R
-import com.example.bmob.data.entity.IDENTIFICATION_DEAN
-import com.example.bmob.data.entity.IDENTIFICATION_PROVOST
-import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
-import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.data.storage.SettingsDataStore
 import com.example.bmob.databinding.FragmentStartBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.BmobUserViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
 
 

@@ -3,7 +3,6 @@ package com.example.bmob.viewmodels
 import androidx.lifecycle.ViewModel
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.UpdateListener
-import com.example.bmob.data.entity.ALREADY_APPROVED
 import com.example.bmob.data.entity.Thesis
 
 class DeanApproveViewModel:ViewModel() {

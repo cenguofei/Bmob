@@ -18,7 +18,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
@@ -40,7 +43,6 @@ import com.example.bmob.utils.*
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random

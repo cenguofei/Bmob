@@ -9,7 +9,10 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
-import com.example.bmob.data.entity.*
+import com.example.bmob.data.entity.NOT_APPROVED
+import com.example.bmob.data.entity.SELECT_STATE_UNSELECTED
+import com.example.bmob.data.entity.Thesis
+import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.databinding.FragmentTeacherNewThesisBinding
 import com.example.bmob.utils.*
@@ -33,7 +36,7 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
 
         val thesisList = getThesisList(user).value
         thesisList?.add(thesis)
-        handler.set(CURRENT_TEACHER_THESIS,thesisList)
+        handler.set(CURRENT_TEACHER_THESIS+user.objectId,thesisList)
 //
 //        val mutableLiveData = getThesisList(user)
 //        if (mutableLiveData.value == null){
@@ -59,10 +62,10 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
     }
 
     fun getThesisList(user: User):MutableLiveData<MutableList<Thesis>>{
-        if (!handler.contains(CURRENT_TEACHER_THESIS)){
+        if (!handler.contains(CURRENT_TEACHER_THESIS+user.objectId)){
             queryTeacherAllThesis(user){isSuccess, thesisList, msg ->
                 if (isSuccess){
-                    handler.set(CURRENT_TEACHER_THESIS,thesisList)
+                    handler.set(CURRENT_TEACHER_THESIS+user.objectId,thesisList)
                 }else{
                     Log.v(LOG_TAG,"教师课题查询失败：$msg")
                 }
@@ -71,7 +74,7 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
 //        if (!handler.contains(CURRENT_TEACHER_THESIS)){
 //            Log.v(LOG_TAG,"!handler.contains(CURRENT_TEACHER_THESIS)")
 //        }
-        return handler.getLiveData(CURRENT_TEACHER_THESIS)
+        return handler.getLiveData(CURRENT_TEACHER_THESIS+user.objectId)
     }
     /**
      * 查询该教师的所有课题
@@ -80,24 +83,6 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
         user:User,
         callback: (isSuccess: Boolean, thesisList:MutableList<Thesis>?,msg: String) -> Unit
     ){
-//        //三个条件
-//        val equalToSchool = BmobQuery<Thesis>()
-//            .addWhereEqualTo(School, user.school)
-//        val equalToDepartment = BmobQuery<Thesis>()
-//            .addWhereEqualTo(Department,user.department)
-//        val equalToCollege = BmobQuery<Thesis>()
-//            .addWhereEqualTo(College,user.college)
-//        val equalToTeacher = BmobQuery<Thesis>()
-//            .addWhereEqualTo(TeacherId,user.objectId)
-//
-//        val queryList = ArrayList<BmobQuery<Thesis>>().run {
-//            add(equalToSchool)
-//            add(equalToDepartment)
-//            add(equalToCollege)
-//            add(equalToTeacher)
-//            this@run
-//        }
-
         BmobQuery<Thesis>().run {
             and(ArrayList<BmobQuery<Thesis>>().apply {
                 add(BmobQuery<Thesis>().addWhereEqualTo(School,user.school))
@@ -187,7 +172,7 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
                         }
                     }
                     mutableList?.add(0,thesis)
-                    handler.set(CURRENT_TEACHER_THESIS,mutableList)
+                    handler.set(CURRENT_TEACHER_THESIS+user.objectId,mutableList)
 
                     callback.invoke(true, EMPTY_TEXT)
                 }else{

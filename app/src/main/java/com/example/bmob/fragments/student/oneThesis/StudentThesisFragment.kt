@@ -2,14 +2,13 @@ package com.example.bmob.fragments.student.oneThesis
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentStudentThesisBinding

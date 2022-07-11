@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentSetBinding
-import com.example.bmob.databinding.ItemSelectTimeBinding.inflate
 import com.example.bmob.databinding.SexPopupWindowBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg

@@ -8,10 +8,8 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
-import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.TeacherId
-import okhttp3.internal.cacheGet
 
 class TeacherSelectResultViewModel(private val handler: SavedStateHandle) : ViewModel() {
 

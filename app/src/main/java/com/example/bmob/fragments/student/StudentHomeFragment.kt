@@ -10,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,12 +19,10 @@ import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
 import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
-import kotlinx.coroutines.launch
 
 /**
  * 学生首页

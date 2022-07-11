@@ -1,6 +1,5 @@
 package com.example.bmob.viewmodels
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import cn.bmob.v3.BmobQuery

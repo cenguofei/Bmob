@@ -3,7 +3,6 @@ package com.example.bmob.fragments.student.select
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.StudentSelectTeacherItemBinding
 
