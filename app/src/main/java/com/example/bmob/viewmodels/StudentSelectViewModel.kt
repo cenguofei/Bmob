@@ -17,7 +17,6 @@ import java.util.*
 
 class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel() {
     var isStudentSelectThesis = MutableLiveData<Boolean>()
-    var isParticipateThesis = MutableLiveData<Boolean>()
     var releaseTime: ReleaseTime? = null
 
     companion object {
@@ -151,6 +150,24 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
             })
     }
 
+
+    fun fetchStudentThesis(student: User,callback: (student: User) -> Unit){
+        BmobQuery<User>()
+            .addWhereEqualTo(ObjectId,student.objectId)
+            .include(StudentThesis)
+            .setLimit(1)
+            .findObjects(object :FindListener<User>(){
+                override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                    if (p1 == null && p0 != null && p0.isNotEmpty()){
+                        Log.v(LOG_TAG,"更新学生成功：${p0[0]}")
+                        callback.invoke(p0[0])
+                    }else{
+                        callback.invoke(student)
+                    }
+                }
+            })
+    }
+
     /**
      * 学生选课,把当前登录的学生账号信息添加到Thesis.studentsList
      */
@@ -169,8 +186,6 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
 //                    if (thesisStudentList.size == 0) 0 else thesisStudentList.size,
                 student
             )
-
-
             /**
              * student.studentThesis = thesis
              * 上面的写法时错误的，会闪退，找了很久也没找到原因
@@ -205,7 +220,6 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
                 }
             })
         }
-//        }
     }
 
     /**
@@ -292,10 +306,6 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
             val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:$minute:$second")
 
             if (dateSystem != null && dateStart != null && dateEnd != null) {
-                Log.v(
-                    LOG_TAG,
-                    "判断选题日期：${dateSystem.after(dateStart) && dateSystem.before(dateEnd)}"
-                )
                 return dateSystem.after(dateStart) && dateSystem.before(dateEnd)
 //                if (dateSystem.after(dateStart) && dateSystem.before(dateEnd)){
 //                    return true

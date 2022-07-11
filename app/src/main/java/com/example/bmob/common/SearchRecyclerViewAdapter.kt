@@ -57,23 +57,19 @@ class ThesisDiffUtil(
 ): DiffUtil.Callback() {
     //获取旧数据元素个数
     override fun getOldListSize(): Int {
-        Log.v(LOG_TAG,"oldList.size=${oldList.size}")
         return oldList.size
     }
     //获取新数据元素个数
     override fun getNewListSize(): Int {
-        Log.v(LOG_TAG,"newList.size=${newList.size}")
         return newList.size
     }
     //是否是同一个对象
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         //判断是否是同一个对象
-        Log.v(LOG_TAG,"newList[newItemPosition] == oldList[oldItemPosition]  ${newList[newItemPosition] == oldList[oldItemPosition]}")
         return newList[newItemPosition] == oldList[oldItemPosition]
     }
     //内容是否一致
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        Log.v(LOG_TAG,"newList[newItemPosition].title == oldList[oldItemPosition].title ${newList[newItemPosition].title == oldList[oldItemPosition].title}")
         return newList[newItemPosition].title == oldList[oldItemPosition].title
     }
 }

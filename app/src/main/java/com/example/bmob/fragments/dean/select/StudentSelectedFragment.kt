@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentSelectedBinding
 import com.example.bmob.databinding.ItemDeanStudentSelectBinding
@@ -21,7 +20,7 @@ import com.example.bmob.viewmodels.SetViewModel
 /**
  * 显示已选学生名单
  */
-class StudentSelectedFragment : Fragment(), FragmentEventListener {
+class StudentSelectedFragment : Fragment() {
     private lateinit var binding: FragmentStudentSelectedBinding
     private val viewModel: DeanStudentSelectedViewModel by viewModels()
     private val setViewModel: SetViewModel by activityViewModels()
@@ -58,13 +57,5 @@ class StudentSelectedFragment : Fragment(), FragmentEventListener {
             }
         }
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    override fun setEventListener() {
     }
 }

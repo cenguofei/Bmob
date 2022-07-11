@@ -47,7 +47,8 @@ class SelectFragment : Fragment(),FragmentEventListener {
                     thesis = result
                     root.setOnClickListener {
                         val actionSelectFragmentToShowThesisFragment =
-                            SelectFragmentDirections.actionSelectFragmentToShowThesisFragment(result, true)
+                            SelectFragmentDirections
+                                .actionSelectFragmentToShowThesisFragment(result, true)
                         /**
                          * 设置为true，通知ShowThesisFragment，
                          *

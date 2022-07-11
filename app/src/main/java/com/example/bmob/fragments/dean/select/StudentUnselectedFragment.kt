@@ -1,7 +1,6 @@
 package com.example.bmob.fragments.dean.select
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentUnselectedBinding
 import com.example.bmob.databinding.ItemDeanStudentSelectBinding
-import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanStudentSelectedViewModel
 import com.example.bmob.viewmodels.SetViewModel
@@ -23,7 +20,7 @@ import com.example.bmob.viewmodels.SetViewModel
 /**
  * 显示未选学生名单
  */
-class StudentUnselectedFragment : Fragment(), FragmentEventListener {
+class StudentUnselectedFragment : Fragment() {
     private lateinit var binding: FragmentStudentUnselectedBinding
     private val viewModel: DeanStudentSelectedViewModel by viewModels()
     private val setViewModel: SetViewModel by activityViewModels()
@@ -40,7 +37,6 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
         {
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
-            Log.v(LOG_TAG,"StudentSelectedFragment观测到 未 选结果：$it")
             if (it.isNotEmpty()){
                 RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent->
                     val itemInflater = LayoutInflater.from(parent.context)
@@ -57,14 +53,5 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
             }
         }
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    override fun setEventListener() {
-
     }
 }

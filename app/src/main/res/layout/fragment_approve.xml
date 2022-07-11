@@ -79,7 +79,7 @@
                     android:layout_height="match_parent"
                     android:autofillHints=""
                     android:background="@drawable/teacher_new_thesis_info_text_bg"
-                    android:drawableStart="@drawable/reshearch"
+                    android:drawableStart="@drawable/_f_"
                     android:drawablePadding="13dp"
                     android:hint="@string/field"
                     android:inputType="text"
@@ -102,7 +102,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/imageView22"
@@ -113,7 +113,8 @@
                     android:paddingStart="15dp"
                     android:src="@drawable/demand"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry" />
 
                 <EditText
                     android:id="@+id/thesisRequire"

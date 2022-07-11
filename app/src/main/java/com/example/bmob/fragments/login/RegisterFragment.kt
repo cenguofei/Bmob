@@ -67,19 +67,15 @@ class RegisterFragment : Fragment(), FragmentEventListener{
         }
         binding.schoolEv.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                Log.v(LOG_TAG,"编辑学校beforeTextChanged：s:${s} start:$start  count:$count")
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                Log.v(LOG_TAG,"编辑学校onTextChanged：s:${s} start:$start  count:$count")
                 binding.departmentEv.visibility = View.GONE
                 binding.collegeEv.visibility = View.GONE
             }
 
             override fun afterTextChanged(s: Editable?) {
                 finalInput = EMPTY_TEXT
-                Log.v(LOG_TAG,"编辑学校afterTextChanged：s:${s.toString()}")
                 val inputSchool = s.toString()
                 userViewModel.querySchool(inputSchool){isSuccess, school, error ->
                     if (isSuccess){
@@ -88,7 +84,6 @@ class RegisterFragment : Fragment(), FragmentEventListener{
                             colleges = school.college
                             binding.collegeEv.visibility = View.VISIBLE
                             binding.isValidTextView.text = "输入学校合法"
-
                             Log.v(LOG_TAG,"departs=$departments \ncolleges=$colleges\n")
                         }else{
                             binding.collegeEv.visibility = View.GONE

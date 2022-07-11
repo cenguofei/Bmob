@@ -8,14 +8,12 @@ import kotlinx.parcelize.Parcelize
 data class Thesis(
 //    val classIds:List<String>?=null,  //班级id，该论文属于哪些班级选
     var title:String?=null, //标题
-//    val content:String?=null, //内容//可以不用管
     var description:String?=null, //论文描述
     var field:String?=null, //所属领域
 
     var teacherId:String?=null, //创造该选题的教师id
     var teacherAvatarUrl:String?=null, //教师的头像地址
     var teacherName:String?=null, //创造该选题的教师
-
     /**
      * 老师的特有功能->导出选题学生名单(包括课题名称，学生姓名，班级)
      *
@@ -43,7 +41,6 @@ data class Thesis(
     var college:String?=null,
     var userDetail:String? = null,
     var require:String? = null,//论文要求
-
 
     /**
      * 针对学生 ，论文是否可选，当审核通过并且选题时间开始后为true，表示可选
@@ -73,7 +70,6 @@ data class Thesis(
      *
      * 然后按照班级分类
      */
-
 
     //教务长只有开设选题和结束选题事件的功能
 ):BmobObject(),Parcelable

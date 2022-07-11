@@ -76,8 +76,6 @@ class HomeFragment : Fragment() {
             )
         }
         val adapter = RecyclerViewAdapter(data as List<Message>) { binding, result ->
-            Log.v(LOG_TAG,"留言的title：${result.forThesis.title}\n\n" +
-                    "留言的Thesis的objectId:${result.objectId}")
             (binding as MessageItemLayoutBinding).run {
                 message = result
                 if (setViewModel.getUserByQuery().value!!.name == result.fUName){

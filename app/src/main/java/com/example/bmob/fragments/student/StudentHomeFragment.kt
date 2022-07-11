@@ -20,7 +20,7 @@ import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
-import com.example.bmob.viewmodels.ERROR
+import com.example.bmob.viewmodels.CommonHomeViewModel.Companion.ERROR
 import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
 
@@ -28,7 +28,6 @@ import com.youth.banner.indicator.CircleIndicator
  * 学生首页
  *
  * 学生选择课题：
- *
  */
 class StudentHomeFragment : Fragment(), FragmentEventListener {
     lateinit var binding: FragmentStudentHomeBinding
@@ -152,23 +151,8 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
         viewModel.setSearchViewListener(binding.searchView,binding.recyclerView,binding.contentLinearLayout){
             if (it){
                 Log.v(LOG_TAG,"输入的内容空")
-//                adapter?.data?.clear()
-//                adapter?.data = null
-
                 adapter = null
             }
         }
     }
 }
-
-
-//测试
-//        binding.headImg.setOnClickListener {
-//            testViewModel.addStudentToThesis("", emptyList()){isSuccess, msg ->
-//                if (isSuccess){
-//                    Log.v(LOG_TAG,"成功添加学生到课题")
-//                }else{
-//                    Log.v(LOG_TAG,msg)
-//                }
-//            }
-//        }

@@ -25,9 +25,7 @@ import com.example.bmob.viewmodels.BmobUserViewModel
  * 后期待完善：
  * 1.StudentSelectViewModel.getTeacherAllThesis()
  *
- * 2. FragmentShowThesis教师修改信息了但是Thesis表没有同步
- *
- * 3. 添加childView有问题
+ * 2.FragmentShowThesis教师修改信息了但是Thesis表没有同步
  */
 
 class MainActivity : AppCompatActivity() {
@@ -98,29 +96,22 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.usernameFragment
                 || destination.id == R.id.phoneNumberFragment
                 || destination.id == R.id.resetPasswordFragment
-
                 || destination.id == R.id.browseFragment
                 || destination.id == R.id.selectFragment
                 || destination.id == R.id.studentThesisFragment
-
                 || destination.id == R.id.showThesisFragment
-
                 || destination.id == R.id.setFragment
-
                 || destination.id == R.id.teacherReleasedFragment
                 || destination.id == R.id.teacherSelectResultFragment
                 || destination.id == R.id.teacherNewThesisFragment
-
                 || destination.id == R.id.approveFragment
                 || destination.id == R.id.deanApprovedFragment
                 || destination.id == R.id.deanNotApprovedFragment
                 || destination.id == R.id.studentSelectedFragment
                 || destination.id == R.id.studentUnselectedFragment
-
                 || destination.id == R.id.provostSelectTimeFragment
                 || destination.id == R.id.skimFragment
             ) {
-                Log.v(LOG_TAG, "在这 addOnDestinationChangedListener getUserIdentification.value")
                 when (userViewModel.getUserIdentification().value) {
                     IDENTIFICATION_STUDENT -> {
                         binding.bottomStudentNavigationView.visibility = View.GONE

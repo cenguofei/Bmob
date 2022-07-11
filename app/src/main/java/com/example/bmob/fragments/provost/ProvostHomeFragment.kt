@@ -25,7 +25,7 @@ import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.databinding.FragmentProvostHomeBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
-import com.example.bmob.viewmodels.ERROR
+import com.example.bmob.viewmodels.CommonHomeViewModel.Companion.ERROR
 import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
 
@@ -38,34 +38,21 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
     private val setViewModel: SetViewModel by activityViewModels()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.v(LOG_TAG,"ProvostHomeFragment  onAttach")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.v(LOG_TAG,"ProvostHomeFragment  onCreate")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProvostHomeBinding.inflate(inflater, container, false)
-        Log.v(LOG_TAG,"ProvostHomeFragment  onCreateView")
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        Log.v(LOG_TAG,"ProvostHomeFragment  onStart")
         binding.banner1.start()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.v(LOG_TAG,"ProvostHomeFragment  onViewCreated")
         setEventListener()
         viewModel.setFragment(this)
         binding.banner1.addBannerLifecycleObserver(this)
@@ -132,105 +119,17 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
         }.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.v(LOG_TAG,"ProvostHomeFragment  onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.v(LOG_TAG,"ProvostHomeFragment  onPause")
-    }
-
-
     override fun onStop() {
         super.onStop()
-        Log.v(LOG_TAG,"ProvostHomeFragment  onStop")
         binding.banner1.stop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.v(LOG_TAG,"ProvostHomeFragment  onDestroy")
         binding.banner1.destroy()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.v(LOG_TAG,"ProvostHomeFragment  onDestroyView")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.v(LOG_TAG,"ProvostHomeFragment  onDetach")
-    }
-
     override fun setEventListener() {
-//        binding.imageView10.setOnClickListener {
-//            //开启一个子线程
-//            //开启一个子线程
-//            val listOf = listOf(
-//                PhoneBillExpressBean(
-//                    "ff",
-//                    8,
-//                    "fdf",
-//                    "ff",
-//                    "fdfs",
-//                    "ffsd",
-//                    "ffd",
-//                    "fdfs",
-//                    "fdf",
-//                    "fds",
-//                    "fdsf",
-//                    "fdsf"
-//                ),
-//                PhoneBillExpressBean(
-//                    "ff",
-//                    8,
-//                    "fdf",
-//                    "ff",
-//                    "fdfs",
-//                    "ffsd",
-//                    "ffd",
-//                    "fdfs",
-//                    "fdf",
-//                    "fds",
-//                    "fdsf",
-//                    "fdsf"
-//                ),
-//                PhoneBillExpressBean(
-//                    "ff",
-//                    8,
-//                    "fdf",
-//                    "ff",
-//                    "fdfs",
-//                    "ffsd",
-//                    "ffd",
-//                    "fdfs",
-//                    "fdf",
-//                    "fds",
-//                    "fdsf",
-//                    "fdsf"
-//                )
-//            )
-//            lifecycleScope.launch {
-//                val isSuccess: Boolean = exportExcel(listOf)
-//                //返回UI线程
-//                activity!!.runOnUiThread {
-//                    if (isSuccess) {
-//                        Toast.makeText(
-//                            context,
-//                            "导出成功:/storage/emulated/0/Download/",
-//                            Toast.LENGTH_LONG
-//                        )
-//                            .show()
-//                    } else {
-//                        Toast.makeText(context, "导出失败", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }
-//        }
-
         binding.issueTime.setOnClickListener {
             findNavController().navigate(R.id.action_provostHomeFragment_to_provostSelectTimeFragment)
         }

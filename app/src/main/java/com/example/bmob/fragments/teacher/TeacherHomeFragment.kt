@@ -18,7 +18,7 @@ import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentTeacherHomeBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
-import com.example.bmob.viewmodels.ERROR
+import com.example.bmob.viewmodels.CommonHomeViewModel.Companion.ERROR
 import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
 

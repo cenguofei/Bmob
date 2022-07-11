@@ -14,7 +14,7 @@ import com.example.bmob.utils.*
 class StudentThesisViewModel:ViewModel() {
 
     /**
-     * 学生推选
+     * 学生退选
      */
     fun studentOutThesis(student: User,callback:(isSuccess:Boolean,student:User?,message:String)->Unit){
         student.studentSelectState = STUDENT_NOT_SELECT_THESIS
@@ -57,18 +57,5 @@ class StudentThesisViewModel:ViewModel() {
             add(addWhereEqualTo)
             this@run
         }
-        BmobQuery<User>()
-            .and(queryList)
-            .findObjects(object :FindListener<User>(){
-                override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.isNotEmpty()){
-
-                        }
-                    }else{
-
-                    }
-                }
-            })
     }
 }

@@ -43,7 +43,7 @@ class TeacherSelectResultViewModel(private val handler: SavedStateHandle) : View
      *          Thesis.teacherId = user.objectId
      *
      * 选择此课题的学生：
-     * selectedStudent = ThesisList[i].studentsList
+     * selectedStudent = ThesisList{i}.studentsList
      */
     private fun getStudentOfSelectedThisThesis(
         teacher: User,

@@ -115,20 +115,9 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
                         viewModel.addStudentToTeacherThesis(student,args.thesis,{msg->
                             showMsg(requireContext(),msg)
                         }){stu ->
-                            BmobQuery<User>()
-                                .addWhereEqualTo(ObjectId,stu.objectId)
-                                .include(StudentThesis)
-                                .setLimit(1)
-                                .findObjects(object :FindListener<User>(){
-                                    override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                                        if (p1 == null && p0 != null && p0.isNotEmpty()){
-                                            Log.v(LOG_TAG,"更新学生成功：${p0[0]}")
-                                            setViewModel.setUserByQuery(p0[0])
-                                        }else{
-                                            setViewModel.setUserByQuery(stu)
-                                        }
-                                    }
-                                })
+                            viewModel.fetchStudentThesis(stu){
+                                setViewModel.setUserByQuery(it)
+                            }
                         }
                     }
                 }else showMsg(requireContext(),"当前不是选题时间")

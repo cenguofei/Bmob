@@ -169,13 +169,9 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
     }
 
     //退出登录
-    fun logout() {
-        BmobUser.logOut()
-    }
+    fun logout() = BmobUser.logOut()
 
-    fun isLogin(): Boolean {
-        return BmobUser.isLogin()
-    }
+    fun isLogin(): Boolean = BmobUser.isLogin()
 
     //手机号码重置密码
     //1. 请求重置密码操作的短信验证码

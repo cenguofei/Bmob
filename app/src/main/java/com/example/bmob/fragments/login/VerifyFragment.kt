@@ -58,7 +58,6 @@ class VerifyFragment : Fragment() ,FragmentEventListener{
                     viewModel.signOrLogin(name,workNum,pwd,identification,phoneNum,
                         "$code1$code2$code3$code4$code5$code6",
                         args.codeVerifySuccessUser.school,
-//                        args.codeVerifySuccessUser.college,
                         args.codeVerifySuccessUser.department,
                         args.codeVerifySuccessUser.college
                     ){ isSuccess, msg ->

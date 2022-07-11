@@ -62,12 +62,10 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
         endTime:String,
         callback: (isValid: Boolean,message:String) -> Unit
     ){
-
         if (beginTime == EMPTY_TEXT || endTime == EMPTY_TEXT){
             callback.invoke(false,"请输入时间")
             return
         }
-
         try {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
             val dateBegin = simpleDateFormat.parse(beginTime)

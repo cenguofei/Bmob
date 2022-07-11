@@ -16,7 +16,7 @@ import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentSearchBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.CommonHomeViewModel
-import com.example.bmob.viewmodels.ERROR
+import com.example.bmob.viewmodels.CommonHomeViewModel.Companion.ERROR
 
 
 class SearchFragment : Fragment(),FragmentEventListener {

@@ -53,24 +53,6 @@ class MessageViewModel(private val handler:SavedStateHandle):ViewModel() {
     }
 
     /**
-     * 获取用户以前的留言，
-     * 以及当前登录后的留言，登录后的留言暂时保存到了handler
-     */
-//    fun getUserMessageLiveData(
-//        loginTeacher: User,
-//        callback: (message: String) -> Unit
-//    ): MutableLiveData<MutableList<Message>> {
-//        if (!handler.contains(LEAVE_MESSAGE_KEY)){
-//            getRemoteHistoryMessage(loginTeacher){isSuccess, mutableListMessage, msg ->
-//                if (isSuccess){
-//                    handler.set(LEAVE_MESSAGE_KEY,mutableListMessage)
-//                }else callback.invoke(msg)
-//            }
-//        }
-//        return handler.getLiveData(LEAVE_MESSAGE_KEY)
-//    }
-
-    /**
      * 远程获取历史留言
      * @param loginTeacher
      * 当前登录的教师用户
@@ -135,9 +117,7 @@ class MessageViewModel(private val handler:SavedStateHandle):ViewModel() {
             })
     }
 
-
     companion object{
         private const val LEAVE_MESSAGE_KEY = "_leave_message_"
     }
-
 }

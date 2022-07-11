@@ -207,6 +207,7 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
 
     companion object {
         private const val BANNER_DATA = "_banner_data_"
+        const val ERROR = "_error_"
     }
 }
 

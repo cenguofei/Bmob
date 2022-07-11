@@ -78,7 +78,7 @@ class ProvostSkimViewModel(val handler:SavedStateHandle):ViewModel() {
     }
 
     /**
-     * 获取处教务长意外的角色信息
+     * 获取除教务长意外的角色信息
      * @param provost
      * @param identification  用户身份
      */
@@ -89,18 +89,12 @@ class ProvostSkimViewModel(val handler:SavedStateHandle):ViewModel() {
     ){
         val addWhereEqualToSchool = BmobQuery<User>()
             .addWhereEqualTo(School, provost.school)
-//        val addWhereEqualToCollege = BmobQuery<User>()
-//            .addWhereEqualTo(College, provost.college)
-//        val addWhereEqualToDepartment = BmobQuery<User>()
-//            .addWhereEqualTo(Department, provost.department)
         val addWhereEqualToIdentification = BmobQuery<User>()
             .addWhereEqualTo(Identification, identification)
 
 
         val queryList = ArrayList<BmobQuery<User>>().run {
             add(addWhereEqualToSchool)
-//            add(addWhereEqualToCollege)
-//            add(addWhereEqualToDepartment)
             add(addWhereEqualToIdentification)
             this@run
         }

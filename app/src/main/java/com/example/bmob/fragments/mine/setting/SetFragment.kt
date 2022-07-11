@@ -56,7 +56,6 @@ class SetFragment : Fragment() ,FragmentEventListener{
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
 
-        Log.v(LOG_TAG,"SetFragment  viewModel:$viewModel  viewModel.handler:${viewModel.handler}")
         viewModel.getBmobUser().observe(viewLifecycleOwner){
             Log.v(LOG_TAG,"SetFragment BmobUser  id  :$it")
         }
@@ -99,7 +98,7 @@ class SetFragment : Fragment() ,FragmentEventListener{
             popupWindow.dismiss()
         }
         binding.editGenderEv.setOnClickListener {
-            popupWindow.showAsDropDown(it)
+            popupWindow.showAsDropDown(it,it.width/8,it.height/8)
         }
         binding.editBirthEv.setOnClickListener {
             viewModel.selectTime(requireContext(),"选择生日",0,0,0){

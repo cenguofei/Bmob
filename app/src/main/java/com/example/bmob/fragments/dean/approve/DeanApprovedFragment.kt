@@ -45,7 +45,6 @@ class DeanApprovedFragment : Fragment() {
                             false
                         )
                     findNavController().navigate(actionDeanApprovedFragmentToApproveFragment)
-                    Log.v(LOG_TAG,"approveThesisAdapter 被点击了：$thesis")
                 }
                 binding.recyclerView.run {
                     layoutManager = LinearLayoutManager(requireContext(),

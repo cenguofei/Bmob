@@ -43,8 +43,7 @@ class StartFragment : Fragment() {
                             findNavController().navigate(R.id.action_startFragment_to_loginFragment)
                         }else{
                             //判断用户是否处于登录状态
-                            //是
-                            if (userViewModel.isLogin()){
+                            if (userViewModel.isLogin()){  //是
                                 val bmobUser = BmobUser.getCurrentUser()
                                 Log.v(LOG_TAG,"已经登录:账号username：${bmobUser.username} 电话：${bmobUser.mobilePhoneNumber}")
                                 userViewModel.getUserInfo { isSuccess, user ->
@@ -61,24 +60,4 @@ class StartFragment : Fragment() {
                                                 },2000)
         }
     }
-
-//    /**
-//     * 判断当前用户身份
-//     */
-//    fun getUserIdentificationAndNavigate(identification:Int){
-//        when (identification) {
-//            IDENTIFICATION_STUDENT -> {
-//                findNavController().navigate(R.id.action_startFragment_to_studentHomeFragment)
-//            }
-//            IDENTIFICATION_TEACHER -> {
-//                findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
-//            }
-//            IDENTIFICATION_DEAN -> {
-//                //
-//            }
-//            IDENTIFICATION_PROVOST -> {
-//                //
-//            }
-//        }
-//    }
 }

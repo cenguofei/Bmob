@@ -90,14 +90,12 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 Log.v(LOG_TAG, "uriToFileQ path = ${file?.path}  uri=$uri")
                 //存储图片
                 Log.v(LOG_TAG, "图片类型:${imageType}")
-
                 //上传头像
                 uploadImage(file!!, { isSuccess, msg ->
                     if (isSuccess) {
                         Log.v(LOG_TAG, "图片上传成功")
                         //改变ui
                         if ((imageType!!) == IMAGE_TYPE_HEAD) {
-
                             fragment.binding.editHeadIv.setImageURI(uri)
                         } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND) {
                             fragment.binding.backgroundIv.setImageURI(uri)
@@ -109,7 +107,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 }) { progress ->
                     if (progress != null) {
                         //显示上传进度
-                        Log.v(LOG_TAG, "progress=$progress")
                         fragment.binding.progressBar.progress = progress
                         if (progress == 100) {
                             fragment.binding.progressBar.visibility = View.GONE
@@ -149,7 +146,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     }
 
     fun setUserByQuery(student: User) {
-        Log.v(LOG_TAG,"setUserByQuery")
         handler.set(QUERY_USER_KEY, student)
     }
 
@@ -182,7 +178,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         callback: (isSuccess: Boolean, msg: String) -> Unit,
         progressCallback: (progress: Int?) -> Unit
     ) {
-        Log.v(LOG_TAG, "开始上传图片")
         val bmobFile = BmobFile(file)
         bmobFile.uploadblock(object : UploadFileListener() {
             override fun done(p0: BmobException?) {
@@ -191,7 +186,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                     addImageUrlToCurrentUser(bmobFile.fileUrl) { isSuccess, message ->
                         if (isSuccess) {
                             Log.v(LOG_TAG, "type=$imageType 图片url已经添加到用户")
-                            Log.v(LOG_TAG, "添加图片后的用户:${getUserByQuery().value.toString()}")
                             callback.invoke(true, EMPTY_TEXT)
                         } else {
                             Log.v(LOG_TAG, "type=$imageType 图片url没有添加到用户")
@@ -205,7 +199,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             }
 
             override fun onProgress(value: Int?) {
-                Log.v(LOG_TAG, "pro value = $value")
                 progressCallback.invoke(value)
             }
         })
@@ -339,7 +332,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
 
 
                 //修改了学生信息后，课题里面学生的信息也要修改
-
 
                 saveUsernameToPreferencesStore(username = userName, fragment.requireContext())
             }
