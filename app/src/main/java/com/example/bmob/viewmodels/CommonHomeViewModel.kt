@@ -14,23 +14,32 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
 import com.example.bmob.R
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.data.entity.BmobBannerObject
+import com.example.bmob.data.entity.ReleaseTime
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.fragments.student.StudentHomeFragment
 import com.example.bmob.fragments.teacher.TeacherHomeFragment
 import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.ProvostObjectId
+import com.example.bmob.utils.School
 import com.example.bmob.utils.showMsg
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
-class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
+class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
     private val repository = BmobRepository.getInstance()
     private var nowSearch = MutableLiveData<String>()
-    private lateinit var fragment:Fragment
+    private lateinit var fragment: Fragment
 
-    fun setFragment(fragment: Fragment){
+    fun setFragment(fragment: Fragment) {
         this.fragment = fragment
     }
 
@@ -38,6 +47,7 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
     fun setNowSearch(query: String) {
         nowSearch.postValue(query)
     }
+
     fun getNowSearch() = nowSearch
 
     //外部观察
@@ -49,12 +59,13 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
      * 模糊查询能选的文章
      */
     private fun switchSearchAnyThesis(query: String): MutableLiveData<Pair<String, MutableList<Thesis>>> {
-        val results: MutableLiveData<Pair<String, MutableList<Thesis>>> = MutableLiveData<Pair<String,MutableList<Thesis>>>()
+        val results: MutableLiveData<Pair<String, MutableList<Thesis>>> =
+            MutableLiveData<Pair<String, MutableList<Thesis>>>()
         repository.searchAnyThesis(query) { isSuccess, thesisList, msg ->
             if (isSuccess) {
                 results.value = thesisList
             } else {
-                Log.v(LOG_TAG,"模糊查询能选的文章失败：$msg")
+                Log.v(LOG_TAG, "模糊查询能选的文章失败：$msg")
                 results.value = Pair(ERROR, mutableListOf())
             }
         }
@@ -62,7 +73,11 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
     }
 
     //初始化界面
-    fun isShowRecyclerView(recyclerView: RecyclerView,linearLayout: LinearLayout,isShow: Boolean) {
+    fun isShowRecyclerView(
+        recyclerView: RecyclerView,
+        linearLayout: LinearLayout,
+        isShow: Boolean
+    ) {
         if (isShow) {
             recyclerView.visibility = View.VISIBLE
             linearLayout.visibility = View.GONE
@@ -76,8 +91,8 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
         searchView: SearchView,
         recyclerView: RecyclerView,
         linearLayout: LinearLayout,
-        callback:(isTextEmpty:Boolean)->Unit
-    ){
+        callback: (isTextEmpty: Boolean) -> Unit
+    ) {
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             //点击搜索时调用
@@ -93,7 +108,7 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
                     true
                 } else {
                     callback.invoke(true)
-                    isShowRecyclerView(recyclerView,linearLayout,false)
+                    isShowRecyclerView(recyclerView, linearLayout, false)
                     false
                 }
             }
@@ -103,11 +118,11 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
     /**
      * 搜索学生首页的banner
      */
-    fun queryBannerData():MutableLiveData<MutableList<BmobBannerObject>> {
-        if (!handler.contains(BANNER_DATA)){
-            repository.queryBannerData{isSuccess, data, msg ->
+    fun queryBannerData(): MutableLiveData<MutableList<BmobBannerObject>> {
+        if (!handler.contains(BANNER_DATA)) {
+            repository.queryBannerData { isSuccess, data, msg ->
                 if (isSuccess) {
-                    handler.set(BANNER_DATA,data)
+                    handler.set(BANNER_DATA, data)
                 } else {
                     showMsg(fragment.requireContext(), msg)
                 }
@@ -116,7 +131,69 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
         return handler.getLiveData(BANNER_DATA)
     }
 
-    companion object{
+    /**
+     * 针对学生用户
+     *
+     * 每次学生登录的时候都检查自己的选题状态
+     *
+     * 用当前时间和教务长发布的选题时间作比较，
+     * 如果时间已过期，即选题时间段在当前时间段之前，
+     * 就要把学生的选题状态改为false（如果本来就是false也可以不用改）
+     */
+    fun updateStudentSelectState(
+        student: User,
+        releaseTime: ReleaseTime,
+        callback: (isSuccess: Boolean, msg: String) -> Unit
+    ) {
+        repository.updateUser(determineStudentSelectStateByReleaseTime(releaseTime), student, callback)
+    }
+
+    fun queryIssuedReleaseTime(student: User, callback: (release: ReleaseTime?) -> Unit) {
+        BmobQuery<ReleaseTime>()
+            .addWhereEqualTo(School, student.school)
+            .findObjects(object : FindListener<ReleaseTime>() {
+                override fun done(
+                    p0: MutableList<ReleaseTime>?,
+                    p1: BmobException?
+                ) {
+                    if (p1 == null && p0 != null && p0.isNotEmpty()) {
+                        callback.invoke(p0[0])
+                    }else callback.invoke(null)
+                }
+            })
+    }
+
+    /**
+     * 通过releaseTime决定学生的studentSelectState属性是true还是false
+     */
+    private fun determineStudentSelectStateByReleaseTime(releaseTime: ReleaseTime): Boolean {
+        return try {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+            val endTime = simpleDateFormat.parse(releaseTime.endTime)
+
+            val calendar: Calendar = Calendar.getInstance()
+            val year: Int = calendar.get(Calendar.YEAR)
+            val month: Int = calendar.get(Calendar.MONTH) + 1
+            val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+            val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute: Int = calendar.get(Calendar.MINUTE)
+            val second: Int = calendar.get(Calendar.SECOND)
+
+            val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:$minute:$second")
+
+            if (dateSystem != null) {
+                if (dateSystem.after(endTime)) {
+                    return false
+                }
+            }
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    companion object {
         private const val BANNER_DATA = "_banner_data_"
     }
 }

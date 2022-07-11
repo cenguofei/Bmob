@@ -8,31 +8,37 @@ import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.*
 import com.example.bmob.data.entity.*
-import com.example.bmob.utils.EMPTY_TEXT
-import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.*
+import java.util.ArrayList
 
 
-class BmobRepository private constructor(){
+class BmobRepository private constructor() {
 
-    companion object{
-        @Volatile private var INSTANCE:BmobRepository? = null
+    companion object {
+        @Volatile
+        private var INSTANCE: BmobRepository? = null
+
         //单例模式，获取实例
-        fun getInstance() = INSTANCE ?: synchronized(this){
-            if (INSTANCE == null){
+        fun getInstance() = INSTANCE ?: synchronized(this) {
+            if (INSTANCE == null) {
                 INSTANCE = BmobRepository()
             }
             INSTANCE!!
         }
     }
 
-    fun updateUser(studentSelectState:Boolean,user:User,callback: (isSuccess: Boolean, msg: String) -> Unit){
+    fun updateUser(
+        studentSelectState: Boolean,
+        user: User,
+        callback: (isSuccess: Boolean, msg: String) -> Unit
+    ) {
         user.studentSelectState = studentSelectState
-        user.update(object :UpdateListener(){
+        user.update(object : UpdateListener() {
             override fun done(p0: BmobException?) {
-                if (p0 == null){
+                if (p0 == null) {
                     callback.invoke(true, EMPTY_TEXT)
-                }else{
-                    callback.invoke(false,p0.message.toString())
+                } else {
+                    callback.invoke(false, p0.message.toString())
                 }
             }
         })
@@ -42,17 +48,17 @@ class BmobRepository private constructor(){
      * 通过username登录
      * 也就是工号或学号
      */
-    fun loginByUsername(userName:String,pwd:String,callback: (Boolean,String)->Unit){
+    fun loginByUsername(userName: String, pwd: String, callback: (Boolean, String) -> Unit) {
         BmobUser().run {
             username = userName
             setPassword(pwd)
-            login(object :SaveListener<User>(){
+            login(object : SaveListener<User>() {
                 override fun done(p0: User?, p1: BmobException?) {
-                    if(p1 == null){
+                    if (p1 == null) {
                         callback.invoke(true, EMPTY_TEXT)
-                    }else{
-                        callback.invoke(false,p1.message ?: EMPTY_TEXT)
-                        Log.v(LOG_TAG,"登录失败：${p1.message}")
+                    } else {
+                        callback.invoke(false, p1.message ?: EMPTY_TEXT)
+                        Log.v(LOG_TAG, "登录失败：${p1.message}")
                     }
                 }
             })
@@ -60,19 +66,26 @@ class BmobRepository private constructor(){
     }
 
     //账号密码注册
-    fun signup(userName:String,workNum:String,phoneNumber: String,pwd: String, identify:Int, callback: (Boolean)->Unit){
+    fun signup(
+        userName: String,
+        workNum: String,
+        phoneNumber: String,
+        pwd: String,
+        identify: Int,
+        callback: (Boolean) -> Unit
+    ) {
         User(identification = identify).run {
             username = workNum
             name = userName
             mobilePhoneNumber = phoneNumber
             setPassword(pwd)
-            signUp(object :SaveListener<User>(){
+            signUp(object : SaveListener<User>() {
                 override fun done(p0: User?, p1: BmobException?) {
-                    if (p1 == null){
+                    if (p1 == null) {
                         callback.invoke(true)
-                    }else{
+                    } else {
                         callback.invoke(false)
-                        Log.v(LOG_TAG,"${p1.message}")
+                        Log.v(LOG_TAG, "${p1.message}")
                     }
                 }
             })
@@ -84,30 +97,47 @@ class BmobRepository private constructor(){
      * 获取验证码
      * 请求登录或注册操作的短信验证码
      */
-    fun getSignupCode(phoneNumber: String,callback: (isResponseSuccess:Boolean,msgCode:String,msg:String) -> Unit){
-        BmobSMS.requestSMSCode(phoneNumber,"",object :QueryListener<Int>(){
+    fun getSignupCode(
+        phoneNumber: String,
+        callback: (isResponseSuccess: Boolean, msgCode: String, msg: String) -> Unit
+    ) {
+        BmobSMS.requestSMSCode(phoneNumber, "", object : QueryListener<Int>() {
             override fun done(p0: Int?, p1: BmobException?) {
-                if (p1 == null){
-                    callback.invoke(true,p0.toString(), EMPTY_TEXT)
-                }else{
-                    callback.invoke(false,FAILED_REQUEST_SMS_CODE.toString(),p1.message.toString())
+                if (p1 == null) {
+                    callback.invoke(true, p0.toString(), EMPTY_TEXT)
+                } else {
+                    callback.invoke(
+                        false,
+                        FAILED_REQUEST_SMS_CODE.toString(),
+                        p1.message.toString()
+                    )
                 }
             }
         })
     }
+
     /**
      * 一键注册或登录的同时保存其他字段的数据
      * @param phoneNumber
      * @param msgCode
      */
-    fun signOrLogin(userName:String,workNum:String,pwd: String, identify:Int,phoneNumber: String, msgCode:String,
-                    s:String,
-                    d:String,
-                    c:String,
-                    callback: (isSuccess:Boolean,msg:String)->Unit){
-        with(User(identification = identify)){
-            avatarUrl = "https://bmob-cdn-30807.bmobpay.com/2022/07/09/a9a95cd5401e013d801ce9aa5160af32.jpg"
-            backgroundUrl="https://bmob-cdn-30807.bmobpay.com/2022/07/09/2fa8045040089d7780c2e4cd86e1b56a.jpg"
+    fun signOrLogin(
+        userName: String,
+        workNum: String,
+        pwd: String,
+        identify: Int,
+        phoneNumber: String,
+        msgCode: String,
+        s: String,
+        d: String,
+        c: String,
+        callback: (isSuccess: Boolean, msg: String) -> Unit
+    ) {
+        with(User(identification = identify)) {
+            avatarUrl =
+                "https://bmob-cdn-30807.bmobpay.com/2022/07/09/a9a95cd5401e013d801ce9aa5160af32.jpg"
+            backgroundUrl =
+                "https://bmob-cdn-30807.bmobpay.com/2022/07/09/2fa8045040089d7780c2e4cd86e1b56a.jpg"
             name = userName
             username = workNum
             setPassword(pwd)
@@ -123,13 +153,13 @@ class BmobRepository private constructor(){
              */
             studentSelectState = STUDENT_NOT_SELECT_THESIS
 
-            signOrLogin(msgCode,object :SaveListener<User>(){
+            signOrLogin(msgCode, object : SaveListener<User>() {
                 override fun done(p0: User?, p1: BmobException?) {
-                    if(p1 == null){
+                    if (p1 == null) {
                         callback.invoke(true, EMPTY_TEXT)
-                    }else{
-                        Log.v(LOG_TAG,"验证失败：${p1.message.toString()}")
-                        callback.invoke(false,p1.message.toString())
+                    } else {
+                        Log.v(LOG_TAG, "验证失败：${p1.message.toString()}")
+                        callback.invoke(false, p1.message.toString())
                     }
                 }
             })
@@ -137,39 +167,49 @@ class BmobRepository private constructor(){
     }
 
     //获取用户信息
-    fun getUserInfo(callback:(isSuccess:Boolean,user:User?)->Unit){
-        BmobQuery<User>().getObject(BmobUser.getCurrentUser().objectId,object :QueryListener<User>(){
-            override fun done(p0: User?, p1: BmobException?) {
-                if (p1 == null){
-                    callback.invoke(true,p0!!)
+    fun getUserInfo(callback: (isSuccess: Boolean, user: User?) -> Unit) {
+        BmobQuery<User>()
+            .include(StudentThesis)  //是学生用户的话把课题信息也找出来
+            .getObject(BmobUser.getCurrentUser().objectId, object : QueryListener<User>() {
+                override fun done(p0: User?, p1: BmobException?) {
+                    if (p1 == null) {
+                        callback.invoke(true, p0!!)
+                    } else {
+                        callback.invoke(false, null)
+                    }
                 }
-                else{
-                    callback.invoke(false,null)
-                }
-            }
-        })
+            })
     }
+
     //手机号码重置密码
     //1. 请求重置密码操作的短信验证码
-    fun findPassword(phoneNumber:String,callback: (isSuccess: Boolean,smsId:Int,error:String?) -> Unit){
-        BmobSMS.requestSMSCode(phoneNumber,"",object :QueryListener<Int>(){
+    fun findPassword(
+        phoneNumber: String,
+        callback: (isSuccess: Boolean, smsId: Int, error: String?) -> Unit
+    ) {
+        BmobSMS.requestSMSCode(phoneNumber, "", object : QueryListener<Int>() {
             override fun done(p0: Int?, p1: BmobException?) {
-                if (p1 == null){
-                    callback.invoke(true,p0!!, EMPTY_TEXT)
-                }else{
-                    callback.invoke(false,FAILED_REQUEST_SMS_CODE,p1.message.toString())
+                if (p1 == null) {
+                    callback.invoke(true, p0!!, EMPTY_TEXT)
+                } else {
+                    callback.invoke(false, FAILED_REQUEST_SMS_CODE, p1.message.toString())
                 }
             }
         })
     }
+
     //2. 然后执行验证码的密码重置操作
-    fun verifyCode(smsId:String,newPassword:String,callback: (isResetSuccess:Boolean,msg:String) -> Unit){
-        BmobUser.resetPasswordBySMSCode(smsId,newPassword,object :UpdateListener(){
+    fun verifyCode(
+        smsId: String,
+        newPassword: String,
+        callback: (isResetSuccess: Boolean, msg: String) -> Unit
+    ) {
+        BmobUser.resetPasswordBySMSCode(smsId, newPassword, object : UpdateListener() {
             override fun done(p0: BmobException?) {
-                if (p0 == null){
+                if (p0 == null) {
                     callback.invoke(true, EMPTY_TEXT)
-                }else{
-                    callback.invoke(false,p0.message.toString())
+                } else {
+                    callback.invoke(false, p0.message.toString())
                 }
             }
         })
@@ -179,24 +219,27 @@ class BmobRepository private constructor(){
      * 模糊查询
      * 查询学校，系
      */
-    fun querySchool(schoolName:String, callback: (isSuccess:Boolean, school:School?, error:String) -> Unit){
+    fun querySchool(
+        schoolName: String,
+        callback: (isSuccess: Boolean, school: School?, error: String) -> Unit
+    ) {
         BmobQuery<School>()
 //            .addWhereMatches("schoolName","%西南大学%")
 //            .addWhereContains("schoolName","西南大学")
-            .addWhereEqualTo("schoolName",schoolName)
+            .addWhereEqualTo("schoolName", schoolName)
             .setLimit(1)
 //            .addWhereStartsWith("schoolName","西南大学")
 //            .addWhereEndsWith("schoolName","西南大学")
-            .findObjects(object :FindListener<School>(){
+            .findObjects(object : FindListener<School>() {
                 override fun done(p0: MutableList<School>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.size > 0){
-                            callback.invoke(true,p0[0], EMPTY_TEXT)
-                        }else{
-                            callback.invoke(false,null, "没有匹配信息")
+                    if (p1 == null) {
+                        if (p0 != null && p0.size > 0) {
+                            callback.invoke(true, p0[0], EMPTY_TEXT)
+                        } else {
+                            callback.invoke(false, null, "没有匹配信息")
                         }
-                    }else{
-                        callback.invoke(false,null,p1.message.toString())
+                    } else {
+                        callback.invoke(false, null, p1.message.toString())
                     }
                 }
             })
@@ -206,43 +249,46 @@ class BmobRepository private constructor(){
     /**
      * 搜索学生首页的banner
      */
-    fun queryBannerData(callback: (isSuccess:Boolean, data:MutableList<BmobBannerObject>?, msg:String) -> Unit){
+    fun queryBannerData(callback: (isSuccess: Boolean, data: MutableList<BmobBannerObject>?, msg: String) -> Unit) {
         BmobQuery<BmobBannerObject>()
             .order("-likes")  // 根据likes字段降序显示数据
             .setLimit(12)
-            .findObjects(object :FindListener<BmobBannerObject>(){
-            override fun done(p0: MutableList<BmobBannerObject>?, p1: BmobException?) {
-                if (p1 == null){
-                    if (p0 != null && p0.size > 0){
-                        callback.invoke(true,p0, EMPTY_TEXT)
-                    }else{
-                        callback.invoke(false,null,"没有banner数据")
+            .findObjects(object : FindListener<BmobBannerObject>() {
+                override fun done(p0: MutableList<BmobBannerObject>?, p1: BmobException?) {
+                    if (p1 == null) {
+                        if (p0 != null && p0.size > 0) {
+                            callback.invoke(true, p0, EMPTY_TEXT)
+                        } else {
+                            callback.invoke(false, null, "没有banner数据")
+                        }
+                    } else {
+                        callback.invoke(false, null, p1.message.toString())
                     }
-                }else{
-                    callback.invoke(false,null, p1.message.toString())
                 }
-            }
-        })
+            })
     }
 
     /**
      * 模糊查询能选的文章
      */
-    fun searchAnyThesis(searchTitle:String,callback: (isSuccess:Boolean,thesis:Pair<String,MutableList<Thesis>>?,msg:String) -> Unit){
+    fun searchAnyThesis(
+        searchTitle: String,
+        callback: (isSuccess: Boolean, thesis: Pair<String, MutableList<Thesis>>?, msg: String) -> Unit
+    ) {
         BmobQuery<Thesis>()
 //            .addWhereEqualTo("title",searchTitle)
-            .addWhereContains("title",searchTitle)
+            .addWhereContains("title", searchTitle)
 //            .addWhereMatches("title","")
-            .findObjects(object :FindListener<Thesis>(){
+            .findObjects(object : FindListener<Thesis>() {
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.size > 0){
-                            callback.invoke(true,Pair(searchTitle,p0), EMPTY_TEXT)
-                        }else{
-                            callback.invoke(false,null,"没有匹配项")
+                    if (p1 == null) {
+                        if (p0 != null && p0.size > 0) {
+                            callback.invoke(true, Pair(searchTitle, p0), EMPTY_TEXT)
+                        } else {
+                            callback.invoke(false, null, "没有匹配项")
                         }
-                    }else{
-                        callback.invoke(false,null,p1.message.toString())
+                    } else {
+                        callback.invoke(false, null, p1.message.toString())
                     }
                 }
             })
@@ -251,44 +297,78 @@ class BmobRepository private constructor(){
     /**
      * 添加Thesis测试方法
      */
-    fun addThesis(thesis: Thesis,callback: (isSuccess:Boolean,objectId:String?,msg:String?) -> Unit){
+    fun addThesis(
+        thesis: Thesis,
+        callback: (isSuccess: Boolean, objectId: String?, msg: String?) -> Unit
+    ) {
         thesis.save(object : SaveListener<String>() {
             override fun done(p0: String?, p1: BmobException?) {
-                if (p1 == null){
-                    callback.invoke(true,p0!!, EMPTY_TEXT)
-                }else{
-                    callback.invoke(false,null,p1.message)
+                if (p1 == null) {
+                    callback.invoke(true, p0!!, EMPTY_TEXT)
+                } else {
+                    callback.invoke(false, null, p1.message)
                 }
             }
         })
     }
 
     //同步控制台数据到缓存中
-    fun fetchUserInfo(){
-        BmobUser.fetchUserInfo(object :FetchUserInfoListener<User>(){
+    fun fetchUserInfo() {
+        BmobUser.fetchUserInfo(object : FetchUserInfoListener<User>() {
             override fun done(p0: User?, p1: BmobException?) {
-                if (p1 == null){
-                    Log.v(LOG_TAG,"更新用户本地缓存信息成功:${p0?.username}  ${p0?.name}")
-                }else{
-                    Log.v(LOG_TAG,"更新用户本地缓存信息失败:${p1.message}")
+                if (p1 == null) {
+                    Log.v(LOG_TAG, "更新用户本地缓存信息成功:${p0?.username}  ${p0?.name}")
+                } else {
+                    Log.v(LOG_TAG, "更新用户本地缓存信息失败:${p1.message}")
                 }
             }
         })
     }
 
     //下载图片
-    fun downloadImage(){
-        BmobFile("16570959234301576.jpg","","http://bmob-cdn-30807.bmobpay.com/2022/07/06/2da1c22294734cf2ac8855bf7f271fce.jpg")
-            .download(object :DownloadFileListener(){
+    fun downloadImage() {
+        BmobFile(
+            "16570959234301576.jpg",
+            "",
+            "http://bmob-cdn-30807.bmobpay.com/2022/07/06/2da1c22294734cf2ac8855bf7f271fce.jpg"
+        )
+            .download(object : DownloadFileListener() {
                 override fun done(p0: String?, p1: BmobException?) {
-                    if (p1 == null){
-                        Log.v(LOG_TAG,"下载成功:p0=$p0")
-                    }else{
-                        Log.v(LOG_TAG,"下载失败:${p1.message}")
+                    if (p1 == null) {
+                        Log.v(LOG_TAG, "下载成功:p0=$p0")
+                    } else {
+                        Log.v(LOG_TAG, "下载失败:${p1.message}")
                     }
                 }
+
                 override fun onProgress(p0: Int?, p1: Long) {
-                    Log.v(LOG_TAG,"p0=$p0  p1=$p1")
+                    Log.v(LOG_TAG, "p0=$p0  p1=$p1")
+                }
+            })
+    }
+
+    fun queryIssuedReleaseTime(provost: User, callback: (release: ReleaseTime?) -> Unit) {
+        val addWhereEqualTo1 = BmobQuery<ReleaseTime>()
+            .addWhereEqualTo(ProvostObjectId, provost.objectId)
+        val addWhereEqualTo2 = BmobQuery<ReleaseTime>()
+            .addWhereEqualTo(School, provost.school)
+
+        val queryList = ArrayList<BmobQuery<ReleaseTime>>().run {
+            add(addWhereEqualTo1)
+            add(addWhereEqualTo2)
+            this@run
+        }
+
+        BmobQuery<ReleaseTime>()
+            .and(queryList)
+            .findObjects(object : FindListener<ReleaseTime>() {
+                override fun done(
+                    p0: MutableList<ReleaseTime>?,
+                    p1: BmobException?
+                ) {
+                    if (p1 == null && p0 != null && p0.isNotEmpty()) {
+                        callback.invoke(p0[0])
+                    }else callback.invoke(null)
                 }
             })
     }

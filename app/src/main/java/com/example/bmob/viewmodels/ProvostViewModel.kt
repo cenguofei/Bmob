@@ -11,17 +11,21 @@ import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.data.entity.ReleaseTime
 import com.example.bmob.data.entity.User
+import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.LOG_TAG
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
+    private val repository = BmobRepository.getInstance()
 
     fun getProvostReleaseSelectTimeLiveData(provost: User):MutableLiveData<ReleaseTime>{
         if (!handler.contains(PROVOST_RELEASE_SELECT_TIME)){
-            queryIssuedReleaseTime(provost){
-                handler.set(PROVOST_RELEASE_SELECT_TIME,it)
+            repository.queryIssuedReleaseTime(provost){
+                if (it != null){
+                    handler.set(PROVOST_RELEASE_SELECT_TIME,it)
+                }
             }
         }
         return handler.getLiveData(PROVOST_RELEASE_SELECT_TIME)
@@ -98,32 +102,6 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
             e.printStackTrace()
         }
         callback.invoke(true, EMPTY_TEXT)
-    }
-
-    private fun queryIssuedReleaseTime(provost: User,callback:(release:ReleaseTime)->Unit) {
-        val addWhereEqualTo1 = BmobQuery<ReleaseTime>()
-            .addWhereEqualTo("provostObjectId", provost.objectId)
-        val addWhereEqualTo2 = BmobQuery<ReleaseTime>()
-            .addWhereEqualTo("school", provost.school)
-
-        val queryList = ArrayList<BmobQuery<ReleaseTime>>().run {
-            add(addWhereEqualTo1)
-            add(addWhereEqualTo2)
-            this@run
-        }
-
-        BmobQuery<ReleaseTime>()
-            .and(queryList)
-            .findObjects(object :FindListener<ReleaseTime>(){
-                override fun done(
-                    p0: MutableList<ReleaseTime>?,
-                    p1: BmobException?
-                ){
-                    if (p1 == null && p0 != null && p0.isNotEmpty()){
-                        callback.invoke(p0[0])
-                    }
-                }
-            })
     }
 
     fun updateReleaseTime(

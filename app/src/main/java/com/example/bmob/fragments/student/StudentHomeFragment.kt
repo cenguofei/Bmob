@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +20,12 @@ import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentHomeBinding
 import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.ERROR
 import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
+import kotlinx.coroutines.launch
 
 /**
  * 学生首页
@@ -53,7 +56,6 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (!it) {
                 Log.v(LOG_TAG, "用户拒绝权限请求")
@@ -67,7 +69,25 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
 
         setViewModel.getUserByQuery().observe(viewLifecycleOwner){
             binding.user = it
+
+            /**
+             * 每次学生登录的时候都检查自己的选题状态
+             *
+             * 用当前时间和教务长发布的选题时间作比较，
+             * 如果时间已过期，即选题时间段在当前时间段之前，
+             * 就要把学生的选题状态改为false（如果本来就是false也可以不用改）
+             */
+            lifecycleScope.launch {
+                viewModel.queryIssuedReleaseTime(it){releaseTime->
+                    if (releaseTime != null){
+                        viewModel.updateStudentSelectState(it,releaseTime){isSuccess, msg ->
+                            if (!isSuccess) showMsg(requireContext(),msg)
+                        }
+                    }else Log.v(LOG_TAG,"releaseTime=$releaseTime")
+                }
+            }
         }
+
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {
             Log.v(LOG_TAG, "观测到数据：$it")

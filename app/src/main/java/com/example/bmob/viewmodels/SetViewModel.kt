@@ -28,7 +28,6 @@ import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
 import com.example.bmob.R
-import com.example.bmob.data.entity.Message
 import com.example.bmob.data.entity.ReleaseTime
 import com.example.bmob.data.entity.STUDENT_NOT_SELECT_THESIS
 import com.example.bmob.data.entity.User
@@ -136,6 +135,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
      * 关键方法，全局都会用到
      */
     fun getUserByQuery(): MutableLiveData<User> {
+        Log.v(LOG_TAG,"getUserByQuery(): MutableLiveData<User>")
         if (!handler.contains(QUERY_USER_KEY)) {
             repository.getUserInfo { isSuccess, user ->
                 if (isSuccess && user != null) {
@@ -147,6 +147,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     }
 
     fun setUserByQuery(student: User) {
+        Log.v(LOG_TAG,"setUserByQuery")
         handler.set(QUERY_USER_KEY, student)
     }
 
@@ -360,8 +361,8 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             .findObjects(object : FindListener<ReleaseTime>() {
                 override fun done(p0: MutableList<ReleaseTime>?, p1: BmobException?) {
                     if (p1 == null && p0 != null && p0.isNotEmpty()) {
-                        if (measureIsSelectTime(p0[0]) { callback.invoke(false, it) }) {
-                            callback.invoke(true, com.example.bmob.utils.EMPTY_TEXT)
+                        if (measureIsNowInSelectTime(p0[0]) { callback.invoke(false, it) }) {
+                            callback.invoke(true, EMPTY_TEXT)
                         }
                     } else {
                         callback.invoke(false, p1?.message.toString())
@@ -370,7 +371,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             })
     }
 
-    private fun measureIsSelectTime(
+    private fun measureIsNowInSelectTime(
         releaseTime: ReleaseTime,
         callback: (message: String) -> Unit
     ): Boolean {
@@ -452,6 +453,5 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     }
 }
 
-const val IMAGE_TYPE = "_image_type_"
 const val IMAGE_TYPE_HEAD = "head_"
 const val IMAGE_TYPE_BACKGROUND = "background_"

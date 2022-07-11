@@ -177,13 +177,15 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
                  * 上面的写法时错误的，会闪退，找了很久也没找到原因
                  */
                 student.studentSelectState = STUDENT_HAS_SELECTED_THESIS
-                student.title = thesis.title
-                student.field = thesis.field
-                student.require = thesis.require
-                student.desc = thesis.description
+//                student.title = thesis.title
+//                student.field = thesis.field
+//                student.require = thesis.require
+//                student.desc = thesis.description
                 student.isAgree = false
-                student.theTeaDetail = thesis.userDetail
-                student.theTeaAvaUrl = thesis.teacherAvatarUrl
+//                student.theTeaDetail = thesis.userDetail
+//                student.theTeaAvaUrl = thesis.teacherAvatarUrl
+
+                student.studentThesis = thesis
                 student.update(student.objectId, object : UpdateListener() {
                     override fun done(p0: BmobException?) {
                         if (p0 == null) {

@@ -31,6 +31,8 @@ class StudentThesisFragment : Fragment(),FragmentEventListener {
         val student = setViewModel.getUserByQuery().value
         if (student?.studentSelectState!!){
             binding.student = student
+            binding.thesis = student.studentThesis
+            Log.v(LOG_TAG,"student的thesis：${student.studentThesis}")
         }else{
             showMsg(requireContext(),"您还没有选择课题，点击选择选择课题")
         }

@@ -45,12 +45,12 @@ data class User(
      * @see studentSelectState
      */
     var studentSelectState:Boolean? = null, //true已选，false未选
-    var field:String? = null,
-    var require:String? = null,
-    var desc:String?=null,
+//    var field:String? = null,
+//    var require:String? = null,
+//    var desc:String?=null,
+//    var theTeaDetail:String?=null,
+//    var theTeaAvaUrl:String?= null,
     var isAgree:Boolean?=null,
-    var theTeaDetail:String?=null,
-    var theTeaAvaUrl:String?= null,
 
 
     //2) 老师

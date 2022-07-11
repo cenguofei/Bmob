@@ -10,6 +10,10 @@
         <variable
             name="view"
             type="android.view.View" />
+        <variable
+            name="thesis"
+            type="com.example.bmob.data.entity.Thesis" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +49,7 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageView21"
-            loadHeadImage='@{student.studentSelectState?student.theTeaAvaUrl:""}'
+            loadHeadImage='@{student.studentSelectState?thesis.teacherAvatarUrl:""}'
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginStart="20dp"
@@ -63,7 +67,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
 
-            android:text='@{student.studentSelectState?student.theTeaDetail:""}'
+            android:text='@{student.studentSelectState?thesis.userDetail:""}'
             android:textColor="@color/grey_light"
 
 
@@ -95,7 +99,7 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:padding="10sp"
-                    android:text='@{student.studentSelectState?("课题名称:"+student.title):""}'
+                    android:text='@{student.studentSelectState?("课题名称:"+thesis.title):""}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.495"
                     app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +114,7 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:padding="10sp"
-                    android:text='@{student.studentSelectState?("研究方向:"+student.field):""}'
+                    android:text='@{student.studentSelectState?("研究方向:"+thesis.field):""}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.512"
                     app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +129,7 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:padding="10sp"
-                    android:text='@{student.studentSelectState?("要求:"+student.require):""}'
+                    android:text='@{student.studentSelectState?("要求:"+thesis.require):""}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.487"
                     app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +144,7 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:padding="10sp"
-                    android:text='@{student.studentSelectState?("简介:"+student.desc):""}'
+                    android:text='@{student.studentSelectState?("简介:"+thesis.description):""}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.512"
                     app:layout_constraintStart_toStartOf="parent"

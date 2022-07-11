@@ -16,8 +16,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewbinding.ViewBinding
 import cn.bmob.v3.BmobObject
+import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.SaveListener
+import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.Thesis
@@ -26,6 +29,8 @@ import com.example.bmob.databinding.FragmentShowThesisBinding
 import com.example.bmob.databinding.LeaveMessagePopupWindowLayoutBinding
 import com.example.bmob.databinding.SexPopupWindowBinding
 import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.ObjectId
+import com.example.bmob.utils.StudentThesis
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.MessageViewModel
 import com.example.bmob.viewmodels.SetViewModel
@@ -96,16 +101,50 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
     }
 
     override fun setEventListener() {
+        //测试
+        //上传
+//        binding.imageView7.setOnClickListener {
+//            val value = setViewModel.getUserByQuery().value!!
+//            value.studentThesis = args.thesis
+//            value.update(object :UpdateListener(){
+//                override fun done(p0: BmobException?) {
+//                    Log.v(LOG_TAG,"${p0?.message}")
+//                }
+//            })
+//        }
+//        //下载
+//        binding.textView12.setOnClickListener {
+//            BmobQuery<User>()
+//                .addWhereEqualTo(ObjectId,setViewModel.getUserByQuery().value!!.objectId)
+//                .setLimit(1)
+//                .include(StudentThesis)
+//                .findObjects(object :FindListener<User>(){
+//                    override fun done(p0: MutableList<User>?, p1: BmobException?) {
+//                        if (p1 == null){
+//                            if (p0 != null && p0.isNotEmpty()){
+//                                Log.v(LOG_TAG,"查找成功：用户:${p0[0].studentThesis}")
+//                            }else{
+//                                Log.v(LOG_TAG,"查找用户失败了了,没有用户")
+//                            }
+//                        }else{
+//                            Log.v(LOG_TAG,"查找用户失败了了：${p1.message}")
+//                        }
+//                    }
+//                })
+//        }
+
         binding.leaveMessageBtn.setOnClickListener {
-            Log.v(LOG_TAG,"留言thesis：${args.thesis}")
-            messageViewModel.uploadMessage(
-                args.thesis,
-                binding.leaveMessageEt.text.toString(),
-                setViewModel.getUserByQuery().value!!,
-                args.thesis.teacherId?:""
-            ) { _, message ->
-                showMsg(requireContext(), message)
-            }
+            if (!TextUtils.isEmpty(binding.leaveMessageEt.text)){
+                Log.v(LOG_TAG,"留言thesis：${args.thesis}")
+                messageViewModel.uploadMessage(
+                    args.thesis,
+                    binding.leaveMessageEt.text.toString(),
+                    setViewModel.getUserByQuery().value!!,
+                    args.thesis.teacherId?:""
+                ) { _, message ->
+                    showMsg(requireContext(), message)
+                }
+            }else showMsg(requireContext(),"请输入留言内容")
         }
         binding.backBtn.setOnClickListener {
             Log.v(LOG_TAG,"返回按钮")

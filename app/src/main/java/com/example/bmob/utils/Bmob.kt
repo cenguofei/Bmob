@@ -45,3 +45,9 @@ inline val FromUserId:String
 
 inline val ForThesis:String
     get() = "forThesis"
+
+inline val StudentThesis:String
+    get() = "studentThesis"
+
+inline val ProvostObjectId:String
+    get() = "provostObjectId"
