@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentTeacherSelectResultBinding
-import com.example.bmob.databinding.ItemDeanStudentSelectedBinding
 import com.example.bmob.databinding.StudentChooseThesisItemBinding
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.SetViewModel

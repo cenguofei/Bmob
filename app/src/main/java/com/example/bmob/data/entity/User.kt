@@ -65,14 +65,21 @@ data class User(
 ):BmobUser(), Parcelable
 
 //identification取值
-const val IDENTIFICATION_STUDENT = 1 //身份为学生
-const val IDENTIFICATION_TEACHER = 2 //身份为老师
-const val IDENTIFICATION_DEAN = 3 //身份为系主任
-const val IDENTIFICATION_PROVOST = 4 //身份为教务长
-const val USER_HAS_NOT_IDENTIFICATION = -1  //不写入云数据库，只在本地dataStore里面使用
+inline val IDENTIFICATION_STUDENT:Int  //身份为学生
+    get() = 1
+inline val IDENTIFICATION_TEACHER:Int  //身份为老师
+    get() = 2
+inline val IDENTIFICATION_DEAN:Int  //身份为系主任
+    get() = 3
+inline val IDENTIFICATION_PROVOST:Int   //身份为教务长
+    get() = 4
+inline val USER_HAS_NOT_IDENTIFICATION:Int  //不写入云数据库，只在本地dataStore里面使用
+    get() = -1
 
 
 
 //针对学生 selectThesisState取值
-const val STUDENT_NOT_SELECT_THESIS = false
-const val STUDENT_HAS_SELECTED_THESIS = true
+inline val STUDENT_NOT_SELECT_THESIS:Boolean
+    get() = false
+inline val STUDENT_HAS_SELECTED_THESIS:Boolean
+    get() = true

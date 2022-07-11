@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.R
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
-import com.example.bmob.databinding.FragmentStudentSelectedBinding
-import com.example.bmob.databinding.FragmentStudentUnselectedBinding
-import com.example.bmob.databinding.ItemDeanStudentNotSelectBinding
-import com.example.bmob.databinding.ItemDeanStudentSelectedBinding
+import com.example.bmob.databinding.*
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanStudentSelectedViewModel
@@ -47,10 +44,10 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
             if (it.isNotEmpty()){
                 RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent->
                     val itemInflater = LayoutInflater.from(parent.context)
-                    RecyclerViewAdapter.ResultViewHolder(ItemDeanStudentNotSelectBinding.inflate(itemInflater,parent,false))
+                    RecyclerViewAdapter.ResultViewHolder(ItemDeanStudentSelectBinding.inflate(itemInflater,parent,false))
                 }
                 val adapter = RecyclerViewAdapter(it){binding, result ->
-                    (binding as ItemDeanStudentNotSelectBinding).user = result
+                    (binding as ItemDeanStudentSelectBinding).user = result
                 }
                 binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),
                     RecyclerView.VERTICAL,false)
