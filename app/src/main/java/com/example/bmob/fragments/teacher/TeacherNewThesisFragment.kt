@@ -38,6 +38,7 @@ class TeacherNewThesisFragment : Fragment(),FragmentEventListener {
         }
 
         viewModel.getThesis().observe(viewLifecycleOwner){
+            Log.v(LOG_TAG,"教师选中thesis：$it")
             if (args.isUpdate){
                 binding.thesis = it
             }

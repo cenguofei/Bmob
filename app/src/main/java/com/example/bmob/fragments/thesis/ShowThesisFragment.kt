@@ -1,15 +1,20 @@
 package com.example.bmob.fragments.thesis
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.viewbinding.ViewBinding
 import cn.bmob.v3.BmobObject
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
@@ -18,8 +23,11 @@ import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.FragmentShowThesisBinding
+import com.example.bmob.databinding.LeaveMessagePopupWindowLayoutBinding
+import com.example.bmob.databinding.SexPopupWindowBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
+import com.example.bmob.viewmodels.MessageViewModel
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.StudentSelectViewModel
 
@@ -29,6 +37,9 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
     private val viewModel:StudentSelectViewModel by activityViewModels()
     private val setViewModel:SetViewModel by activityViewModels()
 
+    private val messageViewModel:MessageViewModel by viewModels()
+//    private lateinit var popupWindowBinding:LeaveMessagePopupWindowLayoutBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +47,7 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
     ): View {
         binding = FragmentShowThesisBinding.inflate(inflater,container,false)
         binding.thesis = args.thesis
+        Log.v(LOG_TAG,"args.thesis:${args.thesis}")
         /**
          * 判断当前用户身份
          * 是学生则显示加入按钮，否则隐藏
@@ -82,6 +94,50 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
     }
 
     override fun setEventListener() {
+        binding.leaveMessageBtn.setOnClickListener {
+            Log.v(LOG_TAG,"留言thesis：${args.thesis}")
+            messageViewModel.uploadMessage(
+                args.thesis,
+                binding.leaveMessageEt.text.toString(),
+                setViewModel.getUserByQuery().value!!,
+                args.thesis.teacherId?:""
+            ) { _, message ->
+                showMsg(requireContext(), message)
+            }
+        }
+//        val from = LayoutInflater.from(requireContext())
+//        popupWindowBinding = LeaveMessagePopupWindowLayoutBinding.inflate(from, null, false)
+//        val popupWindow = PopupWindow(
+//            popupWindowBinding.root,
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            true
+//        )
+//        //取消留言
+//        popupWindowBinding.cancel.setOnClickListener {
+//            popupWindow.dismiss()
+//        }
+//        //上传留言
+//        popupWindowBinding.confirm.setOnClickListener {
+//            popupWindow.dismiss()
+//            messageViewModel.uploadMessage(
+//                args.thesis,
+//                binding.leaveMessageEt.text.toString(),
+//                setViewModel.getUserByQuery().value!!,
+//                args.thesis.teacherId!!
+//            ){_, message ->
+//                showMsg(requireContext(),message)
+//            }
+//        }
+
+        //留言
+//        binding.leaveMessageEt.setOnEditorActionListener { v, actionId, event ->
+//            if (actionId == EditorInfo.IME_ACTION_SEND){
+//                popupWindow.showAsDropDown(v)
+//            }
+//            true
+//        }
+
         binding.backBtn.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -90,8 +146,8 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
             if (viewModel.releaseTime != null){
                 if (viewModel.isInSelectTime(viewModel.releaseTime!!)){
                     setViewModel.getUserByQuery().value?.let { student->
-                        viewModel.addStudentToTeacherThesis(student,args.thesis,{
-                            showMsg(requireContext(),it)
+                        viewModel.addStudentToTeacherThesis(student,args.thesis,{msg->
+                            showMsg(requireContext(),msg)
                         }){stu ->
                             setViewModel.setUserByQuery(stu)
                             Log.v(LOG_TAG,"学生已更新：$stu")

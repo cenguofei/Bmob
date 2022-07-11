@@ -124,4 +124,9 @@
     <string name="y_">院</string>
     <string name="w_">女</string>
     <string name="n_">男</string>
+    <string name="l_m">留言:</string>
+    <string name="c_l">确定给该课题留言吗?</string>
+    <string name="cancel_">取消</string>
+    <string name="_l_m">留言</string>
+    <string name="h_l_m">历史留言</string>
 </resources>

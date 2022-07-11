@@ -57,6 +57,7 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
                             TeacherReleasedFragmentDirections
                                 .actionTeacherReleasedFragmentToTeacherNewThesisFragment(true)
                         root.setOnClickListener {
+                            thesisViewModel.setThesis(result)
                             findNavController().navigate(actionTeacherReleasedFragmentToTeacherNewThesisFragment)
                         }
                     }

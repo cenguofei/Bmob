@@ -61,44 +61,6 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
         return results
     }
 
-    /**
-     * fragment通过observe观察数据
-     */
-    fun getStudentInfo(fragment:StudentHomeFragment):MutableLiveData<User>{
-        if (!handler.contains(USER)){
-            repository.getUserInfo{isSuccess, user ->
-                if (isSuccess) {
-                    Log.v(LOG_TAG,"CommonHomeViewModel 设置user到handler")
-                    handler.set(USER,user)
-                } else {
-                    Log.v(LOG_TAG,"CommonHomeViewModel 没有搜索到用户")
-                    handler.set(USER, EMPTY_SEARCH)
-                    fragment.binding.headImg.setImageResource(R.drawable.default_head)
-                }
-            }
-        }
-        return handler.getLiveData(USER)
-    }
-
-    /**
-     * fragment通过observe观察数据
-     */
-    fun getTeacherInfo(fragment:TeacherHomeFragment):MutableLiveData<User>{
-        if (!handler.contains(USER)){
-            repository.getUserInfo{isSuccess, user ->
-                if (isSuccess) {
-                    Log.v(LOG_TAG,"CommonHomeViewModel 设置user到handler")
-                    handler.set(USER,user)
-                } else {
-                    Log.v(LOG_TAG,"CommonHomeViewModel 没有搜索到用户")
-                    handler.set(USER, EMPTY_SEARCH)
-                    fragment.binding.headImg11.setImageResource(R.drawable.default_head)
-                }
-            }
-        }
-        return handler.getLiveData(USER)
-    }
-
     //初始化界面
     fun isShowRecyclerView(recyclerView: RecyclerView,linearLayout: LinearLayout,isShow: Boolean) {
         if (isShow) {
@@ -120,20 +82,19 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
             SearchView.OnQueryTextListener {
             //点击搜索时调用
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
+                return false
             }
 
             //此处可以设置按输入给出提示的adapter
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.v(LOG_TAG, "newText:${newText}")
-                if (!TextUtils.isEmpty(newText)) {
+                return if (!TextUtils.isEmpty(newText)) {
                     setNowSearch(newText!!)
-                    return true
-
+                    true
                 } else {
                     callback.invoke(true)
                     isShowRecyclerView(recyclerView,linearLayout,false)
-                    return false
+                    false
                 }
             }
         })
@@ -154,8 +115,9 @@ class CommonHomeViewModel(private val handler:SavedStateHandle):ViewModel() {
         }
         return handler.getLiveData(BANNER_DATA)
     }
+
+    companion object{
+        private const val BANNER_DATA = "_banner_data_"
+    }
 }
 
-private const val USER = "user_"
-private const val BANNER_DATA = "banner_data_"
-const val EMPTY_SEARCH = ""

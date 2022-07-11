@@ -28,6 +28,7 @@ import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
 import com.example.bmob.R
+import com.example.bmob.data.entity.Message
 import com.example.bmob.data.entity.ReleaseTime
 import com.example.bmob.data.entity.STUDENT_NOT_SELECT_THESIS
 import com.example.bmob.data.entity.User

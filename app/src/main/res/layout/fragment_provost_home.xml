@@ -69,6 +69,7 @@
             android:background="@drawable/search_shape"
 
             android:focusable="true"
+
             android:iconifiedByDefault="false"
             android:imeOptions="actionSearch"
             android:paddingStart="40dp"
@@ -106,7 +107,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="154dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="37dp"
                 android:layout_marginEnd="10dp"
                 app:banner_indicator_gravity="center"
                 app:banner_loop_time="2000"

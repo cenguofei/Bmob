@@ -36,3 +36,12 @@ inline val ObjectId:String
 
 inline val TeacherId:String
     get() = "teacherId"
+
+inline val ToUserId:String
+    get() = "toUserId"
+
+inline val FromUserId:String
+    get() = "fromUserId"
+
+inline val ForThesis:String
+    get() = "forThesis"

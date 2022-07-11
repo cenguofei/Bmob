@@ -2,6 +2,7 @@ package com.example.bmob.fragments.provost
 
 import PhoneBillExpressBean
 import android.Manifest
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,21 +43,34 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
     private val setViewModel: SetViewModel by activityViewModels()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.v(LOG_TAG,"ProvostHomeFragment  onAttach")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.v(LOG_TAG,"ProvostHomeFragment  onCreate")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProvostHomeBinding.inflate(inflater, container, false)
+        Log.v(LOG_TAG,"ProvostHomeFragment  onCreateView")
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
+        Log.v(LOG_TAG,"ProvostHomeFragment  onStart")
         binding.banner1.start()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.v(LOG_TAG,"ProvostHomeFragment  onViewCreated")
         setEventListener()
         viewModel.setFragment(this)
         binding.banner1.addBannerLifecycleObserver(this)
@@ -123,14 +137,37 @@ class ProvostHomeFragment : Fragment(), FragmentEventListener {
         }.launch(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE))
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.v(LOG_TAG,"ProvostHomeFragment  onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.v(LOG_TAG,"ProvostHomeFragment  onPause")
+    }
+
+
     override fun onStop() {
         super.onStop()
+        Log.v(LOG_TAG,"ProvostHomeFragment  onStop")
         binding.banner1.stop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.v(LOG_TAG,"ProvostHomeFragment  onDestroy")
         binding.banner1.destroy()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.v(LOG_TAG,"ProvostHomeFragment  onDestroyView")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.v(LOG_TAG,"ProvostHomeFragment  onDetach")
     }
 
     override fun setEventListener() {

@@ -146,31 +146,62 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
+                <EditText
+                    android:id="@+id/leaveMessageEt"
+                    android:layout_width="372dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/mine_info_bg"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:padding="10sp"
+                    android:hint="@string/l_m"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.512"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView17"
+                    android:autofillHints="" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <Button
             android:id="@+id/participateButton"
             android:layout_width="350dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/btn_round_bg"
             android:text="@string/into"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/leaveMessageBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/leaveMessageBtn"
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_round_bg"
+            android:text="@string/_l_m"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent" />
-
         <TextView
             android:id="@+id/timeIntervalTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/blue"
             android:textSize="12sp"
-            android:visibility="gone"
             android:text='@{"选题时间:"+releaseTime.beginTime+"至"+releaseTime.endTime}'
+            android:visibility="gone"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/participateButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
