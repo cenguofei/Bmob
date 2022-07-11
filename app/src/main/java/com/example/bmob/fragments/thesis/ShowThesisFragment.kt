@@ -54,14 +54,16 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
          */
         if (args.isShowParticipateButton){
             binding.participateButton.visibility = View.VISIBLE
+            //判断时间
             viewModel.queryChooseThesisTime(setViewModel.getUserByQuery().value!!)
             {isSuccess, releaseTime,message ->
                 if (isSuccess){
                     binding.timeIntervalTv.visibility = View.VISIBLE
                     binding.releaseTime = releaseTime
                 }else{
-                    binding.participateButton.setBackgroundColor(R.color.grey_light)
+//                    binding.participateButton.setBackgroundColor(R.color.grey_light)
                     Log.v(LOG_TAG,"isEnabled = false")
+                    binding.participateButton.isEnabled = false
                     showMsg(requireContext(),message)
                 }
             }
@@ -105,40 +107,8 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
                 showMsg(requireContext(), message)
             }
         }
-//        val from = LayoutInflater.from(requireContext())
-//        popupWindowBinding = LeaveMessagePopupWindowLayoutBinding.inflate(from, null, false)
-//        val popupWindow = PopupWindow(
-//            popupWindowBinding.root,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            true
-//        )
-//        //取消留言
-//        popupWindowBinding.cancel.setOnClickListener {
-//            popupWindow.dismiss()
-//        }
-//        //上传留言
-//        popupWindowBinding.confirm.setOnClickListener {
-//            popupWindow.dismiss()
-//            messageViewModel.uploadMessage(
-//                args.thesis,
-//                binding.leaveMessageEt.text.toString(),
-//                setViewModel.getUserByQuery().value!!,
-//                args.thesis.teacherId!!
-//            ){_, message ->
-//                showMsg(requireContext(),message)
-//            }
-//        }
-
-        //留言
-//        binding.leaveMessageEt.setOnEditorActionListener { v, actionId, event ->
-//            if (actionId == EditorInfo.IME_ACTION_SEND){
-//                popupWindow.showAsDropDown(v)
-//            }
-//            true
-//        }
-
         binding.backBtn.setOnClickListener {
+            Log.v(LOG_TAG,"返回按钮")
             findNavController().navigateUp()
         }
         binding.participateButton.setOnClickListener {

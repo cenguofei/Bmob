@@ -41,6 +41,7 @@ class SelectFragment : Fragment(),FragmentEventListener {
         selectViewModel.getMutableTeacherThesisLiveData(args.teacher){
             showMsg(requireContext(),it)
         }.observe(viewLifecycleOwner){
+            Log.v(LOG_TAG,"getMutableTeacherThesisLiveData 成功：$it")
             RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent->
                 val itemInflater = LayoutInflater.from(parent.context)
                 RecyclerViewAdapter.ResultViewHolder(StudentSelectThesisItemBinding.inflate(itemInflater,parent,false))

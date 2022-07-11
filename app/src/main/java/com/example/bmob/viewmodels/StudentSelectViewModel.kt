@@ -122,7 +122,7 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
         callback: (isSuccess: Boolean, thesisList: MutableList<Thesis>?, message: String) -> Unit
     ) {
         BmobQuery<Thesis>()
-            .addWhereEqualTo("teacherId", thesisUser.objectId)
+            .addWhereEqualTo(TeacherId, thesisUser.objectId)
 
             /**
              * 这里还要添加条件
@@ -138,10 +138,11 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
             .findObjects(object : FindListener<Thesis>() {
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null) {
-                        if (p0 == null) {
-                            callback.invoke(false, null, "没有搜索到该教师的课题")
-                        } else {
+                        if (p0 != null && p0.isNotEmpty()) {
+                            Log.v(LOG_TAG,"搜索成功p0=$p0")
                             callback.invoke(true, p0, EMPTY_TEXT)
+                        } else {
+                            callback.invoke(false, null, "没有搜索到该教师的课题")
                         }
                     } else {
                         callback.invoke(false, null, "出错了：${p1.message}")
@@ -221,7 +222,7 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
                 override fun done(p0: MutableList<ReleaseTime>?, p1: BmobException?) {
                     if (p1 == null){
                         if (p0 != null && p0.isNotEmpty()){
-                            if (timeIsInDate(p0[0].beginTime)){
+                            if (timeIsInDate(p0[0].endTime)){
                                 releaseTime = p0[0]
                                 callback.invoke(true, p0[0],EMPTY_TEXT)
                             }else{
@@ -276,15 +277,25 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
             val dateStart = simpleDateFormat.parse(releaseTime.beginTime)
             val dateEnd = simpleDateFormat.parse(releaseTime.endTime)
+            Log.v(LOG_TAG,"开始：${releaseTime.beginTime}  结束：${releaseTime.endTime}")
 
             val calendar: Calendar = Calendar.getInstance()
             val year: Int = calendar.get(Calendar.YEAR)
             val month: Int = calendar.get(Calendar.MONTH) + 1
             val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
             val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
-            val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:00:00")
+            val minute:Int = calendar.get(Calendar.MINUTE)
+            val second:Int = calendar.get(Calendar.SECOND)
+
+            Log.v(LOG_TAG,"当前时间：$year-$month-$day $hour:$minute:$second")
+
+            val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:$minute:$second")
+            if (dateSystem != null) {
+                Log.v(LOG_TAG,"系统时间：${dateSystem} ")
+            }
 
             if (dateSystem != null && dateStart != null && dateEnd != null){
+                Log.v(LOG_TAG,"判断选题日期：${dateSystem.after(dateStart) && dateSystem.before(dateEnd)}")
                 return dateSystem.after(dateStart) && dateSystem.before(dateEnd)
 //                if (dateSystem.after(dateStart) && dateSystem.before(dateEnd)){
 //                    return true

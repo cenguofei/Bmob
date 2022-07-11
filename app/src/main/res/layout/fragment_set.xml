@@ -344,10 +344,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_gravity="center"
-        android:background="@drawable/done"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAddressEv" />
+        android:background="@drawable/done"/>
     </LinearLayout>
     </LinearLayout>
 </layout>

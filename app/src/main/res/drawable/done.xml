@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="90dp"
-    android:height="90dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="25dp"
+    android:height="25dp"
     android:viewportWidth="90"
     android:viewportHeight="90">
 
@@ -29,7 +30,8 @@
 35.9572C64.2369 36.6738 66.4119 37.9582 68.0478 39.6551C70.0992 41.7826 71.2295
 44.4803 71.2295 47.2506C71.2295 48.9082 70.8416 50.5131 70.0764 52.0201C69.351
 53.4492 68.3197 54.7266 67.0113 55.817C64.3857 58.0049 60.9164 59.2096 57.2414
-59.2096V59.2096Z" />
+59.2096V59.2096Z"
+        tools:ignore="VectorPath" />
     <path
         android:fillColor="#ffffff"
         android:pathData="M45 67.254C43.9975 67.254 43.1854 66.4413 43.1854 65.4393V42.8139C43.1854 41.812
