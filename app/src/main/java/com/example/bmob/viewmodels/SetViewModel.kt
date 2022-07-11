@@ -375,7 +375,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         releaseTime: ReleaseTime,
         callback: (message: String) -> Unit
     ): Boolean {
-        try {
+        return try {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
             val beginTime = simpleDateFormat.parse(releaseTime.beginTime)
             val endTime = simpleDateFormat.parse(releaseTime.endTime)
@@ -393,7 +393,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             //还没到选题时间
             if (dateSystem != null) {
                 if (dateSystem.before(beginTime)) {
-                    callback.invoke("还没到选题时间")
+//                    callback.invoke("还没到选题时间")
                     Log.v(LOG_TAG, "还没到选题时间:dateSystem:$dateSystem  beginTime$beginTime")
                     return false
                 }
@@ -401,15 +401,16 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             //选题时间已经过了
             if (dateSystem != null) {
                 if (dateSystem.after(endTime)) {
-                    callback.invoke("来晚了，选题时间已过")
-                    callback.invoke("选题时间已过:dateSystem:$dateSystem  endTime:$endTime")
+//                    callback.invoke("来晚了，选题时间已过")
+//                    callback.invoke("选题时间已过:dateSystem:$dateSystem  endTime:$endTime")
                     return false
                 }
             }
+            true
         } catch (e: Exception) {
             e.printStackTrace()
+            return true
         }
-        return true
     }
 
     /**

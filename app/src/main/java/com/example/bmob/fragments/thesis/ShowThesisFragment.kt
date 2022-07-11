@@ -68,7 +68,7 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
                 }else{
 //                    binding.participateButton.setBackgroundColor(R.color.grey_light)
                     Log.v(LOG_TAG,"isEnabled = false")
-                    binding.participateButton.isEnabled = false
+//                    binding.participateButton.isEnabled = false
                     showMsg(requireContext(),message)
                 }
             }
@@ -158,7 +158,20 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
                         viewModel.addStudentToTeacherThesis(student,args.thesis,{msg->
                             showMsg(requireContext(),msg)
                         }){stu ->
-                            setViewModel.setUserByQuery(stu)
+                            BmobQuery<User>()
+                                .addWhereEqualTo(ObjectId,stu.objectId)
+                                .include(StudentThesis)
+                                .setLimit(1)
+                                .findObjects(object :FindListener<User>(){
+                                    override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                                        if (p1 == null && p0 != null && p0.isNotEmpty()){
+                                            Log.v(LOG_TAG,"更新学生成功：${p0[0]}")
+                                            setViewModel.setUserByQuery(p0[0])
+                                        }else{
+                                            setViewModel.setUserByQuery(stu)
+                                        }
+                                    }
+                                })
                             Log.v(LOG_TAG,"学生已更新：$stu")
                         }
                     }

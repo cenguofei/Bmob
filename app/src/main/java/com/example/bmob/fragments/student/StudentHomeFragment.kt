@@ -77,15 +77,20 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
              * 如果时间已过期，即选题时间段在当前时间段之前，
              * 就要把学生的选题状态改为false（如果本来就是false也可以不用改）
              */
-            lifecycleScope.launch {
-                viewModel.queryIssuedReleaseTime(it){releaseTime->
-                    if (releaseTime != null){
-                        viewModel.updateStudentSelectState(it,releaseTime){isSuccess, msg ->
-                            if (!isSuccess) showMsg(requireContext(),msg)
-                        }
-                    }else Log.v(LOG_TAG,"releaseTime=$releaseTime")
-                }
-            }
+//            lifecycleScope.launch {
+//                Log.v(LOG_TAG,"开始更新选题状态")
+//                viewModel.queryIssuedReleaseTime(it){releaseTime->
+//                    if (releaseTime != null){
+//                        viewModel.updateStudentSelectState(it,releaseTime){isSuccess,student, msg ->
+//                            if (!isSuccess){
+//                                showMsg(requireContext(),msg)
+//                            }else{
+//                                setViewModel.setUserByQuery(student!!)
+//                            }
+//                        }
+//                    }else Log.v(LOG_TAG,"releaseTime=$releaseTime")
+//                }
+//            }
         }
 
         //观测搜索结果

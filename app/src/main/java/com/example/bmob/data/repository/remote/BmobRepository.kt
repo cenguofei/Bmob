@@ -32,7 +32,10 @@ class BmobRepository private constructor() {
         user: User,
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
-        user.studentSelectState = studentSelectState
+//        user.studentSelectState = studentSelectState
+//        if (!studentSelectState){
+//            user.studentThesis = null
+//        }
         user.update(object : UpdateListener() {
             override fun done(p0: BmobException?) {
                 if (p0 == null) {
@@ -172,8 +175,8 @@ class BmobRepository private constructor() {
             .include(StudentThesis)  //是学生用户的话把课题信息也找出来
             .getObject(BmobUser.getCurrentUser().objectId, object : QueryListener<User>() {
                 override fun done(p0: User?, p1: BmobException?) {
-                    if (p1 == null) {
-                        callback.invoke(true, p0!!)
+                    if (p1 == null && p0 != null) {
+                        callback.invoke(true, p0)
                     } else {
                         callback.invoke(false, null)
                     }

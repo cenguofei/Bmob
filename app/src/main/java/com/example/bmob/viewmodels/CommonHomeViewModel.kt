@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
+import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.R
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.data.entity.BmobBannerObject
@@ -26,10 +27,7 @@ import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.fragments.student.StudentHomeFragment
 import com.example.bmob.fragments.teacher.TeacherHomeFragment
-import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.utils.ProvostObjectId
-import com.example.bmob.utils.School
-import com.example.bmob.utils.showMsg
+import com.example.bmob.utils.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -143,9 +141,21 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
     fun updateStudentSelectState(
         student: User,
         releaseTime: ReleaseTime,
-        callback: (isSuccess: Boolean, msg: String) -> Unit
+        callback: (isSuccess: Boolean, student:User?,msg: String) -> Unit
     ) {
-        repository.updateUser(determineStudentSelectStateByReleaseTime(releaseTime), student, callback)
+        student.studentSelectState = determineStudentSelectStateByReleaseTime(student,releaseTime)
+        if (student.studentSelectState == false){
+            student.studentThesis = null
+        }
+        student.update(object : UpdateListener() {
+            override fun done(p0: BmobException?) {
+                if (p0 == null) {
+                    callback.invoke(true,student, EMPTY_TEXT)
+                } else {
+                    callback.invoke(false,null, p0.message.toString())
+                }
+            }
+        })
     }
 
     fun queryIssuedReleaseTime(student: User, callback: (release: ReleaseTime?) -> Unit) {
@@ -166,7 +176,7 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
     /**
      * 通过releaseTime决定学生的studentSelectState属性是true还是false
      */
-    private fun determineStudentSelectStateByReleaseTime(releaseTime: ReleaseTime): Boolean {
+    private fun determineStudentSelectStateByReleaseTime(student:User,releaseTime: ReleaseTime): Boolean {
         return try {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
             val endTime = simpleDateFormat.parse(releaseTime.endTime)
@@ -183,10 +193,17 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
 
             if (dateSystem != null) {
                 if (dateSystem.after(endTime)) {
+                    Log.v(LOG_TAG,"系统时间大于 选题结束时间  更新为false")
                     return false
                 }
             }
-            return true
+//            Log.v(LOG_TAG,"系统时间小于 选题结束时间  更新为true")
+
+//            return student.studentSelectState != false
+            if (student.studentSelectState == false){
+                Log.v(LOG_TAG,"更新为false")
+                return false
+            }else return true
         } catch (e: Exception) {
             e.printStackTrace()
             false

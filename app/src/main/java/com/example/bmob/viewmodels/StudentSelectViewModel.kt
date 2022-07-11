@@ -3,6 +3,7 @@ package com.example.bmob.viewmodels
 import android.util.Log
 import androidx.lifecycle.*
 import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.datatype.BmobPointer
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
@@ -18,7 +19,7 @@ import kotlin.collections.ArrayList
 class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel() {
     var isStudentSelectThesis = MutableLiveData<Boolean>()
     var isParticipateThesis = MutableLiveData<Boolean>()
-    var releaseTime:ReleaseTime? = null
+    var releaseTime: ReleaseTime? = null
 
     companion object {
         private const val TEACHER_IN_DEPARTMENT_KEY = "_teacher_in_depart_"
@@ -139,7 +140,7 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
                 override fun done(p0: MutableList<Thesis>?, p1: BmobException?) {
                     if (p1 == null) {
                         if (p0 != null && p0.isNotEmpty()) {
-                            Log.v(LOG_TAG,"搜索成功p0=$p0")
+                            Log.v(LOG_TAG, "搜索成功p0=$p0")
                             callback.invoke(true, p0, EMPTY_TEXT)
                         } else {
                             callback.invoke(false, null, "没有搜索到该教师的课题")
@@ -157,57 +158,55 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
     fun addStudentToTeacherThesis(
         student: User,
         thesis: Thesis,
-        messageCallback:(message:String)->Unit,
+        messageCallback: (message: String) -> Unit,
         updateStudentCallback: (student: User) -> Unit
     ) {
         viewModelScope.launch {
-            if (student.studentSelectState == STUDENT_HAS_SELECTED_THESIS) {
-                messageCallback.invoke("已经选择课题，不能多选或重复选")
-            } else {
-                val thesisStudentList = thesis.studentsList ?: mutableListOf()
-                thesisStudentList.add(
-                    if (thesisStudentList.size == 0) 0 else thesisStudentList.size,
-                    student
-                )
-                thesis.studentsList = thesisStudentList
-                Log.v(LOG_TAG, "thesisStudentList=$thesisStudentList")
+//            if (student.studentSelectState == STUDENT_HAS_SELECTED_THESIS) {
+//                messageCallback.invoke("已经选择课题，不能多选或重复选")
+//            } else {
+            val thesisStudentList = thesis.studentsList ?: mutableListOf()
+            thesisStudentList.add(
+//                    if (thesisStudentList.size == 0) 0 else thesisStudentList.size,
+                student
+            )
 
-                /**
-                 * student.studentThesis = thesis
-                 * 上面的写法时错误的，会闪退，找了很久也没找到原因
-                 */
-                student.studentSelectState = STUDENT_HAS_SELECTED_THESIS
-//                student.title = thesis.title
-//                student.field = thesis.field
-//                student.require = thesis.require
-//                student.desc = thesis.description
-                student.isAgree = false
-//                student.theTeaDetail = thesis.userDetail
-//                student.theTeaAvaUrl = thesis.teacherAvatarUrl
 
-                student.studentThesis = thesis
-                student.update(student.objectId, object : UpdateListener() {
-                    override fun done(p0: BmobException?) {
-                        if (p0 == null) {
-                            updateStudentCallback.invoke(student)
-                        } else {
-                            messageCallback.invoke("更新用户信息失败:${p0.message.toString()}")
-                        }
+            /**
+             * student.studentThesis = thesis
+             * 上面的写法时错误的，会闪退，找了很久也没找到原因
+             */
+            student.studentSelectState = STUDENT_HAS_SELECTED_THESIS
+            student.isAgree = false
+            val thesis1 = Thesis()
+            Log.v(LOG_TAG, "thesis=$thesis")
+            thesis1.objectId = thesis.objectId
+            student.studentThesis = thesis1
+            student.update(student.objectId, object : UpdateListener() {
+                override fun done(p0: BmobException?) {
+                    if (p0 == null) {
+                        updateStudentCallback.invoke(student)
+                    } else {
+                        messageCallback.invoke("更新用户信息失败:${p0.message.toString()}")
                     }
-                })
+                }
+            })
 
-                //更新课题
-                thesis.update(object : UpdateListener() {
-                    override fun done(p0: BmobException?) {
-                        if (p0 == null) {
-                            messageCallback.invoke("您已成功选择该课题")
-                        } else {
-                            messageCallback.invoke("加入课题失败:${p0.message}")
-                        }
+            thesis.studentsList = thesisStudentList
+            Log.v(LOG_TAG, "thesisStudentList=$thesisStudentList")
+
+            //更新课题
+            thesis.update(object : UpdateListener() {
+                override fun done(p0: BmobException?) {
+                    if (p0 == null) {
+                        messageCallback.invoke("您已成功选择该课题")
+                    } else {
+                        messageCallback.invoke("加入课题失败:${p0.message}")
                     }
-                })
-            }
+                }
+            })
         }
+//        }
     }
 
     /**
@@ -215,26 +214,26 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
      */
     fun queryChooseThesisTime(
         student: User,
-        callback: (isSuccess: Boolean,releaseTime:ReleaseTime?,message: String) -> Unit
-    ){
+        callback: (isSuccess: Boolean, releaseTime: ReleaseTime?, message: String) -> Unit
+    ) {
         BmobQuery<ReleaseTime>()
-            .addWhereEqualTo(School,student.school)
+            .addWhereEqualTo(School, student.school)
             .setLimit(1)
-            .findObjects(object :FindListener<ReleaseTime>(){
+            .findObjects(object : FindListener<ReleaseTime>() {
                 override fun done(p0: MutableList<ReleaseTime>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.isNotEmpty()){
-                            if (timeIsInDate(p0[0].endTime)){
+                    if (p1 == null) {
+                        if (p0 != null && p0.isNotEmpty()) {
+                            if (timeIsInDate(p0[0].endTime)) {
                                 releaseTime = p0[0]
-                                callback.invoke(true, p0[0],EMPTY_TEXT)
-                            }else{
-                                callback.invoke(false,null,"发布的选题时间已过期")
+                                callback.invoke(true, p0[0], EMPTY_TEXT)
+                            } else {
+                                callback.invoke(false, null, "发布的选题时间已过期")
                             }
-                        }else{
-                            callback.invoke(false,null,"还没有教务长发布选题时间，请耐心等待")
+                        } else {
+                            callback.invoke(false, null, "还没有教务长发布选题时间，请耐心等待")
                         }
-                    }else{
-                        callback.invoke(false,null,"查询选题时间失败:${p1.message}")
+                    } else {
+                        callback.invoke(false, null, "查询选题时间失败:${p1.message}")
                     }
                 }
             })
@@ -243,7 +242,7 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
     /**
      * 判断时间是否过期
      */
-    private fun timeIsInDate(endTime:String):Boolean{
+    private fun timeIsInDate(endTime: String): Boolean {
         return try {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
             val dateEnd = simpleDateFormat.parse(endTime)
@@ -255,17 +254,17 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
             val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
             val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:00:00")
 
-            if (dateSystem != null && dateEnd != null){
+            if (dateSystem != null && dateEnd != null) {
                 return !dateEnd.before(dateSystem)
 //                if (dateEnd.before(dateSystem)){
 //                    return false
 //                }else{
 //                    return true
 //                }
-            }else{
+            } else {
                 return false
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             false
         }
@@ -274,36 +273,36 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
     /**
      * 当学生点击加入按钮时，判断当前时间是否在选题时间内
      */
-    fun isInSelectTime(releaseTime: ReleaseTime):Boolean{
+    fun isInSelectTime(releaseTime: ReleaseTime): Boolean {
         return try {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
             val dateStart = simpleDateFormat.parse(releaseTime.beginTime)
             val dateEnd = simpleDateFormat.parse(releaseTime.endTime)
-            Log.v(LOG_TAG,"开始：${releaseTime.beginTime}  结束：${releaseTime.endTime}")
+            Log.v(LOG_TAG, "开始：${releaseTime.beginTime}  结束：${releaseTime.endTime}")
 
             val calendar: Calendar = Calendar.getInstance()
             val year: Int = calendar.get(Calendar.YEAR)
             val month: Int = calendar.get(Calendar.MONTH) + 1
             val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
             val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute:Int = calendar.get(Calendar.MINUTE)
-            val second:Int = calendar.get(Calendar.SECOND)
+            val minute: Int = calendar.get(Calendar.MINUTE)
+            val second: Int = calendar.get(Calendar.SECOND)
 
-            Log.v(LOG_TAG,"当前时间：$year-$month-$day $hour:$minute:$second")
+            Log.v(LOG_TAG, "当前时间：$year-$month-$day $hour:$minute:$second")
 
             val dateSystem = simpleDateFormat.parse("$year-$month-$day $hour:$minute:$second")
-            if (dateSystem != null) {
-                Log.v(LOG_TAG,"系统时间：${dateSystem} ")
-            }
 
-            if (dateSystem != null && dateStart != null && dateEnd != null){
-                Log.v(LOG_TAG,"判断选题日期：${dateSystem.after(dateStart) && dateSystem.before(dateEnd)}")
+            if (dateSystem != null && dateStart != null && dateEnd != null) {
+                Log.v(
+                    LOG_TAG,
+                    "判断选题日期：${dateSystem.after(dateStart) && dateSystem.before(dateEnd)}"
+                )
                 return dateSystem.after(dateStart) && dateSystem.before(dateEnd)
 //                if (dateSystem.after(dateStart) && dateSystem.before(dateEnd)){
 //                    return true
 //                }else return false
-            }else return false
-        }catch (e:Exception){
+            } else return false
+        } catch (e: Exception) {
             e.printStackTrace()
             false
         }

@@ -28,20 +28,23 @@ class StudentThesisFragment : Fragment(),FragmentEventListener {
         savedInstanceState: Bundle?
     ): View {
         binding =FragmentStudentThesisBinding.inflate(inflater,container,false)
-        val student = setViewModel.getUserByQuery().value
-        if (student?.studentSelectState!!){
-            binding.student = student
-            binding.thesis = student.studentThesis
-            Log.v(LOG_TAG,"student的thesis：${student.studentThesis}")
-        }else{
-            showMsg(requireContext(),"您还没有选择课题，点击选择选择课题")
-        }
-        setViewModel.isSelectTime(setViewModel.getUserByQuery().value!!){ isSelectTime, _ ->
-            if (!isSelectTime){
-                showMsg(requireContext(),"课题已过期")
-                binding.selectThesisBtn.setBackgroundColor(R.color.grey_light)
-                binding.selectThesisBtn.isEnabled = false
+
+        setViewModel.getUserByQuery().observe(viewLifecycleOwner){
+            setViewModel.isSelectTime(it){ isSelectTime, _ ->
+                if (!isSelectTime){
+                    showMsg(requireContext(),"课题已过期")
+                    binding.selectThesisBtn.setBackgroundColor(R.color.grey_light)
+                    binding.selectThesisBtn.isEnabled = false
+                }
             }
+
+            if (it.studentSelectState!!){
+                if (it.studentThesis != null){
+                    binding.student = it
+                    binding.thesis = it.studentThesis
+                    Log.v(LOG_TAG,"student的thesis：${it.studentThesis}")
+                }
+            }else showMsg(requireContext(),"您还没有选择课题，点击选择选择课题")
         }
         setEventListener()
         return binding.root

@@ -18,6 +18,7 @@ class StudentThesisViewModel:ViewModel() {
      */
     fun studentOutThesis(student: User,callback:(isSuccess:Boolean,student:User?,message:String)->Unit){
         student.studentSelectState = STUDENT_NOT_SELECT_THESIS
+        student.studentThesis = null
         student.update(object :UpdateListener(){
             override fun done(p0: BmobException?) {
                 if (p0 == null){
