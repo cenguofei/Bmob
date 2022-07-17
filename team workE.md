@@ -39,8 +39,3 @@ git remote -v
 
 * push(git代码：git push origin master)</br>
 ![push](https://user-images.githubusercontent.com/72325667/176986302-96139519-479c-45d4-bae0-1b4272cb380e.png)
-
-### 2. 推送或拉取时发生冲突
- * 建议先搜索了解冲突是什么原因造成的
- 
- 
