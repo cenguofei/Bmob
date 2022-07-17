@@ -1,13 +1,17 @@
 package com.example.bmob
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -17,7 +21,6 @@ import com.example.bmob.data.entity.IDENTIFICATION_PROVOST
 import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
 import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.databinding.ActivityMainBinding
-import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.BmobUserViewModel
 
 
@@ -84,6 +87,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         setBottomNavigationView()
+
+        askPermission()
     }
 
     private fun setBottomNavigationView() {
@@ -174,5 +179,35 @@ class MainActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addCategory(Intent.CATEGORY_HOME)
         context.startActivity(intent)
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun askPermission(){
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            //通过的权限
+            val grantedList = it.filterValues { booleanIt->
+                booleanIt
+            }.mapNotNull { entryIt->
+                entryIt.key
+            }
+            //是否所有权限都通过
+            val allGranted = grantedList.size == it.size
+            val list = (it - grantedList.toSet()).map {entryIt->
+                entryIt.key
+            }
+            //未通过的权限
+            val deniedList = list.filter { stringIt->
+                ActivityCompat.shouldShowRequestPermissionRationale(this, stringIt)
+            }
+            //拒绝并且点了“不再询问”权限
+            val alwaysDeniedList = list - deniedList.toSet()
+        }.launch(arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_SETTINGS,
+            Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+            Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS
+        ))
     }
 }

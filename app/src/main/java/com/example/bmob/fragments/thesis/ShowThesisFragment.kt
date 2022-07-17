@@ -11,15 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import cn.bmob.v3.BmobQuery
-import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
 import com.example.bmob.common.FragmentEventListener
-import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.FragmentShowThesisBinding
 import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.utils.ObjectId
-import com.example.bmob.utils.StudentThesis
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.MessageViewModel
 import com.example.bmob.viewmodels.SetViewModel
@@ -104,7 +98,6 @@ class ShowThesisFragment : Fragment(),FragmentEventListener{
             }else showMsg(requireContext(),"请输入留言内容")
         }
         binding.backBtn.setOnClickListener {
-            Log.v(LOG_TAG,"返回按钮")
             findNavController().navigateUp()
         }
         binding.participateButton.setOnClickListener {

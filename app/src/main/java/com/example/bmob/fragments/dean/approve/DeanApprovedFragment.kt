@@ -1,7 +1,6 @@
 package com.example.bmob.fragments.dean.approve
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.data.entity.ALREADY_APPROVED
 import com.example.bmob.databinding.FragmentDeanApprovedBinding
-import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.ApprovedNotApprovedViewModel
 import com.example.bmob.viewmodels.SetViewModel

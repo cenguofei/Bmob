@@ -51,7 +51,7 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
         callback: ((message: String) -> Unit)
     ): MutableLiveData<MutableList<User>> {
         if (!handler.contains(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA)) {
-            findStudentsWhichHaveSelectedThesis(
+            findStudentsIfSelectedThesis(
                 dean,
                 studentSelectState
             ) { isSuccess, listUser, message ->
@@ -66,61 +66,13 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
         return handler.getLiveData(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA)
     }
 
-    /**
-     * Thesis表属性：
-     *      @see Thesis->studentsList:MutableList<User>
-     *      @see Thesis->teacherIsSelectOneStudent:Boolean
-     *
-     * 只要选择了该课题的学生都找出来给系主任看，教师选择了某一个学生后，
-     * 系主任也只能看到一个学生
-     */
-    private fun findStudentsWhichHaveSelectedThesis(
-        dean: User,
-        studentSelectState: Boolean,
-        callback: (isSuccess: Boolean, listUser: MutableList<User>?, message: String) -> Unit
-    ) {
-        val addWhereEqualTo = BmobQuery<User>().addWhereEqualTo(School, dean.school)
-        val addWhereEqualTo1 = BmobQuery<User>().addWhereEqualTo(College, dean.college)
-        val addWhereEqualTo2 = BmobQuery<User>().addWhereEqualTo(Department, dean.department)
-        val addWhereEqualTo3 =
-            BmobQuery<User>().addWhereEqualTo(StudentSelectState, studentSelectState)
-        val addWhereEqualTo4 =
-            BmobQuery<User>().addWhereEqualTo(Identification, IDENTIFICATION_STUDENT)
-
-        val queryList = ArrayList<BmobQuery<User>>()
-        queryList.add(addWhereEqualTo)
-        queryList.add(addWhereEqualTo1)
-        queryList.add(addWhereEqualTo2)
-        queryList.add(addWhereEqualTo3)
-        queryList.add(addWhereEqualTo4)
-
-
-        BmobQuery<User>()
-            .and(queryList)
-            .findObjects(object : FindListener<User>() {
-                override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                    if (p1 == null) {
-                        if (p0 != null && p0.isNotEmpty()) {
-                            Log.v(LOG_TAG, "搜索成功：$p0")
-                            callback.invoke(true, p0, EMPTY_TEXT)
-                        } else {
-                            Log.v(LOG_TAG, "findStudentWhichHaveSelectedThesis没有匹配项")
-                            callback.invoke(false, null, "没有学生选题信息")
-                        }
-                    } else {
-                        callback.invoke(false, null, "出错了:${p1.message}")
-                    }
-                }
-            })
-    }
-
     fun getStudentsWhichNotSelectedThesisLiveData(
         dean: User,
         studentSelectState: Boolean,
         callback: (message: String) -> Unit
     ): MutableLiveData<MutableList<User>> {
         if (!handler.contains(WHICH_NOT_SELECT_ONE_THESIS)) {
-            findStudentsWhichNotSelectedThesis(
+            findStudentsIfSelectedThesis(
                 dean,
                 studentSelectState
             ) { isSuccess, data, message ->
@@ -134,38 +86,45 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
         return handler.getLiveData(WHICH_NOT_SELECT_ONE_THESIS)
     }
 
-    private fun findStudentsWhichNotSelectedThesis(
+    /**
+     * Thesis表属性：
+     *      @see Thesis->studentsList:MutableList<User>
+     *      @see Thesis->teacherIsSelectOneStudent:Boolean
+     *
+     * 只要选择了该课题的学生都找出来给系主任看，教师选择了某一个学生后，
+     * 系主任也只能看到一个学生
+     */
+    private fun findStudentsIfSelectedThesis(
         dean: User,
         studentSelectState: Boolean,
-        callback: (isSuccess: Boolean, data: MutableList<User>?, message: String) -> Unit
+        callback: (isSuccess: Boolean, listUser: MutableList<User>?, message: String) -> Unit
     ) {
-        val addWhereEqualTo = BmobQuery<User>().addWhereEqualTo(School, dean.school)
-        val addWhereEqualTo1 = BmobQuery<User>().addWhereEqualTo(College, dean.college)
-        val addWhereEqualTo2 = BmobQuery<User>().addWhereEqualTo(Department, dean.department)
-        val addWhereEqualTo3 =
-            BmobQuery<User>().addWhereEqualTo(StudentSelectState, studentSelectState)
-        val addWhereEqualTo4 =
-            BmobQuery<User>().addWhereEqualTo(Identification, IDENTIFICATION_STUDENT)
-
-        val queryList = ArrayList<BmobQuery<User>>()
-        queryList.add(addWhereEqualTo)
-        queryList.add(addWhereEqualTo1)
-        queryList.add(addWhereEqualTo2)
-        queryList.add(addWhereEqualTo3)
-        queryList.add(addWhereEqualTo4)
-
+        val arrayList = ArrayList<BmobQuery<User>>().apply {
+            add(BmobQuery<User>().addWhereEqualTo(School, dean.school))
+            add(BmobQuery<User>().addWhereEqualTo(College, dean.college))
+            add(BmobQuery<User>().addWhereEqualTo(Department, dean.department))
+            add(BmobQuery<User>().addWhereEqualTo(StudentSelectState, studentSelectState))
+            add(BmobQuery<User>().addWhereEqualTo(Identification, IDENTIFICATION_STUDENT))
+        }
         BmobQuery<User>()
-            .and(queryList)
+            .and(arrayList)
+            .apply {
+                if (studentSelectState){
+                    include(StudentThesis)
+                }
+            }
             .findObjects(object : FindListener<User>() {
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if (p1 == null) {
                         if (p0 != null && p0.isNotEmpty()) {
+                            Log.v(LOG_TAG, "搜索成功：$p0")
                             callback.invoke(true, p0, EMPTY_TEXT)
                         } else {
-                            callback.invoke(false, null, "没有找到相关数据")
+                            Log.v(LOG_TAG, "findStudentWhichHaveSelectedThesis没有匹配项")
+                            callback.invoke(false, null, "没有学生选题信息")
                         }
                     } else {
-                        callback.invoke(false, null, "异常:${p1.message}")
+                        callback.invoke(false, null, "出错了:${p1.message}")
                     }
                 }
             })

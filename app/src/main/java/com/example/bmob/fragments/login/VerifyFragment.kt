@@ -65,7 +65,7 @@ class VerifyFragment : Fragment() ,FragmentEventListener{
                             //这里需要识别身份再进入对应主页
                             //识别身份
                             Log.v(LOG_TAG,"输入code=$code1$code2$code3$code4$code5$code6")
-                            viewModel.getUserIdentificationAndNavigateForVerify(identification,this@VerifyFragment)
+                            viewModel.getUserIdentificationAndNavigateFromVerify(identification,this@VerifyFragment)
                         }else{
                             showMsg(requireContext(),msg)
                         }

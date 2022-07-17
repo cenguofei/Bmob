@@ -22,13 +22,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
 
 
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
 
+    <!--
+        android:usesCleartextTraffic="true"，bmob配置，下载、显示图片
 
+        android:requestLegacyExternalStorage="true"，使用外部存储的配置
+    -->
     <application
         android:usesCleartextTraffic="true"
 
@@ -64,18 +70,6 @@
             android:grantUriPermissions="true">
 
         </provider>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.bmob.fileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
-
     </application>
 
 </manifest>

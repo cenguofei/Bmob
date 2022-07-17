@@ -99,21 +99,11 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
         approvedState:Int,
         callback: (isSuccess: Boolean,data:MutableList<MutableList<Thesis>>?,  message: String) -> Unit
     ) {
-        val addWhereEqualToSchool = BmobQuery<Thesis>()
-            .addWhereEqualTo(School, dean.school)
-        val addWhereEqualToCollege = BmobQuery<Thesis>()
-            .addWhereEqualTo(College, dean.college)
-        val addWhereEqualToDepartment = BmobQuery<Thesis>()
-            .addWhereEqualTo(Department, dean.department)
-        val addWhereEqualToState = BmobQuery<Thesis>()
-            .addWhereEqualTo(ThesisState, approvedState)
-
-        val queryList = ArrayList<BmobQuery<Thesis>>().run {
-            add(addWhereEqualToSchool)
-            add(addWhereEqualToCollege)
-            add(addWhereEqualToDepartment)
-            add(addWhereEqualToState)
-            this@run
+        val queryList = ArrayList<BmobQuery<Thesis>>().apply {
+            add(BmobQuery<Thesis>().addWhereEqualTo(School, dean.school))
+            add(BmobQuery<Thesis>().addWhereEqualTo(College, dean.college))
+            add(BmobQuery<Thesis>().addWhereEqualTo(Department, dean.department))
+            add(BmobQuery<Thesis>().addWhereEqualTo(ThesisState, approvedState))
         }
         BmobQuery<Thesis>()
             .and(queryList)

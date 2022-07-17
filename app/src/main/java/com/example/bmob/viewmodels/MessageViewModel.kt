@@ -41,6 +41,8 @@ class MessageViewModel(private val handler:SavedStateHandle):ViewModel() {
 
     /**
      * 保存用户的留言
+     *
+     * 留言是时时的，所以就不采用这种方法了
      */
     fun addUserLeaveMessage(message: Message){
         if(!handler.contains(LEAVE_MESSAGE_KEY)){
@@ -63,17 +65,12 @@ class MessageViewModel(private val handler:SavedStateHandle):ViewModel() {
         loginTeacher: User,
         callback: (isSuccess: Boolean,mutableListMessage:MutableList<Message>?, msg: String) -> Unit
     ){
-        //别人给当前教师的留言
-        val addWhereEqualTo1 = BmobQuery<Message>().addWhereEqualTo(ToUserId, loginTeacher.objectId)
-        //当前教师给别人的留言
-        val addWhereEqualTo2 =
-            BmobQuery<Message>().addWhereEqualTo(FromUserId, loginTeacher.objectId)
-
         val queryList = ArrayList<BmobQuery<Message>>().apply {
-            add(addWhereEqualTo1)
-            add(addWhereEqualTo2)
+            //别人给当前教师的留言
+            add(BmobQuery<Message>().addWhereEqualTo(ToUserId, loginTeacher.objectId))
+            //当前教师给别人的留言
+            add(BmobQuery<Message>().addWhereEqualTo(FromUserId, loginTeacher.objectId))
         }
-
         BmobQuery<Message>()
             .or(queryList)
             .include(ForThesis) //如果有关联关系，一定要添加include

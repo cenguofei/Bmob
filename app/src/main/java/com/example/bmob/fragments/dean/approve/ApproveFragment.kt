@@ -54,9 +54,6 @@ class ApproveFragment : Fragment() ,FragmentEventListener{
         //同意课题申请
         binding.agreeBtn.setOnClickListener {
             viewModel.updateThesisForDeanApprove(args.deanApproveThesis, ALREADY_APPROVED){ _, message->
-//                if (isSuccess){
-//                    binding.repulseBtn.visibility = View.GONE
-//                }
                 showMsg(requireContext(),message)
             }
         }

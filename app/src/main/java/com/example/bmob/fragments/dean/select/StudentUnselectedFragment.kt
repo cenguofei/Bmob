@@ -9,9 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentUnselectedBinding
 import com.example.bmob.databinding.ItemDeanStudentSelectBinding
+import com.example.bmob.utils.JxlExcelUtil
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanStudentSelectedViewModel
 import com.example.bmob.viewmodels.SetViewModel
@@ -20,7 +22,7 @@ import com.example.bmob.viewmodels.SetViewModel
 /**
  * 显示未选学生名单
  */
-class StudentUnselectedFragment : Fragment() {
+class StudentUnselectedFragment : Fragment(),FragmentEventListener {
     private lateinit var binding: FragmentStudentUnselectedBinding
     private val viewModel: DeanStudentSelectedViewModel by viewModels()
     private val setViewModel: SetViewModel by activityViewModels()
@@ -53,5 +55,40 @@ class StudentUnselectedFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setEventListener()
+    }
+
+    override fun setEventListener() {
+        binding.exportBtn.setOnClickListener {
+            viewModel.getStudentsWhichNotSelectedThesisLiveData(
+                setViewModel.getUserByQuery().value!!,
+                true
+            ) {
+                showMsg(requireContext(), it)
+            }.value?.let {
+                val dean = setViewModel.getUserByQuery().value
+                val excelFileName = "${dean?.department} 未选课题学生名单${System.currentTimeMillis()}.xlsx"
+                JxlExcelUtil.export(
+                    it,
+                    requireActivity(),
+                    requireContext(),
+                    excelFileName,
+                    arrayOf("姓名", "年龄", "性别", "班级", "选课状态", "课题名称")
+                ) { student->
+                    return@export arrayListOf<String>().apply {
+                        add(student.name!!)
+                        add(student.age.toString())
+                        add(student.gender!!)
+                        add(student.studentClass ?: "暂无班级")
+                        add("未选")
+                        add("无课题信息")
+                    }
+                }
+            }
+        }
     }
 }

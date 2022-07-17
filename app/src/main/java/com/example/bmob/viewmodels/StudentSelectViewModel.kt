@@ -73,24 +73,16 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
             isSuccess: Boolean, teacherList: MutableList<User>?, msg: String
         ) -> Unit
     ) {
-        //三个条件
-        val equalToSchool = BmobQuery<User>()
-            .addWhereEqualTo(School, student.school)
-        val equalToDepartment = BmobQuery<User>()
-            .addWhereEqualTo(Department, student.department)
-        val equalToCollege = BmobQuery<User>()
-            .addWhereEqualTo(College, student.college)
-        val equalToIdentification = BmobQuery<User>()
-            .addWhereEqualTo(Identification, IDENTIFICATION_TEACHER)
-
-        val queryList = ArrayList<BmobQuery<User>>().run {
-            add(equalToSchool)
-            add(equalToDepartment)
-            add(equalToCollege)
-            add(equalToIdentification)
-            this@run
+        val queryList = ArrayList<BmobQuery<User>>().apply {
+            add(BmobQuery<User>()
+                .addWhereEqualTo(School, student.school))
+            add(BmobQuery<User>()
+                .addWhereEqualTo(Department, student.department))
+            add(BmobQuery<User>()
+                .addWhereEqualTo(College, student.college))
+            add(BmobQuery<User>()
+                .addWhereEqualTo(Identification, IDENTIFICATION_TEACHER))
         }
-
         BmobQuery<User>()
             .and(queryList)
             .findObjects(object : FindListener<User>() {
@@ -122,7 +114,6 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
     ) {
         BmobQuery<Thesis>()
             .addWhereEqualTo(TeacherId, thesisUser.objectId)
-
             /**
              * 这里还要添加条件
              * 等系主任
@@ -182,10 +173,7 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
 //                messageCallback.invoke("已经选择课题，不能多选或重复选")
 //            } else {
             val thesisStudentList = thesis.studentsList ?: mutableListOf()
-            thesisStudentList.add(
-//                    if (thesisStudentList.size == 0) 0 else thesisStudentList.size,
-                student
-            )
+            thesisStudentList.add(student)
             /**
              * student.studentThesis = thesis
              * 上面的写法时错误的，会闪退，找了很久也没找到原因

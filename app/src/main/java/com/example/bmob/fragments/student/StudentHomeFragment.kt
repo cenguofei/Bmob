@@ -1,12 +1,10 @@
 package com.example.bmob.fragments.student
 
-import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -52,11 +50,11 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (!it) {
-                Log.v(LOG_TAG, "用户拒绝权限请求")
-            }
-        }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+//            if (!it) {
+//                Log.v(LOG_TAG, "用户拒绝权限请求")
+//            }
+//        }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         setEventListener()
         viewModel.setFragment(this)

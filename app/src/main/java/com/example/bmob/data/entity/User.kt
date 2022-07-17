@@ -11,10 +11,16 @@ data class User(
     var avatarUrl:String? = null,  //头像url
     var backgroundUrl:String? = null,  //背景url
     var age:Int? = null,    //年龄
+
+//    @ExcelProperty(value = ["性别"])
     var gender:String? = null,  //性别
     var birth:String? = null, //生日
+
+//    @ExcelProperty(value = ["地址"])
     var address:String? = null, //地址
     val identification:Int, //身份
+
+//    @ExcelProperty(value = ["学生姓名"])
     var name:String?=null,  //姓名
     var signature:String? = null,  //用户签名
 
@@ -27,7 +33,10 @@ data class User(
      * 通过这三个属性可以把老师和学生联系起来
      */
     var school:String?=null, //学校
+
+//    @ExcelProperty(value = ["系"])
     var department:String?=null,  //系
+//    @ExcelProperty(value = ["学院"])
     var college:String?=null,  //学院
 
     //2. 特有属性
@@ -40,7 +49,7 @@ data class User(
     val studentClass:String?=null, //学生所属班级
     var studentThesis:Thesis?=null,
 
-    var title:String?=null,
+//    var title:String?=null,
     /**
      * @see studentSelectState
      */

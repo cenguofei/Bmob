@@ -87,15 +87,11 @@ class ProvostSkimViewModel(val handler:SavedStateHandle):ViewModel() {
         identification:Int,
         callback:(isSuccess:Boolean,userList:MutableList<User>?,message:String)->Unit
     ){
-        val addWhereEqualToSchool = BmobQuery<User>()
-            .addWhereEqualTo(School, provost.school)
-        val addWhereEqualToIdentification = BmobQuery<User>()
-            .addWhereEqualTo(Identification, identification)
-
-
         val queryList = ArrayList<BmobQuery<User>>().run {
-            add(addWhereEqualToSchool)
-            add(addWhereEqualToIdentification)
+            add(BmobQuery<User>()
+                .addWhereEqualTo(School, provost.school))
+            add(BmobQuery<User>()
+                .addWhereEqualTo(Identification, identification))
             this@run
         }
         BmobQuery<User>()

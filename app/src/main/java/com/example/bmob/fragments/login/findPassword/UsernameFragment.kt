@@ -41,8 +41,8 @@ class UsernameFragment : Fragment(),FragmentEventListener {
             if (TextUtils.isEmpty(text)){
                 showMsg(requireContext(),"请输入账号")
             }else{
-                userViewModel.ifExistUserForGivenUsername(text.toString()){isSuccess, msg ->
-                    if (isSuccess){
+                userViewModel.ifExistUserForGivenUsername(text.toString()){isExist, msg ->
+                    if (isExist){
                         val navDirections =
                             UsernameFragmentDirections.actionUsernameFragmentToPhoneNumberFragment(text.toString())
                         findNavController().navigate(navDirections)

@@ -13,7 +13,6 @@ import com.example.bmob.data.entity.NOT_APPROVED
 import com.example.bmob.data.entity.SELECT_STATE_UNSELECTED
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
-import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.databinding.FragmentTeacherNewThesisBinding
 import com.example.bmob.utils.*
 

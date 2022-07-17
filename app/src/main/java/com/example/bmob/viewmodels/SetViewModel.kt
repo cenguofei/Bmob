@@ -72,6 +72,8 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         }
     }
 
+//    private var headUri:Uri? = null
+//    private var backgroundUri:Uri? = null
     /**
      * 初始化register，
      * 必须要在onCreate的时候调用
@@ -86,6 +88,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             val resultCode = it.resultCode
             if (resultCode == AppCompatActivity.RESULT_OK) {
                 val uri = data?.data
+                Log.v(LOG_TAG,"uri=$uri")
                 file = uriToFileQ(fragment.requireContext(), uri!!)
                 Log.v(LOG_TAG, "uriToFileQ path = ${file?.path}  uri=$uri")
                 //存储图片
@@ -96,8 +99,10 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                         Log.v(LOG_TAG, "图片上传成功")
                         //改变ui
                         if ((imageType!!) == IMAGE_TYPE_HEAD) {
+//                            headUri = uri
                             fragment.binding.editHeadIv.setImageURI(uri)
                         } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND) {
+//                            backgroundUri = uri
                             fragment.binding.backgroundIv.setImageURI(uri)
                         }
                     } else {

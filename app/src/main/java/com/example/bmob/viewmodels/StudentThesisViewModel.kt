@@ -3,7 +3,6 @@ package com.example.bmob.viewmodels
 import androidx.lifecycle.ViewModel
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
 import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
 import com.example.bmob.data.entity.STUDENT_HAS_SELECTED_THESIS

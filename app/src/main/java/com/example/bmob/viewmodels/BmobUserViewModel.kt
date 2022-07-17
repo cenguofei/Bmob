@@ -40,7 +40,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         handler.set(USER_IDENTIFICATION, identification)
     }
 
-    fun getUserIdentificationAndNavigateForVerify(identification: Int, fragment: Fragment) {
+    fun getUserIdentificationAndNavigateFromVerify(identification: Int, fragment: Fragment) {
         /**
          * setUserIdentification()暂时不起作用
          * 因为MainActivity并没有判断用户身份，然后显示不同的底部导航栏的中间图标
@@ -74,15 +74,11 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
      * 判断当前用户身份，
      * 并导航到对应首页
      */
-    fun getUserIdentificationAndNavigateForStart(
+    fun getUserIdentificationAndNavigateFromStart(
         identification: Int,
         fragment: Fragment
     ) {
         Log.v(LOG_TAG,"StartFragment getUserIdentificationAndNavigateForStart 当前身份为：$identification")
-        /**
-         * setUserIdentification()暂时不起作用
-         * 因为MainActivity并没有判断用户身份，然后显示不同的底部导航栏的中间图标
-         */
         when (identification) {
             IDENTIFICATION_STUDENT -> {
                 setUserIdentification(IDENTIFICATION_STUDENT)
@@ -207,7 +203,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
      */
     fun ifExistUserForGivenUsername(
         userName: String,
-        callback: (isSuccess: Boolean, msg: String) -> Unit
+        callback: (isExist: Boolean, msg: String) -> Unit
     ) {
         BmobQuery<User>()
             .addWhereEqualTo(Username, userName)
