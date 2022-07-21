@@ -196,7 +196,7 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
 
             thesis.studentsList = thesisStudentList
             Log.v(LOG_TAG, "thesisStudentList=$thesisStudentList")
-
+            thesis.selectedNum = (thesis.selectedNum?:0) + 1
             //更新课题
             thesis.update(object : UpdateListener() {
                 override fun done(p0: BmobException?) {

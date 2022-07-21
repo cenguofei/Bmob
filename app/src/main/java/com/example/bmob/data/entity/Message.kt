@@ -17,4 +17,8 @@ data class Message(
     val content:String,  //留言的内容
     val fUAvatar:String, //留言者的头像url
     val fUName:String //留言者的名字
-):BmobObject()
+):BmobObject() {
+    constructor() : this(
+        Thesis(),"","","","",""
+    )
+}

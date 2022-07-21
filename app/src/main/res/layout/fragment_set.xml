@@ -7,7 +7,7 @@
         <import type="com.example.bmob.utils.BindingKtKt"/>
         <variable
             name="user"
-            type="com.example.bmob.fragments.mine.SetUserInfo" />
+            type="com.example.bmob.data.entity.User" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -175,15 +175,15 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="15dp"
                 android:autofillHints=""
-                android:hint="@string/nickname"
+                android:hint="@string/nc"
                 android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/age"
+                android:drawableStart="@drawable/nickname_img"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
                 android:inputType="text"
                 android:paddingStart="15dp"
+                android:text="@{user.nickname}"
                 android:paddingEnd="15dp"
-                android:text="@{BindingKtKt.intToString(user.age)}"
                 app:layout_constraintBottom_toTopOf="@+id/editGenderEv"
                 app:layout_constraintEnd_toEndOf="@+id/editNameEv"
                 app:layout_constraintStart_toStartOf="@+id/editNameEv"
@@ -324,7 +324,7 @@
                 android:paddingStart="15dp"
                 android:hint="@string/phone_"
                 android:paddingEnd="15dp"
-                android:text="@={user.phoneNumber}"
+                android:text="@={user.mobilePhoneNumber}"
                 app:layout_constraintEnd_toEndOf="@+id/editBirthEv"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/editBirthEv"

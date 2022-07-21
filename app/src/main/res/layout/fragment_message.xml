@@ -5,11 +5,11 @@
     android:id="@+id/frameLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.home.HomeFragment">
+    tools:context=".fragments.home.MessageFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/swipeRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="30dp"

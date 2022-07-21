@@ -130,4 +130,6 @@
     <string name="_l_m">留言</string>
     <string name="h_l_m">历史留言</string>
     <string name="h_s_">已选学生名单</string>
+    <string name="n_l_">年龄</string>
+    <string name="nc">昵称</string>
 </resources>

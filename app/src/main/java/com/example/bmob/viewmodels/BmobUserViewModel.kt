@@ -20,7 +20,7 @@ import com.example.bmob.utils.Username
 class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
 
     companion object {
-        private val userRepository = BmobRepository.getInstance()
+        private val repository = BmobRepository.getInstance()
         private const val USER_IDENTIFICATION = "_user_identification_"
     }
 
@@ -104,11 +104,11 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
     }
 
     fun loginByUsername(userName: String, pwd: String, callback: (Boolean, String) -> Unit) {
-        userRepository.loginByUsername(userName, pwd, callback)
+        repository.loginByUsername(userName, pwd, callback)
     }
 
     fun getUserInfo(callback: (isSuccess: Boolean, user: User?) -> Unit) {
-        userRepository.getUserInfo(callback)
+        repository.getUserInfo(callback)
     }
 
     fun getUserInfoByUsername(
@@ -137,7 +137,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         phoneNumber: String,
         callback: (isResponseSuccess: Boolean, msgCode: String, msg: String) -> Unit
     ) {
-        userRepository.getSignupCode(phoneNumber, callback)
+        repository.getSignupCode(phoneNumber, callback)
     }
 
     /**
@@ -157,7 +157,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         c: String,
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
-        userRepository.signOrLogin(
+        repository.signOrLogin(
             userName, workNum, pwd, identify, phoneNumber, msgCode,
             s, d, c,
             callback
@@ -175,7 +175,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         phoneNumber: String,
         callback: (isSuccess: Boolean, smsId: Int, error: String?) -> Unit
     ) {
-        userRepository.findPassword(phoneNumber, callback)
+        repository.findPassword(phoneNumber, callback)
     }
 
     //2. 然后执行验证码的密码重置操作
@@ -184,7 +184,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         newPassword: String,
         callback: (isResetSuccess: Boolean, msg: String) -> Unit
     ) {
-        userRepository.verifyCode(smsId, newPassword, callback)
+        repository.verifyCode(smsId, newPassword, callback)
     }
 
     /**
@@ -195,7 +195,7 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         schoolName: String,
         callback: (isSuccess: Boolean, school: School?, error: String) -> Unit
     ) {
-        userRepository.querySchool(schoolName, callback)
+        repository.querySchool(schoolName, callback)
     }
 
     /**

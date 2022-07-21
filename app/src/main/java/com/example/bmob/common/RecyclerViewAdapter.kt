@@ -1,12 +1,14 @@
 package com.example.bmob.common
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.example.bmob.data.entity.Thesis
 
 
 class RecyclerViewAdapter<T>(
-    private val data: List<T>,
+    private var data: List<T>,
     private val bindCallback:(binding:ViewBinding,result:T)->Unit
 ) : RecyclerView.Adapter<RecyclerViewAdapter.ResultViewHolder>() {
     class ResultViewHolder(val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -23,4 +25,9 @@ class RecyclerViewAdapter<T>(
         bindCallback.invoke(holder.binding,data[position])
     }
     override fun getItemCount(): Int = data.size
+
+    fun setData(newThesisList: List<T>){
+        this.data = newThesisList
+        this.notifyDataSetChanged()
+    }
 }

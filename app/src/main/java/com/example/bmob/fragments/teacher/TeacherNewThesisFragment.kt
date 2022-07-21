@@ -58,7 +58,7 @@ class TeacherNewThesisFragment : Fragment(),FragmentEventListener {
                 val userLiveData = setViewModel.getUserByQuery()
                 //仅当用户身份为教师时才能上传
                 //前面我们已经确定过用户身份了，但是这里有必要再做一次检查
-                if (userLiveData.value != null && userLiveData.value!!.identification == IDENTIFICATION_TEACHER){
+                userLiveData.value?.let {
                     if (viewModel.isInputValid(binding)){
                         viewModel.saveThesis(
                             userLiveData.value!!,
@@ -80,6 +80,28 @@ class TeacherNewThesisFragment : Fragment(),FragmentEventListener {
                         showMsg(requireContext(),"请完善信息")
                     }
                 }
+//                if (userLiveData.value != null && userLiveData.value!!.identification == IDENTIFICATION_TEACHER){
+//                    if (viewModel.isInputValid(binding)){
+//                        viewModel.saveThesis(
+//                            userLiveData.value!!,
+//                            Thesis(
+//                                title = binding.thesisTitle.text.toString(),
+//                                field = binding.thesisField.text.toString(),
+//                                require = binding.thesisRequire.text.toString(),
+//                                description = binding.thesisBrief.text.toString()
+//                            )
+//                        ){isSuccess, msg ->
+//                            if (isSuccess){
+//                                showMsg(requireContext(),"课题上传成功")
+//                                back()
+//                            }else{
+//                                showMsg(requireContext(),"课题上传失败，请稍后再试:$msg")
+//                            }
+//                        }
+//                    }else{
+//                        showMsg(requireContext(),"请完善信息")
+//                    }
+//                }
             }catch (e:Exception){
                 Log.v(LOG_TAG,"TeacherNewThesis出错了：${e.message}")
             }

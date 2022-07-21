@@ -296,50 +296,55 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
-    fun saveUserEdit(fragment: SetFragment) {
-        repository.getUserInfo { isSuccess, user ->
-            if (isSuccess) {
-                val userName = fragment.binding.editUsernameEv.text.toString()
-                user?.run {
-                    with(fragment.binding) {
-                        name = editNameEv.text.toString()
-                        signature = editSignatureEv.text.toString()
-                        nickname = editNicknameEv.text.toString()
-                        gender = editGenderEv.text.toString()
-                        username = userName
-                        school = editSchoolEv.text.toString()
-                        college = editCollegeEv.text.toString()
-                        department = editDepartmentEv.text.toString()
-                        birth = editBirthEv.text.toString()
-                        mobilePhoneNumber = editPhoneNumberEv.text.toString()
-                        address = editAddressEv.text.toString()
-                        email = editEmailEv.text.toString()
-                    }
+    fun saveUserEdit(
+        fragment: SetFragment,
+        callback: () -> Unit
+    ) {
+        getUserByQuery().value?.let {
+            val userName = fragment.binding.editUsernameEv.text.toString()
+            it.run {
+                with(fragment.binding) {
+                    name = editNameEv.text.toString()
+                    signature = editSignatureEv.text.toString()
+                    nickname = editNicknameEv.text.toString()
+                    gender = editGenderEv.text.toString()
+                    username = userName
+                    school = editSchoolEv.text.toString()
+                    college = editCollegeEv.text.toString()
+                    department = editDepartmentEv.text.toString()
+
+                    val birthFormat = editBirthEv.text.toString().split(" ")[0]
+                    birth = birthFormat
+
+                    mobilePhoneNumber = editPhoneNumberEv.text.toString()
+                    address = editAddressEv.text.toString()
+                    email = editEmailEv.text.toString()
                 }
-                //SetFragment修改后让MineFragment接受到
-                val bmobUser = BmobUser()
-                bmobUser.username = userName
-                bmobUser.mobilePhoneNumber = fragment.binding.editPhoneNumberEv.text.toString()
-                bmobUser.email = fragment.binding.editEmailEv.text.toString()
-                handler.set(BMOB_USER_KEY, bmobUser)
-                handler.set(QUERY_USER_KEY, user)
-
-                repository.updateUser(STUDENT_NOT_SELECT_THESIS, user!!) { isResponseSuccess, msg ->
-                    if (isResponseSuccess) {
-                        fragment.findNavController().navigateUp()
-                        showMsg(fragment.requireContext(), "用户信息已更新")
-                    } else {
-                        showMsg(fragment.requireContext(), "用户信息更新失败:$msg")
-                    }
-                }
-
-                //修改用户信息后，如果该用户是老师，就还要把老师对应课题的信息修改掉
-
-
-                //修改了学生信息后，课题里面学生的信息也要修改
-
-                saveUsernameToPreferencesStore(username = userName, fragment.requireContext())
             }
+            //SetFragment修改后让MineFragment接受到
+            val bmobUser = BmobUser()
+            bmobUser.username = userName
+            bmobUser.mobilePhoneNumber = fragment.binding.editPhoneNumberEv.text.toString()
+            bmobUser.email = fragment.binding.editEmailEv.text.toString()
+
+            handler.set(BMOB_USER_KEY, bmobUser)
+            handler.set(QUERY_USER_KEY, it)
+
+            saveUsernameToPreferencesStore(username = userName, fragment.requireContext())
+
+            repository.updateUser(it) { isResponseSuccess, msg ->
+                if (isResponseSuccess) {
+                    showMsg(fragment.requireContext(), "用户信息已更新")
+                    callback.invoke()
+                } else {
+                    showMsg(fragment.requireContext(), "用户信息更新失败:$msg")
+                }
+            }
+
+            //修改用户信息后，如果该用户是老师，就还要把老师对应课题的信息修改掉
+
+
+            //修改了学生信息后，课题里面学生的信息也要修改
         }
     }
 

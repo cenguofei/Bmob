@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.bmob.R
 import com.example.bmob.data.entity.*
 import com.example.bmob.viewmodels.DeanStudentSelectedModel
+import java.util.*
 
 object BindingAdapter {
     /**
@@ -161,16 +162,28 @@ object BindingAdapter {
         }
     }
     @JvmStatic
-    @BindingAdapter("deanStudentSelectedModelText")
-    fun deanStudentSelectedModelText(textView: TextView?,model:DeanStudentSelectedModel?){
+    @BindingAdapter("userAge")
+    fun userAge(textView: TextView?,birth:String?){
         if (textView != null){
-            if (model != null){
-                if (model.studentClass == " "){
-                    textView.text = model.studentName
-                }else{
-                    textView.text = "${model.studentClass} ${model.studentName}"
-                }
+            if (birth != null){
+                textView.text = getAge(birth)
             }
         }
+    }
+
+    fun getAge(birth: String?):String{
+        return if (birth != null){
+            try {
+                val subSequence = birth.subSequence(0, 4).toString()
+                val birthYear = subSequence.toInt()
+                val calendar: Calendar = Calendar.getInstance()
+                val year: Int = calendar.get(Calendar.YEAR)
+                val age = year - birthYear
+                age.toString()
+            }catch (e:Exception){
+                e.printStackTrace()
+                ""
+            }
+        }else ""
     }
 }

@@ -44,32 +44,10 @@ class SearchRecyclerViewAdapter(
     fun setThesisList(newThesisList: MutableList<Thesis>){
         if (this.data != null){
             val diffResult = DiffUtil.calculateDiff(ThesisDiffUtil(this.data!!, newThesisList))
+            this.data = newThesisList
             diffResult.dispatchUpdatesTo(this)
         }else{
             Log.v(LOG_TAG,"data=null")
         }
-    }
-}
-
-class ThesisDiffUtil(
-    private val oldList: MutableList<Thesis>,
-    private val newList: MutableList<Thesis>
-): DiffUtil.Callback() {
-    //获取旧数据元素个数
-    override fun getOldListSize(): Int {
-        return oldList.size
-    }
-    //获取新数据元素个数
-    override fun getNewListSize(): Int {
-        return newList.size
-    }
-    //是否是同一个对象
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        //判断是否是同一个对象
-        return newList[newItemPosition] == oldList[oldItemPosition]
-    }
-    //内容是否一致
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return newList[newItemPosition].title == oldList[oldItemPosition].title
     }
 }

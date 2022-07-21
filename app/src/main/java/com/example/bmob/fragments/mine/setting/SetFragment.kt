@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentSetBinding
 import com.example.bmob.databinding.SexPopupWindowBinding
+import com.example.bmob.utils.BindingAdapter
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.IMAGE_TYPE_BACKGROUND
@@ -75,7 +77,9 @@ class SetFragment : Fragment() ,FragmentEventListener{
         }
         binding.saveConfigBtn.setOnClickListener {
             if (isInputAllInvalid()){
-                viewModel.saveUserEdit(this)
+                viewModel.saveUserEdit(this){
+                    findNavController().navigateUp()
+                }
             }
         }
         //选择性别
@@ -91,18 +95,22 @@ class SetFragment : Fragment() ,FragmentEventListener{
             Log.v(LOG_TAG,"男")
             binding.editGenderEv.text = "男"
             popupWindow.dismiss()
+            Log.v(LOG_TAG,"args.userInfo:${args.userInfo}")
         }
         popupWindowBinding.radioButtonWoman.setOnClickListener {
             Log.v(LOG_TAG,"女")
             binding.editGenderEv.text = "女"
             popupWindow.dismiss()
+            Log.v(LOG_TAG,"args.userInfo:${args.userInfo}")
         }
         binding.editGenderEv.setOnClickListener {
             popupWindow.showAsDropDown(it,it.width/8,it.height/8)
         }
         binding.editBirthEv.setOnClickListener {
             viewModel.selectTime(requireContext(),"选择生日",0,0,0){
-                binding.editBirthEv.text = it
+                val birthFormat = it.split(" ")[0]
+                binding.editBirthEv.text = birthFormat
+                Log.v(LOG_TAG,"args.userInfo:${args.userInfo}")
             }
         }
     }

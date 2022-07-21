@@ -33,20 +33,24 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
     fun addThesis(user: User,thesis: Thesis){
         val thesisList = getThesisList(user).value
         thesisList?.add(thesis)
-        handler.set(CURRENT_TEACHER_THESIS+user.objectId,thesisList)
+        handler.set(CURRENT_TEACHER_THESIS,thesisList)
     }
 
-    fun getThesisList(user: User):MutableLiveData<MutableList<Thesis>>{
-        if (!handler.contains(CURRENT_TEACHER_THESIS+user.objectId)){
-            queryTeacherAllThesis(user){isSuccess, thesisList, msg ->
+    fun setThesisList(listThesis:MutableList<Thesis>){
+        handler.set(CURRENT_TEACHER_THESIS,listThesis)
+    }
+
+    fun getThesisList(user: User?):MutableLiveData<MutableList<Thesis>>{
+        if (!handler.contains(CURRENT_TEACHER_THESIS)){
+            queryTeacherAllThesis(user!!){isSuccess, thesisList, msg ->
                 if (isSuccess){
-                    handler.set(CURRENT_TEACHER_THESIS+user.objectId,thesisList)
+                    handler.set(CURRENT_TEACHER_THESIS,thesisList)
                 }else{
                     Log.v(LOG_TAG,"教师课题查询失败：$msg")
                 }
             }
         }
-        return handler.getLiveData(CURRENT_TEACHER_THESIS+user.objectId)
+        return handler.getLiveData(CURRENT_TEACHER_THESIS)
     }
     /**
      * 查询该教师的所有课题
@@ -125,7 +129,7 @@ class TeacherThesisViewModel(private val handler:SavedStateHandle):ViewModel() {
                         }
                     }
                     mutableList?.add(0,thesis)
-                    handler.set(CURRENT_TEACHER_THESIS+user.objectId,mutableList)
+                    handler.set(CURRENT_TEACHER_THESIS,mutableList)
                     callback.invoke(true, EMPTY_TEXT)
                 }else{
                     callback.invoke(false,p0.message.toString())

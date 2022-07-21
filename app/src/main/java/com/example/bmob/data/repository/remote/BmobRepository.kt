@@ -14,11 +14,11 @@ import com.example.bmob.utils.*
 class BmobRepository private constructor() {
 
     companion object {
-        @Volatile
-        private var INSTANCE: BmobRepository? = null
+        @Volatile private var INSTANCE: BmobRepository? = null
 
         //单例模式，获取实例
         fun getInstance() = INSTANCE ?: synchronized(this) {
+//            INSTANCE ?: BmobRepository()
             if (INSTANCE == null) {
                 INSTANCE = BmobRepository()
             }
@@ -27,7 +27,6 @@ class BmobRepository private constructor() {
     }
 
     fun updateUser(
-        studentSelectState: Boolean,
         user: User,
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
