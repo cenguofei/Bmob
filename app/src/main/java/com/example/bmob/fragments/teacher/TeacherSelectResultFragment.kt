@@ -20,20 +20,21 @@ import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherSelectResultViewModel
 
 
-class TeacherSelectResultFragment : Fragment(),FragmentEventListener{
-    private lateinit var binding:FragmentTeacherSelectResultBinding
-    private val viewModel:TeacherSelectResultViewModel by viewModels()
+class TeacherSelectResultFragment : Fragment(), FragmentEventListener {
+    private lateinit var binding: FragmentTeacherSelectResultBinding
+    private val viewModel: TeacherSelectResultViewModel by viewModels()
+
     //一定要用全局的SetViewModel，不然会空指针
-    private val setViewModel:SetViewModel by activityViewModels()
+    private val setViewModel: SetViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTeacherSelectResultBinding.inflate(inflater,container,false)
-        viewModel.getStudentOfSelectedThisThesisLiveData(setViewModel.getUserByQuery().value!!){
-            showMsg(requireContext(),it)
-        }.observe(viewLifecycleOwner){
+        binding = FragmentTeacherSelectResultBinding.inflate(inflater, container, false)
+        viewModel.getStudentOfSelectedThisThesisLiveData(setViewModel.getUserByQuery().value!!) {
+            showMsg(requireContext(), it)
+        }.observe(viewLifecycleOwner) {
             RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
                 val itemInflater = LayoutInflater.from(parent.context)
                 RecyclerViewAdapter.ResultViewHolder(
@@ -47,9 +48,9 @@ class TeacherSelectResultFragment : Fragment(),FragmentEventListener{
             val adapter = RecyclerViewAdapter(it) { binding, result ->
                 (binding as StudentChooseThesisItemBinding).selectedModel = result
             }
-            binding.recyclerView2.layoutManager =
+            binding.recyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            binding.recyclerView2.adapter = adapter
+            binding.recyclerView.adapter = adapter
         }
         return binding.root
     }
@@ -62,9 +63,9 @@ class TeacherSelectResultFragment : Fragment(),FragmentEventListener{
     override fun setEventListener() {
         //老师导出学生选题信息
         binding.exportBtn.setOnClickListener {
-            viewModel.getStudentOfSelectedThisThesisLiveData(setViewModel.getUserByQuery().value!!){
-                showMsg(requireContext(),it)
-            }.value?.let {data->
+            viewModel.getStudentOfSelectedThisThesisLiveData(setViewModel.getUserByQuery().value!!) {
+                showMsg(requireContext(), it)
+            }.value?.let { data ->
                 val teacher = setViewModel.getUserByQuery().value
                 val excelFileName = "${teacher?.name}教师课题被选信息${System.currentTimeMillis()}.xlsx"
                 JxlExcelUtil.export(
@@ -72,8 +73,8 @@ class TeacherSelectResultFragment : Fragment(),FragmentEventListener{
                     requireActivity(),
                     requireContext(),
                     excelFileName,
-                    arrayOf("被选课题","学生所在系","学生班级","学生姓名")
-                ) { selectedModel->
+                    arrayOf("被选课题", "学生所在系", "学生班级", "学生姓名")
+                ) { selectedModel ->
                     return@export arrayListOf<String>().apply {
                         add(selectedModel.title)
                         add(selectedModel.department)

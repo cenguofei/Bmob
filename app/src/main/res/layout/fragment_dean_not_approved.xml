@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="dean"
-            type= "com.example.bmob.data.entity.User"/>
+            type="com.example.bmob.data.entity.User" />
 
     </data>
 

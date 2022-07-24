@@ -22,7 +22,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.bmob", appContext.packageName)
 
-        Log.v(LOG_TAG,"\n\n\n\n\n本地时间：${LocalDateTime.now()} ")
+        Log.v(LOG_TAG, "\n\n\n\n\n本地时间：${LocalDateTime.now()} ")
 
     }
 }

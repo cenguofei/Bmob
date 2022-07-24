@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="dean"
             type="com.example.bmob.data.entity.User" />
@@ -20,7 +21,8 @@
             android:id="@+id/imageView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/todo"
             android:src="@drawable/back_img"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,50 +56,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView17" />
 
-        <SearchView
-            android:id="@+id/searchView2"
-            android:layout_width="0dp"
-
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-
-            android:background="@drawable/search_shape"
-            android:focusable="true"
-            android:iconifiedByDefault="false"
-            android:imeOptions="actionSearch"
-            android:paddingStart="40dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="1dp"
-            android:paddingBottom="5dp"
-            android:queryBackground="@null"
-            android:queryHint="@string/find_thesis"
-            android:searchIcon="@null"
-
-            android:showDividers="none"
-            android:submitBackground="@null"
-            android:textAlignment="center"
-            app:iconifiedByDefault="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
-            tools:ignore="MissingConstraints" />
-
-        <ImageView
-            android:id="@+id/imageView18"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/search"
-            app:layout_constraintBottom_toBottomOf="@+id/searchView2"
-            app:layout_constraintStart_toStartOf="@+id/searchView2"
-            app:layout_constraintTop_toTopOf="@+id/searchView2" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="409dp"
@@ -107,8 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
         <Button
             android:id="@+id/exportBtn"

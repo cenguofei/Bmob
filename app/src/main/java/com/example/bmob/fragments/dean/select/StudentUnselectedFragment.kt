@@ -22,7 +22,7 @@ import com.example.bmob.viewmodels.SetViewModel
 /**
  * 显示未选学生名单
  */
-class StudentUnselectedFragment : Fragment(),FragmentEventListener {
+class StudentUnselectedFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentStudentUnselectedBinding
     private val viewModel: DeanStudentSelectedViewModel by viewModels()
     private val setViewModel: SetViewModel by activityViewModels()
@@ -35,23 +35,32 @@ class StudentUnselectedFragment : Fragment(),FragmentEventListener {
         binding.dean = setViewModel.getUserByQuery().value
         viewModel.getStudentsWhichNotSelectedThesisLiveData(
             setViewModel.getUserByQuery().value!!,
-            false)
+            false
+        )
         {
-            showMsg(requireContext(),it)
-        }.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
-                RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent->
+            showMsg(requireContext(), it)
+        }.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
                     val itemInflater = LayoutInflater.from(parent.context)
-                    RecyclerViewAdapter.ResultViewHolder(ItemDeanStudentSelectBinding.inflate(itemInflater,parent,false))
+                    RecyclerViewAdapter.ResultViewHolder(
+                        ItemDeanStudentSelectBinding.inflate(
+                            itemInflater,
+                            parent,
+                            false
+                        )
+                    )
                 }
-                val adapter = RecyclerViewAdapter(it){binding, result ->
+                val adapter = RecyclerViewAdapter(it) { binding, result ->
                     (binding as ItemDeanStudentSelectBinding).user = result
                 }
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),
-                    RecyclerView.VERTICAL,false)
+                binding.recyclerView.layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    RecyclerView.VERTICAL, false
+                )
                 binding.recyclerView.adapter = adapter
-            }else{
-                showMsg(requireContext(),"没有搜索到任何结果")
+            } else {
+                showMsg(requireContext(), "没有搜索到任何结果")
             }
         }
         return binding.root
@@ -78,7 +87,7 @@ class StudentUnselectedFragment : Fragment(),FragmentEventListener {
                     requireContext(),
                     excelFileName,
                     arrayOf("姓名", "年龄", "性别", "班级", "选课状态", "课题名称")
-                ) { student->
+                ) { student ->
                     return@export arrayListOf<String>().apply {
                         add(student.name!!)
                         add(student.age.toString())

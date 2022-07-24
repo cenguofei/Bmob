@@ -1,7 +1,6 @@
 package com.example.bmob
 
 import org.junit.Test
-import java.text.SimpleDateFormat
 
 
 /**
@@ -11,7 +10,7 @@ import java.text.SimpleDateFormat
  */
 class ExampleUnitTest {
     @Test
-    fun testBirthFormat(){
+    fun testBirthFormat() {
         val birthStr = "2022-7-30 19:00:00"
 
         val birthFormat = birthStr.split(" ")[0]

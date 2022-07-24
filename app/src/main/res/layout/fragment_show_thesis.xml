@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
+
         <variable
             name="releaseTime"
             type="com.example.bmob.data.entity.ReleaseTime" />
@@ -22,7 +24,8 @@
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/todo"
             android:src="@drawable/back_img"
             app:layout_constraintStart_toStartOf="parent"
@@ -213,5 +216,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{"审核状态:"+(thesis.thesisState==0?"未审批":(thesis.thesisState==1?"审批通过":"未通过"))}'
+            android:textSize="10sp"
+            android:textColor="#FF6666"
+            app:layout_constraintBottom_toTopOf="@+id/imageView7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            tools:ignore="SmallSp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

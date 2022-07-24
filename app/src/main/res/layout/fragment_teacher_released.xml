@@ -11,6 +11,8 @@
         android:id="@+id/imageView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/back_img"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/swipe_recycler_view"
         android:layout_width="0dp"
         android:layout_height="605dp"
         app:layout_constraintEnd_toEndOf="parent"

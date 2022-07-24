@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.example.bmob.fragments.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -38,21 +38,21 @@
         android:id="@+id/registerFragment"
         android:name="com.example.bmob.fragments.login.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_verifyFragment"
             app:destination="@id/verifyFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.bmob.fragments.home.MessageFragment"
+        android:name="com.example.bmob.fragments.message.MessageFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_message" />
     <fragment
         android:id="@+id/verifyFragment"
         android:name="com.example.bmob.fragments.login.VerifyFragment"
         android:label="fragment_verify"
-        tools:layout="@layout/fragment_verify" >
+        tools:layout="@layout/fragment_verify">
         <argument
             android:name="codeVerifySuccessUser"
             app:argType="com.example.bmob.fragments.login.CodeVerifySuccessUser" />
@@ -74,7 +74,7 @@
         android:id="@+id/startFragment"
         android:name="com.example.bmob.fragments.start.StartFragment"
         android:label="fragment_start"
-        tools:layout="@layout/fragment_start" >
+        tools:layout="@layout/fragment_start">
         <action
             android:id="@+id/action_startFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -99,7 +99,7 @@
         android:id="@+id/usernameFragment"
         android:name="com.example.bmob.fragments.login.findPassword.UsernameFragment"
         android:label="fragment_username"
-        tools:layout="@layout/fragment_username" >
+        tools:layout="@layout/fragment_username">
         <action
             android:id="@+id/action_usernameFragment_to_phoneNumberFragment"
             app:destination="@id/phoneNumberFragment" />
@@ -108,7 +108,7 @@
         android:id="@+id/phoneNumberFragment"
         android:name="com.example.bmob.fragments.login.findPassword.PhoneNumberFragment"
         android:label="fragment_phone_number"
-        tools:layout="@layout/fragment_phone_number" >
+        tools:layout="@layout/fragment_phone_number">
         <argument
             android:name="username"
             app:argType="string" />
@@ -120,7 +120,7 @@
         android:id="@+id/resetPasswordFragment"
         android:name="com.example.bmob.fragments.login.findPassword.ResetPasswordFragment"
         android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password" >
+        tools:layout="@layout/fragment_reset_password">
         <action
             android:id="@+id/action_resetPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -129,7 +129,7 @@
         android:id="@+id/mineFragment"
         android:name="com.example.bmob.fragments.mine.MineFragment"
         android:label="fragment_mine"
-        tools:layout="@layout/fragment_mine" >
+        tools:layout="@layout/fragment_mine">
         <action
             android:id="@+id/action_mineFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -143,7 +143,7 @@
         android:id="@+id/studentHomeFragment"
         android:name="com.example.bmob.fragments.student.StudentHomeFragment"
         android:label="fragment_student_home"
-        tools:layout="@layout/fragment_student_home" >
+        tools:layout="@layout/fragment_student_home">
         <action
             android:id="@+id/action_studentHomeFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
@@ -153,12 +153,15 @@
         <action
             android:id="@+id/action_studentHomeFragment_to_studentThesisFragment"
             app:destination="@id/studentThesisFragment" />
+        <action
+            android:id="@+id/action_studentHomeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
         android:name="com.example.bmob.fragments.student.select.BrowseFragment"
         android:label="fragment_browse"
-        tools:layout="@layout/fragment_browse" >
+        tools:layout="@layout/fragment_browse">
         <action
             android:id="@+id/action_browseFragment_to_selectFragment"
             app:destination="@id/selectFragment" />
@@ -167,7 +170,7 @@
         android:id="@+id/showThesisFragment"
         android:name="com.example.bmob.fragments.thesis.ShowThesisFragment"
         android:label="fragment_show_thesis"
-        tools:layout="@layout/fragment_show_thesis" >
+        tools:layout="@layout/fragment_show_thesis">
         <argument
             android:name="thesis"
             app:argType="com.example.bmob.data.entity.Thesis" />
@@ -180,7 +183,7 @@
         android:id="@+id/setFragment"
         android:name="com.example.bmob.fragments.mine.setting.SetFragment"
         android:label="fragment_set"
-        tools:layout="@layout/fragment_set" >
+        tools:layout="@layout/fragment_set">
         <argument
             android:name="userInfo"
             app:argType="com.example.bmob.data.entity.User" />
@@ -189,7 +192,7 @@
         android:id="@+id/teacherHomeFragment"
         android:name="com.example.bmob.fragments.teacher.TeacherHomeFragment"
         android:label="fragment_teacher_home"
-        tools:layout="@layout/fragment_teacher_home" >
+        tools:layout="@layout/fragment_teacher_home">
         <action
             android:id="@+id/action_teacherHomeFragment_to_teacherReleasedFragment"
             app:destination="@id/teacherReleasedFragment" />
@@ -199,12 +202,15 @@
         <action
             android:id="@+id/action_teacherHomeFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
+        <action
+            android:id="@+id/action_teacherHomeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/teacherReleasedFragment"
         android:name="com.example.bmob.fragments.teacher.TeacherReleasedFragment"
         android:label="fragment_teacher_release"
-        tools:layout="@layout/fragment_teacher_released" >
+        tools:layout="@layout/fragment_teacher_released">
         <action
             android:id="@+id/action_teacherReleasedFragment_to_teacherNewThesisFragment"
             app:destination="@id/teacherNewThesisFragment" />
@@ -213,7 +219,7 @@
         android:id="@+id/teacherNewThesisFragment"
         android:name="com.example.bmob.fragments.teacher.TeacherNewThesisFragment"
         android:label="fragment_teacher_new_thesis"
-        tools:layout="@layout/fragment_teacher_new_thesis" >
+        tools:layout="@layout/fragment_teacher_new_thesis">
         <argument
             android:name="isUpdate"
             app:argType="boolean"
@@ -227,7 +233,7 @@
     <fragment
         android:id="@+id/selectFragment"
         android:name="com.example.bmob.fragments.student.select.SelectFragment"
-        android:label="SelectFragment" >
+        android:label="SelectFragment">
         <action
             android:id="@+id/action_selectFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
@@ -238,7 +244,7 @@
     <fragment
         android:id="@+id/deanHomeFragment"
         android:name="com.example.bmob.fragments.dean.DeanHomeFragment"
-        android:label="DeanHomeFragment" >
+        android:label="DeanHomeFragment">
         <action
             android:id="@+id/action_deanHomeFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
@@ -254,11 +260,14 @@
         <action
             android:id="@+id/action_deanHomeFragment_to_studentUnselectedFragment"
             app:destination="@id/studentUnselectedFragment" />
+        <action
+            android:id="@+id/action_deanHomeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/approveFragment"
         android:name="com.example.bmob.fragments.dean.approve.ApproveFragment"
-        android:label="ApproveFragment" >
+        android:label="ApproveFragment">
         <argument
             android:name="deanApproveThesis"
             app:argType="com.example.bmob.data.entity.Thesis" />
@@ -281,7 +290,7 @@
         android:id="@+id/provostHomeFragment"
         android:name="com.example.bmob.fragments.provost.ProvostHomeFragment"
         android:label="fragment_provost_home"
-        tools:layout="@layout/fragment_provost_home" >
+        tools:layout="@layout/fragment_provost_home">
         <action
             android:id="@+id/action_provostHomeFragment_to_showThesisFragment"
             app:destination="@id/showThesisFragment" />
@@ -291,6 +300,9 @@
         <action
             android:id="@+id/action_provostHomeFragment_to_skimFragment"
             app:destination="@id/skimFragment" />
+        <action
+            android:id="@+id/action_provostHomeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/provostSelectTimeFragment"
@@ -300,7 +312,7 @@
     <fragment
         android:id="@+id/deanApprovedFragment"
         android:name="com.example.bmob.fragments.dean.approve.DeanApprovedFragment"
-        android:label="DeanApprovedFragment" >
+        android:label="DeanApprovedFragment">
         <action
             android:id="@+id/action_deanApprovedFragment_to_approveFragment"
             app:destination="@id/approveFragment" />
@@ -308,7 +320,7 @@
     <fragment
         android:id="@+id/deanNotApprovedFragment"
         android:name="com.example.bmob.fragments.dean.approve.DeanNotApprovedFragment"
-        android:label="DeanNotApprovedFragment" >
+        android:label="DeanNotApprovedFragment">
         <action
             android:id="@+id/action_deanNotApprovedFragment_to_approveFragment"
             app:destination="@id/approveFragment" />
@@ -317,7 +329,7 @@
         android:id="@+id/studentThesisFragment"
         android:name="com.example.bmob.fragments.student.oneThesis.StudentThesisFragment"
         android:label="fragment_student_thesis"
-        tools:layout="@layout/fragment_student_thesis" >
+        tools:layout="@layout/fragment_student_thesis">
         <action
             android:id="@+id/action_studentThesisFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
@@ -326,9 +338,20 @@
         android:id="@+id/skimFragment"
         android:name="com.example.bmob.fragments.provost.SkimFragment"
         android:label="fragment_skim"
-        tools:layout="@layout/fragment_skim" >
+        tools:layout="@layout/fragment_skim">
         <argument
             android:name="identification"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.bmob.fragments.search.SearchFragment"
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_showThesisFragment"
+            app:destination="@id/showThesisFragment" />
+        <argument
+            android:name="isShowParticipateButton"
+            app:argType="boolean" />
     </fragment>
 </navigation>

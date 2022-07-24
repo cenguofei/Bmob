@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/default_head"/>
+        android:src="@drawable/default_head" />
 
     <TextView
         android:id="@+id/textView27"

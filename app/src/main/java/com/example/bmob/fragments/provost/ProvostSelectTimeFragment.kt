@@ -79,7 +79,7 @@ class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
                         if (isSuccess) {
                             binding.confirmBtn.visibility = View.GONE
                             binding.updateBtn.visibility = View.VISIBLE
-                        }else{
+                        } else {
                             binding.confirmBtn.isEnabled = true
                         }
                     }
@@ -98,13 +98,15 @@ class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
                 if (!isValid) {
                     showMsg(requireContext(), message)
                 } else {
-                    //保存发布时间
-                    viewModel.updateReleaseTime(
-                        viewModel.getProvostReleaseSelectTimeLiveData(setViewModel.getUserByQuery().value!!).value!!,
-                        beginTime,
-                        endTime
-                    ) {
-                        showMsg(requireContext(), it)
+                    setViewModel.getUserByQuery().value?.let {
+                        //保存发布时间
+                        viewModel.updateReleaseTime(
+                            viewModel.getProvostReleaseSelectTimeLiveData(it).value!!,
+                            beginTime,
+                            endTime
+                        ) { msg ->
+                            showMsg(requireContext(), msg)
+                        }
                     }
                 }
             }

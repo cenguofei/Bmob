@@ -4,347 +4,352 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.bmob.utils.BindingKtKt"/>
+
+        <import type="com.example.bmob.utils.BindingKtKt" />
+
         <variable
             name="user"
             type="com.example.bmob.data.entity.User" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="650dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout5"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="650dp">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="61dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                tools:layout_editor_absoluteY="204dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/backgroundIv"
-                loadRectImage="@{user.backgroundUrl}"
-                android:layout_width="0dp"
-                android:layout_height="250dp"
-                android:contentDescription="@string/todo"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="61dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    tools:layout_editor_absoluteY="204dp" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/editHeadIv"
-                loadUserCircleImage1="@{user.avatarUrl}"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="210dp"
-                android:contentDescription="@string/todo"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                <ImageView
+                    android:id="@+id/backgroundIv"
+                    loadRectImage="@{user.backgroundUrl}"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/edit_head"
-                app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
-                app:layout_constraintEnd_toEndOf="@+id/editHeadIv" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/editHeadIv"
+                    loadUserCircleImage1="@{user.avatarUrl}"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="210dp"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.501"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
 
-            <ImageView
-                android:id="@+id/editBackgroundIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/edit_head"
-                app:layout_constraintBottom_toBottomOf="@+id/backgroundIv"
-                app:layout_constraintEnd_toEndOf="parent" />
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/edit_head"
+                    app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
+                    app:layout_constraintEnd_toEndOf="@+id/editHeadIv" />
 
-            <EditText
-                android:id="@+id/editNameEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:autofillHints=""
-                android:hint="@string/name_"
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/username_img"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="@={user.name}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.508"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editHeadIv"
-                tools:ignore="LabelFor" />
+                <ImageView
+                    android:id="@+id/editBackgroundIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/edit_head"
+                    app:layout_constraintBottom_toBottomOf="@+id/backgroundIv"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-            <EditText
-                android:id="@+id/editSignatureEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:autofillHints=""
-                android:hint="@string/_sig"
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/signature"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="@={user.signature}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.491"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editNameEv"
-                tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/editNameEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:autofillHints=""
+                    android:hint="@string/name_"
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/username_img"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.name}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.508"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editHeadIv"
+                    tools:ignore="LabelFor" />
 
-            <EditText
-                android:id="@+id/editAddressEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/address"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:hint="@string/add"
-                android:paddingEnd="15dp"
-                android:text="@={user.address}"
-                app:layout_constraintEnd_toEndOf="@+id/editEmailEv"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/editEmailEv"
-                app:layout_constraintTop_toBottomOf="@+id/editEmailEv"
-                tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/editSignatureEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:autofillHints=""
+                    android:hint="@string/_sig"
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/signature"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.signature}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.491"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editNameEv"
+                    tools:ignore="LabelFor" />
 
-            <EditText
-                android:id="@+id/editEmailEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/email"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:hint="@string/ema"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="@={user.email}"
-                app:layout_constraintEnd_toEndOf="@+id/editPhoneNumberEv"
-                app:layout_constraintStart_toStartOf="@+id/editPhoneNumberEv"
-                app:layout_constraintTop_toBottomOf="@+id/editPhoneNumberEv"
-                tools:ignore="LabelFor,TextFields"
-                tools:layout_editor_absoluteY="663dp" />
+                <EditText
+                    android:id="@+id/editAddressEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/address"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:hint="@string/add"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.address}"
+                    app:layout_constraintEnd_toEndOf="@+id/editEmailEv"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/editEmailEv"
+                    app:layout_constraintTop_toBottomOf="@+id/editEmailEv"
+                    tools:ignore="LabelFor" />
 
-            <EditText
-                android:id="@+id/editNicknameEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:hint="@string/nc"
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/nickname_img"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:text="@{user.nickname}"
-                android:paddingEnd="15dp"
-                app:layout_constraintBottom_toTopOf="@+id/editGenderEv"
-                app:layout_constraintEnd_toEndOf="@+id/editNameEv"
-                app:layout_constraintStart_toStartOf="@+id/editNameEv"
-                app:layout_constraintTop_toBottomOf="@+id/editSignatureEv"
-                tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/editEmailEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/email"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:hint="@string/ema"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.email}"
+                    app:layout_constraintEnd_toEndOf="@+id/editPhoneNumberEv"
+                    app:layout_constraintStart_toStartOf="@+id/editPhoneNumberEv"
+                    app:layout_constraintTop_toBottomOf="@+id/editPhoneNumberEv"
+                    tools:ignore="LabelFor,TextFields"
+                    tools:layout_editor_absoluteY="663dp" />
+
+                <EditText
+                    android:id="@+id/editNicknameEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:hint="@string/nc"
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/nickname_img"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:text="@{user.nickname}"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintBottom_toTopOf="@+id/editGenderEv"
+                    app:layout_constraintEnd_toEndOf="@+id/editNameEv"
+                    app:layout_constraintStart_toStartOf="@+id/editNameEv"
+                    app:layout_constraintTop_toBottomOf="@+id/editSignatureEv"
+                    tools:ignore="LabelFor" />
+
+                <Button
+                    android:id="@+id/editGenderEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/sex"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/_sex"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.gender}"
+                    app:layout_constraintBottom_toTopOf="@+id/editUsernameEv"
+                    app:layout_constraintEnd_toEndOf="@+id/editNicknameEv"
+                    app:layout_constraintStart_toStartOf="@+id/editNicknameEv"
+                    tools:ignore="LabelFor" />
+
+                <EditText
+                    android:id="@+id/editUsernameEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/work_num"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:hint="@string/_work_num"
+                    android:text="@={user.username}"
+                    app:layout_constraintBottom_toTopOf="@+id/editSchoolEv"
+                    app:layout_constraintEnd_toEndOf="@+id/editGenderEv"
+                    app:layout_constraintStart_toStartOf="@+id/editGenderEv"
+                    tools:ignore="LabelFor" />
+
+                <EditText
+                    android:id="@+id/editSchoolEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/school"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:hint="@string/sc"
+                    android:paddingEnd="15dp"
+                    android:text='@={user.school}'
+                    app:layout_constraintBottom_toTopOf="@+id/editCollegeEv"
+                    app:layout_constraintEnd_toEndOf="@+id/editUsernameEv"
+                    app:layout_constraintStart_toStartOf="@+id/editUsernameEv"
+                    tools:ignore="LabelFor" />
+
+                <EditText
+                    android:id="@+id/editCollegeEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/college"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/y_"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.college}"
+                    app:layout_constraintBottom_toTopOf="@+id/editDepartmentEv"
+                    app:layout_constraintEnd_toEndOf="@+id/editSchoolEv"
+                    app:layout_constraintStart_toStartOf="@+id/editSchoolEv"
+                    tools:ignore="LabelFor" />
+
+                <EditText
+                    android:id="@+id/editDepartmentEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/department"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:hint="@string/d_"
+                    android:text="@={user.department}"
+                    app:layout_constraintBottom_toTopOf="@+id/editBirthEv"
+                    app:layout_constraintEnd_toEndOf="@+id/editCollegeEv"
+                    app:layout_constraintStart_toStartOf="@+id/editCollegeEv"
+                    tools:ignore="LabelFor" />
+
+                <Button
+                    android:id="@+id/editBirthEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/birth"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/bir_"
+
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.birth}"
+                    app:layout_constraintBottom_toTopOf="@+id/editPhoneNumberEv"
+                    app:layout_constraintEnd_toEndOf="@+id/editDepartmentEv"
+                    app:layout_constraintStart_toStartOf="@+id/editDepartmentEv"
+                    tools:ignore="LabelFor" />
+
+                <EditText
+                    android:id="@+id/editPhoneNumberEv"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints=""
+                    android:background="@drawable/mine_info_bg"
+                    android:drawableStart="@drawable/signup_phone"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:paddingStart="15dp"
+                    android:hint="@string/phone_"
+                    android:paddingEnd="15dp"
+                    android:text="@={user.mobilePhoneNumber}"
+                    app:layout_constraintEnd_toEndOf="@+id/editBirthEv"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/editBirthEv"
+                    app:layout_constraintTop_toBottomOf="@+id/editBirthEv"
+                    tools:ignore="LabelFor,TextFields" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
 
             <Button
-                android:id="@+id/editGenderEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/sex"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:hint="@string/_sex"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="@={user.gender}"
-                app:layout_constraintBottom_toTopOf="@+id/editUsernameEv"
-                app:layout_constraintEnd_toEndOf="@+id/editNicknameEv"
-                app:layout_constraintStart_toStartOf="@+id/editNicknameEv"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/editUsernameEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/work_num"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:hint="@string/_work_num"
-                android:text="@={user.username}"
-                app:layout_constraintBottom_toTopOf="@+id/editSchoolEv"
-                app:layout_constraintEnd_toEndOf="@+id/editGenderEv"
-                app:layout_constraintStart_toStartOf="@+id/editGenderEv"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/editSchoolEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/school"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:hint="@string/sc"
-                android:paddingEnd="15dp"
-                android:text='@={user.school}'
-                app:layout_constraintBottom_toTopOf="@+id/editCollegeEv"
-                app:layout_constraintEnd_toEndOf="@+id/editUsernameEv"
-                app:layout_constraintStart_toStartOf="@+id/editUsernameEv"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/editCollegeEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/college"
-                android:drawablePadding="15dp"
-                android:hint="@string/y_"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="@={user.college}"
-                app:layout_constraintBottom_toTopOf="@+id/editDepartmentEv"
-                app:layout_constraintEnd_toEndOf="@+id/editSchoolEv"
-                app:layout_constraintStart_toStartOf="@+id/editSchoolEv"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/editDepartmentEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/department"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="text"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:hint="@string/d_"
-                android:text="@={user.department}"
-                app:layout_constraintBottom_toTopOf="@+id/editBirthEv"
-                app:layout_constraintEnd_toEndOf="@+id/editCollegeEv"
-                app:layout_constraintStart_toStartOf="@+id/editCollegeEv"
-                tools:ignore="LabelFor" />
-
-            <Button
-                android:id="@+id/editBirthEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/birth"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:hint="@string/bir_"
-
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="@={user.birth}"
-                app:layout_constraintBottom_toTopOf="@+id/editPhoneNumberEv"
-                app:layout_constraintEnd_toEndOf="@+id/editDepartmentEv"
-                app:layout_constraintStart_toStartOf="@+id/editDepartmentEv"
-                tools:ignore="LabelFor" />
-
-            <EditText
-                android:id="@+id/editPhoneNumberEv"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:autofillHints=""
-                android:background="@drawable/mine_info_bg"
-                android:drawableStart="@drawable/signup_phone"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:inputType="number"
-                android:paddingStart="15dp"
-                android:hint="@string/phone_"
-                android:paddingEnd="15dp"
-                android:text="@={user.mobilePhoneNumber}"
-                app:layout_constraintEnd_toEndOf="@+id/editBirthEv"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/editBirthEv"
-                app:layout_constraintTop_toBottomOf="@+id/editBirthEv"
-                tools:ignore="LabelFor,TextFields" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
-    <Button
-        android:id="@+id/saveConfigBtn"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_gravity="center"
-        android:background="@drawable/done"/>
-    </LinearLayout>
+                android:id="@+id/saveConfigBtn"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:background="@drawable/done" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

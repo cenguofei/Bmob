@@ -1,8 +1,6 @@
 package com.example.bmob.fragments.dean.select
 
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,20 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
-import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.FragmentStudentSelectedBinding
 import com.example.bmob.databinding.ItemDeanStudentSelectBinding
 import com.example.bmob.utils.JxlExcelUtil
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanStudentSelectedViewModel
 import com.example.bmob.viewmodels.SetViewModel
-import java.io.File
 
 
 /**
  * 显示已选学生名单
  */
-class StudentSelectedFragment : Fragment() ,FragmentEventListener {
+class StudentSelectedFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentStudentSelectedBinding
     private val viewModel: DeanStudentSelectedViewModel by viewModels()
     private val setViewModel: SetViewModel by activityViewModels()
@@ -86,7 +82,7 @@ class StudentSelectedFragment : Fragment() ,FragmentEventListener {
                     requireContext(),
                     excelFileName,
                     arrayOf("姓名", "年龄", "性别", "班级", "选课状态", "课题名称")
-                ) {student->
+                ) { student ->
                     return@export arrayListOf<String>().apply {
                         add(student.name!!)
                         add(student.age.toString())

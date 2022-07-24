@@ -20,7 +20,7 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
 
     private var currentPos = MutableLiveData<Int>()
 
-    fun convert(p0: MutableList<Thesis>, approvedState:Int) {
+    fun convert(p0: MutableList<Thesis>, approvedState: Int) {
         val hashMapOf = hashMapOf<String, MutableList<Thesis>>()
         p0.forEach {
             if (!hashMapOf.contains(it.teacherName!!)) {
@@ -35,12 +35,12 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
         hashMapOf.values.forEach {
             listThesisList.add(it)
         }
-        if (approvedState == ALREADY_APPROVED){
+        if (approvedState == ALREADY_APPROVED) {
             handler.set(APPROVED_THESIS_LIST_LIST, listThesisList)
-            Log.v(LOG_TAG,"ALREADY_APPROVED listThesisList:$listThesisList")
-        }else{
-            Log.v(LOG_TAG,"NOT_APPROVED_THESIS_LIST listThesisList:$listThesisList")
-            handler.set(NOT_APPROVED_THESIS_LIST,listThesisList)
+            Log.v(LOG_TAG, "ALREADY_APPROVED listThesisList:$listThesisList")
+        } else {
+            Log.v(LOG_TAG, "NOT_APPROVED_THESIS_LIST listThesisList:$listThesisList")
+            handler.set(NOT_APPROVED_THESIS_LIST, listThesisList)
         }
     }
 
@@ -49,33 +49,34 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
      */
     fun getQueryThesisToDeanNotApprovedLiveData(
         dean: User,
-        approvedState:Int,
-        callback:(message:String)->Unit
-    ):MutableLiveData<MutableList<MutableList<Thesis>>>{
-        if (!handler.contains(NOT_APPROVED_THESIS_LIST)){
-            queryThesisToDeanInApprovedFragment(dean,approvedState){isSuccess, data, message ->
-                if (isSuccess){
-                    handler.set(NOT_APPROVED_THESIS_LIST,data)
-                }else{
+        approvedState: Int,
+        callback: (message: String) -> Unit
+    ): MutableLiveData<MutableList<MutableList<Thesis>>> {
+        if (!handler.contains(NOT_APPROVED_THESIS_LIST)) {
+            queryThesisToDeanInApprovedFragment(dean, approvedState) { isSuccess, data, message ->
+                if (isSuccess) {
+                    handler.set(NOT_APPROVED_THESIS_LIST, data)
+                } else {
                     callback.invoke(message)
                 }
             }
         }
         return handler.getLiveData(NOT_APPROVED_THESIS_LIST)
     }
+
     /**
      * 获取未选该课题的学生名单
      */
     fun getQueryThesisToDeanApprovedLiveData(
         dean: User,
-        approvedState:Int,
-        callback:(message:String)->Unit
-    ):MutableLiveData<MutableList<MutableList<Thesis>>>{
-        if (!handler.contains(APPROVED_THESIS_LIST_LIST)){
-            queryThesisToDeanInApprovedFragment(dean,approvedState){isSuccess, data, message ->
-                if (isSuccess){
-                    handler.set(APPROVED_THESIS_LIST_LIST,data)
-                }else{
+        approvedState: Int,
+        callback: (message: String) -> Unit
+    ): MutableLiveData<MutableList<MutableList<Thesis>>> {
+        if (!handler.contains(APPROVED_THESIS_LIST_LIST)) {
+            queryThesisToDeanInApprovedFragment(dean, approvedState) { isSuccess, data, message ->
+                if (isSuccess) {
+                    handler.set(APPROVED_THESIS_LIST_LIST, data)
+                } else {
                     callback.invoke(message)
                 }
             }
@@ -96,8 +97,8 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
      */
     private fun queryThesisToDeanInApprovedFragment(
         dean: User,
-        approvedState:Int,
-        callback: (isSuccess: Boolean,data:MutableList<MutableList<Thesis>>?,  message: String) -> Unit
+        approvedState: Int,
+        callback: (isSuccess: Boolean, data: MutableList<MutableList<Thesis>>?, message: String) -> Unit
     ) {
         val queryList = ArrayList<BmobQuery<Thesis>>().apply {
             add(BmobQuery<Thesis>().addWhereEqualTo(School, dean.school))
@@ -131,10 +132,10 @@ class ApprovedNotApprovedViewModel(private val handler: SavedStateHandle) : View
                                 EMPTY_TEXT
                             )
                         } else {
-                            callback.invoke(false, null,"没有搜索到相应结果")
+                            callback.invoke(false, null, "没有搜索到相应结果")
                         }
                     } else {
-                        callback.invoke(false, null,"请稍后再试:${p1.message}")
+                        callback.invoke(false, null, "请稍后再试:${p1.message}")
                     }
                 }
             })

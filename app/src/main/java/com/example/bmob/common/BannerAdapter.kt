@@ -12,10 +12,10 @@ import com.example.bmob.data.entity.BmobBannerObject
 import com.youth.banner.adapter.BannerAdapter
 
 class BannerAdapter(
-    data:List<BmobBannerObject>
-): BannerAdapter<BmobBannerObject, com.example.bmob.common.BannerAdapter.BannerViewHolder>(data) {
+    data: List<BmobBannerObject>
+) : BannerAdapter<BmobBannerObject, com.example.bmob.common.BannerAdapter.BannerViewHolder>(data) {
 
-    class BannerViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
+    class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView = itemView as ImageView
     }
 

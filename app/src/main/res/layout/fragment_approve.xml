@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
@@ -144,9 +145,8 @@
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView3">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/imageView12"
@@ -163,14 +163,14 @@
                 <EditText
                     android:id="@+id/thesisBrief"
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:autofillHints=""
                     android:background="@drawable/teacher_new_thesis_info_text_bg"
                     android:drawablePadding="10dp"
                     android:gravity="start"
                     android:hint="@string/brief"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:text="@{thesis.description}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -251,10 +251,12 @@
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/todo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/back_img"
-            android:contentDescription="@string/todo" />
+            app:srcCompat="@drawable/back_img" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="uri"
             type="java.lang.String" />
+
         <variable
             name="userConfig"
             type="com.example.bmob.data.storage.UserConfig" />

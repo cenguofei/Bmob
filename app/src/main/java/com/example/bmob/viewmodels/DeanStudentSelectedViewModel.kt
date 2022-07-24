@@ -56,7 +56,7 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
                 studentSelectState
             ) { isSuccess, listUser, message ->
                 if (isSuccess) {
-                    Log.v(LOG_TAG,"findStudentsWhichHaveSelectedThesis isSuccess")
+                    Log.v(LOG_TAG, "findStudentsWhichHaveSelectedThesis isSuccess")
                     handler.set(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA, listUser)
                 } else {
                     callback.invoke(message)
@@ -109,7 +109,7 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
         BmobQuery<User>()
             .and(arrayList)
             .apply {
-                if (studentSelectState){
+                if (studentSelectState) {
                     include(StudentThesis)
                 }
             }

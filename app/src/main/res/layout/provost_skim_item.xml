@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="user"
             type="com.example.bmob.data.entity.User" />
@@ -60,8 +61,7 @@
                 android:maxWidth="350dp"
                 android:ellipsize="end"
                 android:textColor="@color/grey_light"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

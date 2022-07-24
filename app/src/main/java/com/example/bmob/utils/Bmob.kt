@@ -3,57 +3,57 @@ package com.example.bmob.utils
 import android.content.Context
 import android.widget.Toast
 
-fun showMsg(context: Context, msg:String){
-    Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
+fun showMsg(context: Context, msg: String) {
+    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 }
 
-inline val EMPTY_TEXT:String
+inline val EMPTY_TEXT: String
     get() = ""
 
 inline val School: String
     get() = "school"
 
-inline val College:String
+inline val College: String
     get() = "college"
 
-inline val Department:String
+inline val Department: String
     get() = "department"
 
-inline val ThesisState:String
+inline val ThesisState: String
     get() = "thesisState"
 
-inline val Username:String
+inline val Username: String
     get() = "username"
 
-inline val StudentSelectState:String
-    get() ="studentSelectState"
+inline val StudentSelectState: String
+    get() = "studentSelectState"
 
-inline val Identification:String
+inline val Identification: String
     get() = "identification"
 
-inline val ObjectId:String
+inline val ObjectId: String
     get() = "objectId"
 
-inline val TeacherId:String
+inline val TeacherId: String
     get() = "teacherId"
 
-inline val ToUserId:String
+inline val ToUserId: String
     get() = "toUserId"
 
-inline val FromUserId:String
+inline val FromUserId: String
     get() = "fromUserId"
 
-inline val ForThesis:String
+inline val ForThesis: String
     get() = "forThesis"
 
-inline val StudentThesis:String
+inline val StudentThesis: String
     get() = "studentThesis"
 
-inline val ProvostObjectId:String
+inline val ProvostObjectId: String
     get() = "provostObjectId"
 
-inline val SchoolName:String
+inline val SchoolName: String
     get() = "schoolName"
 
-inline val Title:String
+inline val Title: String
     get() = "title"

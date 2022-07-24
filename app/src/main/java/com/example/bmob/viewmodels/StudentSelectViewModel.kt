@@ -32,16 +32,16 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
         teacher: User,
         callback: (message: String) -> Unit
     ): MutableLiveData<MutableList<Thesis>> {
-        if (!handler.contains(MUTABLE_THESIS_KEY+teacher.objectId)) {
+        if (!handler.contains(MUTABLE_THESIS_KEY + teacher.objectId)) {
             getTeacherAllThesis(teacher) { isSuccess, thesisList, message ->
                 if (isSuccess) {
-                    handler.set(MUTABLE_THESIS_KEY+teacher.objectId, thesisList)
+                    handler.set(MUTABLE_THESIS_KEY + teacher.objectId, thesisList)
                 } else {
                     callback.invoke(message)
                 }
             }
         }
-        return handler.getLiveData(MUTABLE_THESIS_KEY+teacher.objectId)
+        return handler.getLiveData(MUTABLE_THESIS_KEY + teacher.objectId)
     }
 
     /**
@@ -74,14 +74,22 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
         ) -> Unit
     ) {
         val queryList = ArrayList<BmobQuery<User>>().apply {
-            add(BmobQuery<User>()
-                .addWhereEqualTo(School, student.school))
-            add(BmobQuery<User>()
-                .addWhereEqualTo(Department, student.department))
-            add(BmobQuery<User>()
-                .addWhereEqualTo(College, student.college))
-            add(BmobQuery<User>()
-                .addWhereEqualTo(Identification, IDENTIFICATION_TEACHER))
+            add(
+                BmobQuery<User>()
+                    .addWhereEqualTo(School, student.school)
+            )
+            add(
+                BmobQuery<User>()
+                    .addWhereEqualTo(Department, student.department)
+            )
+            add(
+                BmobQuery<User>()
+                    .addWhereEqualTo(College, student.college)
+            )
+            add(
+                BmobQuery<User>()
+                    .addWhereEqualTo(Identification, IDENTIFICATION_TEACHER)
+            )
         }
         BmobQuery<User>()
             .and(queryList)
@@ -142,17 +150,17 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
     }
 
 
-    fun fetchStudentThesis(student: User,callback: (student: User) -> Unit){
+    fun fetchStudentThesis(student: User, callback: (student: User) -> Unit) {
         BmobQuery<User>()
-            .addWhereEqualTo(ObjectId,student.objectId)
+            .addWhereEqualTo(ObjectId, student.objectId)
             .include(StudentThesis)
             .setLimit(1)
-            .findObjects(object :FindListener<User>(){
+            .findObjects(object : FindListener<User>() {
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                    if (p1 == null && p0 != null && p0.isNotEmpty()){
-                        Log.v(LOG_TAG,"更新学生成功：${p0[0]}")
+                    if (p1 == null && p0 != null && p0.isNotEmpty()) {
+                        Log.v(LOG_TAG, "更新学生成功：${p0[0]}")
                         callback.invoke(p0[0])
-                    }else{
+                    } else {
                         callback.invoke(student)
                     }
                 }
@@ -196,7 +204,7 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
 
             thesis.studentsList = thesisStudentList
             Log.v(LOG_TAG, "thesisStudentList=$thesisStudentList")
-            thesis.selectedNum = (thesis.selectedNum?:0) + 1
+            thesis.selectedNum = (thesis.selectedNum ?: 0) + 1
             //更新课题
             thesis.update(object : UpdateListener() {
                 override fun done(p0: BmobException?) {

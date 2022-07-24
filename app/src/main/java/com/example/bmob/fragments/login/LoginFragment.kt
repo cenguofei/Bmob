@@ -48,8 +48,7 @@ class LoginFragment : Fragment(), FragmentEventListener {
         if (args.isChangeAccount) {
             binding.passwordEv.setText(R.string.empty_text)
             binding.usernameEv.setText(R.string.empty_text)
-        }
-        else {
+        } else {
             settingsDataStore.preferenceFlow.asLiveData().observe(viewLifecycleOwner) {
                 //设置CheckBox选择状态
                 Log.v(LOG_TAG, it.toString())
@@ -81,10 +80,6 @@ class LoginFragment : Fragment(), FragmentEventListener {
         }
     }
 
-    //获得用户输入的账号和密码
-    private fun getUserInputInfo(callback: (String, String) -> Unit) {
-        callback.invoke(binding.usernameEv.text.toString(), binding.passwordEv.text.toString())
-    }
     //设置点击事件
     override fun setEventListener() {
         binding.forgetPwd.setOnClickListener {
@@ -105,14 +100,14 @@ class LoginFragment : Fragment(), FragmentEventListener {
         }
         with(binding.rememberPwdCheckBox) {
             setOnClickListener {
-                getUserInputInfo { username, pwd ->
-                    if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
-                        lifecycleScope.launch {
-                            if (isChecked) {
-                                saveConfig(true, username, pwd)
-                            } else {
-                                saveConfig(false, "", "")
-                            }
+                val username = binding.usernameEv.text.toString()
+                val pwd = binding.passwordEv.text.toString()
+                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
+                    lifecycleScope.launch {
+                        if (isChecked) {
+                            saveConfig(true, username, pwd)
+                        } else {
+                            saveConfig(false, "", "")
                         }
                     }
                 }
@@ -126,76 +121,82 @@ class LoginFragment : Fragment(), FragmentEventListener {
 
         //需要判断并且保存身份
         binding.loginBtn.setOnClickListener {
-            getUserInputInfo { username, password ->
-                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-                    showMsg(requireContext(), "用户名或密码不能为空！")
-                } else {
-                    userViewModel.loginByUsername(username, password) { isSuccess, msg ->
-                        if (isSuccess) {
-                            lifecycleScope.launch {
-                                saveConfig(
-                                    binding.rememberPwdCheckBox.isChecked,
-                                    username,
-                                    password
-                                )
-                            }
-                            verifyUserIdentification {identification->
-                                if (identification != USER_HAS_NOT_IDENTIFICATION){
-                                    when (identification) {
-                                        IDENTIFICATION_STUDENT -> {
-                                            //登录成功，进入学生主页
-                                            try {
-                                                userViewModel.setUserIdentification(IDENTIFICATION_STUDENT)
-                                                findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
-                                            } catch (e: Exception) {
-                                                Log.v(LOG_TAG, "登录出错：${e.message}")
-                                                showMsg(requireContext(), "系统出错，请稍后再试")
-                                            }
-                                        }
-                                        IDENTIFICATION_TEACHER -> {
-                                            //登录成功，进入教师主页
-                                            try {
-                                                userViewModel.setUserIdentification(IDENTIFICATION_TEACHER)
-                                                findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
-                                            } catch (e: Exception) {
-                                                Log.v(LOG_TAG, "登录出错：${e.message}")
-                                                showMsg(requireContext(), "系统出错，请稍后再试")
-                                            }
-                                        }
-                                        IDENTIFICATION_DEAN -> {
-                                            //登录成功，进入教师主页
-                                            try {
-                                                userViewModel.setUserIdentification(IDENTIFICATION_DEAN)
-                                                findNavController().navigate(R.id.action_loginFragment_to_deanHomeFragment)
-                                            } catch (e: Exception) {
-                                                Log.v(LOG_TAG, "登录出错：${e.message}")
-                                                showMsg(requireContext(), "系统出错，请稍后再试")
-                                            }
-                                        }
-                                        IDENTIFICATION_PROVOST -> {
-                                            //登录成功，进入教师主页
-                                            try {
-                                                userViewModel.setUserIdentification(IDENTIFICATION_PROVOST)
-                                                findNavController().navigate(R.id.action_loginFragment_to_provostHomeFragment)
-                                            } catch (e: Exception) {
-                                                Log.v(LOG_TAG, "登录出错：${e.message}")
-                                                showMsg(requireContext(), "系统出错，请稍后再试")
-                                            }
-                                        }
-                                        else -> {
-                                            showMsg(requireContext(),"系统出错")
-                                        }
-                                    }
-                                }else{
-                                    showMsg(requireContext(),"登录异常，请稍后再试")
-                                }
-                            }
-                        } else {
-                            //登录失败
-                            showMsg(requireContext(), msg)
+            val username = binding.usernameEv.text.toString()
+            val password = binding.passwordEv.text.toString()
+            if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+                showMsg(requireContext(), "用户名或密码不能为空！")
+            } else {
+                userViewModel.loginByUsername(username, password) { isSuccess, msg ->
+                    if (isSuccess) {
+                        lifecycleScope.launch {
+                            saveConfig(
+                                binding.rememberPwdCheckBox.isChecked,
+                                username,
+                                password
+                            )
                         }
+                        verifyUserIdentification { identification -> loginToHome(identification) }
+                    } else {
+                        //登录失败
+                        showMsg(requireContext(), msg)
                     }
                 }
+            }
+        }
+    }
+
+    private fun loginToHome(identification: Int) {
+        when (identification) {
+            IDENTIFICATION_STUDENT -> {
+                //登录成功，进入学生主页
+                try {
+                    userViewModel.setUserIdentification(
+                        IDENTIFICATION_STUDENT
+                    )
+                    findNavController().navigate(R.id.action_loginFragment_to_studentHomeFragment)
+                } catch (e: Exception) {
+                    Log.v(LOG_TAG, "登录出错：${e.message}")
+                    showMsg(requireContext(), "系统出错，请稍后再试")
+                }
+            }
+            IDENTIFICATION_TEACHER -> {
+                //登录成功，进入教师主页
+                try {
+                    userViewModel.setUserIdentification(
+                        IDENTIFICATION_TEACHER
+                    )
+                    findNavController().navigate(R.id.action_loginFragment_to_teacherHomeFragment)
+                } catch (e: Exception) {
+                    Log.v(LOG_TAG, "登录出错：${e.message}")
+                    showMsg(requireContext(), "系统出错，请稍后再试")
+                }
+            }
+            IDENTIFICATION_DEAN -> {
+                //登录成功，进入教师主页
+                try {
+                    userViewModel.setUserIdentification(
+                        IDENTIFICATION_DEAN
+                    )
+                    findNavController().navigate(R.id.action_loginFragment_to_deanHomeFragment)
+                } catch (e: Exception) {
+                    Log.v(LOG_TAG, "登录出错：${e.message}")
+                    showMsg(requireContext(), "系统出错，请稍后再试")
+                }
+            }
+            IDENTIFICATION_PROVOST -> {
+                //登录成功，进入教师主页
+                try {
+                    userViewModel.setUserIdentification(
+                        IDENTIFICATION_PROVOST
+                    )
+                    findNavController().navigate(R.id.action_loginFragment_to_provostHomeFragment)
+                } catch (e: Exception) {
+                    Log.v(LOG_TAG, "登录出错：${e.message}")
+                    showMsg(requireContext(), "系统出错，请稍后再试")
+                }
+            }
+            else -> {
+                showMsg(requireContext(), "登录异常，请稍后再试")
             }
         }
     }

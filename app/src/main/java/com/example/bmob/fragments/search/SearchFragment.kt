@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.common.FragmentEventListener
@@ -19,35 +21,46 @@ import com.example.bmob.viewmodels.CommonHomeViewModel
 import com.example.bmob.viewmodels.CommonHomeViewModel.Companion.ERROR
 
 
-class SearchFragment : Fragment(),FragmentEventListener {
-    private lateinit var binding:FragmentSearchBinding
+class SearchFragment : Fragment(), FragmentEventListener {
+    private lateinit var binding: FragmentSearchBinding
     private var adapter: SearchRecyclerViewAdapter? = null
     private val viewModel: CommonHomeViewModel by viewModels()
+    private val args: SearchFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater,container,false)
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {
             Log.v(LOG_TAG, "观测到数据：$it")
             if (it.first != ERROR) {
-                if (adapter == null && it.second.isNotEmpty()) {
+                Log.v(LOG_TAG, "it.first != ERROR")
+                if (adapter == null) {
+                    Log.v(LOG_TAG, "search adapter == null")
                     adapter = SearchRecyclerViewAdapter(it.second) { thesis ->
                         Log.v(LOG_TAG, "回调：$thesis")
+                        val actionSearchFragmentToShowThesisFragment =
+                            SearchFragmentDirections.actionSearchFragmentToShowThesisFragment(
+                                thesis,
+                                args.isShowParticipateButton
+                            )
+                        findNavController().navigate(actionSearchFragmentToShowThesisFragment)
                     }
-                    binding.recyclerView1.adapter = adapter
-                    binding.recyclerView1.layoutManager = LinearLayoutManager(
+                    binding.recyclerView.layoutManager = LinearLayoutManager(
                         requireContext(),
                         RecyclerView.VERTICAL, false
                     )
+                    binding.recyclerView.adapter = adapter
                 } else {
-                    if (it.second.isNotEmpty() && viewModel.getNowSearch().value == it.first) {
-                        Log.v(LOG_TAG, "设置thesisList：$it")
-                        adapter!!.setThesisList(it.second)
+                    Log.v(LOG_TAG, "设置新list")
+                    if (viewModel.nowSearch.value == it.first) {
+                        adapter?.setThesisList(it.second)
                     }
                 }
+            } else {
+                Log.v(LOG_TAG, "it.first == ERROR")
             }
         }
         return binding.root
@@ -55,10 +68,14 @@ class SearchFragment : Fragment(),FragmentEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setFragment(this)
         setEventListener()
     }
 
     override fun setEventListener() {
+        binding.backToHomeIv.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.searchView2.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             //点击搜索时调用
@@ -72,7 +89,10 @@ class SearchFragment : Fragment(),FragmentEventListener {
                 return if (!TextUtils.isEmpty(newText)) {
                     viewModel.setNowSearch(newText!!)
                     true
-                } else false
+                } else {
+                    adapter?.setThesisList(mutableListOf())
+                    false
+                }
             }
         })
     }

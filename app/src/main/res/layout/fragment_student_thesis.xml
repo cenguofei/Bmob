@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="student"
             type="com.example.bmob.data.entity.User" />
+
         <variable
             name="view"
             type="android.view.View" />
+
         <variable
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
@@ -26,7 +29,8 @@
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/todo"
             android:src="@drawable/back_img"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +155,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -196,6 +199,7 @@
             app:layout_constraintStart_toStartOf="@+id/imageView21"
             app:srcCompat="@drawable/wait_approve_img"
             android:contentDescription="@string/todo" />
+
         <ImageView
             android:id="@+id/approvedIv"
             android:layout_width="wrap_content"
@@ -207,6 +211,7 @@
             app:layout_constraintStart_toStartOf="@+id/imageView21"
             app:srcCompat="@drawable/approved_img"
             android:contentDescription="@string/todo" />
+
         <ImageView
             android:id="@+id/rejectedIv"
             android:layout_width="wrap_content"
@@ -221,17 +226,17 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
-<!--<TextView-->
-<!--android:id="@+id/waitTeacherToSelectTv"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="26dp"-->
-<!--android:layout_marginEnd="16dp"-->
-<!--android:background="@drawable/blue_rounded_rectangle"-->
-<!--android:gravity="center"-->
-<!--android:text='@{student.studentSelectState?(student.isAgree?"已获选":"教师审批中"):"无课题"}'-->
-<!--android:textColor="@color/blue"-->
-<!--android:textSize="12sp"-->
-<!--android:textStyle="bold"-->
-<!--app:layout_constraintBottom_toBottomOf="@+id/textView14"-->
-<!--app:layout_constraintEnd_toEndOf="@+id/textView14"-->
-<!--app:layout_constraintTop_toTopOf="@+id/textView14" />-->
+    <!--<TextView-->
+    <!--android:id="@+id/waitTeacherToSelectTv"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="26dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:background="@drawable/blue_rounded_rectangle"-->
+    <!--android:gravity="center"-->
+    <!--android:text='@{student.studentSelectState?(student.isAgree?"已获选":"教师审批中"):"无课题"}'-->
+    <!--android:textColor="@color/blue"-->
+    <!--android:textSize="12sp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintBottom_toBottomOf="@+id/textView14"-->
+    <!--app:layout_constraintEnd_toEndOf="@+id/textView14"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/textView14" />-->

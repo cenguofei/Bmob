@@ -18,7 +18,10 @@ import com.example.bmob.data.entity.Message
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.MessageItemLayoutBinding
-import com.example.bmob.utils.*
+import com.example.bmob.utils.ForThesis
+import com.example.bmob.utils.FromUserId
+import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.ToUserId
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener
 import com.yanzhenjie.recyclerview.SwipeMenuCreator
 import com.yanzhenjie.recyclerview.SwipeMenuItem
@@ -26,7 +29,7 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.yanzhenjie.recyclerview.touch.OnItemMoveListener
 import java.util.*
 
-class MessageViewModel(application: Application):AndroidViewModel(application) {
+class MessageViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _messagesLiveData = MutableLiveData<MutableList<Message>>()
 
@@ -36,18 +39,25 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
      */
     fun uploadMessage(
         forThesis: Thesis,
-        content:String,
-        fromUser:User,
+        content: String,
+        fromUser: User,
         toUserId: String,
-        callback:(isSuccess:Boolean,message:String)->Unit
-    ){
-        Message(forThesis,fromUser.objectId,toUserId,content,fromUser.avatarUrl!!,fromUser.name!!)
-            .save(object :SaveListener<String>(){
+        callback: (isSuccess: Boolean, message: String) -> Unit
+    ) {
+        Message(
+            forThesis,
+            fromUser.objectId,
+            toUserId,
+            content,
+            fromUser.avatarUrl!!,
+            fromUser.name!!
+        )
+            .save(object : SaveListener<String>() {
                 override fun done(p0: String?, p1: BmobException?) {
-                    if (p1 == null){
-                        callback.invoke(true,"留言成功")
-                    }else{
-                        callback.invoke(false,"留言失败")
+                    if (p1 == null) {
+                        callback.invoke(true, "留言成功")
+                    } else {
+                        callback.invoke(false, "留言失败")
                     }
                 }
             })
@@ -63,7 +73,7 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
     fun getTeacherRemoteHistoryMessage(
         loginTeacher: User,
         callback: FetchDataCallback
-    ){
+    ) {
         val queryList = ArrayList<BmobQuery<Message>>().apply {
             //别人给当前教师的留言
             add(BmobQuery<Message>().addWhereEqualTo(ToUserId, loginTeacher.objectId))
@@ -73,15 +83,15 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
         BmobQuery<Message>()
             .or(queryList)
             .include(ForThesis) //如果有关联关系，一定要添加include
-            .findObjects(object : FindListener<Message>(){
+            .findObjects(object : FindListener<Message>() {
                 override fun done(p0: MutableList<Message>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.isNotEmpty()){
+                    if (p1 == null) {
+                        if (p0 != null && p0.isNotEmpty()) {
                             _messagesLiveData.value = p0
-                        }else{
+                        } else {
                             callback.invoke("没有搜索到历史留言")
                         }
-                    }else{
+                    } else {
                         callback.invoke("出错了:${p1.message}")
                     }
                 }
@@ -94,19 +104,19 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
     fun getRemoteHistoryMessage(
         user: User,
         callback: FetchDataCallback
-    ){
+    ) {
         BmobQuery<Message>()
             .addWhereEqualTo(FromUserId, user.objectId)  //自己给教师的留言
             .include(ForThesis) //如果有关联关系，一定要添加include
-            .findObjects(object : FindListener<Message>(){
+            .findObjects(object : FindListener<Message>() {
                 override fun done(p0: MutableList<Message>?, p1: BmobException?) {
-                    if (p1 == null){
-                        if (p0 != null && p0.isNotEmpty()){
+                    if (p1 == null) {
+                        if (p0 != null && p0.isNotEmpty()) {
                             _messagesLiveData.value = p0
-                        }else{
+                        } else {
                             callback.invoke("没有搜索到历史留言")
                         }
-                    }else{
+                    } else {
                         callback.invoke("出错了:${p1.message}")
                     }
                 }
@@ -115,17 +125,17 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
 
 
     /**  2.对留言进行 删除，拖拽排序  */
-    private var messageAdapter:MessageAdapter? = null
+    private var messageAdapter: MessageAdapter? = null
     var messagesLiveData = _messagesLiveData
 
     fun initAdapter(
-        userName:String,
+        userName: String,
         swipeRecyclerView: SwipeRecyclerView,
-        onItemClickListener:OnItemClickCallback
-    ){
-        Log.v(LOG_TAG,"messagesLiveData:$messagesLiveData")
+        onItemClickListener: OnItemClickCallback
+    ) {
+        Log.v(LOG_TAG, "messagesLiveData:$messagesLiveData")
         messagesLiveData.value?.let {
-            with(swipeRecyclerView){
+            with(swipeRecyclerView) {
                 /**
                  * 第一次调用时没问题，但以后调用就会报下面的错，
                  * java.lang.IllegalStateException: Cannot set menu creator,
@@ -144,36 +154,36 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
                     RecyclerView.VERTICAL,
                     false
                 )
-                messageAdapter = MessageAdapter(userName,it,onItemClickListener)
+                messageAdapter = MessageAdapter(userName, it, onItemClickListener)
                 adapter = messageAdapter
             }
         }
     }
 
-    private val swipeMenuCreator = SwipeMenuCreator { leftMenu, rightMenu, position ->
+    private val swipeMenuCreator = SwipeMenuCreator { _, rightMenu, _ ->
         val swipeMenuItem = SwipeMenuItem(application).apply {
             setBackgroundColor(Color.parseColor("#FF0033"))
             text = "删除"
             setTextColor(Color.WHITE)
             textSize = 16
-            height = 60*3
+            height = 60 * 3
             width = 220
         }
         rightMenu.addMenuItem(swipeMenuItem)
     }
 
-    private val itemMenuClickListener = OnItemMenuClickListener{menuBridge, adapterPosition ->
+    private val itemMenuClickListener = OnItemMenuClickListener { menuBridge, adapterPosition ->
         menuBridge.closeMenu()
-        if (menuBridge.direction == SwipeRecyclerView.RIGHT_DIRECTION){
+        if (menuBridge.direction == SwipeRecyclerView.RIGHT_DIRECTION) {
             //菜单位置，如果有多个菜单项，需要判断
             val position = menuBridge.position
             messagesLiveData.value?.let {
-                deleteMessage(it[adapterPosition]){
+                deleteMessage(it[adapterPosition]) {
                     it.removeAt(adapterPosition)
                     messageAdapter?.notifyItemRemoved(adapterPosition)
                 }
             }
-            Log.v("cgf","adapterPosition=$adapterPosition 菜单位置:$position")
+            Log.v("cgf", "adapterPosition=$adapterPosition 菜单位置:$position")
         }
     }
 
@@ -187,8 +197,8 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
             srcPos?.let {
                 tarPos?.let {
                     messagesLiveData.value?.let {
-                        Collections.swap(it,srcPos,tarPos)
-                        messageAdapter?.notifyItemMoved(srcPos,tarPos)
+                        Collections.swap(it, srcPos, tarPos)
+                        messageAdapter?.notifyItemMoved(srcPos, tarPos)
                         //此时可以交换位置
                         return true
                     }
@@ -212,14 +222,14 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
 
     private fun deleteMessage(
         message: Message,
-        callback:()->Unit,
+        callback: () -> Unit,
     ) {
         val deleteMessage = Message()
         deleteMessage.objectId = message.objectId
-        deleteMessage.delete(object :UpdateListener(){
+        deleteMessage.delete(object : UpdateListener() {
             override fun done(p0: BmobException?) {
                 if (p0 == null) callback.invoke()
-                else Log.v(LOG_TAG,"删除留言失败：${p0.message}")
+                else Log.v(LOG_TAG, "删除留言失败：${p0.message}")
             }
         })
     }
@@ -230,16 +240,16 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
      * 给课题的留言
      */
     class MessageAdapter(
-        private val userName:String,
+        private val userName: String,
         private val messageList: MutableList<Message>,
-        private val onItemClickListener:OnItemClickCallback
-    ):RecyclerView.Adapter<MessageAdapter.MessageViewHolder>(){
-        class MessageViewHolder(val binding:MessageItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
-        {
-            companion object{
-                fun createMessageViewHolder(parent: ViewGroup):MessageViewHolder{
+        private val onItemClickListener: OnItemClickCallback
+    ) : RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
+        class MessageViewHolder(val binding: MessageItemLayoutBinding) :
+            RecyclerView.ViewHolder(binding.root) {
+            companion object {
+                fun createMessageViewHolder(parent: ViewGroup): MessageViewHolder {
                     val inflater = LayoutInflater.from(parent.context)
-                    val viewBinding = MessageItemLayoutBinding.inflate(inflater,parent,false)
+                    val viewBinding = MessageItemLayoutBinding.inflate(inflater, parent, false)
                     return MessageViewHolder(viewBinding)
                 }
             }
@@ -248,13 +258,13 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
                 itemBinding: MessageItemLayoutBinding,
                 userName: String,
                 itemData: Message,
-                onItemClickListener:OnItemClickCallback
-            ){
+                onItemClickListener: OnItemClickCallback
+            ) {
                 itemBinding.run {
                     message = itemData
-                    if (userName == itemData.fUName){
+                    if (userName == itemData.fUName) {
                         topTitle.text = "你留言给:${itemData.forThesis.title}"
-                    }else{
+                    } else {
                         topTitle.text = "${itemData.fUName}留言给:${itemData.forThesis.title}"
                     }
                     root.setOnClickListener {
@@ -269,12 +279,12 @@ class MessageViewModel(application: Application):AndroidViewModel(application) {
         }
 
         override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-            holder.bind(holder.binding,userName,messageList[position],onItemClickListener)
+            holder.bind(holder.binding, userName, messageList[position], onItemClickListener)
         }
 
         override fun getItemCount() = messageList.size
     }
 }
-private typealias OnItemClickCallback = (message:Message)->Unit
+private typealias OnItemClickCallback = (message: Message) -> Unit
 private typealias FetchDataCallback = (msg: String) -> Unit
 

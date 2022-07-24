@@ -154,21 +154,21 @@ object JxlExcelUtil {
         }
     }
 
-    fun<T> export(
-        data:MutableList<T>,
-        activity:Activity,
+    fun <T> export(
+        data: MutableList<T>,
+        activity: Activity,
         context: Context,
-        excelFileName:String,
-        colsTitleName:Array<String>,
+        excelFileName: String,
+        colsTitleName: Array<String>,
         createRowCallback: (student: T) -> ArrayList<String>
-    ){
-        if (data.isNotEmpty()){
+    ) {
+        if (data.isNotEmpty()) {
             var filePath = "${activity.getExternalFilesDir("bmobExcel")?.path}"
-            if (checkPermission(context)){
+            if (checkPermission(context)) {
                 filePath = Environment.getExternalStorageDirectory().toString()
-                Log.v("cgf","外部存储：$filePath")
-            }else{
-                Log.v("cgf","应用内存储：$filePath")
+                Log.v("cgf", "外部存储：$filePath")
+            } else {
+                Log.v("cgf", "应用内存储：$filePath")
             }
             val file = File(filePath)
             /**
@@ -179,8 +179,8 @@ object JxlExcelUtil {
                 file.mkdirs()
             }
             filePath = "$filePath/$excelFileName"
-            initExcel(filePath, colsTitleName,excelFileName.substring(0,excelFileName.length-5))
-            writeObjListToExcel(data, filePath, context,createRowCallback)
+            initExcel(filePath, colsTitleName, excelFileName.substring(0, excelFileName.length - 5))
+            writeObjListToExcel(data, filePath, context, createRowCallback)
         }
     }
 

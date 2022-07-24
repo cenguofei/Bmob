@@ -16,17 +16,18 @@ import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
 
-class VerifyFragment : Fragment() ,FragmentEventListener{
-    private lateinit var binding:FragmentVerifyBinding
-    private val viewModel:BmobUserViewModel by activityViewModels()
-    private val args:VerifyFragmentArgs by navArgs()
+class VerifyFragment : Fragment(), FragmentEventListener {
+    private lateinit var binding: FragmentVerifyBinding
+    private val viewModel: BmobUserViewModel by activityViewModels()
+    private val args: VerifyFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentVerifyBinding.inflate(inflater,container,false)
+        binding = FragmentVerifyBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
@@ -50,24 +51,28 @@ class VerifyFragment : Fragment() ,FragmentEventListener{
                 || TextUtils.isEmpty(code4)
                 || TextUtils.isEmpty(code5)
                 || TextUtils.isEmpty(code6)
-            ){
-                showMsg(requireContext(),"请输入完整的验证码")
-            }else{
-                Log.v(LOG_TAG,"codeVerifySuccessUser=${args.codeVerifySuccessUser}")
+            ) {
+                showMsg(requireContext(), "请输入完整的验证码")
+            } else {
+                Log.v(LOG_TAG, "codeVerifySuccessUser=${args.codeVerifySuccessUser}")
                 args.codeVerifySuccessUser.run {
-                    viewModel.signOrLogin(name,workNum,pwd,identification,phoneNum,
+                    viewModel.signOrLogin(
+                        name, workNum, pwd, identification, phoneNum,
                         "$code1$code2$code3$code4$code5$code6",
                         args.codeVerifySuccessUser.school,
                         args.codeVerifySuccessUser.department,
                         args.codeVerifySuccessUser.college
-                    ){ isSuccess, msg ->
-                        if (isSuccess){
+                    ) { isSuccess, msg ->
+                        if (isSuccess) {
                             //这里需要识别身份再进入对应主页
                             //识别身份
-                            Log.v(LOG_TAG,"输入code=$code1$code2$code3$code4$code5$code6")
-                            viewModel.getUserIdentificationAndNavigateFromVerify(identification,this@VerifyFragment)
-                        }else{
-                            showMsg(requireContext(),msg)
+                            Log.v(LOG_TAG, "输入code=$code1$code2$code3$code4$code5$code6")
+                            viewModel.getUserIdentificationAndNavigateFromVerify(
+                                identification,
+                                this@VerifyFragment
+                            )
+                        } else {
+                            showMsg(requireContext(), msg)
                         }
                     }
                 }

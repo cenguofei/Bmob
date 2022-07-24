@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         setBottomNavigationView()
-
         askPermission()
     }
 
@@ -101,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.usernameFragment
                 || destination.id == R.id.phoneNumberFragment
                 || destination.id == R.id.resetPasswordFragment
+                || destination.id == R.id.searchFragment
                 || destination.id == R.id.browseFragment
                 || destination.id == R.id.selectFragment
                 || destination.id == R.id.studentThesisFragment
@@ -183,31 +183,33 @@ class MainActivity : AppCompatActivity() {
 
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun askPermission(){
+    private fun askPermission() {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             //通过的权限
-            val grantedList = it.filterValues { booleanIt->
+            val grantedList = it.filterValues { booleanIt ->
                 booleanIt
-            }.mapNotNull { entryIt->
+            }.mapNotNull { entryIt ->
                 entryIt.key
             }
             //是否所有权限都通过
             val allGranted = grantedList.size == it.size
-            val list = (it - grantedList.toSet()).map {entryIt->
+            val list = (it - grantedList.toSet()).map { entryIt ->
                 entryIt.key
             }
             //未通过的权限
-            val deniedList = list.filter { stringIt->
+            val deniedList = list.filter { stringIt ->
                 ActivityCompat.shouldShowRequestPermissionRationale(this, stringIt)
             }
             //拒绝并且点了“不再询问”权限
             val alwaysDeniedList = list - deniedList.toSet()
-        }.launch(arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_SETTINGS,
-            Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-            Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS
-        ))
+        }.launch(
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_SETTINGS,
+                Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS
+            )
+        )
     }
 }

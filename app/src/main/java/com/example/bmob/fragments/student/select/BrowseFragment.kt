@@ -20,15 +20,15 @@ import com.example.bmob.viewmodels.StudentSelectViewModel
 /**
  * 浏览有课题的各个老师
  */
-class BrowseFragment : Fragment(),FragmentEventListener {
-    private lateinit var binding:FragmentBrowseBinding
-    private val selectViewModel:StudentSelectViewModel by activityViewModels()
-    private val setViewModel:SetViewModel by activityViewModels()
+class BrowseFragment : Fragment(), FragmentEventListener {
+    private lateinit var binding: FragmentBrowseBinding
+    private val selectViewModel: StudentSelectViewModel by activityViewModels()
+    private val setViewModel: SetViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBrowseBinding.inflate(inflater,container,false)
+        binding = FragmentBrowseBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,24 +37,25 @@ class BrowseFragment : Fragment(),FragmentEventListener {
         setEventListener()
 
         //设置选题学生的校院系
-        setViewModel.getUserByQuery().observe(viewLifecycleOwner){
+        setViewModel.getUserByQuery().observe(viewLifecycleOwner) {
             binding.user = it
         }
 
-        selectViewModel.getAllTeacherInDepartmentLiveData(setViewModel.getUserByQuery().value!!){
-            showMsg(requireContext(),it)
-        }.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
-                Log.v(LOG_TAG,"BrowseFragment查询可选课题的老师的课题成功了")
+        selectViewModel.getAllTeacherInDepartmentLiveData(setViewModel.getUserByQuery().value!!) {
+            showMsg(requireContext(), it)
+        }.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Log.v(LOG_TAG, "BrowseFragment查询可选课题的老师的课题成功了")
                 val browseTeacherHasThesisAdapter =
-                    BrowseTeacherHasThesisAdapter(it!!) {teacher->
-                        Log.v(LOG_TAG,"被点击：$teacher")
+                    BrowseTeacherHasThesisAdapter(it!!) { teacher ->
+                        Log.v(LOG_TAG, "被点击：$teacher")
                         val actionBrowseFragmentToSelectFragment =
                             BrowseFragmentDirections.actionBrowseFragmentToSelectFragment(teacher)
                         findNavController().navigate(actionBrowseFragmentToSelectFragment)
                     }
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),
-                    RecyclerView.VERTICAL,false
+                binding.recyclerView.layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    RecyclerView.VERTICAL, false
                 )
                 binding.recyclerView.adapter = browseTeacherHasThesisAdapter
             }

@@ -29,7 +29,7 @@ import java.util.*
 
 class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
     private val repository = BmobRepository.getInstance()
-    private var nowSearch = MutableLiveData<String>()
+    private var _nowSearch = MutableLiveData<String>()
     private lateinit var fragment: Fragment
 
     fun setFragment(fragment: Fragment) {
@@ -38,13 +38,13 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
 
     //设置当前的搜索内容
     fun setNowSearch(query: String) {
-        nowSearch.postValue(query)
+        _nowSearch.postValue(query)
     }
 
-    fun getNowSearch() = nowSearch
+    var nowSearch = _nowSearch
 
     //外部观察
-    var searchResult = Transformations.switchMap(nowSearch) { query ->
+    var searchResult = Transformations.switchMap(_nowSearch) { query ->
         switchSearchAnyThesis(query)
     }
 
@@ -136,18 +136,18 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
     fun updateStudentSelectState(
         student: User,
         releaseTime: ReleaseTime,
-        callback: (isSuccess: Boolean, student:User?,msg: String) -> Unit
+        callback: (isSuccess: Boolean, student: User?, msg: String) -> Unit
     ) {
-        student.studentSelectState = determineStudentSelectStateByReleaseTime(student,releaseTime)
-        if (student.studentSelectState == false){
+        student.studentSelectState = determineStudentSelectStateByReleaseTime(student, releaseTime)
+        if (student.studentSelectState == false) {
             student.studentThesis = null
         }
         student.update(object : UpdateListener() {
             override fun done(p0: BmobException?) {
                 if (p0 == null) {
-                    callback.invoke(true,student, EMPTY_TEXT)
+                    callback.invoke(true, student, EMPTY_TEXT)
                 } else {
-                    callback.invoke(false,null, p0.message.toString())
+                    callback.invoke(false, null, p0.message.toString())
                 }
             }
         })
@@ -163,7 +163,7 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
                 ) {
                     if (p1 == null && p0 != null && p0.isNotEmpty()) {
                         callback.invoke(p0[0])
-                    }else callback.invoke(null)
+                    } else callback.invoke(null)
                 }
             })
     }
@@ -171,7 +171,10 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
     /**
      * 通过releaseTime决定学生的studentSelectState属性是true还是false
      */
-    private fun determineStudentSelectStateByReleaseTime(student:User,releaseTime: ReleaseTime): Boolean {
+    private fun determineStudentSelectStateByReleaseTime(
+        student: User,
+        releaseTime: ReleaseTime
+    ): Boolean {
         return try {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
             val endTime = simpleDateFormat.parse(releaseTime.endTime)
@@ -188,17 +191,17 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
 
             if (dateSystem != null) {
                 if (dateSystem.after(endTime)) {
-                    Log.v(LOG_TAG,"系统时间大于 选题结束时间  更新为false")
+                    Log.v(LOG_TAG, "系统时间大于 选题结束时间  更新为false")
                     return false
                 }
             }
 //            Log.v(LOG_TAG,"系统时间小于 选题结束时间  更新为true")
 
 //            return student.studentSelectState != false
-            if (student.studentSelectState == false){
-                Log.v(LOG_TAG,"更新为false")
+            if (student.studentSelectState == false) {
+                Log.v(LOG_TAG, "更新为false")
                 return false
-            }else return true
+            } else return true
         } catch (e: Exception) {
             e.printStackTrace()
             false

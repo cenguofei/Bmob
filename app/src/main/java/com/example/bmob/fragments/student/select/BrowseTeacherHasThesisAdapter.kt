@@ -8,18 +8,20 @@ import com.example.bmob.databinding.StudentSelectTeacherItemBinding
 
 
 class BrowseTeacherHasThesisAdapter(
-    private var userList:List<User>,
-    private val callback:(user: User)->Unit
-): RecyclerView.Adapter<BrowseTeacherHasThesisAdapter.SearchViewHolder>() {
-    class SearchViewHolder(val binding: StudentSelectTeacherItemBinding): RecyclerView.ViewHolder(binding.root) {
-        companion object{
-            fun createViewHolder(parent: ViewGroup):SearchViewHolder{
+    private var userList: List<User>,
+    private val callback: (user: User) -> Unit
+) : RecyclerView.Adapter<BrowseTeacherHasThesisAdapter.SearchViewHolder>() {
+    class SearchViewHolder(val binding: StudentSelectTeacherItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        companion object {
+            fun createViewHolder(parent: ViewGroup): SearchViewHolder {
                 val from = LayoutInflater.from(parent.context)
                 val itemBinding = StudentSelectTeacherItemBinding.inflate(from, parent, false)
                 return SearchViewHolder(itemBinding)
             }
         }
-        fun bind(user: User, callback: (thesis: User) -> Unit){
+
+        fun bind(user: User, callback: (thesis: User) -> Unit) {
             binding.user = user
             binding.root.setOnClickListener {
                 callback.invoke(user)
@@ -32,7 +34,7 @@ class BrowseTeacherHasThesisAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(user = userList[position],callback)
+        holder.bind(user = userList[position], callback)
     }
 
     override fun getItemCount(): Int = userList.size

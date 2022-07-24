@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="provost"
             type="com.example.bmob.data.entity.User" />
+
         <variable
             name="releaseTimeEntity"
             type="com.example.bmob.data.entity.ReleaseTime" />

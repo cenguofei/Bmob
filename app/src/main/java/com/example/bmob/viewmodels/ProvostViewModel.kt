@@ -15,14 +15,14 @@ import com.example.bmob.utils.LOG_TAG
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
+class ProvostViewModel(private val handler: SavedStateHandle) : ViewModel() {
     private val repository = BmobRepository.getInstance()
 
-    fun getProvostReleaseSelectTimeLiveData(provost: User):MutableLiveData<ReleaseTime>{
-        if (!handler.contains(PROVOST_RELEASE_SELECT_TIME)){
-            repository.queryIssuedReleaseTime(provost){
-                if (it != null){
-                    handler.set(PROVOST_RELEASE_SELECT_TIME,it)
+    fun getProvostReleaseSelectTimeLiveData(provost: User): MutableLiveData<ReleaseTime> {
+        if (!handler.contains(PROVOST_RELEASE_SELECT_TIME)) {
+            repository.queryIssuedReleaseTime(provost) {
+                if (it != null) {
+                    handler.set(PROVOST_RELEASE_SELECT_TIME, it)
                 }
             }
         }
@@ -32,9 +32,9 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
     fun saveTime(
         beginTime: String,
         endTime: String,
-        provost:User,
+        provost: User,
         callback: (isSuccess: Boolean, message: String) -> Unit
-    ){
+    ) {
         ReleaseTime(
             provost.objectId,
             provost.name!!,
@@ -43,13 +43,13 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
             endTime = endTime,
             true
         ).run {
-            save(object :SaveListener<String>(){
+            save(object : SaveListener<String>() {
                 override fun done(p0: String?, p1: BmobException?) {
-                    if (p1 == null){
+                    if (p1 == null) {
                         callback.invoke(true, "保存成功")
-                        handler.set(PROVOST_RELEASE_SELECT_TIME,this@run)
-                    }else{
-                        callback.invoke(false,p1.message.toString())
+                        handler.set(PROVOST_RELEASE_SELECT_TIME, this@run)
+                    } else {
+                        callback.invoke(false, p1.message.toString())
                     }
                 }
             })
@@ -58,12 +58,12 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
 
 
     fun checkIsEndValid(
-        beginTime:String,
-        endTime:String,
-        callback: (isValid: Boolean,message:String) -> Unit
-    ){
-        if (beginTime == EMPTY_TEXT || endTime == EMPTY_TEXT){
-            callback.invoke(false,"请输入时间")
+        beginTime: String,
+        endTime: String,
+        callback: (isValid: Boolean, message: String) -> Unit
+    ) {
+        if (beginTime == EMPTY_TEXT || endTime == EMPTY_TEXT) {
+            callback.invoke(false, "请输入时间")
             return
         }
         try {
@@ -73,8 +73,8 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
 
             //开始时间不能大于结束时间
             if (dateBegin != null) {
-                if (dateBegin.after(dateEnd)){
-                    callback.invoke(false,"开始时间不能大于结束时间")
+                if (dateBegin.after(dateEnd)) {
+                    callback.invoke(false, "开始时间不能大于结束时间")
                     return
                 }
             }
@@ -88,13 +88,13 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
 
             //开始时间不能小于系统当前时间
             if (dateSystem != null) {
-                if (dateSystem.after(dateBegin)){
-                    callback.invoke(false,"开始时间不能小于系统当前时间")
+                if (dateSystem.after(dateBegin)) {
+                    callback.invoke(false, "开始时间不能小于系统当前时间")
                     return
                 }
             }
-        }catch (e:Exception){
-            callback.invoke(false,"系统故障")
+        } catch (e: Exception) {
+            callback.invoke(false, "系统故障")
             e.printStackTrace()
         }
         callback.invoke(true, EMPTY_TEXT)
@@ -122,19 +122,19 @@ class ProvostViewModel(private val handler:SavedStateHandle):ViewModel() {
             )
         release.beginTime = beginTime
         release.endTime = endTime
-        releaseTime.update(release.objectId,object :UpdateListener(){
+        releaseTime.update(release.objectId, object : UpdateListener() {
             override fun done(p0: BmobException?) {
-                if (p0 == null){
+                if (p0 == null) {
                     callback.invoke("更新成功")
-                }else{
-                    Log.v(LOG_TAG,"更新失败：${p0.message}")
+                } else {
+                    Log.v(LOG_TAG, "更新失败：${p0.message}")
                     callback.invoke("更新失败:${p0.message}")
                 }
             }
         })
     }
 
-    companion object{
+    companion object {
         private const val PROVOST_RELEASE_SELECT_TIME = "_pro_rel_"
     }
 }

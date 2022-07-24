@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="dean"
-            type= "com.example.bmob.data.entity.User"/>
+            type="com.example.bmob.data.entity.User" />
 
     </data>
 
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:layout_constraintTop_toBottomOf="@+id/searchViewTv"
             app:tabGravity="start"
             android:textSize="18sp"
             app:tabIndicatorColor="@color/blue"
@@ -32,6 +33,7 @@
             app:tabRippleColor="@color/cardview_shadow_end_color"
             app:tabSelectedTextColor="@color/blue"
             app:tabTextColor="@color/blue" />
+
         <ImageView
             android:id="@+id/backImg"
             android:layout_width="wrap_content"
@@ -56,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/searchViewTv"
             android:layout_width="0dp"
             android:layout_height="40dp"
 
@@ -94,9 +96,9 @@
             android:layout_marginStart="20dp"
             android:contentDescription="@string/todo"
             android:src="@drawable/search"
-            app:layout_constraintBottom_toBottomOf="@+id/searchView"
-            app:layout_constraintStart_toStartOf="@+id/searchView"
-            app:layout_constraintTop_toTopOf="@+id/searchView" />
+            app:layout_constraintBottom_toBottomOf="@+id/searchViewTv"
+            app:layout_constraintStart_toStartOf="@+id/searchViewTv"
+            app:layout_constraintTop_toTopOf="@+id/searchViewTv" />
 
         <TextView
             android:id="@+id/textView18"
@@ -116,9 +118,9 @@
             android:textColor="@color/grey_light"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backImg"
-            >
-            <requestFocus/>
+            app:layout_constraintTop_toBottomOf="@+id/backImg">
+
+            <requestFocus />
         </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView

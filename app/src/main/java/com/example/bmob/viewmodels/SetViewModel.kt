@@ -22,7 +22,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
@@ -32,7 +31,6 @@ import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
 import com.example.bmob.R
 import com.example.bmob.data.entity.ReleaseTime
-import com.example.bmob.data.entity.STUDENT_NOT_SELECT_THESIS
 import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.data.storage.SettingsDataStore
@@ -88,7 +86,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             val resultCode = it.resultCode
             if (resultCode == AppCompatActivity.RESULT_OK) {
                 val uri = data?.data
-                Log.v(LOG_TAG,"uri=$uri")
+                Log.v(LOG_TAG, "uri=$uri")
                 file = uriToFileQ(fragment.requireContext(), uri!!)
                 Log.v(LOG_TAG, "uriToFileQ path = ${file?.path}  uri=$uri")
                 //存储图片
@@ -139,7 +137,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
      * 关键方法，全局都会用到
      */
     fun getUserByQuery(): MutableLiveData<User> {
-        Log.v(LOG_TAG,"getUserByQuery(): MutableLiveData<User>")
+        Log.v(LOG_TAG, "getUserByQuery(): MutableLiveData<User>")
         if (!handler.contains(QUERY_USER_KEY)) {
             repository.getUserInfo { isSuccess, user ->
                 if (isSuccess && user != null) {
@@ -420,7 +418,14 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     /**
      * 设置时间选择器
      */
-    fun selectTime(context: Context, title:String, monthOff:Int, dayOff:Int, hourOff:Int, callback: (time:String)->Unit) {
+    fun selectTime(
+        context: Context,
+        title: String,
+        monthOff: Int,
+        dayOff: Int,
+        hourOff: Int,
+        callback: (time: String) -> Unit
+    ) {
         val calendar: Calendar = Calendar.getInstance()
         var yearBegin: Int = calendar.get(Calendar.YEAR)
         var monthBegin: Int = calendar.get(Calendar.MONTH) + 1

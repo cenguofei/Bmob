@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="com.example.bmob.data.entity.User" />
@@ -45,32 +46,19 @@
             app:layout_constraintTop_toTopOf="@+id/headImg11" />
 
 
-        <SearchView
-            android:id="@+id/searchView1"
+        <TextView
+            android:id="@+id/searchViewTv"
             android:layout_width="0dp"
             android:layout_height="40dp"
-
-            android:layout_gravity="center"
             android:layout_marginStart="10dp"
+            android:paddingStart="60dp"
+            android:paddingEnd="0dp"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_weight="1"
             android:background="@drawable/search_shape"
-            android:iconifiedByDefault="false"
-
-            android:imeOptions="actionSearch"
-            android:paddingStart="40dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="1dp"
-            android:paddingBottom="5dp"
-            android:queryBackground="@null"
-            android:queryHint="@string/find_thesis"
-            android:searchIcon="@null"
-            android:showDividers="none"
-            android:submitBackground="@null"
-            android:textAlignment="center"
-
-            app:iconifiedByDefault="false"
+            android:text="@string/find_thesis"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,10 +75,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView1">
+            app:layout_constraintTop_toBottomOf="@+id/searchViewTv">
 
             <com.youth.banner.Banner
-                android:id="@+id/banner1"
+                android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="154dp"
                 android:layout_marginStart="10dp"
@@ -101,7 +89,7 @@
                 app:banner_orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchView" />
+                app:layout_constraintTop_toBottomOf="@+id/searchViewTv" />
 
             <LinearLayout
                 android:layout_gravity="center"
@@ -192,7 +180,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView1"
+            app:layout_constraintTop_toBottomOf="@+id/searchViewTv"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
@@ -201,9 +189,9 @@
             android:layout_height="30dp"
             android:src="@drawable/search"
             android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/searchView1"
-            app:layout_constraintStart_toStartOf="@+id/searchView1"
-            app:layout_constraintTop_toTopOf="@+id/searchView1"
+            app:layout_constraintBottom_toBottomOf="@+id/searchViewTv"
+            app:layout_constraintStart_toStartOf="@+id/searchViewTv"
+            app:layout_constraintTop_toTopOf="@+id/searchViewTv"
             android:contentDescription="@string/todo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="thesisTeacherName"
             type="java.lang.String" />
@@ -47,6 +48,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/itemContainer"
@@ -55,7 +57,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

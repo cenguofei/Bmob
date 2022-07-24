@@ -14,21 +14,21 @@ import com.example.bmob.databinding.FragmentUsernameBinding
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
 
-class UsernameFragment : Fragment(),FragmentEventListener {
-    private lateinit var binding:FragmentUsernameBinding
-    private val userViewModel:BmobUserViewModel by activityViewModels()
+class UsernameFragment : Fragment(), FragmentEventListener {
+    private lateinit var binding: FragmentUsernameBinding
+    private val userViewModel: BmobUserViewModel by activityViewModels()
     private var username = EMPTY_USERNAME
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentUsernameBinding.inflate(inflater,container,false)
+        binding = FragmentUsernameBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (userViewModel.isLogin()){
+        if (userViewModel.isLogin()) {
             username = BmobUser.getCurrentUser().username.toString()
             binding.username = username
         }
@@ -38,16 +38,18 @@ class UsernameFragment : Fragment(),FragmentEventListener {
     override fun setEventListener() {
         binding.nextBtn.setOnClickListener {
             val text = binding.editText.text
-            if (TextUtils.isEmpty(text)){
-                showMsg(requireContext(),"请输入账号")
-            }else{
-                userViewModel.ifExistUserForGivenUsername(text.toString()){isExist, msg ->
-                    if (isExist){
+            if (TextUtils.isEmpty(text)) {
+                showMsg(requireContext(), "请输入账号")
+            } else {
+                userViewModel.ifExistUserForGivenUsername(text.toString()) { isExist, msg ->
+                    if (isExist) {
                         val navDirections =
-                            UsernameFragmentDirections.actionUsernameFragmentToPhoneNumberFragment(text.toString())
+                            UsernameFragmentDirections.actionUsernameFragmentToPhoneNumberFragment(
+                                text.toString()
+                            )
                         findNavController().navigate(navDirections)
-                    }else{
-                        showMsg(requireContext(),msg)
+                    } else {
+                        showMsg(requireContext(), msg)
                     }
                 }
             }

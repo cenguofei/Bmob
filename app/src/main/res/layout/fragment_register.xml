@@ -11,6 +11,7 @@
         android:id="@+id/backImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/back_img"
@@ -21,10 +22,11 @@
         android:id="@+id/text_zhuCe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/signup"
         android:textColor="@color/blue"
         android:textSize="30sp"
-        android:layout_marginBottom="5dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/backImg"
         app:layout_constraintStart_toEndOf="@+id/backImg"
@@ -268,7 +270,6 @@
         android:paddingEnd="15dp"
 
 
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pwdEv"
@@ -291,7 +292,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/schoolEv"
         tools:ignore="LabelFor,RtlSymmetry" />
-
 
 
     <EditText

@@ -13,7 +13,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentSetBinding
 import com.example.bmob.databinding.SexPopupWindowBinding
-import com.example.bmob.utils.BindingAdapter
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.IMAGE_TYPE_BACKGROUND
@@ -33,22 +32,22 @@ import com.example.bmob.viewmodels.SetViewModel
  * 但是显示不了方法：
  * android:usesCleartextTraffic="true"
  */
-class SetFragment : Fragment() ,FragmentEventListener{
-    lateinit var binding:FragmentSetBinding
-    private val viewModel:SetViewModel by activityViewModels()
-    private val args:SetFragmentArgs by navArgs()
+class SetFragment : Fragment(), FragmentEventListener {
+    lateinit var binding: FragmentSetBinding
+    private val viewModel: SetViewModel by activityViewModels()
+    private val args: SetFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.setRegister(this)
-        Log.v(LOG_TAG,"SetFragment  viewModel $viewModel")
+        Log.v(LOG_TAG, "SetFragment  viewModel $viewModel")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSetBinding.inflate(inflater,container,false)
+        binding = FragmentSetBinding.inflate(inflater, container, false)
         binding.user = args.userInfo
         viewModel.setSettingsDataStore(requireContext())
         return binding.root
@@ -58,11 +57,11 @@ class SetFragment : Fragment() ,FragmentEventListener{
         super.onViewCreated(view, savedInstanceState)
         setEventListener()
 
-        viewModel.getBmobUser().observe(viewLifecycleOwner){
-            Log.v(LOG_TAG,"SetFragment BmobUser  id  :$it")
+        viewModel.getBmobUser().observe(viewLifecycleOwner) {
+            Log.v(LOG_TAG, "SetFragment BmobUser  id  :$it")
         }
-        viewModel.getUserByQuery().observe(viewLifecycleOwner){
-            Log.v(LOG_TAG,"SetFragment User  id  :$it")
+        viewModel.getUserByQuery().observe(viewLifecycleOwner) {
+            Log.v(LOG_TAG, "SetFragment User  id  :$it")
         }
     }
 
@@ -76,8 +75,8 @@ class SetFragment : Fragment() ,FragmentEventListener{
             viewModel.openFile(IMAGE_TYPE_HEAD)
         }
         binding.saveConfigBtn.setOnClickListener {
-            if (isInputAllInvalid()){
-                viewModel.saveUserEdit(this){
+            if (isInputAllInvalid()) {
+                viewModel.saveUserEdit(this) {
                     findNavController().navigateUp()
                 }
             }
@@ -92,47 +91,48 @@ class SetFragment : Fragment() ,FragmentEventListener{
             true
         )
         popupWindowBinding.radioButtonMan.setOnClickListener {
-            Log.v(LOG_TAG,"男")
+            Log.v(LOG_TAG, "男")
             binding.editGenderEv.text = "男"
             popupWindow.dismiss()
-            Log.v(LOG_TAG,"args.userInfo:${args.userInfo}")
+            Log.v(LOG_TAG, "args.userInfo:${args.userInfo}")
         }
         popupWindowBinding.radioButtonWoman.setOnClickListener {
-            Log.v(LOG_TAG,"女")
+            Log.v(LOG_TAG, "女")
             binding.editGenderEv.text = "女"
             popupWindow.dismiss()
-            Log.v(LOG_TAG,"args.userInfo:${args.userInfo}")
+            Log.v(LOG_TAG, "args.userInfo:${args.userInfo}")
         }
         binding.editGenderEv.setOnClickListener {
-            popupWindow.showAsDropDown(it,it.width/8,it.height/8)
+            popupWindow.showAsDropDown(it, it.width / 8, it.height / 8)
         }
         binding.editBirthEv.setOnClickListener {
-            viewModel.selectTime(requireContext(),"选择生日",0,0,0){
+            viewModel.selectTime(requireContext(), "选择生日", 0, 0, 0) {
                 val birthFormat = it.split(" ")[0]
                 binding.editBirthEv.text = birthFormat
-                Log.v(LOG_TAG,"args.userInfo:${args.userInfo}")
+                Log.v(LOG_TAG, "args.userInfo:${args.userInfo}")
             }
         }
     }
-    private fun isInputAllInvalid():Boolean{
-        if (binding.editUsernameEv.text.isEmpty()){
-            showMsg(requireContext(),"用户名不能为空")
+
+    private fun isInputAllInvalid(): Boolean {
+        if (binding.editUsernameEv.text.isEmpty()) {
+            showMsg(requireContext(), "用户名不能为空")
             return false
         }
-        if (binding.editSchoolEv.text.isEmpty()){
-            showMsg(requireContext(),"学校不能为空")
+        if (binding.editSchoolEv.text.isEmpty()) {
+            showMsg(requireContext(), "学校不能为空")
             return false
         }
-        if (binding.editCollegeEv.text.isEmpty()){
-            showMsg(requireContext(),"学院不能为空")
+        if (binding.editCollegeEv.text.isEmpty()) {
+            showMsg(requireContext(), "学院不能为空")
             return false
         }
-        if (binding.editDepartmentEv.text.isEmpty()){
-            showMsg(requireContext(),"系不能为空")
+        if (binding.editDepartmentEv.text.isEmpty()) {
+            showMsg(requireContext(), "系不能为空")
             return false
         }
-        if (binding.editPhoneNumberEv.text.isEmpty()){
-            showMsg(requireContext(),"手机号不能为空")
+        if (binding.editPhoneNumberEv.text.isEmpty()) {
+            showMsg(requireContext(), "手机号不能为空")
             return false
         }
         return true

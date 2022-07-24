@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
@@ -132,7 +133,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
-<!--
-android.content.res.Resources$NotFoundException: String resource ID #0x63
-报这个错是因为没有把int的selectedNum转换为String
--->
+    <!--
+    android.content.res.Resources$NotFoundException: String resource ID #0x63
+    报这个错是因为没有把int的selectedNum转换为String
+    -->

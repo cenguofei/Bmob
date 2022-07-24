@@ -59,8 +59,9 @@
         <shape>
             <solid android:color="#FFFFFF" />
             <corners android:radius="10dp" />
-            <size android:width="311dp" android:height="61.5dp"
-                />
+            <size
+                android:width="311dp"
+                android:height="61.5dp" />
         </shape>
     </item>
 

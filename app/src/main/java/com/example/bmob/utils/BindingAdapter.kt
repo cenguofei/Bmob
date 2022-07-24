@@ -11,7 +11,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.bmob.R
 import com.example.bmob.data.entity.*
-import com.example.bmob.viewmodels.DeanStudentSelectedModel
 import java.util.*
 
 object BindingAdapter {
@@ -25,21 +24,21 @@ object BindingAdapter {
      */
     @JvmStatic
     @BindingAdapter("phoneNumberForFindPassword")
-    fun phoneNumberForFindPassword(textView: TextView?,phoneNumber:String?){
+    fun phoneNumberForFindPassword(textView: TextView?, phoneNumber: String?) {
         if (phoneNumber != null) {
-            if (phoneNumber.isEmpty()){
+            if (phoneNumber.isEmpty()) {
                 if (textView != null) {
                     textView.text = ""
                 }
-            }else{
-                val startNum = phoneNumber.subSequence(0,3)
-                val endNum = phoneNumber.subSequence(phoneNumber.length-3,phoneNumber.length)
+            } else {
+                val startNum = phoneNumber.subSequence(0, 3)
+                val endNum = phoneNumber.subSequence(phoneNumber.length - 3, phoneNumber.length)
                 val content = "请填写出完整的手机号 $startNum******$endNum 以验证身份"
                 val spannableString = SpannableString(content)
                 spannableString.setSpan(
                     ForegroundColorSpan(Color.parseColor("#FF0000")),
                     11,
-                    spannableString.length-5,
+                    spannableString.length - 5,
                     SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 if (textView != null) {
@@ -52,7 +51,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("loadRoundCircleHeadImage")
-    fun loadRoundCircleHeadImage(imageView: ImageView?, url: String?){
+    fun loadRoundCircleHeadImage(imageView: ImageView?, url: String?) {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
@@ -64,7 +63,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("loadHeadImage")
-    fun loadHeadImage(imageView: ImageView?, url: String?){
+    fun loadHeadImage(imageView: ImageView?, url: String?) {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
@@ -76,7 +75,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("loadUserCircleImage")
-    fun loadUserCircleImage(imageView: ImageView?, url: String?){
+    fun loadUserCircleImage(imageView: ImageView?, url: String?) {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
@@ -88,7 +87,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("loadRectImage")
-    fun loadRectImage(imageView: ImageView?, url: String?){
+    fun loadRectImage(imageView: ImageView?, url: String?) {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
@@ -99,7 +98,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("setRoleStartHello")
-    fun setRoleStartHello(textView: TextView?,user: User?){
+    fun setRoleStartHello(textView: TextView?, user: User?) {
         val identity = when (user?.identification) {
             IDENTIFICATION_STUDENT -> {
                 "学生"
@@ -122,7 +121,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("loadUserCircleImage1")
-    fun loadUserCircleImage1(imageView: ImageView?, url: String?){
+    fun loadUserCircleImage1(imageView: ImageView?, url: String?) {
         if (imageView != null) {
             Glide.with(imageView.context)
                 .load(url)
@@ -135,44 +134,46 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("teacherThesisIsApproved")
-    fun teacherThesisIsApproved(textView: TextView?,thesis: Thesis){
-        when(thesis.thesisState){
+    fun teacherThesisIsApproved(textView: TextView?, thesis: Thesis) {
+        when (thesis.thesisState) {
             NOT_APPROVED -> {
                 textView?.text = "审核中"
             }
             ALREADY_APPROVED -> {
                 textView?.text = "审核通过"
             }
-            THESIS_APPROVED_REJECTED -> {
+            THESIS_APPROVE_REJECTED -> {
                 textView?.text = "审核未通过"
             }
         }
     }
+
     @JvmStatic
     @BindingAdapter("deanItemText")
-    fun deanItemText(textView: TextView?,user: User?){
-        if (textView != null){
-            if (user != null){
-                if (user.studentClass.equals(" ")){
+    fun deanItemText(textView: TextView?, user: User?) {
+        if (textView != null) {
+            if (user != null) {
+                if (user.studentClass.equals(" ")) {
                     textView.text = "${user.name}"
-                }else{
+                } else {
                     textView.text = "${user.studentClass} ${user.name}"
                 }
             }
         }
     }
+
     @JvmStatic
     @BindingAdapter("userAge")
-    fun userAge(textView: TextView?,birth:String?){
-        if (textView != null){
-            if (birth != null){
+    fun userAge(textView: TextView?, birth: String?) {
+        if (textView != null) {
+            if (birth != null) {
                 textView.text = getAge(birth)
             }
         }
     }
 
-    fun getAge(birth: String?):String{
-        return if (birth != null){
+    fun getAge(birth: String?): String {
+        return if (birth != null) {
             try {
                 val subSequence = birth.subSequence(0, 4).toString()
                 val birthYear = subSequence.toInt()
@@ -180,10 +181,10 @@ object BindingAdapter {
                 val year: Int = calendar.get(Calendar.YEAR)
                 val age = year - birthYear
                 age.toString()
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 ""
             }
-        }else ""
+        } else ""
     }
 }

@@ -14,7 +14,8 @@ import com.example.bmob.utils.*
 class BmobRepository private constructor() {
 
     companion object {
-        @Volatile private var INSTANCE: BmobRepository? = null
+        @Volatile
+        private var INSTANCE: BmobRepository? = null
 
         //单例模式，获取实例
         fun getInstance() = INSTANCE ?: synchronized(this) {
@@ -332,7 +333,7 @@ class BmobRepository private constructor() {
                 ) {
                     if (p1 == null && p0 != null && p0.isNotEmpty()) {
                         callback.invoke(p0[0])
-                    }else callback.invoke(null)
+                    } else callback.invoke(null)
                 }
             })
     }

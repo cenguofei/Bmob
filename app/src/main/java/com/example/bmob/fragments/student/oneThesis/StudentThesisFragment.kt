@@ -17,33 +17,33 @@ import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.StudentThesisViewModel
 
-class StudentThesisFragment : Fragment(),FragmentEventListener {
-    private lateinit var binding:FragmentStudentThesisBinding
-    private val setViewModel:SetViewModel by activityViewModels()
-    private val viewModel:StudentThesisViewModel by viewModels()
+class StudentThesisFragment : Fragment(), FragmentEventListener {
+    private lateinit var binding: FragmentStudentThesisBinding
+    private val setViewModel: SetViewModel by activityViewModels()
+    private val viewModel: StudentThesisViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =FragmentStudentThesisBinding.inflate(inflater,container,false)
+        binding = FragmentStudentThesisBinding.inflate(inflater, container, false)
 
-        setViewModel.getUserByQuery().observe(viewLifecycleOwner){
-            setViewModel.isSelectTime(it){ isSelectTime, _ ->
-                if (!isSelectTime){
-                    showMsg(requireContext(),"课题已过期")
+        setViewModel.getUserByQuery().observe(viewLifecycleOwner) {
+            setViewModel.isSelectTime(it) { isSelectTime, _ ->
+                if (!isSelectTime) {
+                    showMsg(requireContext(), "课题已过期")
                     binding.selectThesisBtn.setBackgroundColor(R.color.grey_light)
                     binding.selectThesisBtn.isEnabled = false
                 }
             }
 
-            if (it.studentSelectState!!){
-                if (it.studentThesis != null){
+            if (it.studentSelectState!!) {
+                if (it.studentThesis != null) {
                     binding.student = it
                     binding.thesis = it.studentThesis
-                    Log.v(LOG_TAG,"student的thesis：${it.studentThesis}")
+                    Log.v(LOG_TAG, "student的thesis：${it.studentThesis}")
                 }
-            }else showMsg(requireContext(),"您还没有选择课题，点击选择选择课题")
+            } else showMsg(requireContext(), "您还没有选择课题，点击选择选择课题")
         }
         setEventListener()
         return binding.root
@@ -51,9 +51,9 @@ class StudentThesisFragment : Fragment(),FragmentEventListener {
 
     override fun setEventListener() {
         binding.outButton.setOnClickListener {
-            viewModel.studentOutThesis(setViewModel.getUserByQuery().value!!){isSuccess,student,message ->
-                showMsg(requireContext(),message)
-                if (isSuccess){
+            viewModel.studentOutThesis(setViewModel.getUserByQuery().value!!) { isSuccess, student, message ->
+                showMsg(requireContext(), message)
+                if (isSuccess) {
                     setViewModel.setUserByQuery(student!!)
                 }
             }

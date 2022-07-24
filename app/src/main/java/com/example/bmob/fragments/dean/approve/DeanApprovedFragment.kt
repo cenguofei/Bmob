@@ -32,11 +32,11 @@ class DeanApprovedFragment : Fragment() {
         viewModel.getQueryThesisToDeanApprovedLiveData(
             setViewModel.getUserByQuery().value!!,
             ALREADY_APPROVED
-        ){
-            showMsg(requireContext(),it)
-        }.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
-                val approveThesisAdapter = ApproveThesisAdapter(it!!){thesis->
+        ) {
+            showMsg(requireContext(), it)
+        }.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                val approveThesisAdapter = ApproveThesisAdapter(it!!) { thesis ->
                     val actionDeanApprovedFragmentToApproveFragment =
                         DeanApprovedFragmentDirections.actionDeanApprovedFragmentToApproveFragment(
                             thesis,
@@ -45,8 +45,10 @@ class DeanApprovedFragment : Fragment() {
                     findNavController().navigate(actionDeanApprovedFragmentToApproveFragment)
                 }
                 binding.recyclerView.run {
-                    layoutManager = LinearLayoutManager(requireContext(),
-                        RecyclerView.VERTICAL,false)
+                    layoutManager = LinearLayoutManager(
+                        requireContext(),
+                        RecyclerView.VERTICAL, false
+                    )
                     adapter = approveThesisAdapter
                 }
             }

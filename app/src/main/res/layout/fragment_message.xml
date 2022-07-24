@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.home.MessageFragment">
+    tools:context=".fragments.message.MessageFragment">
 
 
     <com.yanzhenjie.recyclerview.SwipeRecyclerView

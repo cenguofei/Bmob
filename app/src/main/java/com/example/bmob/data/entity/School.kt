@@ -7,7 +7,7 @@ import cn.bmob.v3.BmobObject
  * 用来查询学校 系  院是否存在
  */
 data class School(
-    val schoolName:String, //校名
-    val departments:List<String>, //这个学校的系
-    val college:List<String>  //系下的学院
-):BmobObject()
+    val schoolName: String, //校名
+    val departments: List<String>, //这个学校的系
+    val college: List<String>  //系下的学院
+) : BmobObject()

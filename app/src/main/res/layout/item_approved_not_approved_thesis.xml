@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="tile"
             type="java.lang.String" />
+
         <variable
             name="desc"
             type="java.lang.String" />
