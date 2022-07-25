@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.data.entity.NOT_APPROVED
+import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.FragmentDeanNotApprovedBinding
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.ApprovedNotApprovedViewModel
@@ -27,31 +28,32 @@ class DeanNotApprovedFragment : Fragment() {
     ): View {
         binding = FragmentDeanNotApprovedBinding.inflate(inflater, container, false)
 
-        binding.dean = setViewModel.getUserByQuery().value
-        viewModel.getQueryThesisToDeanNotApprovedLiveData(
-            setViewModel.getUserByQuery().value!!,
-            NOT_APPROVED
-        ) {
-            showMsg(requireContext(), it)
-        }.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                val approveThesisAdapter = ApproveThesisAdapter(it!!) { thesis ->
-                    val actionDeanNotApprovedFragmentToApproveFragment =
-                        DeanNotApprovedFragmentDirections.actionDeanNotApprovedFragmentToApproveFragment(
-                            thesis,
-                            true
-                        )
-                    findNavController().navigate(actionDeanNotApprovedFragmentToApproveFragment)
-                }
-                binding.recyclerView.run {
-                    layoutManager = LinearLayoutManager(
-                        requireContext(),
-                        RecyclerView.VERTICAL, false
-                    )
-                    adapter = approveThesisAdapter
-                }
-            }
+        setViewModel.getUserByQuery().value?.let {
+            binding.dean = it
+            viewModel.getQueryThesisToDeanNotApprovedLiveData(
+                it,
+                NOT_APPROVED
+            ) { msg ->  showMsg(requireContext(), msg) }
+                .observe(viewLifecycleOwner) { data -> initAdapter(data) }
         }
         return binding.root
+    }
+
+    private fun initAdapter(thesisList: MutableList<MutableList<Thesis>>) {
+        val approveThesisAdapter = ApproveThesisAdapter(thesisList) { thesis ->
+            val actionDeanNotApprovedFragmentToApproveFragment =
+                DeanNotApprovedFragmentDirections.actionDeanNotApprovedFragmentToApproveFragment(
+                    thesis,
+                    true
+                )
+            findNavController().navigate(actionDeanNotApprovedFragmentToApproveFragment)
+        }
+        binding.recyclerView.run {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                RecyclerView.VERTICAL, false
+            )
+            adapter = approveThesisAdapter
+        }
     }
 }

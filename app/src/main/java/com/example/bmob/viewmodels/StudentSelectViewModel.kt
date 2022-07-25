@@ -19,11 +19,6 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
     var isStudentSelectThesis = MutableLiveData<Boolean>()
     var releaseTime: ReleaseTime? = null
 
-    companion object {
-        private const val TEACHER_IN_DEPARTMENT_KEY = "_teacher_in_depart_"
-        private const val MUTABLE_THESIS_KEY = "_mu_thesis_"
-    }
-
     /**
      * @param teacher 某个老师的账号
      * 获取学生所在系的老师的所有课题
@@ -311,5 +306,10 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
             e.printStackTrace()
             false
         }
+    }
+
+    companion object {
+        private const val TEACHER_IN_DEPARTMENT_KEY = "_teacher_in_depart_"
+        private const val MUTABLE_THESIS_KEY = "_mu_thesis_"
     }
 }

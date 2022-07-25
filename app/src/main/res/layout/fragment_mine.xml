@@ -308,7 +308,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/editHeadIv"
-                app:srcCompat="@drawable/modify_user_info_img"
+                app:srcCompat="@drawable/edit_img"
                 android:contentDescription="@string/todo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

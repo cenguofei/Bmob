@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
+import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.FragmentStudentSelectedBinding
 import com.example.bmob.databinding.ItemDeanStudentSelectBinding
 import com.example.bmob.utils.JxlExcelUtil
@@ -32,31 +34,11 @@ class StudentSelectedFragment : Fragment(), FragmentEventListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStudentSelectedBinding.inflate(inflater, container, false)
-        binding.dean = setViewModel.getUserByQuery().value
-        viewModel.getStudentWhichHaveSelectedThesisLiveData(
-            setViewModel.getUserByQuery().value!!,
-            true
-        ) {
-            showMsg(requireContext(), it)
-        }.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
-                    val itemInflater = LayoutInflater.from(parent.context)
-                    RecyclerViewAdapter.ResultViewHolder(
-                        ItemDeanStudentSelectBinding.inflate(
-                            itemInflater,
-                            parent,
-                            false
-                        )
-                    )
-                }
-                val adapter = RecyclerViewAdapter(it) { binding, result ->
-                    (binding as ItemDeanStudentSelectBinding).user = result
-                }
-                binding.recyclerView.layoutManager =
-                    LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                binding.recyclerView.adapter = adapter
-            }
+        setViewModel.getUserByQuery().value?.let {
+            binding.dean = it
+            viewModel.getStudentWhichHaveSelectedThesisLiveData(it, true) { msg ->
+                showMsg(requireContext(), msg)
+            }.observe(viewLifecycleOwner) { data -> initAdapter(data) }
         }
         return binding.root
     }
@@ -94,5 +76,24 @@ class StudentSelectedFragment : Fragment(), FragmentEventListener {
                 }
             }
         }
+    }
+
+    private fun initAdapter(data: MutableList<User>) {
+        RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
+            val itemInflater = LayoutInflater.from(parent.context)
+            RecyclerViewAdapter.ResultViewHolder(
+                ItemDeanStudentSelectBinding.inflate(
+                    itemInflater,
+                    parent,
+                    false
+                )
+            )
+        }
+        val adapter = RecyclerViewAdapter(data) { binding, result ->
+            (binding as ItemDeanStudentSelectBinding).user = result
+        }
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.recyclerView.adapter = adapter
     }
 }

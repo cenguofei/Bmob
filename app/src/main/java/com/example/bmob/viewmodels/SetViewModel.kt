@@ -70,8 +70,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         }
     }
 
-//    private var headUri:Uri? = null
-//    private var backgroundUri:Uri? = null
     /**
      * 初始化register，
      * 必须要在onCreate的时候调用
@@ -81,38 +79,31 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         register = fragment.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
-            fragment.binding.progressBar.visibility = View.VISIBLE
             val data = it.data
             val resultCode = it.resultCode
             if (resultCode == AppCompatActivity.RESULT_OK) {
-                val uri = data?.data
-                Log.v(LOG_TAG, "uri=$uri")
-                file = uriToFileQ(fragment.requireContext(), uri!!)
-                Log.v(LOG_TAG, "uriToFileQ path = ${file?.path}  uri=$uri")
-                //存储图片
-                Log.v(LOG_TAG, "图片类型:${imageType}")
-                //上传头像
-                uploadImage(file!!, { isSuccess, msg ->
-                    if (isSuccess) {
-                        Log.v(LOG_TAG, "图片上传成功")
-                        //改变ui
-                        if ((imageType!!) == IMAGE_TYPE_HEAD) {
-//                            headUri = uri
-                            fragment.binding.editHeadIv.setImageURI(uri)
-                        } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND) {
-//                            backgroundUri = uri
-                            fragment.binding.backgroundIv.setImageURI(uri)
+                data?.data?.let { uri ->
+                    fragment.binding.progressBar.visibility = View.VISIBLE
+                    file = uriToFileQ(fragment.requireContext(), uri)
+                    //上传头像
+                    uploadImage(file!!, { isSuccess, msg ->
+                        if (isSuccess) {
+                            //改变ui
+                            if ((imageType!!) == IMAGE_TYPE_HEAD) {
+                                fragment.binding.editHeadIv.setImageURI(uri)
+                            } else if ((imageType!!) == IMAGE_TYPE_BACKGROUND) {
+                                fragment.binding.backgroundIv.setImageURI(uri)
+                            }
+                        } else {
+                            showMsg(fragment.requireContext(), msg)
                         }
-                    } else {
-                        Log.v(LOG_TAG, "图片上传失败")
-                        showMsg(fragment.requireContext(), msg)
-                    }
-                }) { progress ->
-                    if (progress != null) {
-                        //显示上传进度
-                        fragment.binding.progressBar.progress = progress
-                        if (progress == 100) {
-                            fragment.binding.progressBar.visibility = View.GONE
+                    }) { progress ->
+                        if (progress != null) {
+                            //显示上传进度
+                            fragment.binding.progressBar.progress = progress
+                            if (progress == 100) {
+                                fragment.binding.progressBar.visibility = View.GONE
+                            }
                         }
                     }
                 }
@@ -148,8 +139,8 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         return handler.getLiveData(QUERY_USER_KEY)
     }
 
-    fun setUserByQuery(student: User) {
-        handler.set(QUERY_USER_KEY, student)
+    fun setUserByQuery(user: User) {
+        handler.set(QUERY_USER_KEY, user)
     }
 
     /**
@@ -160,6 +151,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     fun removeUser() {
         handler.remove<BmobUser>(BMOB_USER_KEY)
         handler.remove<User>(QUERY_USER_KEY)
+        BmobUser.logOut()
     }
 
     /**
@@ -365,7 +357,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                     if (p1 == null && p0 != null && p0.isNotEmpty()) {
                         if (measureIsNowInSelectTime(p0[0]) { callback.invoke(false, it) }) {
                             callback.invoke(true, EMPTY_TEXT)
-                        }
+                        }else callback.invoke(false, EMPTY_TEXT)
                     } else {
                         callback.invoke(false, p1?.message.toString())
                     }
@@ -395,16 +387,12 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             //还没到选题时间
             if (dateSystem != null) {
                 if (dateSystem.before(beginTime)) {
-//                    callback.invoke("还没到选题时间")
-                    Log.v(LOG_TAG, "还没到选题时间:dateSystem:$dateSystem  beginTime$beginTime")
                     return false
                 }
             }
             //选题时间已经过了
             if (dateSystem != null) {
                 if (dateSystem.after(endTime)) {
-//                    callback.invoke("来晚了，选题时间已过")
-//                    callback.invoke("选题时间已过:dateSystem:$dateSystem  endTime:$endTime")
                     return false
                 }
             }
@@ -451,9 +439,9 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 yearBegin = datePicker.year
                 monthBegin = datePicker.month + 1
                 dayBegin = datePicker.dayOfMonth
-                hourBegin = timePicker.hour
-                minuteBegin = timePicker.minute
-                val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:00:00"
+                hourBegin = timePicker.hour-1
+                minuteBegin = timePicker.minute-1
+                val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:$minuteBegin:00"
                 Log.v(LOG_TAG, "选择的时间1：$dateString")
                 callback.invoke(dateString)
             }

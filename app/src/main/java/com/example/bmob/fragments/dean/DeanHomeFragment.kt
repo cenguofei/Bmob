@@ -12,13 +12,13 @@ import com.example.bmob.R
 import com.example.bmob.common.BannerAdapter
 import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentDeanHomeBinding
-import com.example.bmob.viewmodels.CommonHomeViewModel
+import com.example.bmob.viewmodels.SearchViewModel
 import com.example.bmob.viewmodels.SetViewModel
 import com.youth.banner.indicator.CircleIndicator
 
 class DeanHomeFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentDeanHomeBinding
-    private val viewModel: CommonHomeViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels()
 
     //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
     private val setViewModel: SetViewModel by activityViewModels()

@@ -26,9 +26,7 @@ import com.example.bmob.viewmodels.BmobUserViewModel
 
 /**
  * 后期待完善：
- * 1.StudentSelectViewModel.getTeacherAllThesis()
- *
- * 2.FragmentShowThesis教师修改信息了但是Thesis表没有同步
+ * 1.FragmentShowThesis教师修改信息了但是Thesis表没有同步
  */
 
 class MainActivity : AppCompatActivity() {

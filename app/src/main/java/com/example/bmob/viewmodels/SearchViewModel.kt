@@ -27,7 +27,7 @@ import com.example.bmob.utils.showMsg
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
+class SearchViewModel(private val handler: SavedStateHandle) : ViewModel() {
     private val repository = BmobRepository.getInstance()
     private var _nowSearch = MutableLiveData<String>()
     private lateinit var fragment: Fragment
@@ -78,34 +78,6 @@ class CommonHomeViewModel(private val handler: SavedStateHandle) : ViewModel() {
             recyclerView.visibility = View.GONE
             linearLayout.visibility = View.VISIBLE
         }
-    }
-
-    fun setSearchViewListener(
-        searchView: SearchView,
-        recyclerView: RecyclerView,
-        linearLayout: LinearLayout,
-        callback: (isTextEmpty: Boolean) -> Unit
-    ) {
-        searchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
-            //点击搜索时调用
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            //此处可以设置按输入给出提示的adapter
-            override fun onQueryTextChange(newText: String?): Boolean {
-                Log.v(LOG_TAG, "newText:${newText}")
-                return if (!TextUtils.isEmpty(newText)) {
-                    setNowSearch(newText!!)
-                    true
-                } else {
-                    callback.invoke(true)
-                    isShowRecyclerView(recyclerView, linearLayout, false)
-                    false
-                }
-            }
-        })
     }
 
     /**

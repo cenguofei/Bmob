@@ -24,8 +24,6 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
     private val thesisViewModel: TeacherThesisViewModel by activityViewModels()
     private val setViewModel: SetViewModel by activityViewModels()
 
-    private var adapter: RecyclerViewAdapter<Thesis>? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,35 +37,7 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
         setEventListener()
 
         thesisViewModel.getThesisList(setViewModel.getUserByQuery().value!!)
-            .observe(viewLifecycleOwner) {
-                RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
-                    val itemInflater = LayoutInflater.from(parent.context)
-                    RecyclerViewAdapter.ResultViewHolder(
-                        ItemTeacherReleaseBinding.inflate(
-                            itemInflater,
-                            parent,
-                            false
-                        )
-                    )
-                }
-                adapter = RecyclerViewAdapter(it) { binding, result ->
-                    (binding as ItemTeacherReleaseBinding).run {
-                        thesis = result
-                        val actionTeacherReleasedFragmentToTeacherNewThesisFragment =
-                            TeacherReleasedFragmentDirections
-                                .actionTeacherReleasedFragmentToTeacherNewThesisFragment(true)
-                        root.setOnClickListener {
-                            thesisViewModel.setThesis(result)
-                            findNavController().navigate(
-                                actionTeacherReleasedFragmentToTeacherNewThesisFragment
-                            )
-                        }
-                    }
-                }
-                binding.swipeRecyclerView.layoutManager =
-                    LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                binding.swipeRecyclerView.adapter = adapter
-            }
+            .observe(viewLifecycleOwner) { initAdapter(it) }
     }
 
     override fun setEventListener() {
@@ -77,5 +47,35 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
         binding.imageView12.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    private fun initAdapter(thesisList: MutableList<Thesis>){
+        RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
+            val itemInflater = LayoutInflater.from(parent.context)
+            RecyclerViewAdapter.ResultViewHolder(
+                ItemTeacherReleaseBinding.inflate(
+                    itemInflater,
+                    parent,
+                    false
+                )
+            )
+        }
+        val adapter = RecyclerViewAdapter(thesisList) { binding, result ->
+            (binding as ItemTeacherReleaseBinding).run {
+                thesis = result
+                val actionTeacherReleasedFragmentToTeacherNewThesisFragment =
+                    TeacherReleasedFragmentDirections
+                        .actionTeacherReleasedFragmentToTeacherNewThesisFragment(true)
+                root.setOnClickListener {
+                    thesisViewModel.setThesis(result)
+                    findNavController().navigate(
+                        actionTeacherReleasedFragmentToTeacherNewThesisFragment
+                    )
+                }
+            }
+        }
+        binding.swipeRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.swipeRecyclerView.adapter = adapter
     }
 }

@@ -25,9 +25,7 @@ class ShowThesisFragment : Fragment(), FragmentEventListener {
     private val args: ShowThesisFragmentArgs by navArgs()
     private val viewModel: StudentSelectViewModel by activityViewModels()
     private val setViewModel: SetViewModel by activityViewModels()
-
     private val messageViewModel: MessageViewModel by viewModels()
-//    private lateinit var popupWindowBinding:LeaveMessagePopupWindowLayoutBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,10 +47,7 @@ class ShowThesisFragment : Fragment(), FragmentEventListener {
                 if (isSuccess) {
                     binding.timeIntervalTv.visibility = View.VISIBLE
                     binding.releaseTime = releaseTime
-                } else {
-                    Log.v(LOG_TAG, "isEnabled = false")
-                    showMsg(requireContext(), message)
-                }
+                } else { showMsg(requireContext(), message) }
             }
         } else {
             binding.participateButton.visibility = View.GONE
@@ -98,9 +93,7 @@ class ShowThesisFragment : Fragment(), FragmentEventListener {
                             }
                         }
                     } else showMsg(requireContext(), "当前不是选题时间")
-                } else {
-                    showMsg(requireContext(), "不是选题时间段")
-                }
+                } else showMsg(requireContext(), "不是选题时间段")
             } else showMsg(requireContext(), "课题未被审批或审批拒绝")
         }
     }

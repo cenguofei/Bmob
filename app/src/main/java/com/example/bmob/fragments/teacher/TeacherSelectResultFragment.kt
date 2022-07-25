@@ -16,6 +16,7 @@ import com.example.bmob.databinding.FragmentTeacherSelectResultBinding
 import com.example.bmob.databinding.StudentChooseThesisItemBinding
 import com.example.bmob.utils.JxlExcelUtil
 import com.example.bmob.utils.showMsg
+import com.example.bmob.viewmodels.SelectedModel
 import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherSelectResultViewModel
 
@@ -34,24 +35,7 @@ class TeacherSelectResultFragment : Fragment(), FragmentEventListener {
         binding = FragmentTeacherSelectResultBinding.inflate(inflater, container, false)
         viewModel.getStudentOfSelectedThisThesisLiveData(setViewModel.getUserByQuery().value!!) {
             showMsg(requireContext(), it)
-        }.observe(viewLifecycleOwner) {
-            RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
-                val itemInflater = LayoutInflater.from(parent.context)
-                RecyclerViewAdapter.ResultViewHolder(
-                    StudentChooseThesisItemBinding.inflate(
-                        itemInflater,
-                        parent,
-                        false
-                    )
-                )
-            }
-            val adapter = RecyclerViewAdapter(it) { binding, result ->
-                (binding as StudentChooseThesisItemBinding).selectedModel = result
-            }
-            binding.recyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            binding.recyclerView.adapter = adapter
-        }
+        }.observe(viewLifecycleOwner) { initAdapter(it) }
         return binding.root
     }
 
@@ -87,5 +71,24 @@ class TeacherSelectResultFragment : Fragment(), FragmentEventListener {
         binding.backIv.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    private fun initAdapter(selectedModelList: MutableList<SelectedModel>){
+        RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
+            val itemInflater = LayoutInflater.from(parent.context)
+            RecyclerViewAdapter.ResultViewHolder(
+                StudentChooseThesisItemBinding.inflate(
+                    itemInflater,
+                    parent,
+                    false
+                )
+            )
+        }
+        val adapter = RecyclerViewAdapter(selectedModelList) { binding, result ->
+            (binding as StudentChooseThesisItemBinding).selectedModel = result
+        }
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.recyclerView.adapter = adapter
     }
 }

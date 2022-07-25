@@ -21,10 +21,8 @@ import java.io.IOException
 class SettingsDataStore private constructor() {
 
     companion object {
-        @Volatile
-        private var INSTANCE: SettingsDataStore? = null
-        @Volatile
-        private var CONTEXT: Context? = null
+        @Volatile private var INSTANCE: SettingsDataStore? = null
+        @Volatile private var CONTEXT: Context? = null
 
         /**
          * 单例模式，获取实例

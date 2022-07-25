@@ -68,7 +68,6 @@ object BindingAdapter {
             Glide.with(imageView.context)
                 .load(url)
                 .placeholder(R.drawable.default_head)
-//                .apply(RequestOptions.bitmapTransform(RoundedCorners(25)))
                 .into(imageView)
         }
     }
@@ -172,7 +171,7 @@ object BindingAdapter {
         }
     }
 
-    fun getAge(birth: String?): String {
+    private fun getAge(birth: String?): String {
         return if (birth != null) {
             try {
                 val subSequence = birth.subSequence(0, 4).toString()

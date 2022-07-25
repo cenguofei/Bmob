@@ -84,25 +84,25 @@ class TeacherThesisViewModel(private val handler: SavedStateHandle) : ViewModel(
      * 保存课题到数据库
      */
     fun saveThesis(
-        user: User,
+        teacher: User,
         thesis: Thesis,
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
         thesis.run {
-            teacherId = user.objectId
-            teacherAvatarUrl = user.avatarUrl
-            teacherName = user.name
+            teacherId = teacher.objectId
+            teacherAvatarUrl = teacher.avatarUrl
+            teacherName = teacher.name
             selectState = SELECT_STATE_UNSELECTED
-            school = user.school
-            college = user.college
-            department = user.department
+            school = teacher.school
+            college = teacher.college
+            department = teacher.department
             enabledToStudent = false
             thesisState = NOT_APPROVED  //没有审批
         }
         thesis.save(object : SaveListener<String>() {
             override fun done(p0: String?, p1: BmobException?) {
                 if (p1 == null) {
-                    addThesis(user, thesis)
+                    addThesis(teacher, thesis)
                     callback.invoke(true, EMPTY_TEXT)
                 } else {
                     callback.invoke(false, p1.message.toString())

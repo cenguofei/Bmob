@@ -56,7 +56,6 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
                 studentSelectState
             ) { isSuccess, listUser, message ->
                 if (isSuccess) {
-                    Log.v(LOG_TAG, "findStudentsWhichHaveSelectedThesis isSuccess")
                     handler.set(WHICH_HAVE_SELECTED_THESIS_LIVE_DATA, listUser)
                 } else {
                     callback.invoke(message)
@@ -120,7 +119,6 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
                             Log.v(LOG_TAG, "搜索成功：$p0")
                             callback.invoke(true, p0, EMPTY_TEXT)
                         } else {
-                            Log.v(LOG_TAG, "findStudentWhichHaveSelectedThesis没有匹配项")
                             callback.invoke(false, null, "没有学生选题信息")
                         }
                     } else {
@@ -130,11 +128,3 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
             })
     }
 }
-
-data class DeanStudentSelectedModel(
-    val thesisTitle: String,
-    val thesisTeacherName: String,
-    val studentClass: String,
-    val studentName: String,
-    val studentAvatarUrl: String,
-)

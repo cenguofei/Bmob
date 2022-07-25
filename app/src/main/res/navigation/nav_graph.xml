@@ -148,9 +148,6 @@
             android:id="@+id/action_studentHomeFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
         <action
-            android:id="@+id/action_studentHomeFragment_to_showThesisFragment"
-            app:destination="@id/showThesisFragment" />
-        <action
             android:id="@+id/action_studentHomeFragment_to_studentThesisFragment"
             app:destination="@id/studentThesisFragment" />
         <action
@@ -200,9 +197,6 @@
             android:id="@+id/action_teacherHomeFragment_to_teacherSelectResultFragment"
             app:destination="@id/teacherSelectResultFragment" />
         <action
-            android:id="@+id/action_teacherHomeFragment_to_showThesisFragment"
-            app:destination="@id/showThesisFragment" />
-        <action
             android:id="@+id/action_teacherHomeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
@@ -246,9 +240,6 @@
         android:name="com.example.bmob.fragments.dean.DeanHomeFragment"
         android:label="DeanHomeFragment">
         <action
-            android:id="@+id/action_deanHomeFragment_to_showThesisFragment"
-            app:destination="@id/showThesisFragment" />
-        <action
             android:id="@+id/action_deanHomeFragment_to_studentSelectedFragment"
             app:destination="@id/studentSelectedFragment" />
         <action
@@ -291,9 +282,6 @@
         android:name="com.example.bmob.fragments.provost.ProvostHomeFragment"
         android:label="fragment_provost_home"
         tools:layout="@layout/fragment_provost_home">
-        <action
-            android:id="@+id/action_provostHomeFragment_to_showThesisFragment"
-            app:destination="@id/showThesisFragment" />
         <action
             android:id="@+id/action_provostHomeFragment_to_provostSelectTimeFragment"
             app:destination="@id/provostSelectTimeFragment" />

@@ -55,13 +55,11 @@ class TeacherNewThesisFragment : Fragment(), FragmentEventListener {
         //确定保存可以
         binding.ensureButton.setOnClickListener {
             try {
-                val userLiveData = setViewModel.getUserByQuery()
                 //仅当用户身份为教师时才能上传
-                //前面我们已经确定过用户身份了，但是这里有必要再做一次检查
-                userLiveData.value?.let {
+                setViewModel.getUserByQuery().value?.let {
                     if (viewModel.isInputValid(binding)) {
                         viewModel.saveThesis(
-                            userLiveData.value!!,
+                            it,
                             Thesis(
                                 title = binding.thesisTitle.text.toString(),
                                 field = binding.thesisField.text.toString(),
