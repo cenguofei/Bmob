@@ -94,7 +94,6 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
                         if (p0 == null) {
                             callback.invoke(false, null, EMPTY_TEXT)
                         } else {
-
                             callback.invoke(true, p0, EMPTY_TEXT)
                         }
                     } else {
@@ -172,9 +171,6 @@ class StudentSelectViewModel(private val handler: SavedStateHandle) : ViewModel(
         updateStudentCallback: (student: User) -> Unit
     ) {
         viewModelScope.launch {
-//            if (student.studentSelectState == STUDENT_HAS_SELECTED_THESIS) {
-//                messageCallback.invoke("已经选择课题，不能多选或重复选")
-//            } else {
             val thesisStudentList = thesis.studentsList ?: mutableListOf()
             thesisStudentList.add(student)
             /**

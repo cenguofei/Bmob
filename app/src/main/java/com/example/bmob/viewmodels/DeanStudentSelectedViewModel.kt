@@ -116,7 +116,6 @@ class DeanStudentSelectedViewModel(private val handler: SavedStateHandle) : View
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if (p1 == null) {
                         if (p0 != null && p0.isNotEmpty()) {
-                            Log.v(LOG_TAG, "搜索成功：$p0")
                             callback.invoke(true, p0, EMPTY_TEXT)
                         } else {
                             callback.invoke(false, null, "没有学生选题信息")

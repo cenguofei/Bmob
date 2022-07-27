@@ -130,10 +130,9 @@ object JxlExcelUtil {
                     sheet.setRowView(j + 1, 350)
                 }
                 writeBook.write()
-                Toast.makeText(context, "导出Excel成功:$filePath", Toast.LENGTH_LONG).show()
+                showMsg(context,"已保存至:$filePath")
             } catch (e: Exception) {
-                Log.v("cgf", e.message.toString())
-                Toast.makeText(context, "导出Excel失败:$filePath", Toast.LENGTH_LONG).show()
+                showMsg(context,"导出Excel失败:$filePath")
                 e.printStackTrace()
             } finally {
                 if (writeBook != null) {

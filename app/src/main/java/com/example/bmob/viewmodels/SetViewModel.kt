@@ -177,7 +177,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         bmobFile.uploadblock(object : UploadFileListener() {
             override fun done(p0: BmobException?) {
                 if (p0 == null) {
-                    Log.v(LOG_TAG, "上传文件成功 url:${bmobFile.url}  fileUrl:${bmobFile.fileUrl}")
                     addImageUrlToCurrentUser(bmobFile.fileUrl) { isSuccess, message ->
                         if (isSuccess) {
                             Log.v(LOG_TAG, "type=$imageType 图片url已经添加到用户")
@@ -226,27 +225,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
             }
     }
 
-    private fun findCurrentUser(callback: (isSuccess: Boolean, user: User?, msg: String) -> Unit) {
-        if (!BmobUser.isLogin()) {
-            callback.invoke(false, null, "当前用户未登录")
-            return
-        }
-        BmobQuery<User>()
-            .addWhereEqualTo(Username, BmobUser.getCurrentUser().username)
-            .findObjects(object : FindListener<User>() {
-                override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                    if (p1 == null) {
-                        if (p0 != null && p0.size == 1) {
-                            callback.invoke(true, p0[0], EMPTY_TEXT)
-                        } else if (p0 == null) callback.invoke(false, null, "没有搜索到当前用户")
-                        else callback.invoke(false, null, "搜索到多个username相同的账户")
-                    } else {
-                        callback.invoke(false, null, p1.message.toString())
-                    }
-                }
-            })
-    }
-
     /**
      * 找到uri对应的文件
      */
@@ -273,18 +251,6 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                     }
             } else null
         } else null
-
-    /**
-     * 申请权限
-     */
-    fun requestPermissions(fragment: Fragment) {
-        //申请权限
-        fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (!it) {
-                Log.v(LOG_TAG, "用户拒绝权限请求")
-            }
-        }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    }
 
     fun saveUserEdit(
         fragment: SetFragment,
@@ -449,7 +415,9 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:$minuteBegin:00"
         Log.v(LOG_TAG, "选择的时间2：$dateString")
     }
-}
 
-const val IMAGE_TYPE_HEAD = "head_"
-const val IMAGE_TYPE_BACKGROUND = "background_"
+    companion object{
+        private const val IMAGE_TYPE_HEAD = "head_"
+        private const val IMAGE_TYPE_BACKGROUND = "background_"
+    }
+}

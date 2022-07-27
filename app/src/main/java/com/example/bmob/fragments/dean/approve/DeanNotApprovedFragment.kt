@@ -14,12 +14,12 @@ import com.example.bmob.data.entity.NOT_APPROVED
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.FragmentDeanNotApprovedBinding
 import com.example.bmob.utils.showMsg
-import com.example.bmob.viewmodels.ApprovedNotApprovedViewModel
+import com.example.bmob.viewmodels.DeanApproveViewModel
 import com.example.bmob.viewmodels.SetViewModel
 
 class DeanNotApprovedFragment : Fragment() {
     private lateinit var binding: FragmentDeanNotApprovedBinding
-    private val viewModel: ApprovedNotApprovedViewModel by viewModels()
+    private val viewModel: DeanApproveViewModel by viewModels()
     private val setViewModel: SetViewModel by activityViewModels()
 
     override fun onCreateView(
