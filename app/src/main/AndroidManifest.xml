@@ -53,9 +53,7 @@
         android:theme="@style/Theme.Bmob"
         tools:targetApi="31">
         <activity
-            android:windowSoftInputMode="adjustPan"
-
-
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

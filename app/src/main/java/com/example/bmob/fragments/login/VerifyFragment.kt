@@ -1,11 +1,15 @@
 package com.example.bmob.fragments.login
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +19,7 @@ import com.example.bmob.databinding.FragmentVerifyBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.BmobUserViewModel
+
 
 class VerifyFragment : Fragment(), FragmentEventListener {
     private lateinit var binding: FragmentVerifyBinding
@@ -30,10 +35,58 @@ class VerifyFragment : Fragment(), FragmentEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showSoftInputFromWindow(binding.editText1)
         setEventListener()
     }
 
+    /**
+     * EditText获取焦点弹出软键盘
+     */
+    private fun showSoftInputFromWindow(editText: EditText) {
+        editText.isFocusable = true
+        editText.isFocusableInTouchMode = true
+        editText.requestFocus()
+        val inputManager: InputMethodManager =
+            editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.showSoftInput(editText, 0)
+    }
+
+
     override fun setEventListener() {
+
+        with(binding){
+            editText1.doOnTextChanged { _, _, _, count ->
+                if(count == 1){
+                    editText1.clearFocus()
+                    editText2.requestFocus()
+                }
+            }
+            editText2.doOnTextChanged { _, _, _, count ->
+                if (count == 1){
+                    editText2.clearFocus()
+                    editText3.requestFocus()
+                }
+            }
+            editText3.doOnTextChanged { _, _, _, count ->
+                if (count == 1){
+                    editText3.clearFocus()
+                    editText4.requestFocus()
+                }
+            }
+            editText4.doOnTextChanged { _, _, _, count ->
+                if (count == 1){
+                    editText4.clearFocus()
+                    editText5.requestFocus()
+                }
+            }
+            editText5.doOnTextChanged { _, _, _, count ->
+                if (count == 1){
+                    editText5.clearFocus()
+                    editText6.requestFocus()
+                }
+            }
+        }
+
         binding.backIv.setOnClickListener {
             findNavController().navigateUp()
         }

@@ -417,7 +417,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     }
 
     companion object{
-        private const val IMAGE_TYPE_HEAD = "head_"
-        private const val IMAGE_TYPE_BACKGROUND = "background_"
+        const val IMAGE_TYPE_HEAD = "head_"
+        const val IMAGE_TYPE_BACKGROUND = "background_"
     }
 }

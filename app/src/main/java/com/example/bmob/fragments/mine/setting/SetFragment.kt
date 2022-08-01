@@ -15,8 +15,6 @@ import com.example.bmob.databinding.FragmentSetBinding
 import com.example.bmob.databinding.SexPopupWindowBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.showMsg
-import com.example.bmob.viewmodels.IMAGE_TYPE_BACKGROUND
-import com.example.bmob.viewmodels.IMAGE_TYPE_HEAD
 import com.example.bmob.viewmodels.SetViewModel
 
 /**
@@ -68,11 +66,11 @@ class SetFragment : Fragment(), FragmentEventListener {
     override fun setEventListener() {
         //选择背景图片
         binding.backgroundIv.setOnClickListener {
-            viewModel.openFile(IMAGE_TYPE_BACKGROUND)
+            viewModel.openFile(SetViewModel.IMAGE_TYPE_BACKGROUND)
         }
         //选择头像
         binding.editHeadIv.setOnClickListener {
-            viewModel.openFile(IMAGE_TYPE_HEAD)
+            viewModel.openFile(SetViewModel.IMAGE_TYPE_HEAD)
         }
         binding.saveConfigBtn.setOnClickListener {
             if (isInputAllInvalid()) {
