@@ -1,7 +1,8 @@
 # Bmob
 Kotlin Android毕业论文选题系统
 ***
-[原型设计]([AndroidX](https://developer.android.google.cn/jetpack/androidx))
+[原型设计](https://www.figma.com/file/7mbTLQGwteoSxKl2vGufES/Spare-UI-(Community)?node-id=0%3A1)
+
 ***
 ## 各角色功能
 1. 学生
