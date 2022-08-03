@@ -79,7 +79,7 @@
     <string name="has_approved">已审核</string>
     <string name="update_thesis_button">更新</string>
     <string name="select_list">选题名单</string>
-    <string name="approve_task">审批课题</string>
+    <string name="approve_task">已审批课题</string>
     <string name="find_teacher">查找教师名字</string>
     <string name="teacher_name">教师名称</string>
     <string name="task_name">课题名称</string>
@@ -133,4 +133,5 @@
     <string name="n_l_">年龄</string>
     <string name="nc">昵称</string>
     <string name="search_t">搜索</string>
+    <string name="not_approve_task">未审批课题</string>
 </resources>

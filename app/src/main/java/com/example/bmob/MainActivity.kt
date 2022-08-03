@@ -23,12 +23,6 @@ import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.databinding.ActivityMainBinding
 import com.example.bmob.viewmodels.BmobUserViewModel
 
-
-/**
- * 后期待完善：
- * 1.FragmentShowThesis教师修改信息了但是Thesis表没有同步
- */
-
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
