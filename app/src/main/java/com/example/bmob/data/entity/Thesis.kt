@@ -6,13 +6,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Thesis(
-    var title: String? = null, //标题
-    var description: String? = null, //论文描述
-    var field: String? = null, //所属领域
+    var title: String = "", //标题
+    var description: String = "", //论文描述
+    var field: String = "", //所属领域
 
-    var teacherId: String? = null, //创造该选题的教师id
-    var teacherAvatarUrl: String? = null, //教师的头像地址
-    var teacherName: String? = null, //创造该选题的教师
+    var teacherId: String = "", //创造该选题的教师id
+    var teacherAvatarUrl: String = "", //教师的头像地址
+    var teacherName: String = "", //创造该选题的教师
     /**
      * 老师的特有功能->导出选题学生名单(包括课题名称，学生姓名，班级)
      *
@@ -26,27 +26,27 @@ data class Thesis(
      *      true代表老师决定某个学生选择了该课题
      */
     var studentsList: MutableList<User>? = null, //选择该论文的学生
-    var teaIsSeOne: Boolean? = null,
+    var teaIsSeOne: Boolean = false,
 
-    var selectState: Int? = null, //论文是否被选，0未选，1已选
+    var selectState: Int = SELECT_STATE_UNSELECTED, //论文是否被选，0未选，1已选
 
-    var selectedNum: Int? = null, //被学生选择的次数
+    var selectedNum: Int = 0, //被学生选择的次数
 
-    var school: String? = null,
-    var department: String? = null,
-    var college: String? = null,
-    var userDetail: String? = null,
-    var require: String? = null,//论文要求
+    var school: String = "",
+    var department: String = "",
+    var college: String = "",
+    var userDetail: String = "",
+    var require: String = "",//论文要求
 
     /**
      * 针对学生 ，论文是否可选，当审核通过并且选题时间开始后为true，表示可选
      *  false 初始值
      *  true  系主任审批通过
      */
-    var enabledToStudent: Boolean? = null,
+    var enabledToStudent: Boolean = false,
 
     //针对老师,审批状态
-    var thesisState: Int? = null
+    var thesisState: Int = NOT_APPROVED
 
     //针对系主任
     //看整个系/专业每个老师  每个课题的选择人数

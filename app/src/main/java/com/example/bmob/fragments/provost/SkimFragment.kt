@@ -1,16 +1,11 @@
 package com.example.bmob.fragments.provost
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.data.entity.IDENTIFICATION_DEAN
 import com.example.bmob.data.entity.IDENTIFICATION_STUDENT
@@ -18,29 +13,18 @@ import com.example.bmob.data.entity.IDENTIFICATION_TEACHER
 import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.FragmentSkimBinding
 import com.example.bmob.databinding.ProvostSkimItemBinding
-import com.example.bmob.utils.showMsg
+import com.example.bmob.myapp.appUser
 import com.example.bmob.viewmodels.ProvostSkimViewModel
-import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmoblibrary.base.basefragment.BaseVbFragment
+import com.example.bmoblibrary.ext.showMsgShort
 
 
-class SkimFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentSkimBinding
+class SkimFragment : BaseVbFragment<FragmentSkimBinding>() {
     private val args: SkimFragmentArgs by navArgs()
     private val viewModel: ProvostSkimViewModel by activityViewModels()
-    private val setViewModel: SetViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSkimBinding.inflate(inflater, container, false)
+    override fun createObserver() {
         showUserInfoByIdentification()
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
     }
 
     override fun setEventListener() {
@@ -53,22 +37,22 @@ class SkimFragment : Fragment(), FragmentEventListener {
         when (args.identification) {
             IDENTIFICATION_STUDENT -> {
                 binding.identificationTv.text = "学生信息"
-                viewModel.getStudentInfoLiveData(setViewModel.getUserByQuery().value!!)
-                {
-                    showMsg(requireContext(), it)
-                }.observe(viewLifecycleOwner) { initAdapter(it) }
+                viewModel.getStudentInfoLiveData(appUser) { msg ->
+                    showMsgShort(msg)
+                }.observe(viewLifecycleOwner) { users -> initAdapter(users) }
+
             }
             IDENTIFICATION_TEACHER -> {
                 binding.identificationTv.text = "教师信息"
-                viewModel.getTeacherInfoLiveData(setViewModel.getUserByQuery().value!!) {
-                    showMsg(requireContext(), it)
-                }.observe(viewLifecycleOwner) { initAdapter(it) }
+                viewModel.getTeacherInfoLiveData(appUser) { msg ->
+                    showMsgShort(msg)
+                }.observe(viewLifecycleOwner) { users -> initAdapter(users) }
             }
             IDENTIFICATION_DEAN -> {
                 binding.identificationTv.text = "系主任信息"
-                viewModel.getDeanInfoLiveData(setViewModel.getUserByQuery().value!!) {
-                    showMsg(requireContext(), it)
-                }.observe(viewLifecycleOwner) { initAdapter(it) }
+                viewModel.getDeanInfoLiveData(appUser) { msg ->
+                    showMsgShort(msg)
+                }.observe(viewLifecycleOwner) { users -> initAdapter(users) }
             }
         }
     }

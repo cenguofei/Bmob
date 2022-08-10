@@ -12,6 +12,10 @@
         <variable
             name="releaseTimeEntity"
             type="com.example.bmob.data.entity.ReleaseTime" />
+
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.provost.ProvostSelectTimeFragment.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +26,7 @@
 
         <LinearLayout
             android:id="@+id/timeStartLayout"
+            android:onClick="@{()->click.onTimeStartLayout()}"
             android:layout_width="350dp"
             android:layout_height="60dp"
             android:layout_marginTop="40dp"
@@ -111,6 +116,7 @@
         <LinearLayout
             android:id="@+id/timeEndLayout"
             android:layout_width="350dp"
+            android:onClick="@{()->click.onTimeEndLayout()}"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/teacher_new_thesis_info_bg"
@@ -158,6 +164,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="140dp"
                 android:layout_height="45dp"
+                android:onClick="@{()->click.onBack()}"
                 android:background="@drawable/btn_round_bg"
                 android:text="@string/back"
                 android:textColor="@color/white"
@@ -167,6 +174,7 @@
                 android:id="@+id/confirmBtn"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="140dp"
+                android:onClick="@{()->click.onConfirm()}"
                 android:layout_height="45dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/btn_round_bg"
@@ -180,6 +188,7 @@
                 android:layout_width="140dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="25dp"
+                android:onClick="@{()->click.onUpdate()}"
                 android:background="@drawable/btn_round_bg"
                 android:text="@string/u"
                 android:textColor="@color/white"

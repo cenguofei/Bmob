@@ -3,36 +3,26 @@ package com.example.bmob.fragments.search
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.SearchRecyclerViewAdapter
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.FragmentSearchBinding
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.viewmodels.SearchViewModel
 import com.example.bmob.viewmodels.SearchViewModel.Companion.ERROR
+import com.example.bmoblibrary.base.basefragment.BaseFragment
 
 
-class SearchFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentSearchBinding
+class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
     private var adapter: SearchRecyclerViewAdapter? = null
-    private val viewModel: SearchViewModel by viewModels()
     private val args: SearchFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
+    override fun createObserver() {
         //观测搜索结果
         viewModel.searchResult.observe(viewLifecycleOwner) {
             if (it.first != ERROR) {
@@ -45,16 +35,14 @@ class SearchFragment : Fragment(), FragmentEventListener {
                 }
             }
         }
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setFragment(this)
-        setEventListener()
     }
 
-    private fun initAdapter(thesisList:MutableList<Thesis>){
+    private fun initAdapter(thesisList: MutableList<Thesis>) {
         adapter = SearchRecyclerViewAdapter(thesisList) { thesis ->
             val actionSearchFragmentToShowThesisFragment =
                 SearchFragmentDirections.actionSearchFragmentToShowThesisFragment(

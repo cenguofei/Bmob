@@ -10,6 +10,10 @@
         <variable
             name="user"
             type="com.example.bmob.data.entity.User" />
+
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.mine.setting.SetFragment.ProxyClick" />
     </data>
 
     <LinearLayout
@@ -43,6 +47,7 @@
                     android:id="@+id/backgroundIv"
                     loadRectImage="@{user.backgroundUrl}"
                     android:layout_width="0dp"
+                    android:onClick="@{()->click.onBackground()}"
                     android:layout_height="250dp"
                     android:contentDescription="@string/todo"
                     android:scaleType="centerCrop"
@@ -56,6 +61,7 @@
                     android:id="@+id/editHeadIv"
                     loadUserCircleImage1="@{user.avatarUrl}"
                     android:layout_width="80dp"
+                    android:onClick="@{()->click.onEditHead()}"
                     android:layout_height="80dp"
                     android:layout_marginTop="210dp"
                     android:contentDescription="@string/todo"
@@ -303,6 +309,7 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:hint="@string/bir_"
+                    android:onClick="@{()->click.onEditBirth()}"
 
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
@@ -347,6 +354,7 @@
             <Button
                 android:id="@+id/saveConfigBtn"
                 android:layout_width="65dp"
+                android:onClick="@{()->click.onSaveConfig()}"
                 android:layout_height="65dp"
                 android:layout_gravity="center"
                 android:background="@drawable/done" />

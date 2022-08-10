@@ -6,8 +6,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Environment
 import android.util.Log
-import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.example.bmoblibrary.ext.showMsgShort
 import jxl.Workbook
 import jxl.WorkbookSettings
 import jxl.write.*
@@ -130,9 +130,9 @@ object JxlExcelUtil {
                     sheet.setRowView(j + 1, 350)
                 }
                 writeBook.write()
-                showMsg(context,"已保存至:$filePath")
+                context.showMsgShort("已保存至:$filePath")
             } catch (e: Exception) {
-                showMsg(context,"导出Excel失败:$filePath")
+                context.showMsgShort("导出Excel失败:$filePath")
                 e.printStackTrace()
             } finally {
                 if (writeBook != null) {

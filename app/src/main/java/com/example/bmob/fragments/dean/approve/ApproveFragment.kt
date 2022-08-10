@@ -1,63 +1,50 @@
 package com.example.bmob.fragments.dean.approve
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.ALREADY_APPROVED
 import com.example.bmob.data.entity.THESIS_APPROVE_REJECTED
 import com.example.bmob.databinding.FragmentApproveBinding
-import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanApproveViewModel
+import com.example.bmoblibrary.base.basefragment.BaseFragment
+import com.example.bmoblibrary.ext.showMsgShort
 
-class ApproveFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentApproveBinding
+class ApproveFragment : BaseFragment<DeanApproveViewModel, FragmentApproveBinding>() {
     private val args: ApproveFragmentArgs by navArgs()
-    private val viewModel: DeanApproveViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentApproveBinding.inflate(inflater, container, false)
+    override fun initView(savedInstanceState: Bundle?) {
         binding.thesis = args.deanApproveThesis
+        binding.click = ProxyClick()
         if (!args.isShowActionButton) {
             binding.repulseBtn.visibility = View.GONE
             binding.agreeBtn.visibility = View.GONE
         }
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    override fun setEventListener() {
+    inner class ProxyClick {
         //拒绝
-        binding.repulseBtn.setOnClickListener {
+        fun onRepulse() {
             viewModel.updateThesisForDeanApprove(
                 args.deanApproveThesis,
                 THESIS_APPROVE_REJECTED
             ) { _, message ->
-                showMsg(requireContext(), message)
+                showMsgShort(message)
             }
         }
-        binding.backBtn.setOnClickListener {
+
+        fun onBack() {
             findNavController().navigateUp()
         }
+
         //同意课题申请
-        binding.agreeBtn.setOnClickListener {
+        fun onAgree() {
             viewModel.updateThesisForDeanApprove(
                 args.deanApproveThesis,
                 ALREADY_APPROVED
             ) { _, message ->
-                showMsg(requireContext(), message)
+                showMsgShort(message)
             }
         }
     }

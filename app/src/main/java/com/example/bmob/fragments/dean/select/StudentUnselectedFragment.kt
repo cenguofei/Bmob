@@ -2,44 +2,35 @@ package com.example.bmob.fragments.dean.select
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentStudentUnselectedBinding
 import com.example.bmob.databinding.ItemDeanStudentSelectBinding
+import com.example.bmob.myapp.appUser
 import com.example.bmob.utils.JxlExcelUtil
-import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanStudentSelectedViewModel
-import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmoblibrary.base.basefragment.BaseFragment
+import com.example.bmoblibrary.ext.showMsgShort
 
 
 /**
  * 显示未选学生名单
  */
-class StudentUnselectedFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentStudentUnselectedBinding
-    private val viewModel: DeanStudentSelectedViewModel by viewModels()
-    private val setViewModel: SetViewModel by activityViewModels()
+class StudentUnselectedFragment :
+    BaseFragment<DeanStudentSelectedViewModel, FragmentStudentUnselectedBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentStudentUnselectedBinding.inflate(inflater, container, false)
-        binding.dean = setViewModel.getUserByQuery().value
-        viewModel.getStudentsWhichNotSelectedThesisLiveData(
-            setViewModel.getUserByQuery().value!!,
-            false
-        )
+    override fun initView(savedInstanceState: Bundle?) {
+        binding.dean = appUser
+        binding.click = ProxyClick()
+    }
+
+    override fun createObserver() {
+        viewModel.getStudentsWhichNotSelectedThesisLiveData(appUser, false)
         {
-            showMsg(requireContext(), it)
-        }.observe(viewLifecycleOwner) {
+            showMsgShort(it)
+        }.observe(viewLifecycleOwner)
+        {
             if (it.isNotEmpty()) {
                 RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
                     val itemInflater = LayoutInflater.from(parent.context)
@@ -60,27 +51,21 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
                 )
                 binding.recyclerView.adapter = adapter
             } else {
-                showMsg(requireContext(), "没有搜索到任何结果")
+                showMsgShort("没有搜索到任何结果")
             }
         }
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    override fun setEventListener() {
-        binding.exportBtn.setOnClickListener {
+    inner class ProxyClick {
+        fun onExport() {
             viewModel.getStudentsWhichNotSelectedThesisLiveData(
-                setViewModel.getUserByQuery().value!!,
+                appUser,
                 true
             ) {
-                showMsg(requireContext(), it)
+                showMsgShort(it)
             }.value?.let {
-                val dean = setViewModel.getUserByQuery().value
-                val excelFileName = "${dean?.department} 未选课题学生名单${System.currentTimeMillis()}.xlsx"
+                val excelFileName =
+                    "${appUser.department} 未选课题学生名单${System.currentTimeMillis()}.xlsx"
                 JxlExcelUtil.export(
                     it,
                     requireActivity(),
@@ -89,9 +74,9 @@ class StudentUnselectedFragment : Fragment(), FragmentEventListener {
                     arrayOf("姓名", "年龄", "性别", "班级", "选课状态", "课题名称")
                 ) { student ->
                     return@export arrayListOf<String>().apply {
-                        add(student.name!!)
+                        add(student.name)
                         add(student.age.toString())
-                        add(student.gender!!)
+                        add(student.gender)
                         add(student.studentClass ?: "暂无班级")
                         add("未选")
                         add("无课题信息")

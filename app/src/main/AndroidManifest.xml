@@ -38,6 +38,9 @@
         android:requestLegacyExternalStorage="true"，使用外部存储的配置
     -->
     <application
+
+        android:name=".myapp.APP"
+
         android:usesCleartextTraffic="true"
 
         android:requestLegacyExternalStorage="true"

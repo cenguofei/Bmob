@@ -1,16 +1,11 @@
 package com.example.bmob.viewmodels
 
-import android.text.TextUtils
 import android.util.Log
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
@@ -23,7 +18,7 @@ import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.School
-import com.example.bmob.utils.showMsg
+import com.example.bmoblibrary.ext.showMsgShort
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,21 +60,6 @@ class SearchViewModel(private val handler: SavedStateHandle) : ViewModel() {
         return results
     }
 
-    //初始化界面
-    fun isShowRecyclerView(
-        recyclerView: RecyclerView,
-        linearLayout: LinearLayout,
-        isShow: Boolean
-    ) {
-        if (isShow) {
-            recyclerView.visibility = View.VISIBLE
-            linearLayout.visibility = View.GONE
-        } else {
-            recyclerView.visibility = View.GONE
-            linearLayout.visibility = View.VISIBLE
-        }
-    }
-
     /**
      * 搜索学生首页的banner
      */
@@ -89,7 +69,7 @@ class SearchViewModel(private val handler: SavedStateHandle) : ViewModel() {
                 if (isSuccess) {
                     handler.set(BANNER_DATA, data)
                 } else {
-                    showMsg(fragment.requireContext(), msg)
+                    fragment.showMsgShort(msg)
                 }
             }
         }

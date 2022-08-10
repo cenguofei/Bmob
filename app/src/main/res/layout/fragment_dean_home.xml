@@ -9,6 +9,11 @@
             name="user"
             type="com.example.bmob.data.entity.User" />
 
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.dean.DeanHomeFragment.ProxyClick" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,6 +59,7 @@
             android:layout_marginStart="10dp"
             android:paddingStart="60dp"
             android:paddingEnd="0dp"
+            android:onClick="@{()->click.onSearch()}"
             android:textSize="18sp"
             android:gravity="center_vertical"
             android:layout_marginTop="10dp"
@@ -94,6 +100,7 @@
             <LinearLayout
                 android:id="@+id/selectedResultLayout"
                 android:layout_width="350dp"
+                android:onClick="@{()->click.onSelectedResultLayout()}"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
@@ -136,6 +143,7 @@
             <LinearLayout
                 android:id="@+id/unselectedStudents"
                 android:layout_width="350dp"
+                android:onClick="@{()->click.onUnselectedStudents()}"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
@@ -175,6 +183,7 @@
             <LinearLayout
                 android:id="@+id/approveThesisLayout"
                 android:layout_width="350dp"
+                android:onClick="@{()->click.onApproveThesis()}"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
@@ -215,6 +224,7 @@
                 android:id="@+id/notApproveThesisLayout"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->click.onNotApproveThesisLayout()}"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal">

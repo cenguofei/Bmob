@@ -13,6 +13,7 @@ import cn.bmob.v3.listener.FindListener
 import com.example.bmob.R
 import com.example.bmob.data.entity.*
 import com.example.bmob.data.repository.remote.BmobRepository
+import com.example.bmob.myapp.appViewModel
 import com.example.bmob.utils.EMPTY_TEXT
 import com.example.bmob.utils.LOG_TAG
 import com.example.bmob.utils.Username
@@ -51,22 +52,22 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         )
         when (identification) {
             IDENTIFICATION_STUDENT -> {
-                setUserIdentification(IDENTIFICATION_STUDENT)
+                appViewModel.setUserIdentification(IDENTIFICATION_STUDENT)
                 fragment.findNavController()
                     .navigate(R.id.action_verifyFragment_to_studentHomeFragment)
             }
             IDENTIFICATION_TEACHER -> {
-                setUserIdentification(IDENTIFICATION_TEACHER)
+                appViewModel.setUserIdentification(IDENTIFICATION_TEACHER)
                 fragment.findNavController()
                     .navigate(R.id.action_verifyFragment_to_teacherHomeFragment)
             }
             IDENTIFICATION_DEAN -> {
-                setUserIdentification(IDENTIFICATION_DEAN)
+                appViewModel.setUserIdentification(IDENTIFICATION_DEAN)
                 fragment.findNavController()
                     .navigate(R.id.action_verifyFragment_to_deanHomeFragment)
             }
             IDENTIFICATION_PROVOST -> {
-                setUserIdentification(IDENTIFICATION_PROVOST)
+                appViewModel.setUserIdentification(IDENTIFICATION_PROVOST)
                 fragment.findNavController()
                     .navigate(R.id.action_verifyFragment_to_provostHomeFragment)
             }
@@ -87,22 +88,22 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         )
         when (identification) {
             IDENTIFICATION_STUDENT -> {
-                setUserIdentification(IDENTIFICATION_STUDENT)
+                appViewModel.setUserIdentification(IDENTIFICATION_STUDENT)
                 fragment.findNavController()
                     .navigate(R.id.action_startFragment_to_studentHomeFragment)
             }
             IDENTIFICATION_TEACHER -> {
-                setUserIdentification(IDENTIFICATION_TEACHER)
+                appViewModel.setUserIdentification(IDENTIFICATION_TEACHER)
                 fragment.findNavController()
                     .navigate(R.id.action_startFragment_to_teacherHomeFragment)
             }
             IDENTIFICATION_DEAN -> {
-                setUserIdentification(IDENTIFICATION_DEAN)
+                appViewModel.setUserIdentification(IDENTIFICATION_DEAN)
                 fragment.findNavController()
                     .navigate(R.id.action_startFragment_to_deanHomeFragment)
             }
             IDENTIFICATION_PROVOST -> {
-                setUserIdentification(IDENTIFICATION_PROVOST)
+                appViewModel.setUserIdentification(IDENTIFICATION_PROVOST)
                 fragment.findNavController()
                     .navigate(R.id.action_startFragment_to_provostHomeFragment)
             }
@@ -161,12 +162,14 @@ class BmobUserViewModel(private val handler: SavedStateHandle) : ViewModel() {
         s: String,
         d: String,
         c: String,
-        callback: (isSuccess: Boolean, msg: String) -> Unit
+        callback: (isSuccess: Boolean, msg: String) -> Unit,
+        userAction: (user: User) -> Unit
     ) {
         repository.signOrLogin(
             userName, workNum, pwd, identify, phoneNumber, msgCode,
             s, d, c,
-            callback
+            callback,
+            userAction
         )
     }
 

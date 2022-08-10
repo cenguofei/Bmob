@@ -1,6 +1,5 @@
 package com.example.bmob.viewmodels
 
-import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -17,7 +16,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -35,9 +33,14 @@ import com.example.bmob.data.entity.User
 import com.example.bmob.data.repository.remote.BmobRepository
 import com.example.bmob.data.storage.SettingsDataStore
 import com.example.bmob.fragments.mine.MineFragment.Companion.BMOB_USER_KEY
-import com.example.bmob.fragments.mine.MineFragment.Companion.QUERY_USER_KEY
 import com.example.bmob.fragments.mine.setting.SetFragment
-import com.example.bmob.utils.*
+import com.example.bmob.myapp.appUser
+import com.example.bmob.myapp.appViewModel
+import com.example.bmob.utils.EMPTY_TEXT
+import com.example.bmob.utils.LOG_TAG
+import com.example.bmob.utils.School
+import com.example.bmoblibrary.ext.showMsgShort
+import com.example.bmoblibrary.ext.textString
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -52,14 +55,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     private var imageType: String? = null
 
     //用户配置，记住密码，保存账号密码等
-    private lateinit var settingsDataStore: SettingsDataStore
-
-    /**
-     * 初始化dataStore
-     */
-    fun setSettingsDataStore(context: Context) {
-        this.settingsDataStore = SettingsDataStore.getInstance(context)
-    }
+    lateinit var settingsDataStore: SettingsDataStore
 
     /**
      * 保存用户名到dataStore
@@ -95,7 +91,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                                 fragment.binding.backgroundIv.setImageURI(uri)
                             }
                         } else {
-                            showMsg(fragment.requireContext(), msg)
+                            fragment.showMsgShort(msg)
                         }
                     }) { progress ->
                         if (progress != null) {
@@ -123,34 +119,13 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     }
 
     /**
-     * 查询自定义用户User
-     *
-     * 关键方法，全局都会用到
-     */
-    fun getUserByQuery(): MutableLiveData<User> {
-        Log.v(LOG_TAG, "getUserByQuery(): MutableLiveData<User>")
-        if (!handler.contains(QUERY_USER_KEY)) {
-            repository.getUserInfo { isSuccess, user ->
-                if (isSuccess && user != null) {
-                    handler.set(QUERY_USER_KEY, user)
-                }
-            }
-        }
-        return handler.getLiveData(QUERY_USER_KEY)
-    }
-
-    fun setUserByQuery(user: User) {
-        handler.set(QUERY_USER_KEY, user)
-    }
-
-    /**
      * 当用户切换身份登录时如果不刷新，会使用到前一个其他角色的用户，
      * 所以当要退出登录  或者切换账号时，
      * 需要清除当前用户信息
      */
     fun removeUser() {
-        handler.remove<BmobUser>(BMOB_USER_KEY)
-        handler.remove<User>(QUERY_USER_KEY)
+        appViewModel.user.value = null
+        appViewModel.userIdentification.value = null
         BmobUser.logOut()
     }
 
@@ -205,24 +180,23 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         fileUrl: String,
         callback: (isSuccess: Boolean, msg: String) -> Unit
     ) {
-        getUserByQuery()
-            .value?.run {
-                Log.v(LOG_TAG, "找到的添加图片的用户:${this}")
-                if (imageType == IMAGE_TYPE_HEAD) {
-                    this.avatarUrl = fileUrl
-                } else if (imageType == IMAGE_TYPE_BACKGROUND) {
-                    this.backgroundUrl = fileUrl
-                }
-                update(object : UpdateListener() {
-                    override fun done(p0: BmobException?) {
-                        if (p0 == null) {
-                            callback.invoke(true, EMPTY_TEXT)
-                        } else {
-                            callback.invoke(false, p0.message.toString())
-                        }
-                    }
-                })
+        appUser.run {
+            Log.v(LOG_TAG, "找到的添加图片的用户:${this}")
+            if (imageType == IMAGE_TYPE_HEAD) {
+                this.avatarUrl = fileUrl
+            } else if (imageType == IMAGE_TYPE_BACKGROUND) {
+                this.backgroundUrl = fileUrl
             }
+            update(object : UpdateListener() {
+                override fun done(p0: BmobException?) {
+                    if (p0 == null) {
+                        callback.invoke(true, EMPTY_TEXT)
+                    } else {
+                        callback.invoke(false, p0.message.toString())
+                    }
+                }
+            })
+        }
     }
 
     /**
@@ -256,49 +230,49 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         fragment: SetFragment,
         callback: () -> Unit
     ) {
-        getUserByQuery().value?.let {
-            val userName = fragment.binding.editUsernameEv.text.toString()
+        appUser.let {
+            val userName = fragment.binding.editUsernameEv.textString
             it.run {
                 with(fragment.binding) {
-                    name = editNameEv.text.toString()
-                    signature = editSignatureEv.text.toString()
-                    nickname = editNicknameEv.text.toString()
-                    gender = editGenderEv.text.toString()
-                    username = userName
-                    school = editSchoolEv.text.toString()
-                    college = editCollegeEv.text.toString()
-                    department = editDepartmentEv.text.toString()
-
-                    val birthFormat = editBirthEv.text.toString().split(" ")[0]
+                    name = editNameEv.textString
+                    signature = editSignatureEv.textString
+                    nickname = editNicknameEv.textString
+                    gender = editGenderEv.textString
+                    if (username != userName) {
+                        saveUsernameToPreferencesStore(
+                            username = userName,
+                            fragment.requireContext()
+                        )
+                        username = userName
+                    }
+                    school = editSchoolEv.textString
+                    college = editCollegeEv.textString
+                    department = editDepartmentEv.textString
+                    val birthFormat = editBirthEv.textString.split(" ")[0]
                     birth = birthFormat
-
-                    mobilePhoneNumber = editPhoneNumberEv.text.toString()
-                    address = editAddressEv.text.toString()
-                    email = editEmailEv.text.toString()
+                    mobilePhoneNumber = editPhoneNumberEv.textString
+                    address = editAddressEv.textString
+                    email = editEmailEv.textString
                 }
             }
             //SetFragment修改后让MineFragment接受到
             val bmobUser = BmobUser()
             bmobUser.username = userName
-            bmobUser.mobilePhoneNumber = fragment.binding.editPhoneNumberEv.text.toString()
-            bmobUser.email = fragment.binding.editEmailEv.text.toString()
+            bmobUser.mobilePhoneNumber = fragment.binding.editPhoneNumberEv.textString
+            bmobUser.email = fragment.binding.editEmailEv.textString
 
             handler.set(BMOB_USER_KEY, bmobUser)
-            handler.set(QUERY_USER_KEY, it)
-
-            saveUsernameToPreferencesStore(username = userName, fragment.requireContext())
+            appViewModel.setUser(it)
 
             repository.updateUser(it) { isResponseSuccess, msg ->
                 if (isResponseSuccess) {
-                    showMsg(fragment.requireContext(), "用户信息已更新")
+                    fragment.showMsgShort("用户信息已更新")
                     callback.invoke()
                 } else {
-                    showMsg(fragment.requireContext(), "用户信息更新失败:$msg")
+                    fragment.showMsgShort("用户信息更新失败:$msg")
                 }
             }
-
             //修改用户信息后，如果该用户是老师，就还要把老师对应课题的信息修改掉
-
 
             //修改了学生信息后，课题里面学生的信息也要修改
         }
@@ -307,8 +281,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
     /**
      * 针对学生，当没有开放选题时间时，
      * 学生已选的课题状态为不可用，否则可用
-     */
-    /**
+     *
      * 判断当前时间是否为课题可选时间
      */
     fun isSelectTime(
@@ -323,7 +296,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                     if (p1 == null && p0 != null && p0.isNotEmpty()) {
                         if (measureIsNowInSelectTime(p0[0]) { callback.invoke(false, it) }) {
                             callback.invoke(true, EMPTY_TEXT)
-                        }else callback.invoke(false, EMPTY_TEXT)
+                        } else callback.invoke(false, EMPTY_TEXT)
                     } else {
                         callback.invoke(false, p1?.message.toString())
                     }
@@ -405,8 +378,8 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
                 yearBegin = datePicker.year
                 monthBegin = datePicker.month + 1
                 dayBegin = datePicker.dayOfMonth
-                hourBegin = timePicker.hour-1
-                minuteBegin = timePicker.minute-1
+                hourBegin = timePicker.hour - 1
+                minuteBegin = timePicker.minute - 1
                 val dateString = "$yearBegin-$monthBegin-$dayBegin $hourBegin:$minuteBegin:00"
                 Log.v(LOG_TAG, "选择的时间1：$dateString")
                 callback.invoke(dateString)
@@ -416,7 +389,7 @@ class SetViewModel(val handler: SavedStateHandle) : ViewModel() {
         Log.v(LOG_TAG, "选择的时间2：$dateString")
     }
 
-    companion object{
+    companion object {
         const val IMAGE_TYPE_HEAD = "head_"
         const val IMAGE_TYPE_BACKGROUND = "background_"
     }

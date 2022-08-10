@@ -1,65 +1,50 @@
 package com.example.bmob.fragments.mine
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import cn.bmob.v3.BmobUser
 import com.example.bmob.R
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentMineBinding
+import com.example.bmob.myapp.appUser
+import com.example.bmob.myapp.appViewModel
 import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmoblibrary.base.basefragment.BaseVbFragment
 
 
-class MineFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentMineBinding
+class MineFragment : BaseVbFragment<FragmentMineBinding>() {
     private val setViewModel: SetViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMineBinding.inflate(inflater, container, false)
+    override fun initView(savedInstanceState: Bundle?) {
+        binding.click = ProxyClick()
+    }
 
+    override fun createObserver() {
         setViewModel.getBmobUser().observe(viewLifecycleOwner) {
             binding.bmobUser = it
         }
-        setViewModel.getUserByQuery().observe(viewLifecycleOwner) {
+        appViewModel.user.observe(viewLifecycleOwner) {
             binding.user = it
         }
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    //设置点击事件
-    override fun setEventListener() {
-        binding.editUserInfoIv.setOnClickListener {
-            findNavController().navigate(R.id.action_mineFragment_to_setFragment)
+    inner class ProxyClick {
+        fun onEditUserInfo() {
+            val actionMineFragmentToSetFragment =
+                MineFragmentDirections.actionMineFragmentToSetFragment(appUser)
+            findNavController().navigate(actionMineFragmentToSetFragment)
         }
+
         //退出登录
-        binding.reLogin.setOnClickListener {
+        fun onReLogin() {
             setViewModel.removeUser()
             findNavController().navigate(R.id.action_mineFragment_to_loginFragment)
         }
-        binding.exchangeAccount.setOnClickListener {
+
+        fun onExchangeAccount() {
             setViewModel.removeUser()
             val actionMineFragmentToLoginFragment =
                 MineFragmentDirections.actionMineFragmentToLoginFragment(true)
             findNavController().navigate(actionMineFragmentToLoginFragment)
-        }
-        binding.editUserInfoIv.setOnClickListener {
-            setViewModel.getUserByQuery().value?.let {
-                val actionMineFragmentToSetFragment =
-                    MineFragmentDirections.actionMineFragmentToSetFragment(it)
-                findNavController().navigate(actionMineFragmentToSetFragment)
-            }
         }
     }
 

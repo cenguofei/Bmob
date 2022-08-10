@@ -12,6 +12,11 @@
         <variable
             name="bmobUser"
             type="cn.bmob.v3.BmobUser" />
+
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.mine.MineFragment.ProxyClick" />
+
     </data>
 
     <ScrollView
@@ -225,6 +230,7 @@
 
             <LinearLayout
                 android:id="@+id/reLogin"
+                android:onClick="@{()->click.onReLogin()}"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -256,6 +262,7 @@
             <LinearLayout
                 android:id="@+id/exchangeAccount"
                 android:layout_width="350dp"
+                android:onClick="@{()->click.onExchangeAccount()}"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
@@ -304,6 +311,7 @@
                 android:id="@+id/editUserInfoIv"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:onClick="@{()->click.onEditUserInfo()}"
                 android:layout_marginEnd="15dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editHeadIv"
                 app:layout_constraintEnd_toEndOf="parent"

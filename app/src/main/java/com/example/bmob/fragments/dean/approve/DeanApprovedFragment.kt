@@ -1,43 +1,30 @@
 package com.example.bmob.fragments.dean.approve
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bmob.common.ApproveThesisAdapter
 import com.example.bmob.data.entity.ALREADY_APPROVED
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.FragmentDeanApprovedBinding
-import com.example.bmob.utils.showMsg
+import com.example.bmob.myapp.appUser
 import com.example.bmob.viewmodels.DeanApproveViewModel
-import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmoblibrary.base.basefragment.BaseFragment
+import com.example.bmoblibrary.ext.showMsgShort
 
-class DeanApprovedFragment : Fragment() {
-    private lateinit var binding: FragmentDeanApprovedBinding
-    private val viewModel: DeanApproveViewModel by viewModels()
-    private val setViewModel: SetViewModel by activityViewModels()
+class DeanApprovedFragment : BaseFragment<DeanApproveViewModel, FragmentDeanApprovedBinding>() {
 
+    override fun initView(savedInstanceState: Bundle?) {
+        binding.dean = appUser
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentDeanApprovedBinding.inflate(inflater, container, false)
-
-        setViewModel.getUserByQuery().value?.let {
-            binding.dean = it
-            viewModel.getQueryThesisToDeanApprovedLiveData(
-                it,
-                ALREADY_APPROVED
-            ) { msg -> showMsg(requireContext(), msg) }
-                .observe(viewLifecycleOwner) { data -> initAdapter(data) }
-        }
-        return binding.root
+    override fun createObserver() {
+        viewModel.getQueryThesisToDeanApprovedLiveData(
+            appUser,
+            ALREADY_APPROVED
+        ) { msg -> showMsgShort(msg) }
+            .observe(viewLifecycleOwner) { data -> initAdapter(data) }
     }
 
     private fun initAdapter(thesisList: MutableList<MutableList<Thesis>>) {

@@ -3,95 +3,84 @@ package com.example.bmob.fragments.teacher
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.FragmentTeacherNewThesisBinding
+import com.example.bmob.myapp.appUser
 import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.utils.showMsg
-import com.example.bmob.viewmodels.SetViewModel
 import com.example.bmob.viewmodels.TeacherThesisViewModel
+import com.example.bmoblibrary.base.basefragment.BaseVbFragment
+import com.example.bmoblibrary.ext.showMsgShort
+import com.example.bmoblibrary.ext.textString
 
-class TeacherNewThesisFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentTeacherNewThesisBinding
+class TeacherNewThesisFragment : BaseVbFragment<FragmentTeacherNewThesisBinding>() {
     private val viewModel: TeacherThesisViewModel by activityViewModels()
-    private val setViewModel: SetViewModel by activityViewModels()
     private val args: TeacherNewThesisFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTeacherNewThesisBinding.inflate(inflater, container, false)
-        binding.teacherAvatarUrl = setViewModel.getUserByQuery().value!!.avatarUrl
+    override fun initView(savedInstanceState: Bundle?) {
+        binding.teacherAvatarUrl = appUser.avatarUrl
 
         if (args.isUpdate) {
             binding.updateButton.visibility = View.VISIBLE
             binding.ensureButton.visibility = View.GONE
         }
 
+        binding.click = ProxyClick()
+    }
+
+    override fun createObserver() {
         viewModel.selectedThesis.observe(viewLifecycleOwner) {
             Log.v(LOG_TAG, "教师选中thesis：$it")
             if (args.isUpdate) {
                 binding.thesis = it
             }
         }
-
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    override fun setEventListener() {
+    inner class ProxyClick {
         //确定保存可以
-        binding.ensureButton.setOnClickListener {
+        fun onEnsure() {
             try {
                 //仅当用户身份为教师时才能上传
-                setViewModel.getUserByQuery().value?.let {
-                    if (viewModel.isInputValid(binding)) {
-                        viewModel.saveThesis(
-                            it,
-                            Thesis(
-                                title = binding.thesisTitle.text.toString(),
-                                field = binding.thesisField.text.toString(),
-                                require = binding.thesisRequire.text.toString(),
-                                description = binding.thesisBrief.text.toString()
-                            )
-                        ) { isSuccess, msg ->
-                            if (isSuccess) {
-                                showMsg(requireContext(), "课题上传成功")
-                                back()
-                            } else {
-                                showMsg(requireContext(), "课题上传失败，请稍后再试:$msg")
-                            }
+                if (viewModel.isInputValid(binding)) {
+                    viewModel.saveThesis(
+                        appUser,
+                        Thesis(
+                            title = binding.thesisTitle.textString,
+                            field = binding.thesisField.textString,
+                            require = binding.thesisRequire.textString,
+                            description = binding.thesisBrief.textString
+                        )
+                    ) { isSuccess, msg ->
+                        if (isSuccess) {
+                            showMsgShort("课题上传成功")
+                            back()
+                        } else {
+                            showMsgShort("课题上传失败，请稍后再试:$msg")
                         }
-                    } else {
-                        showMsg(requireContext(), "请完善信息")
                     }
+                } else {
+                    showMsgShort("请完善信息")
                 }
+
             } catch (e: Exception) {
                 Log.v(LOG_TAG, "TeacherNewThesis出错了：${e.message}")
             }
         }
+
         //取消课题
-        binding.cancelBtn.setOnClickListener {
+        fun onCancel() {
             back()
         }
 
-        binding.updateButton.setOnClickListener {
-            val title = binding.thesisTitle.text.toString()
-            val field = binding.thesisField.text.toString()
-            val require = binding.thesisRequire.text.toString()
-            val description = binding.thesisBrief.text.toString()
+        fun onUpdate() {
+            val title = binding.thesisTitle.textString
+            val field = binding.thesisField.textString
+            val require = binding.thesisRequire.textString
+            val description = binding.thesisBrief.textString
             viewModel.selectedThesis.value?.let {
                 if (
                     !TextUtils.equals(title, it.title) ||
@@ -104,18 +93,15 @@ class TeacherNewThesisFragment : Fragment(), FragmentEventListener {
                         it.field = field
                         it.require = require
                         it.description = description
-                        viewModel.updateThesis(
-                            user = setViewModel.getUserByQuery().value!!,
-                            thesis = it
-                        ) { isSuccess, msg ->
+                        viewModel.updateThesis(user = appUser, thesis = it) { isSuccess, msg ->
                             if (isSuccess) {
-                                showMsg(requireContext(), "更新成功")
+                                showMsgShort("更新成功")
                             } else {
-                                showMsg(requireContext(), "更新失败：$msg")
+                                showMsgShort("更新失败：$msg")
                             }
                         }
                     } else {
-                        showMsg(requireContext(), "请完善信息")
+                        showMsgShort("请完善信息")
                     }
                 }
             }

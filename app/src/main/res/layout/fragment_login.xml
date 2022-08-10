@@ -12,6 +12,11 @@
         <variable
             name="userConfig"
             type="com.example.bmob.data.storage.UserConfig" />
+
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.login.LoginFragment.ProxyClick" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,6 +102,7 @@
             android:id="@+id/rememberPwdCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->click.onRememberPwd()}"
             android:layout_marginTop="10dp"
             android:text="@string/remember_pwd"
             android:checked="@{userConfig.isRememberPassword}"
@@ -105,6 +111,7 @@
             app:layout_constraintTop_toBottomOf="@+id/passwordEv" />
 
         <TextView
+            android:onClick="@{()->click.onForgetPwd()}"
             android:id="@+id/forgetPwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,6 +124,7 @@
         <ImageView
             android:id="@+id/showPwdIv"
             android:layout_width="30dp"
+            android:onClick="@{()->click.onShowPwd()}"
             android:layout_height="30dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/pwd_invisible"
@@ -131,6 +139,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/btn_round_bg"
+            android:onClick="@{()->click.onLogin()}"
             android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -143,6 +152,7 @@
             android:id="@+id/registerBtn"
             android:layout_width="350dp"
             android:layout_height="50dp"
+            android:onClick="@{()->click.onRegister()}"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_round_bg"
             android:text="@string/signup"

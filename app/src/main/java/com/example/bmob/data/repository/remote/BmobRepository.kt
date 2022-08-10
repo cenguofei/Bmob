@@ -102,7 +102,8 @@ class BmobRepository private constructor() {
         s: String,
         d: String,
         c: String,
-        callback: (isSuccess: Boolean, msg: String) -> Unit
+        callback: (isSuccess: Boolean, msg: String) -> Unit,
+        userAction: (user: User) -> Unit
     ) {
         with(User(identification = identify)) {
             avatarUrl =
@@ -127,6 +128,7 @@ class BmobRepository private constructor() {
             signOrLogin(msgCode, object : SaveListener<User>() {
                 override fun done(p0: User?, p1: BmobException?) {
                     if (p1 == null) {
+                        userAction.invoke(this@with)
                         callback.invoke(true, EMPTY_TEXT)
                     } else {
                         Log.v(LOG_TAG, "验证失败：${p1.message.toString()}")

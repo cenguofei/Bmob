@@ -3,39 +3,33 @@ package com.example.bmob.fragments.student.select
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.databinding.FragmentSelectBinding
 import com.example.bmob.databinding.StudentSelectThesisItemBinding
 import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.StudentSelectViewModel
+import com.example.bmoblibrary.base.basefragment.BaseVbFragment
+import com.example.bmoblibrary.ext.showMsgShort
 
 /**
  * 显示一个老师的所有课题
  */
-class SelectFragment : Fragment(), FragmentEventListener {
+class SelectFragment : BaseVbFragment<FragmentSelectBinding>() {
     private val args: SelectFragmentArgs by navArgs()
     private val selectViewModel: StudentSelectViewModel by activityViewModels()
 
-    private lateinit var binding: FragmentSelectBinding
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSelectBinding.inflate(inflater, container, false)
+    override fun initView(savedInstanceState: Bundle?) {
         binding.thesisUser = args.teacher
+    }
 
+    override fun createObserver() {
         selectViewModel.getMutableTeacherThesisLiveData(args.teacher) {
-            showMsg(requireContext(), it)
+            showMsgShort(it)
         }.observe(viewLifecycleOwner) {
             Log.v(LOG_TAG, "getMutableTeacherThesisLiveData 成功：$it")
             RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
@@ -71,12 +65,6 @@ class SelectFragment : Fragment(), FragmentEventListener {
             )
             binding.recyclerView.adapter = adapter
         }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
     }
 
     override fun setEventListener() {

@@ -1,43 +1,25 @@
 package com.example.bmob.fragments.teacher
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmob.R
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.data.entity.Thesis
 import com.example.bmob.databinding.FragmentTeacherReleasedBinding
 import com.example.bmob.databinding.ItemTeacherReleaseBinding
-import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmob.myapp.appUser
 import com.example.bmob.viewmodels.TeacherThesisViewModel
+import com.example.bmoblibrary.base.basefragment.BaseVbFragment
 
 
-class TeacherReleasedFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentTeacherReleasedBinding
+class TeacherReleasedFragment : BaseVbFragment<FragmentTeacherReleasedBinding>() {
     private val thesisViewModel: TeacherThesisViewModel by activityViewModels()
-    private val setViewModel: SetViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTeacherReleasedBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-
-        thesisViewModel.getThesisList(setViewModel.getUserByQuery().value!!)
-            .observe(viewLifecycleOwner) { initAdapter(it) }
+    override fun createObserver() {
+        thesisViewModel.getThesisList(appUser).observe(viewLifecycleOwner) { initAdapter(it) }
     }
 
     override fun setEventListener() {
@@ -49,7 +31,7 @@ class TeacherReleasedFragment : Fragment(), FragmentEventListener {
         }
     }
 
-    private fun initAdapter(thesisList: MutableList<Thesis>){
+    private fun initAdapter(thesisList: MutableList<Thesis>) {
         RecyclerViewAdapter.ResultViewHolder.createViewHolderCallback = { parent ->
             val itemInflater = LayoutInflater.from(parent.context)
             RecyclerViewAdapter.ResultViewHolder(

@@ -9,6 +9,9 @@
             name="user"
             type="com.example.bmob.data.entity.User" />
 
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.provost.ProvostHomeFragment.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,6 +51,7 @@
             android:id="@+id/searchViewTv"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:onClick="@{()->click.onSearchViewTv()}"
             android:layout_marginStart="10dp"
             android:paddingStart="60dp"
             android:paddingEnd="0dp"
@@ -91,6 +95,7 @@
                 android:id="@+id/teacherInfo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->click.onTeacherInfo()}"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
                 android:orientation="horizontal"
@@ -132,6 +137,7 @@
             <LinearLayout
                 android:id="@+id/studentInfo"
                 android:layout_width="350dp"
+                android:onClick="@{()->click.onStudentInfo()}"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
@@ -176,6 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:onClick="@{()->click.onDeanInfo()}"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -215,6 +222,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:onClick="@{()->click.onIssueTime()}"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

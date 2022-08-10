@@ -8,6 +8,10 @@
         <variable
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
+
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.dean.approve.ApproveFragment.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -214,6 +218,7 @@
             android:background="@drawable/btn_round_bg"
             android:text="@string/agree"
             android:textColor="@color/white"
+            android:onClick="@{()->click.onAgree()}"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/repulseBtn"
             app:layout_constraintEnd_toEndOf="parent"
@@ -240,6 +245,7 @@
             android:layout_marginBottom="40dp"
             android:background="@drawable/teacher_new_thesis_btn2_bg"
             android:text="@string/repulse"
+            android:onClick="@{()->click.onRepulse()}"
             android:textColor="@color/blue"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -251,6 +257,7 @@
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->click.onBack()}"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:contentDescription="@string/todo"

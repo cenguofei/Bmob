@@ -2,62 +2,44 @@ package com.example.bmob.fragments.dean.select
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.common.RecyclerViewAdapter
 import com.example.bmob.data.entity.User
 import com.example.bmob.databinding.FragmentStudentSelectedBinding
 import com.example.bmob.databinding.ItemDeanStudentSelectBinding
+import com.example.bmob.myapp.appUser
 import com.example.bmob.utils.JxlExcelUtil
-import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.DeanStudentSelectedViewModel
-import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmoblibrary.base.basefragment.BaseFragment
+import com.example.bmoblibrary.ext.showMsgShort
 
 
 /**
  * 显示已选学生名单
  */
-class StudentSelectedFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentStudentSelectedBinding
-    private val viewModel: DeanStudentSelectedViewModel by viewModels()
-    private val setViewModel: SetViewModel by activityViewModels()
+class StudentSelectedFragment :
+    BaseFragment<DeanStudentSelectedViewModel, FragmentStudentSelectedBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentStudentSelectedBinding.inflate(inflater, container, false)
-        setViewModel.getUserByQuery().value?.let {
-            binding.dean = it
-            viewModel.getStudentWhichHaveSelectedThesisLiveData(it, true) { msg ->
-                showMsg(requireContext(), msg)
-            }.observe(viewLifecycleOwner) { data -> initAdapter(data) }
-        }
-        return binding.root
+
+    override fun initView(savedInstanceState: Bundle?) {
+        binding.dean = appUser
+        binding.click = ProxyClick()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
+    override fun createObserver() {
+        viewModel.getStudentWhichHaveSelectedThesisLiveData(appUser, true) { msg ->
+            showMsgShort(msg)
+        }.observe(viewLifecycleOwner) { data -> initAdapter(data) }
     }
 
-    override fun setEventListener() {
-        binding.exportButton.setOnClickListener {
-            viewModel.getStudentWhichHaveSelectedThesisLiveData(
-                setViewModel.getUserByQuery().value!!,
-                true
-            ) {
-                showMsg(requireContext(), it)
+    inner class ProxyClick {
+        fun onExport() {
+            viewModel.getStudentWhichHaveSelectedThesisLiveData(appUser, true) {
+                showMsgShort(it)
             }.value?.let {
-                val dean = setViewModel.getUserByQuery().value
-                val excelFileName = "${dean?.department} 已选课题学生名单${System.currentTimeMillis()}.xlsx"
+                val excelFileName =
+                    "${appUser.department} 已选课题学生名单${System.currentTimeMillis()}.xlsx"
                 JxlExcelUtil.export(
                     it,
                     requireActivity(),
@@ -66,9 +48,9 @@ class StudentSelectedFragment : Fragment(), FragmentEventListener {
                     arrayOf("姓名", "年龄", "性别", "班级", "选课状态", "课题名称")
                 ) { student ->
                     return@export arrayListOf<String>().apply {
-                        add(student.name!!)
+                        add(student.name)
                         add(student.age.toString())
-                        add(student.gender!!)
+                        add(student.gender)
                         add(student.studentClass ?: "暂无班级")
                         add("已选")
                         add(student.studentThesis?.title!!)

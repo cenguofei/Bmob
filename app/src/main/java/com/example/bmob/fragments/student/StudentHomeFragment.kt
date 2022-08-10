@@ -1,19 +1,16 @@
 package com.example.bmob.fragments.student
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bmob.R
 import com.example.bmob.common.BannerAdapter
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentStudentHomeBinding
+import com.example.bmob.myapp.appViewModel
 import com.example.bmob.viewmodels.SearchViewModel
-import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmoblibrary.base.basefragment.BaseFragment
+import com.example.bmoblibrary.ext.askPermission
 import com.youth.banner.indicator.CircleIndicator
 
 /**
@@ -21,34 +18,17 @@ import com.youth.banner.indicator.CircleIndicator
  *
  * 学生选择课题：
  */
-class StudentHomeFragment : Fragment(), FragmentEventListener {
-    lateinit var binding: FragmentStudentHomeBinding
-    private val viewModel: SearchViewModel by viewModels()
-
-    //activityViewModels相当于单例模式，此处用setViewModel是保证用户修改数据后同步数据到改界面
-    private val setViewModel: SetViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+class StudentHomeFragment : BaseFragment<SearchViewModel, FragmentStudentHomeBinding>() {
 
     override fun onStart() {
         super.onStart()
         binding.banner.start()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-        viewModel.setFragment(this)
-
+    override fun createObserver() {
         binding.banner.addBannerLifecycleObserver(this)
 
-        setViewModel.getUserByQuery().observe(viewLifecycleOwner) {
+        appViewModel.user.observe(viewLifecycleOwner) {
             binding.user = it
         }
 
@@ -58,6 +38,16 @@ class StudentHomeFragment : Fragment(), FragmentEventListener {
                 .setAdapter(BannerAdapter(it!!))
                 .indicator = CircleIndicator(requireContext())
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.setFragment(this)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        askPermission()
     }
 
     override fun onStop() {

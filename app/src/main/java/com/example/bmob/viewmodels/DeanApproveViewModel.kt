@@ -1,6 +1,5 @@
 package com.example.bmob.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -120,7 +119,7 @@ class DeanApproveViewModel(private val handler: SavedStateHandle) : ViewModel() 
             })
     }
 
-    private fun convertToDoubleList(thesisList: MutableList<Thesis>):MutableList<MutableList<Thesis>>{
+    private fun convertToDoubleList(thesisList: MutableList<Thesis>): MutableList<MutableList<Thesis>> {
         val hashMapOf = hashMapOf<String, MutableList<Thesis>>()
         thesisList.forEach {
             if (!hashMapOf.contains(it.teacherName!!)) {

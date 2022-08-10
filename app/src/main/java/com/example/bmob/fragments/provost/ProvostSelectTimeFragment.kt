@@ -2,66 +2,61 @@ package com.example.bmob.fragments.provost
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.bmob.common.FragmentEventListener
 import com.example.bmob.databinding.FragmentProvostSelectTimeBinding
+import com.example.bmob.myapp.appUser
 import com.example.bmob.utils.LOG_TAG
-import com.example.bmob.utils.showMsg
 import com.example.bmob.viewmodels.ProvostViewModel
 import com.example.bmob.viewmodels.SetViewModel
+import com.example.bmoblibrary.base.basefragment.BaseVbFragment
+import com.example.bmoblibrary.ext.showMsgShort
+import com.example.bmoblibrary.ext.textString
 
 
-class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
-    private lateinit var binding: FragmentProvostSelectTimeBinding
+class ProvostSelectTimeFragment : BaseVbFragment<FragmentProvostSelectTimeBinding>() {
     private val setViewModel: SetViewModel by activityViewModels()
     private val viewModel: ProvostViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentProvostSelectTimeBinding.inflate(inflater, container, false)
-        binding.provost = setViewModel.getUserByQuery().value
-        viewModel.getProvostReleaseSelectTimeLiveData(setViewModel.getUserByQuery().value!!)
-            .observe(viewLifecycleOwner) {
-                if (it != null) {
-                    binding.releaseTimeEntity = it
+    override fun initView(savedInstanceState: Bundle?) {
+        binding.provost = appUser
+        binding.click = ProxyClick()
+    }
+
+    override fun createObserver() {
+        viewModel.getProvostReleaseSelectTimeLiveData(appUser)
+            .observe(viewLifecycleOwner) { releaseTime ->
+                if (releaseTime != null) {
+                    binding.releaseTimeEntity = releaseTime
                     binding.confirmBtn.visibility = View.GONE
                     binding.updateBtn.visibility = View.VISIBLE
                 }
             }
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setEventListener()
-    }
-
-    override fun setEventListener() {
-        binding.timeStartLayout.setOnClickListener {
+    inner class ProxyClick {
+        fun onTimeStartLayout() {
             setViewModel.selectTime(requireContext(), "开始时间", 3, 3, 3) {
                 binding.chooseStartTime.text = it
             }
         }
-        binding.timeEndLayout.setOnClickListener {
+
+        fun onTimeEndLayout() {
             setViewModel.selectTime(requireContext(), "结束时间", 0, 0, 0) {
                 binding.chooseEndTime.text = it
             }
         }
-        binding.backBtn.setOnClickListener {
+
+        fun onBack() {
             findNavController().navigateUp()
         }
-        binding.confirmBtn.setOnClickListener {
+
+        fun onConfirm() {
             binding.confirmBtn.isEnabled = false
             Log.v(LOG_TAG, "被点击了")
-            val beginTime = binding.chooseStartTime.text.toString()
-            val endTime = binding.chooseEndTime.text.toString()
+            val beginTime = binding.chooseStartTime.textString
+            val endTime = binding.chooseEndTime.textString
             viewModel.checkIsEndValid(
                 beginTime,
                 endTime
@@ -69,13 +64,14 @@ class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
                 Log.v(LOG_TAG, "回调")
                 if (!isValid) {
                     binding.confirmBtn.isEnabled = true
-                    showMsg(requireContext(), message)
+                    showMsgShort(message)
                 } else {
                     //保存发布时间
                     Log.v(LOG_TAG, "日期合法")
-                    viewModel.saveTime(beginTime, endTime, setViewModel.getUserByQuery().value!!)
+
+                    viewModel.saveTime(beginTime, endTime, appUser)
                     { isSuccess, msg ->
-                        showMsg(requireContext(), msg)
+                        showMsgShort(msg)
                         if (isSuccess) {
                             binding.confirmBtn.visibility = View.GONE
                             binding.updateBtn.visibility = View.VISIBLE
@@ -83,30 +79,30 @@ class ProvostSelectTimeFragment : Fragment(), FragmentEventListener {
                             binding.confirmBtn.isEnabled = true
                         }
                     }
+
                 }
             }
         }
-        binding.updateBtn.setOnClickListener {
+
+        fun onUpdate() {
             //更新时间
-            val beginTime = binding.chooseStartTime.text.toString()
-            val endTime = binding.chooseEndTime.text.toString()
+            val beginTime = binding.chooseStartTime.textString
+            val endTime = binding.chooseEndTime.textString
             viewModel.checkIsEndValid(
                 beginTime,
                 endTime
             ) { isValid, message ->
                 Log.v(LOG_TAG, "回调")
                 if (!isValid) {
-                    showMsg(requireContext(), message)
+                    showMsgShort(message)
                 } else {
-                    setViewModel.getUserByQuery().value?.let {
-                        //保存发布时间
-                        viewModel.updateReleaseTime(
-                            viewModel.getProvostReleaseSelectTimeLiveData(it).value!!,
-                            beginTime,
-                            endTime
-                        ) { msg ->
-                            showMsg(requireContext(), msg)
-                        }
+                    //保存发布时间
+                    viewModel.updateReleaseTime(
+                        viewModel.getProvostReleaseSelectTimeLiveData(appUser).value!!,
+                        beginTime,
+                        endTime
+                    ) { msg ->
+                        showMsgShort(msg)
                     }
                 }
             }

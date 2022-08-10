@@ -1,327 +1,343 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.login.RegisterFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/backImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/back_img"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/text_zhuCe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/signup"
-        android:textColor="@color/blue"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/backImg"
-        app:layout_constraintStart_toEndOf="@+id/backImg"
-        app:layout_constraintTop_toTopOf="@+id/backImg" />
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.login.RegisterFragment.ProxyClick" />
+    </data>
 
-    <EditText
-        android:id="@+id/nameEv"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:background="@drawable/login_et_bg"
-        android:drawableStart="@drawable/username_img"
-        android:drawablePadding="15dp"
-        android:hint="@string/name"
-        android:inputType="text"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:textColor="@color/grey_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentIdentification" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.login.RegisterFragment">
 
-    <EditText
-        android:id="@+id/workNumEv"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:background="@drawable/login_et_bg"
-        android:drawableStart="@drawable/username_img"
-        android:drawablePadding="15dp"
-        android:hint="@string/workNum"
-        android:inputType="number"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:textColor="@color/grey_light"
-        app:layout_constraintEnd_toEndOf="@+id/nameEv"
-        app:layout_constraintStart_toStartOf="@+id/nameEv"
-        app:layout_constraintTop_toBottomOf="@+id/nameEv" />
+        <ImageView
+            android:id="@+id/backImg"
+            android:layout_width="wrap_content"
+            android:onClick="@{()->click.onBack()}"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/back_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/pwdEv"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:background="@drawable/login_et_bg"
-        android:drawableStart="@drawable/password_lock_img"
-        android:hint="@string/pwd"
-        android:inputType="textPassword"
-        android:drawablePadding="15dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:textColor="@color/grey_light"
-        app:layout_constraintEnd_toEndOf="@+id/phoneNumberEv"
-        app:layout_constraintStart_toStartOf="@+id/phoneNumberEv"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumberEv" />
-
-    <EditText
-        android:id="@+id/phoneNumberEv"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:background="@drawable/login_et_bg"
-        android:drawableStart="@drawable/signup_phone"
-        android:drawablePadding="15dp"
-        android:hint="@string/phone_number"
-        android:inputType="number"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:textColor="@color/grey_light"
-        app:layout_constraintEnd_toEndOf="@+id/workNumEv"
-        app:layout_constraintStart_toStartOf="@+id/workNumEv"
-        app:layout_constraintTop_toBottomOf="@+id/workNumEv"
-        tools:ignore="TextFields" />
-
-
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_round_bg"
-        android:text="@string/signup"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/registerBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:id="@+id/teacherLinearLayout"
+        <TextView
+            android:id="@+id/text_zhuCe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            tools:layout_editor_absoluteX="91dp"
-            tools:layout_editor_absoluteY="428dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/signup"
+            android:textColor="@color/blue"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/backImg"
+            app:layout_constraintStart_toEndOf="@+id/backImg"
+            app:layout_constraintTop_toTopOf="@+id/backImg" />
 
-            <ImageView
-                android:id="@+id/teacher_signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/signup_teacher" />
+        <EditText
+            android:id="@+id/nameEv"
+            android:layout_width="356dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:background="@drawable/login_et_bg"
+            android:drawableStart="@drawable/username_img"
+            android:drawablePadding="15dp"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="@color/grey_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentIdentification" />
 
-            <TextView
-                android:id="@+id/teacher"
-                android:layout_width="wrap_content"
-                android:layout_height="11dp"
-                android:layout_marginStart="15dp"
-                android:text="@string/teacher"
-                android:textColor="@color/blue"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/workNumEv"
+            android:layout_width="356dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:background="@drawable/login_et_bg"
+            android:drawableStart="@drawable/username_img"
+            android:drawablePadding="15dp"
+            android:hint="@string/workNum"
+            android:inputType="number"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="@color/grey_light"
+            app:layout_constraintEnd_toEndOf="@+id/nameEv"
+            app:layout_constraintStart_toStartOf="@+id/nameEv"
+            app:layout_constraintTop_toBottomOf="@+id/nameEv" />
+
+        <EditText
+            android:id="@+id/pwdEv"
+            android:layout_width="356dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:background="@drawable/login_et_bg"
+            android:drawableStart="@drawable/password_lock_img"
+            android:hint="@string/pwd"
+            android:inputType="textPassword"
+            android:drawablePadding="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="@color/grey_light"
+            app:layout_constraintEnd_toEndOf="@+id/phoneNumberEv"
+            app:layout_constraintStart_toStartOf="@+id/phoneNumberEv"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberEv" />
+
+        <EditText
+            android:id="@+id/phoneNumberEv"
+            android:layout_width="356dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:background="@drawable/login_et_bg"
+            android:drawableStart="@drawable/signup_phone"
+            android:drawablePadding="15dp"
+            android:hint="@string/phone_number"
+            android:inputType="number"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="@color/grey_light"
+            app:layout_constraintEnd_toEndOf="@+id/workNumEv"
+            app:layout_constraintStart_toStartOf="@+id/workNumEv"
+            app:layout_constraintTop_toBottomOf="@+id/workNumEv"
+            tools:ignore="TextFields" />
+
+
+        <Button
+            android:id="@+id/registerBtn"
+            android:layout_width="350dp"
+            android:onClick="@{()->click.onRegister()}"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_round_bg"
+            android:text="@string/signup"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <LinearLayout
-            android:id="@+id/studentLinearLayout"
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            tools:layout_editor_absoluteX="283dp"
-            tools:layout_editor_absoluteY="431dp">
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/registerBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:id="@+id/student_signup"
+            <LinearLayout
+                android:id="@+id/teacherLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/signup_student" />
+                android:onClick="@{()->click.onTeacherLinearLayout()}"
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables"
+                tools:layout_editor_absoluteX="91dp"
+                tools:layout_editor_absoluteY="428dp">
 
-            <TextView
-                android:id="@+id/student"
+                <ImageView
+                    android:id="@+id/teacher_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/signup_teacher" />
+
+                <TextView
+                    android:id="@+id/teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="11dp"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/teacher"
+                    android:textColor="@color/blue"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/studentLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="@string/student"
-                android:textColor="@color/blue"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
+                android:onClick="@{()->click.onStudentLinearLayout()}"
+                android:layout_marginStart="25dp"
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables"
+                tools:layout_editor_absoluteX="283dp"
+                tools:layout_editor_absoluteY="431dp">
+
+                <ImageView
+                    android:id="@+id/student_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/signup_student" />
+
+                <TextView
+                    android:id="@+id/student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/student"
+                    android:textColor="@color/blue"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/provostLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->click.onProvostLinearLayout()}"
+                android:layout_marginStart="25dp"
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables"
+                tools:layout_editor_absoluteX="114dp"
+                tools:layout_editor_absoluteY="522dp">
+
+                <ImageView
+                    android:id="@+id/provost_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/signup_provost" />
+
+                <TextView
+                    android:id="@+id/provost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/provost"
+                    android:textColor="@color/blue"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"
+                    tools:layout_editor_absoluteX="120dp"
+                    tools:layout_editor_absoluteY="574dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/deanLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:onClick="@{()->click.onDeanLinearLayout()}"
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables"
+                tools:layout_editor_absoluteX="251dp"
+                tools:layout_editor_absoluteY="521dp">
+
+                <ImageView
+                    android:id="@+id/dean_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/signup_dean" />
+
+                <TextView
+                    android:id="@+id/dean"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/dean"
+                    android:textColor="@color/blue"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/provostLinearLayout"
+        <TextView
+            android:id="@+id/currentIdentification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            tools:layout_editor_absoluteX="114dp"
-            tools:layout_editor_absoluteY="522dp">
+            android:layout_marginTop="10dp"
+            android:textColor="@color/grey_light"
+            app:layout_constraintStart_toStartOf="@+id/nameEv"
+            app:layout_constraintTop_toBottomOf="@+id/text_zhuCe" />
 
-            <ImageView
-                android:id="@+id/provost_signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/signup_provost" />
+        <EditText
+            android:id="@+id/schoolEv"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:inputType="text"
+            android:hint="@string/school"
+            android:textSize="18sp"
 
-            <TextView
-                android:id="@+id/provost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/provost"
-                android:textColor="@color/blue"
-                android:textSize="10sp"
-                tools:ignore="SmallSp"
-                tools:layout_editor_absoluteX="120dp"
-                tools:layout_editor_absoluteY="574dp" />
-        </LinearLayout>
+            android:drawablePadding="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
 
-        <LinearLayout
-            android:id="@+id/deanLinearLayout"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pwdEv"
+            tools:ignore="LabelFor,RtlSymmetry" />
+
+
+        <EditText
+            android:id="@+id/collegeEv"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:hint="@string/college"
+            android:inputType="text"
+            android:drawablePadding="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/schoolEv"
+            tools:ignore="LabelFor,RtlSymmetry" />
+
+
+        <EditText
+            android:id="@+id/departmentEv"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:hint="@string/depart"
+            android:inputType="text"
+            android:textSize="18sp"
+
+            android:drawablePadding="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/collegeEv"
+            tools:ignore="LabelFor,RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/isValidTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            tools:layout_editor_absoluteX="251dp"
-            tools:layout_editor_absoluteY="521dp">
-
-            <ImageView
-                android:id="@+id/dean_signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/signup_dean" />
-
-            <TextView
-                android:id="@+id/dean"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/dean"
-                android:textColor="@color/blue"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/currentIdentification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/grey_light"
-        app:layout_constraintStart_toStartOf="@+id/nameEv"
-        app:layout_constraintTop_toBottomOf="@+id/text_zhuCe" />
-
-    <EditText
-        android:id="@+id/schoolEv"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:inputType="text"
-        android:hint="@string/school"
-        android:textSize="18sp"
-
-        android:drawablePadding="15dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pwdEv"
-        tools:ignore="LabelFor,RtlSymmetry" />
-
-
-    <EditText
-        android:id="@+id/collegeEv"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:hint="@string/college"
-        android:inputType="text"
-        android:drawablePadding="15dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/schoolEv"
-        tools:ignore="LabelFor,RtlSymmetry" />
-
-
-    <EditText
-        android:id="@+id/departmentEv"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:autofillHints=""
-        android:hint="@string/depart"
-        android:inputType="text"
-        android:textSize="18sp"
-
-        android:drawablePadding="15dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collegeEv"
-        tools:ignore="LabelFor,RtlSymmetry" />
-
-    <TextView
-        android:id="@+id/isValidTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/blue"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/departmentEv" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/departmentEv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

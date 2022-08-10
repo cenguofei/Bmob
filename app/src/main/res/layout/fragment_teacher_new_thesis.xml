@@ -13,6 +13,10 @@
             name="thesis"
             type="com.example.bmob.data.entity.Thesis" />
 
+        <variable
+            name="click"
+            type="com.example.bmob.fragments.teacher.TeacherNewThesisFragment.ProxyClick" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -217,6 +221,7 @@
             android:id="@+id/ensure_button"
             android:layout_width="350dp"
             android:layout_height="50dp"
+            android:onClick="@{()->click.onEnsure()}"
             android:layout_marginBottom="15dp"
             android:background="@drawable/btn_round_bg"
             android:text="@string/ensure"
@@ -233,6 +238,7 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/btn_round_bg"
             android:text="@string/update_thesis_button"
+            android:onClick="@{()->click.onUpdate()}"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:visibility="gone"
@@ -247,6 +253,7 @@
             android:layout_marginBottom="40dp"
             android:background="@drawable/teacher_new_thesis_btn2_bg"
             android:text="@string/cancel"
+            android:onClick="@{()->click.onCancel()}"
             android:textColor="@color/blue"
             android:textSize="18sp"
             android:textStyle="bold"
